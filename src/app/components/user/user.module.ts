@@ -4,9 +4,10 @@ import {UserMaterialModule} from './user-material.module';
 
 @NgModule({
   declarations: [
-    CommonModule
+
   ],
   imports: [
+    CommonModule,
     UserMaterialModule
   ],
   providers: [

@@ -4,9 +4,9 @@ import {GroupMaterialModule} from './group-material.module';
 
 @NgModule({
   declarations: [
-    CommonModule
   ],
   imports: [
+    CommonModule,
     GroupMaterialModule
   ],
   providers: [

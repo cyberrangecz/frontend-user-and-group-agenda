@@ -13,13 +13,16 @@ import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import {MatTabsModule} from '@angular/material';
+import { AlertComponent } from './components/alert/alert.component';
+import {AlertService} from './services/alert.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotAuthorizedComponent,
     NotFoundComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    AlertComponent
   ],
   imports: [
     AppRoutingModule,
@@ -31,6 +34,7 @@ import {MatTabsModule} from '@angular/material';
   providers: [
     UserFacadeService,
     GroupFacadeService,
+    AlertService,
     LoginGuard,
     AuthGuard
   ],

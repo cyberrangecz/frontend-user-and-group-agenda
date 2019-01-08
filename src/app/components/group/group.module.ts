@@ -2,15 +2,18 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {GroupMaterialModule} from './group-material.module';
 import { GroupManagementComponent } from './group-management/group-management.component';
-import { GroupTableComponent } from './group/management/group-table/group-table.component';
+import { GroupTableComponent } from './group-management/group-table/group-table.component';
+import {GroupRoutingModule} from './group-routing.module';
 
 @NgModule({
   declarations: [
   GroupManagementComponent,
-  GroupTableComponent],
+  GroupTableComponent
+  ],
   imports: [
     CommonModule,
-    GroupMaterialModule
+    GroupMaterialModule,
+    GroupRoutingModule
   ],
   providers: [
 

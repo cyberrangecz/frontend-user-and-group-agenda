@@ -11,18 +11,22 @@ import {UserFacadeService} from './services/user/user-facade.service';
 import {GroupFacadeService} from './services/group/group-facade.service';
 import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import {MatTabsModule} from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotAuthorizedComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LandingPageComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabsModule
   ],
   providers: [
     UserFacadeService,

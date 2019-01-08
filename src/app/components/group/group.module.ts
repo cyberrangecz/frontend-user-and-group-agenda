@@ -4,11 +4,13 @@ import {GroupMaterialModule} from './group-material.module';
 import { GroupManagementComponent } from './group-management/group-management.component';
 import { GroupTableComponent } from './group-management/group-table/group-table.component';
 import {GroupRoutingModule} from './group-routing.module';
+import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
 
 @NgModule({
   declarations: [
   GroupManagementComponent,
-  GroupTableComponent
+  GroupTableComponent,
+  GroupControlsComponent
   ],
   imports: [
     CommonModule,

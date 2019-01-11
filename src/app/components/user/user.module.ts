@@ -5,6 +5,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { UserTableComponent } from './user-management/user-table/user-table.component';
 import {UserRoutingModule} from './user-routing.module';
 import { UserControlsComponent } from './user-management/user-controls/user-controls.component';
+import {UserFacadeService} from '../../services/user/user-facade.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { UserControlsComponent } from './user-management/user-controls/user-cont
     UserRoutingModule
   ],
   providers: [
+    UserFacadeService
   ]
 })
 export class UserModule {

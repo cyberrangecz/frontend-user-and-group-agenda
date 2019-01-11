@@ -5,6 +5,7 @@ import { GroupManagementComponent } from './group-management/group-management.co
 import { GroupTableComponent } from './group-management/group-table/group-table.component';
 import {GroupRoutingModule} from './group-routing.module';
 import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
+import {GroupFacadeService} from '../../services/group/group-facade.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { GroupControlsComponent } from './group-management/group-controls/group-
     GroupRoutingModule
   ],
   providers: [
-
+    GroupFacadeService
   ]
 })
 export class GroupModule {

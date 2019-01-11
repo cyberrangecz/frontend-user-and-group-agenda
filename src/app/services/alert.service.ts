@@ -13,24 +13,34 @@ export class AlertService {
   }
 
   addAlert(alert: Alert) {
-    this.alertQueue.length > 0 ? this.alertQueue.push(alert) : this.displayAlert(alert);
+    this.enqueue(alert);
+    if (this.alertQueue.length <= 1) {
+      this.displayAlert();
+    }
   }
 
-  private displayAlert(alert: Alert) {
+  private displayAlert() {
+    const alert = this.dequeue();
     const snackBarRef = this.snackBar.openFromComponent(AlertComponent, {
       data: alert
     });
 
     snackBarRef.afterDismissed().subscribe(() => {
       if (this.alertQueue.length > 0) {
-        this.displayAlert(this.getAlertFromQueue());
+        this.displayAlert();
       }
     });
   }
 
-  private getAlertFromQueue(): Alert {
-    // TODO
-    return null;
+  private dequeue(): Alert {
+    const result = this.alertQueue[0];
+    this.alertQueue = this.alertQueue.splice(0, 1);
+    return result;
+  }
+
+  private enqueue(alert: Alert) {
+    this.alertQueue.push(alert);
   }
 }
+
 

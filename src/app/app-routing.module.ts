@@ -2,7 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
-import {NotAuthorizedComponent} from './components/not-authorized/not-authorized.component';
+import {LoginComponent} from './components/not-authorized/login.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 
 const routes: Routes = [
@@ -18,12 +18,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: NotAuthorizedComponent,
+    component: LoginComponent,
     canActivate: [LoginGuard]
   },
   {
     path: 'not-authorized',
-    component: NotAuthorizedComponent
+    component: LoginComponent
   },
   {
     path: '',

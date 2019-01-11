@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component';
+import { LoginComponent } from './components/not-authorized/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -16,11 +16,12 @@ import {AlertService} from './services/alert.service';
 import {AuthService} from './services/auth.service';
 import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {authConfig} from './model/other/auth.config';
+import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotAuthorizedComponent,
+    LoginComponent,
     NotFoundComponent,
     LandingPageComponent,
     AlertComponent
@@ -41,7 +42,7 @@ import {authConfig} from './model/other/auth.config';
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
-    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     AlertService,
     AuthService,
     LoginGuard,

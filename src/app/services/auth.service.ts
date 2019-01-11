@@ -19,11 +19,19 @@ export class AuthService {
   }
 
   logout() {
-    this.oAuthService.logOut();
+    this.oAuthService.logOut(true);
   }
 
   getLoginName() {
     const claims = this.oAuthService.getIdentityClaims();
     return !claims ? null : claims[name];
+  }
+
+  isAuthenticated(): boolean {
+    return this.oAuthService.hasValidAccessToken();
+  }
+
+  getAuthorizationToken(): string {
+    return this.oAuthService.authorizationHeader();
   }
 }

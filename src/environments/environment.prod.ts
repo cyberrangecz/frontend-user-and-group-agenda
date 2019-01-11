@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-
+  userAndGroupRestBasePath: '',
   // OIDC SETTINGS
   // Url of the Identity Provider
   issuer: 'https://oidc.ics.muni.cz/oidc/',

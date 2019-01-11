@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Alert} from '../model/alert.model';
+import {Alert} from '../../model/alert.model';
 import {MatSnackBar} from '@angular/material';
-import {AlertComponent} from '../components/alert/alert.component';
+import {AlertComponent} from '../../components/alert/alert.component';
 
 @Injectable()
 export class AlertService {

@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {group} from '@angular/animations';
 
 @Injectable()
 export class UserFacadeService {
@@ -16,22 +15,21 @@ export class UserFacadeService {
     return this.http.get(environment.userAndGroupRestBasePath + environment.usersPathExtension);
   }
 
+  getUserById(id: number) {
+    return this.http.get(`${environment.userAndGroupRestBasePath + environment.usersPathExtension}/${id}`);
+  }
+
   deleteUsers(userIds: number[]) {
     return this.http.request('delete', environment.userAndGroupRestBasePath + environment.usersPathExtension,
       {
-        body: userIds
+        body: {
+          ids: userIds
+        }
       });
   }
 
-  getUserById(id: number) {
-   return this.http.get(`${environment.userAndGroupRestBasePath + environment.usersPathExtension}/${id}`);
-  }
-
-  deleteUserById(userId: number) {
-    return this.http.request('delete', environment.userAndGroupRestBasePath + environment.usersPathExtension,
-      {
-        body: userId
-      });
+  deleteUser(userId: number) {
+    return this.http.request('delete', `${environment.userAndGroupRestBasePath + environment.usersPathExtension}/${userId}`);
   }
 
   getUserRoles(userId: number) {

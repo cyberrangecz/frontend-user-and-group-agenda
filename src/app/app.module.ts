@@ -15,7 +15,6 @@ import { AlertComponent } from './components/alert/alert.component';
 import {AlertService} from './services/alert/alert.service';
 import {AuthService} from './services/auth/auth.service';
 import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
-import {authConfig} from './model/other/auth.config';
 import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor';
 
 @NgModule({

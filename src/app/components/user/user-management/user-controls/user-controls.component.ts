@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UserManagementService} from '../../../../services/user/user-management.service';
 
 @Component({
   selector: 'app-user-controls',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-controls.component.css']
 })
 export class UserControlsComponent implements OnInit {
+  selectedUsersCount: number;
 
-  constructor() { }
+  constructor(private userManagementService: UserManagementService) {
+  }
 
   ngOnInit() {
   }
 
+  addAccount() {
+
+  }
+
+  deleteAccounts() {
+
+  }
+
+  synchronizeAccounts() {
+
+  }
 }

@@ -22,13 +22,11 @@ export class GroupFacadeService {
   }
 
   createGroup(group: Group) {
-    // TODO: deserialize group
     return this.http.post(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
       group);
   }
 
   updateGroup(group: Group) {
-    // TODO: deserialize group
     return this.http.put(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
       group);
   }

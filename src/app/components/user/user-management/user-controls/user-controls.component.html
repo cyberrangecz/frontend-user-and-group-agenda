@@ -1,3 +1,17 @@
-<p>
-  user-controls works!
-</p>
+<div class="content">
+  <button mat-raised-button
+          color="primary"
+          (click)="synchronizeAccounts()">
+    Synchronize selected accounts ({{ selectedUsersCount }})
+  </button>
+  <button mat-raised-button
+          color="warn"
+          (click)="deleteAccounts()">
+    Delete selected accounts ({{ selectedUsersCount }})
+  </button>
+  <button mat-raised-button
+          color="basic"
+          (click)="addAccount()">
+    Create new account
+  </button>
+</div>

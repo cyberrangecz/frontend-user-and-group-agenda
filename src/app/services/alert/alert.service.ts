@@ -10,7 +10,6 @@ export class AlertService {
   private alertQueue: Queue<Alert> = new Queue<Alert>();
 
   constructor(public snackBar: MatSnackBar) {
-
   }
 
   addAlert(alert: Alert) {

@@ -8,6 +8,8 @@ export const environment = {
   rolesPathExtension: '/roles',
   usersPathExtension: '/users',
   groupsPathExtension: '/groups',
+  defaultPaginationSize: 0,
+
   // OIDC SETTINGS
   // Url of the Identity Provider
   issuer: 'https://oidc.ics.muni.cz/oidc/',

@@ -10,7 +10,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import {MatTabsModule} from '@angular/material';
+import {MatIconModule, MatTabsModule} from '@angular/material';
 import { AlertComponent } from './components/alert/alert.component';
 import {AlertService} from './services/alert/alert.service';
 import {AuthService} from './services/auth/auth.service';
@@ -37,7 +37,8 @@ import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor
         sendAccessToken: true
       }
     }),
-    MatTabsModule
+    MatTabsModule,
+    MatIconModule
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },

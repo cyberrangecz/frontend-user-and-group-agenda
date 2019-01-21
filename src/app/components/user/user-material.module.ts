@@ -7,7 +7,7 @@ import {MatButtonModule} from '@angular/material';
   ],
   exports: [
     MatButtonModule
-  ]
+  ],
 })
 export class UserMaterialModule {
 

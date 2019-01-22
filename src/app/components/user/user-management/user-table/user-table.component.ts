@@ -31,7 +31,7 @@ export class UserTableComponent implements OnInit {
     'groups',
     'source',
     'edit',
-    'remove'
+    'remove',
   ];
 
   resultsLength = 0;
@@ -101,7 +101,6 @@ export class UserTableComponent implements OnInit {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          console.log('error');
           this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading training definitions'));
           return of([]);
         })
@@ -111,12 +110,12 @@ export class UserTableComponent implements OnInit {
 
   /**
    * Creates table data source from fetched data
-   * @param tableData Users fetched from server
+   * @param dataWrapper Users fetched from server
    */
-  private createDataSource(tableData: TableDataWrapper<UserTableDataModel[]>) {
-    this.totalUsersCount = tableData.tableData.length;
+  private createDataSource(dataWrapper: TableDataWrapper<UserTableDataModel[]>) {
+    this.totalUsersCount = dataWrapper.tableData ? dataWrapper.tableData.length : 0;
     this.selectedUsersCount = 0;
-    this.dataSource = new MatTableDataSource(tableData.tableData);
+    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: UserTableDataModel, filter: string) =>
         data.user.name.toLowerCase().indexOf(filter) !== -1
@@ -150,6 +149,7 @@ export class UserTableComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
+    return false;
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;

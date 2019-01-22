@@ -10,10 +10,10 @@ import {AlertType} from '../../model/enums/alert-type.enum';
 })
 export class AlertComponent implements OnInit {
 
-  public snackBarRef: MatSnackBarRef<AlertComponent>;
   alertTypeEnums = AlertType;
 
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public alert: Alert) { }
+  constructor(public snackBarRef: MatSnackBarRef<AlertComponent>,
+              @Inject(MAT_SNACK_BAR_DATA) public alert: Alert) { }
 
   ngOnInit() {
   }

@@ -7,6 +7,7 @@ import {UserRoutingModule} from './user-routing.module';
 import { UserControlsComponent } from './user-management/user-controls/user-controls.component';
 import {UserFacadeService} from '../../services/user/user-facade.service';
 import {UserManagementService} from '../../services/user/user-management.service';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {UserManagementService} from '../../services/user/user-management.service
   imports: [
     CommonModule,
     UserMaterialModule,
-    UserRoutingModule
+    UserRoutingModule,
+    FormsModule
   ],
   providers: [
     UserManagementService,

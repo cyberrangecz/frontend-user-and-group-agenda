@@ -10,12 +10,13 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import {MatIconModule, MatTabsModule} from '@angular/material';
+import {MatIconModule, MatSnackBarModule, MatTabsModule} from '@angular/material';
 import { AlertComponent } from './components/alert/alert.component';
 import {AlertService} from './services/alert/alert.service';
 import {AuthService} from './services/auth/auth.service';
 import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor';
+import {AppMaterialModule} from './app-material.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor
   ],
   imports: [
     AppRoutingModule,
+    AppMaterialModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -36,9 +38,7 @@ import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor
         allowedUrls: [],
         sendAccessToken: true
       }
-    }),
-    MatTabsModule,
-    MatIconModule
+    })
   ],
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
@@ -47,6 +47,9 @@ import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor
     AuthService,
     LoginGuard,
     AuthGuard
+  ],
+  entryComponents: [
+    AlertComponent
   ],
   bootstrap: [AppComponent]
 })

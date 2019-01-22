@@ -40,7 +40,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
 
   private subscribeSelectedUsers() {
     this._selectedUsersSubscription = this.userManagementService.selectionChange$
-      .subscribe(users =>
-        this.selectedUsersCount = users.length);
+      .subscribe(size =>
+        this.selectedUsersCount = size);
   }
 }

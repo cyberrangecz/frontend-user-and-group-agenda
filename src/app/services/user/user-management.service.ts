@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Set} from 'typescript-collections';
 import {User} from '../../model/user/user.model';
 import {Observable, Subject} from 'rxjs';
 import {UserFacadeService} from './user-facade.service';
@@ -10,31 +11,35 @@ export class UserManagementService {
 
   }
 
-  private _selectedUsers: User[] = [];
+  private _selectedUsers: Set<User> = new Set<User>();
 
-  private selectionChangeSubject: Subject<User[]> = new Subject<User[]>();
-  selectionChange$: Observable<User[]> = this.selectionChangeSubject.asObservable();
+  private selectionChangeSubject: Subject<number> = new Subject<number>();
+  selectionChange$: Observable<number> = this.selectionChangeSubject.asObservable();
 
   selectUser(user: User) {
-    this._selectedUsers.push(user);
+    this._selectedUsers.add(user);
+    this.emitSelectionChange();
+  }
+
+  selectUsers(users: User[]) {
+    const selectedUsers = new Set<User>();
+    users.forEach(user => selectedUsers.add(user));
+    this._selectedUsers.union(selectedUsers);
     this.emitSelectionChange();
   }
 
   unselectUser(unselectedUser: User) {
-    const index = this._selectedUsers.findIndex(user => user.login === unselectedUser.login);
-    if (index !== -1) {
-      this._selectedUsers.splice(index, 1);
-      this.emitSelectionChange();
-    }
+    this._selectedUsers.remove(unselectedUser);
+    this.emitSelectionChange();
   }
 
   unselectAllUsers() {
-    this._selectedUsers = [];
+    this._selectedUsers.clear();
     this.emitSelectionChange();
   }
 
   getSelectedUsers(): User[] {
-    return this._selectedUsers;
+    return this._selectedUsers.toArray();
   }
 
   synchronizeSelectedUsers() {
@@ -42,7 +47,8 @@ export class UserManagementService {
   }
 
   deleteSelectedUsers() {
-    return this.userFacade.deleteUsers(this._selectedUsers.map(user => user.id));
+    return this.userFacade.deleteUsers(this._selectedUsers.toArray()
+      .map(user => user.id));
   }
 
   createUser(user: User) {
@@ -50,7 +56,7 @@ export class UserManagementService {
   }
 
   private emitSelectionChange() {
-    this.selectionChangeSubject.next(this._selectedUsers);
+    this.selectionChangeSubject.next(this._selectedUsers.size());
   }
 
 

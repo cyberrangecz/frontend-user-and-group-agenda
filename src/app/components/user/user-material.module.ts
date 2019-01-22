@@ -1,12 +1,34 @@
 import {NgModule} from '@angular/core';
-import {MatButtonModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule, MatIconModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSortModule,
+  MatTableModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   exports: [
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
 })
 export class UserMaterialModule {

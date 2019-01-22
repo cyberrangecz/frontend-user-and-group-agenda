@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {MatPaginator} from '@angular/material/typings/esm5/paginator';
+import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserTableDataModel} from '../../../../model/table-data/user-table-data-model';
 import {UserManagementService} from '../../../../services/user/user-management.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
@@ -12,6 +11,8 @@ import {AlertService} from '../../../../services/alert/alert.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {Alert} from '../../../../model/alert.model';
+import {User} from '../../../../model/user/user.model';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-user-table',
@@ -21,7 +22,7 @@ import {Alert} from '../../../../model/alert.model';
 export class UserTableComponent implements OnInit {
 
   displayedColumns: string[] = [
-    '',
+    'select',
     'name',
     'login',
     'email',
@@ -29,19 +30,20 @@ export class UserTableComponent implements OnInit {
     'roles',
     'groups',
     'source',
-    '',
-    ''
+    'edit',
+    'remove'
   ];
 
-  dataSource: MatTableDataSource<UserTableDataModel>;
   resultsLength = 0;
   isLoadingResults = true;
   isInErrorState = false;
+  selectedUsersCount: number;
+  totalUsersCount: number;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-
+  dataSource: MatTableDataSource<UserTableDataModel>;
+  selection = new SelectionModel<UserTableDataModel>(true, []);
 
   constructor(private userManagementService: UserManagementService,
               private userFacade: UserFacadeService,
@@ -99,6 +101,7 @@ export class UserTableComponent implements OnInit {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
+          console.log('error');
           this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading training definitions'));
           return of([]);
         })
@@ -111,11 +114,56 @@ export class UserTableComponent implements OnInit {
    * @param tableData Users fetched from server
    */
   private createDataSource(tableData: TableDataWrapper<UserTableDataModel[]>) {
+    this.totalUsersCount = tableData.tableData.length;
+    this.selectedUsersCount = 0;
     this.dataSource = new MatTableDataSource(tableData.tableData);
     this.dataSource.filterPredicate =
       (data: UserTableDataModel, filter: string) =>
         data.user.name.toLowerCase().indexOf(filter) !== -1
         || data.user.login.toLowerCase().indexOf(filter) !== -1
         || data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  selectAllChange() {
+    if (this.isAllSelected()) {
+      this.selectedUsersCount = 0;
+      this.selection.clear();
+      this.userManagementService.unselectAllUsers();
+    } else {
+      this.selectedUsersCount = this.totalUsersCount;
+      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.userManagementService.selectUsers(this.dataSource.data
+        .map(data => data.user));
+    }
+  }
+
+  selectChange(event: MatCheckboxChange, user: User) {
+    if (event.checked) {
+      this.selectedUsersCount++;
+      this.userManagementService.selectUser(user);
+    } else {
+      this.selectedUsersCount--;
+      this.userManagementService.unselectUser(user);
+    }
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  changeIsAdmin(event: MatCheckboxChange, user: User) {
+    // TODO REST API CALL?
+  }
+
+  editUser(user: User) {
+    // TODO open popup
+  }
+
+  deleteUser(user: User) {
+    // TODO REST API CALL
   }
 }

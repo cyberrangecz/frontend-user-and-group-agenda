@@ -1,13 +1,13 @@
 <div class=mat-typography>
   <div class="content">
     <div [ngSwitch]="alert.type">
-      <mat-icon *ngSwitchCase="'error'">
+      <mat-icon *ngSwitchCase="alertTypeEnums.ERROR">
         block
       </mat-icon>
-      <mat-icon *ngSwitchCase="'info'">
+      <mat-icon *ngSwitchCase="alertTypeEnums.INFO">
         info
       </mat-icon>
-      <mat-icon *ngSwitchCase="'success'">
+      <mat-icon *ngSwitchCase="alertTypeEnums.SUCCESS">
         done
       </mat-icon>
     </div>

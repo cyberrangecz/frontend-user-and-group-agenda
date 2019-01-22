@@ -1,0 +1,60 @@
+{
+  "tableData": [
+    {
+    "user": {
+      "id": 1,
+      "name": "Test User 01",
+      "login": "12345@muni.cz",
+      "mail": "12345@mail.muni.cz"
+    },
+    "groups": [
+       {
+        "name": "group1"
+       }
+    ],
+    "isAdmin": "false",
+    "source": "internal",
+    "roles": {}
+    },
+    {
+      "user": {
+        "id": 2,
+        "name": "Test User 02",
+        "login": "99999@muni.cz",
+        "mail": "99999@mail.muni.cz"
+      },
+      "groups": [
+        {
+          "name": "group2"
+        }
+      ],      "isAdmin": "true",
+      "source": "internal",
+      "roles": {}
+    },
+    {
+      "user": {
+        "id": 3,
+        "name": "Test User 03",
+        "login": "11111@muni.cz",
+        "mail": "11111@mail.muni.cz"
+      },
+      "groups": [],
+      "isAdmin": "false",
+      "source": "internal",
+      "roles": {}
+    },
+    {
+      "user": {
+        "id": 4,
+        "name": "Test User 04",
+        "login": "55555@muni.cz",
+        "mail": "55555@mail.muni.cz"
+      },
+      "groups": [],
+      "isAdmin": "false",
+      "source": "internal",
+      "roles": {}
+    }
+  ],
+  "pagination": {}
+}

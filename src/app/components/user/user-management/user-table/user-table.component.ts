@@ -31,7 +31,7 @@ export class UserTableComponent implements OnInit {
     'groups',
     'source',
     'edit',
-    'remove',
+    'delete'
   ];
 
   resultsLength = 0;
@@ -132,8 +132,9 @@ export class UserTableComponent implements OnInit {
     } else {
       this.selectedUsersCount = this.totalUsersCount;
       this.dataSource.data.forEach(row => this.selection.select(row));
-      this.userManagementService.selectUsers(this.dataSource.data
-        .map(data => data.user));
+      const users = [];
+      this.dataSource.data.forEach(row => users.push(row.user));
+      this.userManagementService.selectUsers(users);
     }
   }
 
@@ -149,10 +150,9 @@ export class UserTableComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return false;
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+     return numSelected === numRows;
   }
 
   changeIsAdmin(event: MatCheckboxChange, user: User) {

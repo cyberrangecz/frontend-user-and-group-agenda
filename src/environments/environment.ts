@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  userAndGroupRestBasePath: 'http://localhost:8081/kypo2-rest-user-and-group/api/v1',
+  userAndGroupRestBasePath: '/assets',
   rolesPathExtension: '/roles',
-  usersPathExtension: '/users',
+  usersPathExtension: '/user-table-mock-data.json',
   groupsPathExtension: '/groups',
   defaultPaginationSize: 0,
 

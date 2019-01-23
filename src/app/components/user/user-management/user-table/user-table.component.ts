@@ -10,7 +10,7 @@ import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper'
 import {AlertService} from '../../../../services/alert/alert.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
-import {Alert} from '../../../../model/alert.model';
+import {Alert} from '../../../../model/alert/alert.model';
 import {User} from '../../../../model/user/user.model';
 import {SelectionModel} from '@angular/cdk/collections';
 
@@ -106,7 +106,13 @@ export class UserTableComponent implements OnInit {
   }
 
   deleteUser(user: User) {
-    // TODO REST API CALL
+    this.userFacade.deleteUser(user.id)
+      .subscribe(
+        resp => {
+          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
+          this.fetchData();
+        },
+        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Error while deleting user'), {error: err}));
   }
 
   /**

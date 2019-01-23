@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material';
-import {Alert} from '../../model/alert.model';
+import {Alert} from '../../model/alert/alert.model';
 import {AlertType} from '../../model/enums/alert-type.enum';
 
 @Component({

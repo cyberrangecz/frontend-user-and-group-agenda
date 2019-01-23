@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserTableDataModel} from '../../../../model/table-data/user-table-data-model';
 import {UserManagementService} from '../../../../services/user/user-management.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {environment} from '../../../../../environments/environment';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {merge, of} from 'rxjs';
+import {merge, of, Subscription} from 'rxjs';
 import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
@@ -19,7 +19,7 @@ import {SelectionModel} from '@angular/cdk/collections';
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.css']
 })
-export class UserTableComponent implements OnInit {
+export class UserTableComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = [
     'select',
@@ -39,6 +39,7 @@ export class UserTableComponent implements OnInit {
   isInErrorState = false;
   selectedUsersCount: number;
   totalUsersCount: number;
+  dataChangeSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -51,7 +52,14 @@ export class UserTableComponent implements OnInit {
               private alertService: AlertService) { }
 
   ngOnInit() {
+    this.subscribeForEvents();
     this.initTableDataSource();
+  }
+
+  ngOnDestroy() {
+    if (this.dataChangeSubscription) {
+      this.dataChangeSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -68,33 +76,23 @@ export class UserTableComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   selectAllChange() {
     if (this.isAllSelected()) {
-      this.selectedUsersCount = 0;
-      this.selection.clear();
-      this.userManagementService.unselectAllUsers();
+      this.unselectAll();
     } else {
-      this.selectedUsersCount = this.totalUsersCount;
-      this.dataSource.data.forEach(row => this.selection.select(row));
-      const users = [];
-      this.dataSource.data.forEach(row => users.push(row.user));
-      this.userManagementService.selectUsers(users);
+      this.selectAll();
     }
   }
 
   selectChange(event: MatCheckboxChange, user: User) {
     if (event.checked) {
-      this.selectedUsersCount++;
-      this.userManagementService.selectUser(user);
+      this.selectUser(user);
     } else {
-      this.selectedUsersCount--;
-      this.userManagementService.unselectUser(user);
+      this.unselectUser(user);
     }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-     return numSelected === numRows;
+     return this.selection.selected.length === this.dataSource.data.length;
   }
 
   changeIsAdmin(event: MatCheckboxChange, user: User) {
@@ -112,7 +110,7 @@ export class UserTableComponent implements OnInit {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
           this.fetchData();
         },
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Error while deleting user'), {error: err}));
+        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
   }
 
   /**
@@ -126,7 +124,6 @@ export class UserTableComponent implements OnInit {
     this.sort.direction = 'desc';
     this.fetchData();
   }
-
 
   /**
    * Fetches data from the server and maps them to table data objects
@@ -154,8 +151,8 @@ export class UserTableComponent implements OnInit {
           this.isInErrorState = true;
           this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading training definitions'));
           return of([]);
-        })
-      ).subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
+        }))
+      .subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
 
   }
 
@@ -177,5 +174,34 @@ export class UserTableComponent implements OnInit {
 
   private resolvePreSelectedAdminCheckboxes(data: UserTableDataModel[]) {
     this.adminSelection.select(...data.filter(row => row.isAdmin));
+  }
+
+  private unselectAll() {
+    this.selectedUsersCount = 0;
+    this.selection.clear();
+    this.userManagementService.unselectAllUsers();
+  }
+
+  private selectAll() {
+    this.selectedUsersCount = this.totalUsersCount;
+    this.dataSource.data.forEach(row => this.selection.select(row));
+    const users = [];
+    this.dataSource.data.forEach(row => users.push(row.user));
+    this.userManagementService.selectUsers(users);
+  }
+
+  private selectUser(user: User) {
+    this.selectedUsersCount++;
+    this.userManagementService.selectUser(user);
+  }
+
+  private unselectUser(user: User) {
+    this.selectedUsersCount--;
+    this.userManagementService.unselectUser(user);
+  }
+
+  private subscribeForEvents() {
+    this.userManagementService.dataChange$
+      .subscribe(this.fetchData);
   }
 }

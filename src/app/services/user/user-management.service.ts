@@ -13,8 +13,11 @@ export class UserManagementService {
 
   private _selectedUsers: Set<User> = new Set<User>(user => user.login);
 
-  private selectionChangeSubject: Subject<number> = new Subject<number>();
-  selectionChange$: Observable<number> = this.selectionChangeSubject.asObservable();
+  private _selectionChangeSubject: Subject<number> = new Subject<number>();
+  selectionChange$: Observable<number> = this._selectionChangeSubject.asObservable();
+
+  private _dataChangeSubject: Subject<any> = new Subject<any>();
+  dataChange$: Observable<any> = this._dataChangeSubject.asObservable();
 
   selectUser(user: User) {
     this._selectedUsers.add(user);
@@ -42,20 +45,11 @@ export class UserManagementService {
     return this._selectedUsers.toArray();
   }
 
-  synchronizeSelectedUsers() {
-    // TODO
-  }
-
-  deleteSelectedUsers() {
-    return this.userFacade.deleteUsers(this._selectedUsers.toArray()
-      .map(user => user.id));
-  }
-
-  createUser(user: User) {
-    // TODO
+  emitDataChange() {
+    this._dataChangeSubject.next();
   }
 
   private emitSelectionChange() {
-    this.selectionChangeSubject.next(this._selectedUsers.size());
+    this._selectionChangeSubject.next(this._selectedUsers.size());
   }
 }

@@ -6,7 +6,7 @@ export class RolesTablePipe implements  PipeTransform {
 
   transform(value: Role[]): string {
     return value
-      .map(role => role.name)
-      .join(', ');
+      ? value.map(role => role.name).join(', ')
+      : '';
   }
 }

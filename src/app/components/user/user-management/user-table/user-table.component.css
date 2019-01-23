@@ -35,7 +35,7 @@ td.select, th.select {
 }
 
 td.name, th.name {
-  width: 10%;
+  width: 15%;
 }
 
 td.login, th.login {
@@ -51,7 +51,7 @@ td.admin, th.admin {
 }
 
 td.roles, th.roles {
-  width: 10%;
+  width: 15%;
 }
 
 td.groups, th.groups {
@@ -59,13 +59,13 @@ td.groups, th.groups {
 }
 
 td.source, th.source {
-  width: 15%;
+  width: 10%;
 }
 
 td.edit, th.edit {
-  width: 5%;
+  width: 1%;
 }
 
 td.delete, th.delete {
-  width: 5%;
+  width: 1%;
 }

@@ -44,6 +44,7 @@ export class UserTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<UserTableDataModel>;
   selection = new SelectionModel<UserTableDataModel>(true, []);
+  adminSelection = new SelectionModel<UserTableDataModel>(true, []);
 
   constructor(private userManagementService: UserManagementService,
               private userFacade: UserFacadeService,
@@ -62,65 +63,6 @@ export class UserTableComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  /**
-   * Creates table data source from training definitions retrieved from a server. Only training definitions where
-   * active user is listed as an author are shown
-   */
-  private initTableDataSource() {
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    this.paginator.pageSize = environment.defaultPaginationSize;
-    this.sort.active = 'name';
-    this.sort.direction = 'desc';
-    this.fetchData();
-  }
-
-
-  /**
-   * Fetches data from the server and maps them to table data objects
-   */
-  fetchData() {
-    this.isInErrorState = false;
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          return this.userFacade.getUsers(
-            PaginationFactory.createWithSort(this.paginator.pageIndex,
-            this.paginator.pageSize,
-            this.sort.active,
-            this.sort.direction));
-        }),
-        map(data => {
-          this.isLoadingResults = false;
-          this.resultsLength = data.pagination.totalElements;
-          return data;
-        }),
-        catchError((err) => {
-          this.isLoadingResults = false;
-          this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading training definitions'));
-          return of([]);
-        })
-      ).subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
-
-  }
-
-  /**
-   * Creates table data source from fetched data
-   * @param dataWrapper Users fetched from server
-   */
-  private createDataSource(dataWrapper: TableDataWrapper<UserTableDataModel[]>) {
-    this.totalUsersCount = dataWrapper.tableData ? dataWrapper.tableData.length : 0;
-    this.selectedUsersCount = 0;
-    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
-    this.dataSource.filterPredicate =
-      (data: UserTableDataModel, filter: string) =>
-        data.user.name.toLowerCase().indexOf(filter) !== -1
-        || data.user.login.toLowerCase().indexOf(filter) !== -1
-        || data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -165,5 +107,69 @@ export class UserTableComponent implements OnInit {
 
   deleteUser(user: User) {
     // TODO REST API CALL
+  }
+
+  /**
+   * Creates table data source from training definitions retrieved from a server. Only training definitions where
+   * active user is listed as an author are shown
+   */
+  private initTableDataSource() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.paginator.pageSize = environment.defaultPaginationSize;
+    this.sort.active = 'name';
+    this.sort.direction = 'desc';
+    this.fetchData();
+  }
+
+
+  /**
+   * Fetches data from the server and maps them to table data objects
+   */
+  private fetchData() {
+    this.isInErrorState = false;
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.userFacade.getUsers(
+            PaginationFactory.createWithSort(this.paginator.pageIndex,
+              this.paginator.pageSize,
+              this.sort.active,
+              this.sort.direction));
+        }),
+        map(data => {
+          this.isLoadingResults = false;
+          this.resultsLength = data.pagination.totalElements;
+          return data;
+        }),
+        catchError((err) => {
+          this.isLoadingResults = false;
+          this.isInErrorState = true;
+          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading training definitions'));
+          return of([]);
+        })
+      ).subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
+
+  }
+
+  /**
+   * Creates table data source from fetched data
+   * @param dataWrapper Users fetched from server
+   */
+  private createDataSource(dataWrapper: TableDataWrapper<UserTableDataModel[]>) {
+    this.totalUsersCount = dataWrapper.tableData ? dataWrapper.tableData.length : 0;
+    this.selectedUsersCount = 0;
+    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
+    this.resolvePreSelectedAdminCheckboxes(dataWrapper.tableData);
+    this.dataSource.filterPredicate =
+      (data: UserTableDataModel, filter: string) =>
+        data.user.name.toLowerCase().indexOf(filter) !== -1
+        || data.user.login.toLowerCase().indexOf(filter) !== -1
+        || data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1;
+  }
+
+  private resolvePreSelectedAdminCheckboxes(data: UserTableDataModel[]) {
+    this.adminSelection.select(...data.filter(row => row.isAdmin));
   }
 }

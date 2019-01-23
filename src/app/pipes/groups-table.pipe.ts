@@ -6,7 +6,7 @@ export class GroupsTablePipe implements PipeTransform {
 
   transform(value: Group[]): string {
     return value
-      .map(group => group.name)
-      .join(', ');
+      ? value.map(group => group.name).join(', ')
+      : '';
   }
 }

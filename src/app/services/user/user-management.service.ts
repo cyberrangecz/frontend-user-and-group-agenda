@@ -11,7 +11,7 @@ export class UserManagementService {
 
   }
 
-  private _selectedUsers: Set<User> = new Set<User>();
+  private _selectedUsers: Set<User> = new Set<User>(user => user.login);
 
   private selectionChangeSubject: Subject<number> = new Subject<number>();
   selectionChange$: Observable<number> = this.selectionChangeSubject.asObservable();
@@ -22,7 +22,7 @@ export class UserManagementService {
   }
 
   selectUsers(users: User[]) {
-    const selectedUsers = new Set<User>();
+    const selectedUsers = new Set<User>(user => user.login);
     users.forEach(user => selectedUsers.add(user));
     this._selectedUsers.union(selectedUsers);
     this.emitSelectionChange();
@@ -58,6 +58,4 @@ export class UserManagementService {
   private emitSelectionChange() {
     this.selectionChangeSubject.next(this._selectedUsers.size());
   }
-
-
 }

@@ -12,7 +12,7 @@
         "name": "group1"
        }
     ],
-    "isAdmin": "false",
+    "isAdmin": false,
     "source": "internal",
     "roles": [
       {
@@ -35,7 +35,7 @@
           "name": "group2"
         }
       ],
-      "isAdmin": "true",
+      "isAdmin": true,
       "source": "internal",
       "roles": [
         {
@@ -51,9 +51,9 @@
         "mail": "11111@mail.muni.cz"
       },
       "groups": [],
-      "isAdmin": "false",
+      "isAdmin": false,
       "source": "internal",
-      "roles": {}
+      "roles": []
     },
     {
       "user": {
@@ -63,9 +63,9 @@
         "mail": "55555@mail.muni.cz"
       },
       "groups": [],
-      "isAdmin": "false",
+      "isAdmin": false,
       "source": "internal",
-      "roles": {}
+      "roles": []
     }
   ],
   "pagination": {}

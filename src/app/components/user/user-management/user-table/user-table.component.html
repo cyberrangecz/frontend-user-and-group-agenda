@@ -58,11 +58,12 @@
         <!-- ADMIN Column -->
         <ng-container matColumnDef="admin">
           <th class="admin" mat-header-cell *matHeaderCellDef>Admin</th>
-          <td class="admin" mat-cell *matCellDef="let data">
+          <td class="admin" mat-cell *matCellDef="let data; let row">
             <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? adminSelection.toggle(row) : null; changeIsAdmin($event, data.user)"
               [disabled]="isInErrorState || isLoadingResults"
-              [(ngModel)]="data.isAdmin"
-              (change)="changeIsAdmin($event, data.user)">
+              [checked]="adminSelection.isSelected(row)">
             </mat-checkbox>
           </td>
         </ng-container>
@@ -70,13 +71,13 @@
         <!-- ROLES Column -->
         <ng-container matColumnDef="roles">
           <th class="roles" mat-header-cell *matHeaderCellDef>Roles</th>
-          <td class="roles" mat-cell *matCellDef="let data"> {{ data.roles | rolesToString }}</td>
+          <td class="roles" mat-cell *matCellDef="let data"> {{ data?.roles | rolesToString }}</td>
         </ng-container>
 
         <!-- GROUPS Column -->
         <ng-container matColumnDef="groups">
           <th class="groups" mat-header-cell *matHeaderCellDef>Groups</th>
-          <td class="groups" mat-cell *matCellDef="let data"> {{ data.groups | groupsToString }}</td>
+          <td class="groups" mat-cell *matCellDef="let data"> {{ data?.groups | groupsToString }}</td>
         </ng-container>
 
         <!-- SOURCE Column -->
@@ -108,7 +109,7 @@
         <!-- FOOTER column -->
        <ng-container matColumnDef="footer">
           <td mat-footer-cell *matFooterCellDef colspan="3">
-           Selected {{ selectedUsersCount }} of total {{ totalUsersCount } users}
+           Selected {{ selectedUsersCount }} of total {{ totalUsersCount }} users
           </td>
         </ng-container>
 

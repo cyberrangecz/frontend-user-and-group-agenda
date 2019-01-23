@@ -90,7 +90,10 @@
         <ng-container matColumnDef="edit">
           <th class="edit" mat-header-cell *matHeaderCellDef></th>
           <td class="edit" mat-cell *matCellDef="let data">
-            <button mat-icon-button color="primary" (click)="editUser(data.user)">
+            <button mat-icon-button
+                    color="primary"
+                    matTooltip="Edit user"
+                    (click)="editUser(data.user)">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -100,7 +103,10 @@
         <ng-container matColumnDef="delete">
           <th class="delete" mat-header-cell *matHeaderCellDef></th>
           <td class="delete" mat-cell *matCellDef="let data">
-            <button mat-icon-button color="warn" (click)="deleteUser(data.user)">
+            <button mat-icon-button
+                    color="warn"
+                    matTooltip="Delete user"
+                    (click)="deleteUser(data.user)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

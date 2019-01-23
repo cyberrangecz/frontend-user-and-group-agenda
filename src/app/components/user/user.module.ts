@@ -9,12 +9,14 @@ import {UserFacadeService} from '../../services/user/user-facade.service';
 import {UserManagementService} from '../../services/user/user-management.service';
 import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../pipes/pipes.module';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
   UserManagementComponent,
   UserTableComponent,
-  UserControlsComponent
+  UserControlsComponent,
+  UserEditComponent
   ],
   imports: [
     CommonModule,

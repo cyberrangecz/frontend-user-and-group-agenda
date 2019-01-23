@@ -8,6 +8,7 @@ import { UserControlsComponent } from './user-management/user-controls/user-cont
 import {UserFacadeService} from '../../services/user/user-facade.service';
 import {UserManagementService} from '../../services/user/user-management.service';
 import {FormsModule} from '@angular/forms';
+import {PipesModule} from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +18,10 @@ import {FormsModule} from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     UserMaterialModule,
     UserRoutingModule,
-    FormsModule
+    PipesModule
   ],
   providers: [
     UserManagementService,

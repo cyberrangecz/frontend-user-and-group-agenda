@@ -14,7 +14,14 @@
     ],
     "isAdmin": "false",
     "source": "internal",
-    "roles": {}
+    "roles": [
+      {
+        "name": "designer"
+      },
+      {
+        "name": "organizer"
+      }
+    ]
     },
     {
       "user": {
@@ -27,9 +34,14 @@
         {
           "name": "group2"
         }
-      ],      "isAdmin": "true",
+      ],
+      "isAdmin": "true",
       "source": "internal",
-      "roles": {}
+      "roles": [
+        {
+          "name": "participant"
+        }
+      ]
     },
     {
       "user": {

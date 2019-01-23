@@ -5,8 +5,8 @@ import {Role} from '../model/role.model';
 export class RolesTablePipe implements  PipeTransform {
 
   transform(value: Role[]): string {
-    return value
+    return value && value.length > 0
       ? value.map(role => role.name).join(', ')
-      : '';
+      : '-';
   }
 }

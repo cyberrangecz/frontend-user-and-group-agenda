@@ -5,8 +5,8 @@ import {Group} from '../model/group/group.model';
 export class GroupsTablePipe implements PipeTransform {
 
   transform(value: Group[]): string {
-    return value
+    return value && value.length > 0
       ? value.map(group => group.name).join(', ')
-      : '';
+      : '-';
   }
 }

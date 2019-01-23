@@ -29,7 +29,6 @@ table {
   width: 100%;
 }
 
-
 td.select, th.select {
   width: 5%;
 }
@@ -68,4 +67,8 @@ td.edit, th.edit {
 
 td.delete, th.delete {
   width: 1%;
+}
+
+td.select-count {
+  color: darkslateblue;
 }

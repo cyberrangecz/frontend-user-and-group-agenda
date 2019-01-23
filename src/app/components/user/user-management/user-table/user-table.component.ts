@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserTableDataModel} from '../../../../model/table-data/user-table-data-model';
 import {UserManagementService} from '../../../../services/user/user-management.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
@@ -13,6 +13,8 @@ import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {Alert} from '../../../../model/alert/alert.model';
 import {User} from '../../../../model/user/user.model';
 import {SelectionModel} from '@angular/cdk/collections';
+import {UserEditComponent} from '../../user-edit/user-edit.component';
+import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 
 @Component({
   selector: 'app-user-table',
@@ -47,9 +49,11 @@ export class UserTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<UserTableDataModel>(true, []);
   adminSelection = new SelectionModel<UserTableDataModel>(true, []);
 
-  constructor(private userManagementService: UserManagementService,
-              private userFacade: UserFacadeService,
-              private alertService: AlertService) { }
+  constructor(
+    public dialog: MatDialog,
+    private userManagementService: UserManagementService,
+    private userFacade: UserFacadeService,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.subscribeForEvents();
@@ -100,7 +104,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   editUser(user: User) {
-    // TODO open popup
+    this.openEditUserPopup(user);
   }
 
   deleteUser(user: User) {
@@ -203,5 +207,15 @@ export class UserTableComponent implements OnInit, OnDestroy {
   private subscribeForEvents() {
     this.userManagementService.dataChange$
       .subscribe(this.fetchData);
+  }
+
+  private openEditUserPopup(user: User) {
+    this.dialog.open(UserEditComponent, { data: user })
+      .afterClosed()
+      .subscribe(result => {
+        if (result && result === DialogResultEnum.SUCCESS) {
+          this.fetchData();
+        }
+      });
   }
 }

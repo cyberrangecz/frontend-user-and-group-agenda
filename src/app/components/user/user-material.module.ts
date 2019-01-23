@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
-  MatCheckboxModule, MatIconModule,
+  MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
@@ -19,7 +19,9 @@ import {
     MatSortModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatFormFieldModule,
   ],
   exports: [
     MatButtonModule,
@@ -30,7 +32,9 @@ import {
     MatSortModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatFormFieldModule,
   ],
 })
 export class UserMaterialModule {

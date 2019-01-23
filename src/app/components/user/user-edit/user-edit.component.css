@@ -1,0 +1,22 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  justify-items: flex-end;
+  width: 90%;
+}
+button {
+  margin-right: 10px;
+}
+

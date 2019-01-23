@@ -28,6 +28,9 @@ import { UserEditComponent } from './user-edit/user-edit.component';
   providers: [
     UserManagementService,
     UserFacadeService
+  ],
+  entryComponents: [
+    UserEditComponent
   ]
 })
 export class UserModule {

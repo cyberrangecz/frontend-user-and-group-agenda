@@ -1,5 +1,6 @@
 <div class="content">
-  <h2>Edit {{ user?.name }}</h2>
+  <h2 *ngIf="!editMode">Create new user</h2>
+  <h2 *ngIf="editMode">Edit {{ user?.name }}</h2>
   <div class="form-container">
     <!-- NAME field-->
     <mat-form-field appearance="outline">

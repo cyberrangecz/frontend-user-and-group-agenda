@@ -13,12 +13,20 @@ export class UserFacadeService {
   constructor(private http: HttpClient) {
   }
 
-  getUsers(pagination = null): Observable<TableDataWrapper<UserTableDataModel[]>> {
+  getUsersTableData(pagination = null): Observable<TableDataWrapper<UserTableDataModel[]>> {
     if (pagination) {
       return this.http.get<TableDataWrapper<UserTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) });
     }
     return this.http.get<TableDataWrapper<UserTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
+  }
+
+  getUsers(pagination = null): Observable<TableDataWrapper<User[]>> {
+    if (pagination) {
+      return this.http.get<TableDataWrapper<User[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension,
+        {params: PaginationHttpParams.createPaginationParams(pagination)});
+    }
+    return this.http.get<TableDataWrapper<User[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
   }
 
   getUserById(id: number) {

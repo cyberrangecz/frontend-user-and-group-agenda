@@ -139,7 +139,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.userFacade.getUsers(
+          return this.userFacade.getUsersTableData(
             PaginationFactory.createWithSort(this.paginator.pageIndex,
               this.paginator.pageSize,
               this.sort.active,

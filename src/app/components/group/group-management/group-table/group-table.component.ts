@@ -158,7 +158,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading groups'));
+          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading groups'), err);
           return of([]);
         }))
       .subscribe((data: TableDataWrapper<GroupTableDataModel[]>) => this.createDataSource(data));

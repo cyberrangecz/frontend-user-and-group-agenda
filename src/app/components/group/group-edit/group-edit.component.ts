@@ -44,6 +44,10 @@ export class GroupEditComponent implements OnInit {
     }
   }
 
+  userSelectionChanged($event: User[]) {
+    this.users = $event;
+  }
+
   private resolveInitialValues() {
     if (this.group) {
       this.editMode = true;

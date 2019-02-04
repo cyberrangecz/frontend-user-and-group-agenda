@@ -7,7 +7,7 @@ export const environment = {
   userAndGroupRestBasePath: '/assets',
   rolesPathExtension: '/roles',
   usersPathExtension: '/user-table-mock-data.json',
-  groupsPathExtension: '/groups',
+  groupsPathExtension: '/group-table-mock-data.json',
   defaultPaginationSize: 0,
 
   // OIDC SETTINGS

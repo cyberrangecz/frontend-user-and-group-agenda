@@ -1,14 +1,40 @@
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatDialogModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule, MatFormFieldModule, MatIconModule,
+  MatInputModule,
+  MatPaginatorModule, MatProgressSpinnerModule,
+  MatSortModule,
+  MatTableModule, MatTooltipModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
     MatButtonModule,
-    MatDialogModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   exports: [
     MatButtonModule,
-    MatDialogModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatFormFieldModule
   ]
 })
 export class GroupMaterialModule {

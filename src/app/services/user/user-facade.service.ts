@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment';
 import {PaginationHttpParams} from '../../model/other/pagination-http-params';
 import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
 import {Observable} from 'rxjs';
-import {UserTableDataModel} from '../../model/table-data/user-table-data-model';
+import {UserTableDataModel} from '../../model/table-data/user-table-data.model';
 
 @Injectable()
 export class UserFacadeService {
@@ -15,7 +15,7 @@ export class UserFacadeService {
   getUsers(pagination = null): Observable<TableDataWrapper<UserTableDataModel[]>> {
     if (pagination) {
       return this.http.get<TableDataWrapper<UserTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension,
-        { params: PaginationHttpParams.createPaginationParams(pagination)});
+        { params: PaginationHttpParams.createPaginationParams(pagination) });
     }
     return this.http.get<TableDataWrapper<UserTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
   }

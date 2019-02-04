@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserTableDataModel} from '../../../../model/table-data/user-table-data-model';
+import {UserTableDataModel} from '../../../../model/table-data/user-table-data.model';
 import {UserManagementService} from '../../../../services/user/user-management.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {environment} from '../../../../../environments/environment';
@@ -153,11 +153,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading training definitions'));
+          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading users'));
           return of([]);
         }))
       .subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
-
   }
 
   /**
@@ -188,9 +187,11 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   private selectAll() {
     this.selectedUsersCount = this.totalUsersCount;
-    this.dataSource.data.forEach(row => this.selection.select(row));
     const users = [];
-    this.dataSource.data.forEach(row => users.push(row.user));
+    this.dataSource.data.forEach(row => {
+      this.selection.select(row);
+      users.push(row.user);
+    });
     this.userManagementService.selectUsers(users);
   }
 
@@ -204,11 +205,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.userManagementService.unselectUser(user);
   }
 
-  private subscribeForEvents() {
-    this.userManagementService.dataChange$
-      .subscribe(this.fetchData);
-  }
-
   private openEditUserPopup(user: User) {
     this.dialog.open(UserEditComponent, { data: user })
       .afterClosed()
@@ -217,5 +213,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
           this.fetchData();
         }
       });
+  }
+
+  private subscribeForEvents() {
+    this.userManagementService.dataChange$
+      .subscribe(change => this.fetchData());
   }
 }

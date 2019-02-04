@@ -1,0 +1,77 @@
+{
+  "tableData": [
+    {
+      "group": {
+        "id": 1,
+        "name": "Test Group 01",
+        "description": "This is a Test Group 01"
+      },
+      "members": [
+        {
+          "id": 1,
+          "name": "Test User 01",
+          "login": "12345@muni.cz",
+          "mail": "12345@mail.muni.cz"
+        },
+        {
+          "id": 2,
+          "name": "Test User 02",
+          "login": "99999@muni.cz",
+          "mail": "99999@mail.muni.cz"
+        }
+      ],
+      "source": "internal",
+      "roles": [
+        {
+          "name": "designer"
+        },
+        {
+          "name": "organizer"
+        }
+      ]
+    },
+    {
+      "group": {
+        "id": 2,
+        "name": "Test Group 02",
+        "description": "This is a Test Group 02"
+      },
+      "members": [
+        {
+          "id": 1,
+          "name": "Test User 01",
+          "login": "12345@muni.cz",
+          "mail": "12345@mail.muni.cz"
+        },
+        {
+          "id": 2,
+          "name": "Test User 02",
+          "login": "99999@muni.cz",
+          "mail": "99999@mail.muni.cz"
+        }
+      ],
+      "source": "internal",
+      "roles": [
+        {
+          "name": "designer"
+        },
+        {
+          "name": "organizer"
+        }
+      ]
+    },
+    {
+      "group": {
+        "id": 3,
+        "name": "Test Group 03",
+        "description": "This is a Test Group 03"
+      },
+      "members": [
+      ],
+      "source": "internal",
+      "roles": [
+      ]
+    }
+  ],
+  "pagination": {}
+}

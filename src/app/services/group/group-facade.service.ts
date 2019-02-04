@@ -3,6 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Group} from '../../model/group/group.model';
 import {AddUsersToGroupDTO} from '../../model/DTO/user/add-user-to-group-dto.model';
+import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
+import {GroupTableDataModel} from '../../model/table-data/group-table-data.model';
+import {Observable} from 'rxjs';
+import {PaginationHttpParams} from '../../model/other/pagination-http-params';
 
 @Injectable()
 export class GroupFacadeService {
@@ -10,11 +14,12 @@ export class GroupFacadeService {
   constructor(private http: HttpClient) {
   }
 
-  getGroups(pagination = null) {
+  getGroups(pagination = null): Observable<TableDataWrapper<GroupTableDataModel[]>> {
     if (pagination) {
-
+      return this.http.get<TableDataWrapper<GroupTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
+        { params: PaginationHttpParams.createPaginationParams(pagination) });
     }
-    return this.http.get(environment.userAndGroupRestBasePath + environment.groupsPathExtension);
+    return this.http.get<TableDataWrapper<GroupTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.groupsPathExtension);
   }
 
   getGroupById(groupId: number) {

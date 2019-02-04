@@ -11,6 +11,7 @@ import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-grou
 import { UserTableComponent } from './add-users-to-group/user-table/user-table.component';
 import { RolesOfGroupSubtableComponent } from './group-management/roles-of-group-subtable/roles-of-group-subtable.component';
 import { MembersOfGroupSubtableComponent } from './group-management/members-of-group-subtable/members-of-group-subtable.component';
+import {GroupManagementService} from '../../services/group/group-management.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,11 @@ import { MembersOfGroupSubtableComponent } from './group-management/members-of-g
     GroupRoutingModule
   ],
   providers: [
-    GroupFacadeService
+    GroupFacadeService,
+    GroupManagementService
+  ],
+  entryComponents: [
+    GroupEditComponent
   ]
 })
 export class GroupModule {

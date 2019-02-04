@@ -1,16 +1,18 @@
 <div class="content">
   <button mat-raised-button
-          color="primary"
+          color="basic"
+          [disabled]="selectedUsersCount <= 0"
           (click)="synchronizeUsers()">
     Synchronize selected users ({{ selectedUsersCount }})
   </button>
   <button mat-raised-button
+          [disabled]="selectedUsersCount <= 0"
           color="warn"
           (click)="deleteUsers()">
     Delete selected users ({{ selectedUsersCount }})
   </button>
   <button mat-raised-button
-          color="basic"
+          color="primary"
           (click)="createUser()">
     Create new user
   </button>

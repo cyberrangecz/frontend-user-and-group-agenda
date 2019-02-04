@@ -40,25 +40,16 @@ export class UserControlsComponent implements OnInit, OnDestroy {
   }
 
   deleteUsers() {
-    if (this.selectedUsersCount > 0) {
-      this.sendDeleteUsersRequest();
-    } else {
-      this.alertService.addAlert(new Alert(AlertType.INFO, 'Select users first'));
-    }
+    this.sendDeleteUsersRequest();
   }
 
   synchronizeUsers() {
     // TODO
   }
 
-  private subscribeSelectedUsers() {
-    this._selectedUsersSubscription = this.userManagementService.selectionChange$
-      .subscribe(size =>
-        this.selectedUsersCount = size);
-  }
-
   private getSelectedUserIds(): number[] {
-    return this.userManagementService.getSelectedUsers().map(user => user.id);
+    return this.userManagementService.getSelectedUsers()
+      .map(user => user.id);
   }
 
   private sendDeleteUsersRequest() {
@@ -82,5 +73,11 @@ export class UserControlsComponent implements OnInit, OnDestroy {
           this.userManagementService.emitDataChange();
         }
       });
+  }
+
+  private subscribeSelectedUsers() {
+    this._selectedUsersSubscription = this.userManagementService.selectionChange$
+      .subscribe(size =>
+        this.selectedUsersCount = size);
   }
 }

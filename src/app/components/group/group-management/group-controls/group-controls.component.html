@@ -1,3 +1,13 @@
-<p>
-  group-controls works!
-</p>
+<div class="content">
+  <button mat-raised-button
+          color="warn"
+          [disabled]="selectedGroupsCount <= 0"
+          (click)="deleteGroups()">
+    Delete selected groups ({{ selectedGroupsCount }})
+  </button>
+  <button mat-raised-button
+          color="primary"
+          (click)="createGroup()">
+    Create new group
+  </button>
+</div>

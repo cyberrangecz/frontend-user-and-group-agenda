@@ -2,8 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
-import {LoginComponent} from './components/not-authorized/login.component';
-import {NotFoundComponent} from './components/not-found/not-found.component';
+import {LoginComponent} from './components/login/login.component';
 
 const routes: Routes = [
   {
@@ -22,17 +21,13 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
-    path: 'not-authorized',
+    path: 'login',
     component: LoginComponent
   },
   {
-    path: '',
+    path: '**',
     redirectTo: '/user',
     pathMatch: 'full'
-  },
-  {
-    path: '**',
-    component: NotFoundComponent
   }
 ];
 

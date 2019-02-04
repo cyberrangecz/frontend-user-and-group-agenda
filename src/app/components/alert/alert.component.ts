@@ -11,11 +11,13 @@ import {AlertType} from '../../model/enums/alert-type.enum';
 export class AlertComponent implements OnInit {
 
   alertTypeEnums = AlertType;
+  messages: string[];
 
   constructor(public snackBarRef: MatSnackBarRef<AlertComponent>,
               @Inject(MAT_SNACK_BAR_DATA) public alert: Alert) { }
 
   ngOnInit() {
+    this.messages = this.alert.message.split('\n');
   }
 
   dismiss() {

@@ -23,10 +23,19 @@
       "source": "internal",
       "roles": [
         {
-          "name": "designer"
+          "id": 1,
+          "name": "designer",
+          "role": "designer"
         },
         {
-          "name": "organizer"
+          "id": 2,
+          "name": "organizer",
+          "role": "organizer"
+        },
+        {
+          "id": 3,
+          "name": "trainee",
+          "role": "trainee"
         }
       ]
     },
@@ -53,10 +62,14 @@
       "source": "internal",
       "roles": [
         {
-          "name": "designer"
+          "id": 1,
+          "name": "designer",
+          "role": "designer"
         },
         {
-          "name": "organizer"
+          "id": 2,
+          "name": "organizer",
+          "role": "organizer"
         }
       ]
     },

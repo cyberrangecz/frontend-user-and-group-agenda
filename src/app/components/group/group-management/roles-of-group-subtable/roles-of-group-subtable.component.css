@@ -1,0 +1,17 @@
+h2 {
+  margin-top: 5px;
+}
+
+table {
+  margin: 10px;
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 50%;
+}

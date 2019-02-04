@@ -102,7 +102,7 @@
           <button mat-icon-button
                   color="primary"
                   matTooltip="Add users to group"
-                  (click)="addUsersToGroup(data.group)">
+                  (click)="addUsersToGroup(data.group); $event.stopPropagation()">
             <mat-icon>add</mat-icon>
           </button>
         </td>
@@ -115,7 +115,7 @@
           <button mat-icon-button
                   color="primary"
                   matTooltip="Edit group"
-                  (click)="editGroup(data.group)">
+                  (click)="editGroup(data.group); $event.stopPropagation()">
             <mat-icon>edit</mat-icon>
           </button>
         </td>
@@ -128,7 +128,7 @@
           <button mat-icon-button
                   color="warn"
                   matTooltip="Delete group"
-                  (click)="deleteGroup(data.group)">
+                  (click)="deleteGroup(data.group); $event.stopPropagation()">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

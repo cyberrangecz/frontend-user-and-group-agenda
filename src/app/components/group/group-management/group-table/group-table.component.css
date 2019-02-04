@@ -28,6 +28,8 @@
 .row-detail-content {
   display: flex;
   flex-direction: row;
+  align-items: baseline;
+  align-content: baseline;
 }
 
 tr.detail-row {

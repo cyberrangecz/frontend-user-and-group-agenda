@@ -5,6 +5,7 @@ import {PaginationHttpParams} from '../../model/other/pagination-http-params';
 import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
 import {Observable} from 'rxjs';
 import {UserTableDataModel} from '../../model/table-data/user-table-data.model';
+import {User} from '../../model/user/user.model';
 
 @Injectable()
 export class UserFacadeService {
@@ -51,5 +52,13 @@ export class UserFacadeService {
 
     }
     return this.http.get(`${environment.userAndGroupRestBasePath + environment.usersPathExtension}/not-in-groups/${groupId}`);
+  }
+
+  updateUser(user: User) {
+
+  }
+
+  createUser(user: User) {
+
   }
 }

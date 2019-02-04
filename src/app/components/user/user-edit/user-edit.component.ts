@@ -32,6 +32,17 @@ export class UserEditComponent implements OnInit {
     }
   }
 
+  cancel() {
+    this.dialogRef.close(DialogResultEnum.CANCELED);
+  }
+
+  save() {
+    if (this.isValidInput()) {
+      const editedUser = this.setValuesToUserObject();
+      this.sendSaveRequest(editedUser);
+    }
+  }
+
   private resolveInitialValues() {
     if (this.user) {
       this.editMode = true;
@@ -43,17 +54,6 @@ export class UserEditComponent implements OnInit {
     this.name = this.user.name;
     this.login = this.user.login;
     this.mail = this.user.mail;
-  }
-
-  cancel() {
-    this.dialogRef.close(DialogResultEnum.CANCELED);
-  }
-
-  save() {
-    if (this.isValidInput()) {
-      const editedUser = this.setValuesToUserObject();
-      this.sendSaveRequest(editedUser);
-    }
   }
 
   private isValidInput(): boolean {
@@ -83,7 +83,9 @@ export class UserEditComponent implements OnInit {
 
   private setValuesToUserObject(): User {
     const editedUser: User = new User();
-    editedUser.id = this.user.id;
+    if (this.editMode) {
+      editedUser.id = this.user.id;
+    }
     editedUser.name = this.name;
     editedUser.mail = this.mail;
     editedUser.login = this.login;
@@ -99,10 +101,19 @@ export class UserEditComponent implements OnInit {
   }
 
   private sendUpdateRequest(user: User) {
+    this.userFacade.updateUser(user);
+/*      .subscribe(
+        resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
+        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Updating user failed'), err)
+      );*/
   }
 
   private sendCreateRequest(user: User) {
-
+    this.userFacade.createUser(user);
+    /*      .subscribe(
+        resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
+        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Creating user failed'), err)
+      );*/
   }
 }
 

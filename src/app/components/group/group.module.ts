@@ -8,7 +8,7 @@ import { GroupControlsComponent } from './group-management/group-controls/group-
 import {GroupFacadeService} from '../../services/group/group-facade.service';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-group.component';
-import { UserTableComponent } from './add-users-to-group/user-table/user-table.component';
+import { AddToGroupUserTableComponent } from './add-users-to-group/user-table/add-to-group-user-table.component';
 import { RolesOfGroupSubtableComponent } from './group-management/roles-of-group-subtable/roles-of-group-subtable.component';
 import { MembersOfGroupSubtableComponent } from './group-management/members-of-group-subtable/members-of-group-subtable.component';
 import {GroupManagementService} from '../../services/group/group-management.service';
@@ -20,7 +20,7 @@ import {GroupManagementService} from '../../services/group/group-management.serv
   GroupControlsComponent,
   GroupEditComponent,
   AddUsersToGroupComponent,
-  UserTableComponent,
+  AddToGroupUserTableComponent,
   RolesOfGroupSubtableComponent,
   MembersOfGroupSubtableComponent
   ],

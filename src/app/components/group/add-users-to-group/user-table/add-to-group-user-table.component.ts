@@ -138,7 +138,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   private initTableDataSource() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.paginator.pageSize = environment.defaultPaginationSize;
-    this.sort.active = 'name';
+    this.sort.active = 'login';
     this.sort.direction = 'desc';
     this.fetchData();
   }

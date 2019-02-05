@@ -16,9 +16,15 @@ export class UserMapperService {
 
   }
 
-  mapUserDTOsWithPaginationToTableDataWrapper(restResource: RestResourceDTO<UserDTO>): TableDataWrapper<UserTableDataModel[]> {
+  mapUserDTOsWithPaginationToUserTableDataModel(restResource: RestResourceDTO<UserDTO>): TableDataWrapper<UserTableDataModel[]> {
     return new TableDataWrapper<UserTableDataModel[]>(
       restResource.content.map(userDTO => this.mapUserDTOToUserTableDataModel(userDTO)),
+      this.mapPaginationDTOToPaginationModel(restResource.pagination));
+  }
+
+  mapUserDTOsWithPaginationToUsers(restResource: RestResourceDTO<UserDTO>): TableDataWrapper<User[]> {
+    return new TableDataWrapper<User[]>(
+      restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
 

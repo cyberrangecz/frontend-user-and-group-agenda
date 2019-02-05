@@ -22,15 +22,16 @@ export class UserFacadeService {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(environment.userAndGroupRestBasePath + environment.usersPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })
-        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToTableDataWrapper(resp)));
+        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTableDataModel(resp)));
     }
     return this.http.get<TableDataWrapper<UserTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
   }
 
   getUsers(pagination = null): Observable<TableDataWrapper<User[]>> {
     if (pagination) {
-      return this.http.get<TableDataWrapper<User[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension,
-        {params: PaginationHttpParams.createPaginationParams(pagination)});
+      return this.http.get<RestResourceDTO<UserDTO>>(environment.userAndGroupRestBasePath + environment.usersPathExtension,
+        {params: PaginationHttpParams.createPaginationParams(pagination)})
+        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
     }
     return this.http.get<TableDataWrapper<User[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
   }

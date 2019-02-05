@@ -38,7 +38,7 @@
 
       <!-- NAME Column -->
       <ng-container matColumnDef="name">
-        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Name</th>
+        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="full_name" [disabled]="isInErrorState">Name</th>
         <td class="name" mat-cell *matCellDef="let user">
           {{ user?.name }}
         </td>
@@ -54,7 +54,7 @@
 
       <!-- EMAIL Column -->
       <ng-container matColumnDef="email">
-        <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Email</th>
+        <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header="mail" [disabled]="isInErrorState">Email</th>
         <td class="email" mat-cell *matCellDef="let user">
           {{ user?.mail }}
         </td>

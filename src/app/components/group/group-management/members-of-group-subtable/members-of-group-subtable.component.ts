@@ -85,7 +85,7 @@ export class MembersOfGroupSubtableComponent implements OnInit {
         resp => {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Users were successfully deleted'));
           const indexes = idsToRemove.map(id => this.group.members.findIndex(user => idsToRemove.includes(user.id)));
-          indexes.forEach(index => this.group.members.splice(index))
+          indexes.forEach(index => this.group.members.splice(index));
           this.unselectAll();
           this.createDataSource();
         },

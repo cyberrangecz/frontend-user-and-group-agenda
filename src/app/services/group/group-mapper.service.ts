@@ -1,0 +1,54 @@
+import { Injectable} from '@angular/core';
+import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
+import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
+import {PaginationDTO} from '../../model/DTO/pagination-dto.model';
+import {TableDataPagination} from '../../model/table-data/table-data-pagination';
+import {GroupDTO} from '../../model/DTO/group/group-dto.model';
+import {Group} from '../../model/group/group.model';
+import {GroupTableDataModel} from '../../model/table-data/group-table-data.model';
+import {RoleMapperService} from '../role/role-mapper.service';
+import {UserMapperService} from '../user/user-mapper.service';
+
+@Injectable()
+export class GroupMapperService {
+
+  constructor(private roleMapper: RoleMapperService,
+              private userMapper: UserMapperService) {
+
+  }
+
+  mapGroupDTOsWithPaginationToTableDataWrapper(restResource: RestResourceDTO<GroupDTO>): TableDataWrapper<GroupTableDataModel[]> {
+    return new TableDataWrapper<GroupTableDataModel[]>(
+      restResource.content.map(groupDTO => this.mapGroupDTOToGroupTableDataModel(groupDTO)),
+      this.mapPaginationDTOToPaginationModel(restResource.pagination));
+  }
+
+  mapGroupDTOToGroupTableDataModel(groupDTO: GroupDTO): GroupTableDataModel {
+    const result = new GroupTableDataModel();
+    result.group = this.mapGroupDTOToGroup(groupDTO);
+    return result;
+  }
+
+  mapGroupDTOToGroup(groupDTO: GroupDTO): Group {
+    const result = new Group();
+    result.id = groupDTO.id;
+    result.name = groupDTO.name;
+    result.description = groupDTO.description;
+    result.canBeDeleted = groupDTO.can_be_deleted;
+    result.source = groupDTO.source;
+    result.members = this.userMapper.mapUserForGroupsDTOsToUsers(groupDTO.users);
+    result.roles = this.roleMapper.mapRoleDTOsToRoles(groupDTO.roles);
+    return result;
+  }
+
+  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): TableDataPagination {
+    return new TableDataPagination(
+      paginationDTO.number,
+      paginationDTO.number_of_elements,
+      paginationDTO.size,
+      paginationDTO.total_elements,
+      paginationDTO.total_pages
+    );
+  }
+
+}

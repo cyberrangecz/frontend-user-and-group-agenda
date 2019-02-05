@@ -37,7 +37,7 @@
 
         <!-- NAME Column -->
         <ng-container matColumnDef="name">
-          <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Name</th>
+          <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="full_name" [disabled]="isInErrorState">Name</th>
           <td class="name" mat-cell *matCellDef="let data">
             {{ data.user?.name }}
           </td>
@@ -51,7 +51,7 @@
 
         <!-- EMAIL Column -->
         <ng-container matColumnDef="email">
-          <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Email</th>
+          <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header="mail" [disabled]="isInErrorState">Email</th>
           <td class="email" mat-cell *matCellDef="let data"> {{ data.user?.mail }}</td>
         </ng-container>
 
@@ -71,7 +71,7 @@
         <!-- ROLES Column -->
         <ng-container matColumnDef="roles">
           <th class="roles" mat-header-cell *matHeaderCellDef>Roles</th>
-          <td class="roles" mat-cell *matCellDef="let data"> {{ data?.roles | rolesToString }}</td>
+          <td class="roles" mat-cell *matCellDef="let data"> {{ data?.user?.roles | rolesToString }}</td>
         </ng-container>
 
         <!-- GROUPS Column -->

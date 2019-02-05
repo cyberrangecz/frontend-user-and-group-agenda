@@ -5,7 +5,6 @@ import { GroupManagementComponent } from './group-management/group-management.co
 import { GroupTableComponent } from './group-management/group-table/group-table.component';
 import {GroupRoutingModule} from './group-routing.module';
 import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
-import {GroupFacadeService} from '../../services/group/group-facade.service';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-group.component';
 import { AddToGroupUserTableComponent } from './add-users-to-group/user-table/add-to-group-user-table.component';
@@ -13,7 +12,8 @@ import { RolesOfGroupSubtableComponent } from './group-management/roles-of-group
 import { MembersOfGroupSubtableComponent } from './group-management/members-of-group-subtable/members-of-group-subtable.component';
 import {GroupManagementService} from '../../services/group/group-management.service';
 import {FormsModule} from '@angular/forms';
-import {UserFacadeService} from '../../services/user/user-facade.service';
+import {GroupFacadeModule} from '../../services/group/group-facade.module';
+import {UserFacadeModule} from '../../services/user/user-facade.module';
 
 @NgModule({
   declarations: [
@@ -30,11 +30,11 @@ import {UserFacadeService} from '../../services/user/user-facade.service';
     CommonModule,
     GroupMaterialModule,
     GroupRoutingModule,
-    FormsModule
+    FormsModule,
+    GroupFacadeModule,
+    UserFacadeModule
   ],
   providers: [
-    GroupFacadeService,
-    UserFacadeService,
     GroupManagementService
   ],
   entryComponents: [

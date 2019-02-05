@@ -7,23 +7,31 @@ import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
 import {GroupTableDataModel} from '../../model/table-data/group-table-data.model';
 import {Observable} from 'rxjs';
 import {PaginationHttpParams} from '../../model/other/pagination-http-params';
+import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
+import {GroupDTO} from '../../model/DTO/group/group-dto.model';
+import {map} from 'rxjs/operators';
+import {GroupMapperService} from './group-mapper.service';
+import {UserMapperService} from '../user/user-mapper.service';
 
 @Injectable()
 export class GroupFacadeService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private userMapper: UserMapperService,
+              private groupMapper: GroupMapperService) {
   }
 
   getGroups(pagination = null): Observable<TableDataWrapper<GroupTableDataModel[]>> {
     if (pagination) {
-      return this.http.get<TableDataWrapper<GroupTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
-        { params: PaginationHttpParams.createPaginationParams(pagination) });
+      return this.http.get<RestResourceDTO<GroupDTO>>(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
+        { params: PaginationHttpParams.createPaginationParams(pagination) })
+        .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableDataWrapper(resp)));
     }
     return this.http.get<TableDataWrapper<GroupTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.groupsPathExtension);
   }
 
   getGroupById(groupId: number) {
-    return this.http.get(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}/${groupId}`);
+    return this.http.get(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}${groupId}`);
   }
 
   createGroup(group: Group) {
@@ -47,27 +55,27 @@ export class GroupFacadeService {
   }
 
   deleteGroup(groupId: number) {
-    return this.http.delete(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}/${groupId}`);
+    return this.http.delete(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}${groupId}`);
   }
 
   assignRoleToGroupInMicroservice(groupId: number, roleId: number, microserviceId: number) {
     return this.http.put(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}
-    /${groupId}/assign/${roleId}/in-microservices/${microserviceId}`, {});
+    ${groupId}/assign/${roleId}/in-microservices/${microserviceId}`, {});
   }
 
   removeRoleFromGroupInMicroservice(groupId: number, roleId: number, microserviceId: number) {
     return this.http.put(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}
-    /${groupId}/remove/${roleId}/in-microservices/${microserviceId}`, {});
+    ${groupId}/remove/${roleId}/in-microservices/${microserviceId}`, {});
   }
 
   getRolesOfGroup(groupId: number) {
     return this.http.get(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}
-    /${groupId}${environment.rolesPathExtension}`);
+    ${groupId}/${environment.rolesPathExtension}`);
   }
 
   removeUsersFromGroup(groupId: number, userIds: number[]) {
     return this.http.put(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}
-    /${groupId}${environment.usersPathExtension}`,
+    ${groupId}/${environment.usersPathExtension}`,
       {
         userIds: userIds
       });

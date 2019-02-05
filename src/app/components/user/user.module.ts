@@ -5,11 +5,11 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { UserTableComponent } from './user-management/user-table/user-table.component';
 import {UserRoutingModule} from './user-routing.module';
 import { UserControlsComponent } from './user-management/user-controls/user-controls.component';
-import {UserFacadeService} from '../../services/user/user-facade.service';
 import {UserManagementService} from '../../services/user/user-management.service';
 import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../pipes/pipes.module';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import {UserFacadeModule} from '../../services/user/user-facade.module';
 
 @NgModule({
   declarations: [
@@ -23,11 +23,11 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     FormsModule,
     UserMaterialModule,
     UserRoutingModule,
+    UserFacadeModule,
     PipesModule
   ],
   providers: [
     UserManagementService,
-    UserFacadeService
   ],
   entryComponents: [
     UserEditComponent

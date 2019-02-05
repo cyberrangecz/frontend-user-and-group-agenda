@@ -36,12 +36,12 @@ export class GroupFacadeService {
 
   createGroup(group: Group) {
     return this.http.post(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
-      group);
+      this.groupMapper.mapGroupToNewGroupDTO(group));
   }
 
   updateGroup(group: Group) {
     return this.http.put(environment.userAndGroupRestBasePath + environment.groupsPathExtension,
-      group);
+      this.groupMapper.mapGroupToUpdateGroupDTO(group));
   }
 
   deleteGroups(groupIds: number[]) {

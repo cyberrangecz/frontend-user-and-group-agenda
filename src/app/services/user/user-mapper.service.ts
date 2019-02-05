@@ -65,6 +65,19 @@ export class UserMapperService {
     return result;
   }
 
+  mapUsersToUserForGroupDTOs(users: User[]): UserForGroupsDTO[] {
+    return users.map(user => this.mapUserToUserForGroupDTO(user));
+  }
+
+  mapUserToUserForGroupDTO(user: User): UserForGroupsDTO {
+    const result = new UserForGroupsDTO();
+    result.full_name = user.name;
+    result.id = user.id;
+    result.login = user.login;
+    result.mail = user.mail;
+    return result;
+  }
+
   private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): TableDataPagination {
     return new TableDataPagination(
       paginationDTO.number,

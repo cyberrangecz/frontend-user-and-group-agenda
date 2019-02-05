@@ -8,6 +8,8 @@ import {Group} from '../../model/group/group.model';
 import {GroupTableDataModel} from '../../model/table-data/group-table-data.model';
 import {RoleMapperService} from '../role/role-mapper.service';
 import {UserMapperService} from '../user/user-mapper.service';
+import {NewGroupDTO} from '../../model/DTO/group/new-group-dto.model';
+import {UpdateGroupDTO} from '../../model/DTO/group/update-group-dto.model';
 
 @Injectable()
 export class GroupMapperService {
@@ -38,6 +40,23 @@ export class GroupMapperService {
     result.source = groupDTO.source;
     result.members = this.userMapper.mapUserForGroupsDTOsToUsers(groupDTO.users);
     result.roles = this.roleMapper.mapRoleDTOsToRoles(groupDTO.roles);
+    return result;
+  }
+
+  mapGroupToNewGroupDTO(group: Group): NewGroupDTO {
+    const result = new NewGroupDTO();
+    result.name = group.name;
+    result.description = group.description;
+    result.group_ids_of_imported_users = []; // TODO: Find out what its supposed to be for
+    result.users = this.userMapper.mapUsersToUserForGroupDTOs(group.members);
+    return result;
+  }
+
+  mapGroupToUpdateGroupDTO(group: Group): UpdateGroupDTO {
+    const result = new UpdateGroupDTO();
+    result.id = group.id;
+    result.name = group.name;
+    result.description = group.description;
     return result;
   }
 

@@ -12,6 +12,8 @@ import { AddToGroupUserTableComponent } from './add-users-to-group/user-table/ad
 import { RolesOfGroupSubtableComponent } from './group-management/roles-of-group-subtable/roles-of-group-subtable.component';
 import { MembersOfGroupSubtableComponent } from './group-management/members-of-group-subtable/members-of-group-subtable.component';
 import {GroupManagementService} from '../../services/group/group-management.service';
+import {FormsModule} from '@angular/forms';
+import {UserFacadeService} from '../../services/user/user-facade.service';
 
 @NgModule({
   declarations: [
@@ -27,10 +29,12 @@ import {GroupManagementService} from '../../services/group/group-management.serv
   imports: [
     CommonModule,
     GroupMaterialModule,
-    GroupRoutingModule
+    GroupRoutingModule,
+    FormsModule
   ],
   providers: [
     GroupFacadeService,
+    UserFacadeService,
     GroupManagementService
   ],
   entryComponents: [

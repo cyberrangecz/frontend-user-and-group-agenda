@@ -16,7 +16,6 @@
       </div>
     </div>
     <table mat-table [dataSource]="dataSource" matSort>
-
       <!-- SELECTION CHECKBOXES -->
       <ng-container matColumnDef="select">
         <th class="select" mat-header-cell *matHeaderCellDef>
@@ -27,10 +26,10 @@
             [disabled]="isInErrorState || isLoadingResults">
           </mat-checkbox>
         </th>
-        <td class="select" mat-cell *matCellDef="let data; let row">
+        <td class="select" mat-cell *matCellDef="let user; let row">
           <mat-checkbox
             (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(row) : null; selectChange($event, data.group)"
+            (change)="$event ? selection.toggle(row) : null; selectChange($event, user)"
             [disabled]="isInErrorState || isLoadingResults"
             [checked]="selection.isSelected(row)">
           </mat-checkbox>

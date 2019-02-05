@@ -74,8 +74,8 @@ export class GroupFacadeService {
   }
 
   removeUsersFromGroup(groupId: number, userIds: number[]) {
-    return this.http.put(`${environment.userAndGroupRestBasePath + environment.groupsPathExtension}
-    ${groupId}/${environment.usersPathExtension}`,
+    return this.http.put(environment.userAndGroupRestBasePath + environment.groupsPathExtension +
+    groupId + '/users',
       {
         userIds: userIds
       });

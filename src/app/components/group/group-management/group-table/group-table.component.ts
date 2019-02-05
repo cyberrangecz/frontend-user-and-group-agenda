@@ -206,7 +206,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     this.dialog.open(GroupEditComponent, { data: group })
       .afterClosed()
       .subscribe(result => {
-        if (result && result === DialogResultEnum.SUCCESS) {
+        if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
           this.fetchData();
         }
       });

@@ -66,7 +66,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
     this.dialog.open(GroupEditComponent, { data: null })
       .afterClosed()
       .subscribe(result => {
-        if (result && result === DialogResultEnum.SUCCESS) {
+        if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
           this.groupManagementService.emitDataChange();
         }
       });

@@ -1,3 +1,58 @@
-<p>
-  roles-table works!
-</p>
+<div class="content">
+  <div class="roles-table-wrapper">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)"
+             placeholder="Filter by login">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- SELECTION CHECKBOXES -->
+      <ng-container matColumnDef="select">
+        <th class="select" mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? selectAllChange(): null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td class="select" mat-cell *matCellDef="let role; let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null; selectChange($event, role)"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- NAME Column -->
+      <ng-container matColumnDef="name">
+        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
+        <td class="name" mat-cell *matCellDef="let role">
+          {{ role?.name }}
+        </td>
+      </ng-container>
+
+      <!-- MICROSERVICE Column -->
+      <ng-container matColumnDef="microservice">
+        <th class="microservice" mat-header-cell *matHeaderCellDef mat-sort-header>Microservice</th>
+        <td class="microservice" mat-cell *matCellDef="let role">
+          {{ role?.microservice }}
+        </td>
+      </ng-container>
+
+      <!-- FOOTER column -->
+      <ng-container matColumnDef="select-count">
+        <td mat-footer-cell *matFooterCellDef colspan="10" class="select-count">
+          Selected {{ selectedRolesCount }} of total {{ totalRolesCount }} roles
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row;columns: displayedColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="['select-count']" class="select-count"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
+</div>

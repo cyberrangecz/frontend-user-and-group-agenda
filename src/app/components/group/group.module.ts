@@ -16,6 +16,7 @@ import {GroupFacadeModule} from '../../services/group/group-facade.module';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
 import { AddRolesToGroupComponent } from './add-roles-to-group/add-roles-to-group.component';
 import { RolesTableComponent } from './add-roles-to-group/roles-table/roles-table.component';
+import {RoleFacadeModule} from '../../services/role/role-facade.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { RolesTableComponent } from './add-roles-to-group/roles-table/roles-tabl
     GroupRoutingModule,
     FormsModule,
     GroupFacadeModule,
-    UserFacadeModule
+    UserFacadeModule,
+    RoleFacadeModule
   ],
   providers: [
     GroupManagementService

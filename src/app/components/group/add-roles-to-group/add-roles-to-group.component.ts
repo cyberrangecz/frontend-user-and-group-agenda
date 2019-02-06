@@ -9,6 +9,7 @@ import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 import {forkJoin, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import {RoleFacadeService} from '../../../services/role/role-facade.service';
 
 @Component({
   selector: 'app-add-roles-to-group',
@@ -18,14 +19,17 @@ import {catchError, map} from 'rxjs/operators';
 export class AddRolesToGroupComponent implements OnInit {
 
   selectedRoles: Role[];
+  availableRoles$: Observable<Role[]>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<AddRolesToGroupComponent>,
+              private roleFacadeService: RoleFacadeService,
               private groupFacadeService: GroupFacadeService,
               private alertService: AlertService) {
   }
 
   ngOnInit() {
+    this.getAvailableRoles();
   }
 
   cancel() {
@@ -38,7 +42,7 @@ export class AddRolesToGroupComponent implements OnInit {
     }
   }
 
-  onRoleSelectionChanges($event: Role[]) {
+  onRoleSelectionChanged($event: Role[]) {
     this.selectedRoles = $event;
   }
 
@@ -79,7 +83,7 @@ export class AddRolesToGroupComponent implements OnInit {
     // TODO Add microserviceID
   }
 
-  closeDialogAfterAllRequestsFinished(failedRequests, totalCount: number) {
+  private closeDialogAfterAllRequestsFinished(failedRequests, totalCount: number) {
     if (failedRequests.length > 0) {
       this.dialogRef.close({
         status: DialogResultEnum.FAILED,
@@ -93,5 +97,14 @@ export class AddRolesToGroupComponent implements OnInit {
         totalCount: totalCount
       });
     }
+  }
+
+  private getAvailableRoles() {
+    this.availableRoles$ = this.roleFacadeService.getRoles()
+      .pipe(map(roles => {
+       return roles.filter(role => // Excludes roles which the group already has
+          !this.group.roles.some(assignedRole => assignedRole.id === role.id
+            && assignedRole.microservice === role.microservice)); // TODO change to microserviceID
+      }));
   }
 }

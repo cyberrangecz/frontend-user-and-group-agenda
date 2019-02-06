@@ -84,7 +84,6 @@ export class AddRolesToGroupComponent implements OnInit {
         resp => resp),
         catchError(error => of('failed'))
       );
-    // TODO Add microserviceID
   }
 
   private closeDialogAfterAllRequestsFinished(failedRequests, totalCount: number) {

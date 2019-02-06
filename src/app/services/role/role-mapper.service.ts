@@ -18,6 +18,7 @@ export class RoleMapperService {
     const result = new Role();
     result.name = roleDTO.role_type;
     result.microservice = roleDTO.name_of_microservice;
+    result.microserviceId = roleDTO.microservice_id;
     result.id = roleDTO.id;
     return result;
   }

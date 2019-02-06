@@ -56,7 +56,7 @@ export class RolesOfGroupSubtableComponent implements OnInit {
 
   private deleteRemovedRoleFromTable(removedRole: Role) {
     this.group.roles = this.group.roles.filter(role =>
-      !(role.microservice === removedRole.microservice
+      !(role.microservice === removedRole.microservice // TODO change to microservice id
         && role.id !== removedRole.id));
     this.createDataSource();  }
 }

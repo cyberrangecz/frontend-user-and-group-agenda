@@ -236,7 +236,10 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe( result => {
         this.displayAlertBasedOnRolesPopupResult(result);
-      });
+        if (result !== undefined && result !== null && result.status !== DialogResultEnum.CANCELED) {
+          this.fetchData();
+        }
+        });
   }
 
   private displayAlertBasedOnRolesPopupResult(result: any) {

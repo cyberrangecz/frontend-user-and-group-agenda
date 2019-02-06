@@ -33,7 +33,11 @@ export class AddRolesToGroupComponent implements OnInit {
   }
 
   cancel() {
-    this.dialogRef.close(DialogResultEnum.CANCELED);
+    this.dialogRef.close({
+      status: DialogResultEnum.CANCELED,
+      failedCount: 0,
+      totalCount: 0
+    });
   }
 
   save() {
@@ -68,17 +72,17 @@ export class AddRolesToGroupComponent implements OnInit {
       this.sendAddRoleToGroupRequest(role)))
       .subscribe(
         results => {
-          const failedRequests = results.filter(result => result === null);
+          const failedRequests = results.filter(result => result === 'failed');
           this.closeDialogAfterAllRequestsFinished(failedRequests, results.length);
         }
       );
   }
 
   private sendAddRoleToGroupRequest(role: Role): Observable<any> {
-    return this.groupFacadeService.assignRoleToGroupInMicroservice(this.group.id, role.id, 0)
+    return this.groupFacadeService.assignRoleToGroupInMicroservice(this.group.id, role.id, role.microserviceId)
       .pipe(map(
-        resp => resp,
-        catchError(error => of(null)))
+        resp => resp),
+        catchError(error => of('failed'))
       );
     // TODO Add microserviceID
   }

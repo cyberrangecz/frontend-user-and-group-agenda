@@ -3,6 +3,9 @@ import {Group} from '../../../../model/group/group.model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Role} from '../../../../model/role.model';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
+import {AlertService} from '../../../../services/alert/alert.service';
+import {Alert} from '../../../../model/alert/alert.model';
+import {AlertType} from '../../../../model/enums/alert-type.enum';
 
 @Component({
   selector: 'app-roles-of-group-subtable',
@@ -18,7 +21,8 @@ export class RolesOfGroupSubtableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private groupFacade: GroupFacadeService) { }
+  constructor(private groupFacade: GroupFacadeService,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.createDataSource();
@@ -38,6 +42,21 @@ export class RolesOfGroupSubtableComponent implements OnInit {
   }
 
   removeRole(role: Role) {
-    this.groupFacade.removeRoleFromGroupInMicroservice(this.group.id, role.id, 0); // TODO microservice id
+    this.groupFacade.removeRoleFromGroupInMicroservice(this.group.id, role.id, role.microserviceId)
+      .subscribe(
+        resp => {
+          this.deleteRemovedRoleFromTable(role);
+          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Role was successfully removed'));
+        },
+        err => {
+          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Role was not removed'), err);
+        }
+      );
   }
+
+  private deleteRemovedRoleFromTable(removedRole: Role) {
+    this.group.roles = this.group.roles.filter(role =>
+      !(role.microservice === removedRole.microservice
+        && role.id !== removedRole.id));
+    this.createDataSource();  }
 }

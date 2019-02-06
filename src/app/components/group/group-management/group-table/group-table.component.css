@@ -89,10 +89,14 @@ td.membersCount, th.membersCount {
 }
 
 td.source, th.source {
-  width: 12%;
+  width: 10%;
 }
 
-td.add, th.add {
+td.add-users, th.add-users {
+  width: 1%;
+}
+
+td.add-roles, th.add-roles {
   width: 1%;
 }
 

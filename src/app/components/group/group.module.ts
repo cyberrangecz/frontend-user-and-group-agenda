@@ -14,6 +14,8 @@ import {GroupManagementService} from '../../services/group/group-management.serv
 import {FormsModule} from '@angular/forms';
 import {GroupFacadeModule} from '../../services/group/group-facade.module';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
+import { AddRolesToGroupComponent } from './add-roles-to-group/add-roles-to-group.component';
+import { RolesTableComponent } from './add-roles-to-group/roles-table/roles-table.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {UserFacadeModule} from '../../services/user/user-facade.module';
   AddUsersToGroupComponent,
   AddToGroupUserTableComponent,
   RolesOfGroupSubtableComponent,
-  MembersOfGroupSubtableComponent
+  MembersOfGroupSubtableComponent,
+  AddRolesToGroupComponent,
+  RolesTableComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +43,8 @@ import {UserFacadeModule} from '../../services/user/user-facade.module';
   ],
   entryComponents: [
     GroupEditComponent,
-    AddUsersToGroupComponent
+    AddUsersToGroupComponent,
+    AddRolesToGroupComponent
   ]
 })
 export class GroupModule {

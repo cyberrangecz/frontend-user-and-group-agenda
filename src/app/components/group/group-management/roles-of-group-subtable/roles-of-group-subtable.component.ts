@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Role} from '../../../../model/role.model';
+import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 
 @Component({
   selector: 'app-roles-of-group-subtable',
@@ -17,7 +18,7 @@ export class RolesOfGroupSubtableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(private groupFacade: GroupFacadeService) { }
 
   ngOnInit() {
     this.createDataSource();
@@ -37,6 +38,6 @@ export class RolesOfGroupSubtableComponent implements OnInit {
   }
 
   removeRole(role: Role) {
-    // TODO
+    this.groupFacade.removeRoleFromGroupInMicroservice(this.group.id, role.id, 0); // TODO microservice id
   }
 }

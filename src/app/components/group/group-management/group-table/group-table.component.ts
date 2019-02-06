@@ -17,6 +17,7 @@ import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {GroupTableDataModel} from '../../../../model/table-data/group-table-data.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
+import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-group.component';
 
 @Component({
   selector: 'app-group-table',
@@ -39,7 +40,8 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     'rolesCount',
     'membersCount',
     'source',
-    'add',
+    'add-roles',
+    'add-users',
     'edit',
     'delete'
   ];
@@ -107,6 +109,10 @@ export class GroupTableComponent implements OnInit, OnDestroy {
 
   addUsersToGroup(group: Group) {
     this.openAddUsersToGroupPopup(group);
+  }
+
+  addRolesToGroup(group: Group) {
+    this.openAddRolesToGroupPopup(group);
   }
 
   editGroup(group: Group) {
@@ -214,11 +220,6 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       });
   }
 
-  private subscribeForEvents() {
-    this.groupManagementService.dataChange$
-      .subscribe(change => this.fetchData());
-  }
-
   private openAddUsersToGroupPopup(group: Group) {
     this.dialog.open(AddUsersToGroupComponent, { data: group })
       .afterClosed()
@@ -228,5 +229,31 @@ export class GroupTableComponent implements OnInit, OnDestroy {
           this.fetchData();
         }
       });
+  }
+
+  private openAddRolesToGroupPopup(group: Group) {
+    this.dialog.open(AddRolesToGroupComponent, { data: group })
+      .afterClosed()
+      .subscribe( result => {
+        this.displayAlertBasedOnRolesPopupResult(result);
+      });
+  }
+
+  private displayAlertBasedOnRolesPopupResult(result: any) {
+    if (result === undefined || result === null || result.status === DialogResultEnum.CANCELED) {
+      return;
+    } else if (result.status === DialogResultEnum.SUCCESS) {
+      this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Roles were successfully added'));
+      this.fetchData();
+    } else if (result.status === DialogResultEnum.FAILED) {
+      this.alertService.addAlert(new Alert(
+        AlertType.ERROR,
+        `Adding ${result.failedCount} role(s) of ${result.totalCount} requested failed.`));
+    }
+  }
+
+  private subscribeForEvents() {
+    this.groupManagementService.dataChange$
+      .subscribe(change => this.fetchData());
   }
 }

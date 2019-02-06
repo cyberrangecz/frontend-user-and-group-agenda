@@ -95,15 +95,28 @@
         </td>
       </ng-container>
 
-      <!-- ADD Column -->
-      <ng-container matColumnDef="add">
-        <th class="add" mat-header-cell *matHeaderCellDef></th>
-        <td class="add" mat-cell *matCellDef="let data">
+      <!-- ADD ROLES Column -->
+      <ng-container matColumnDef="add-roles">
+        <th class="add-roles" mat-header-cell *matHeaderCellDef></th>
+        <td class="add-roles" mat-cell *matCellDef="let data">
+          <button mat-icon-button
+                  color="primary"
+                  matTooltip="Add roles to group"
+                  (click)="addRolesToGroup(data.group); $event.stopPropagation()">
+            <mat-icon>category</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- ADD USERS Column -->
+      <ng-container matColumnDef="add-users">
+        <th class="add-users" mat-header-cell *matHeaderCellDef></th>
+        <td class="add-users" mat-cell *matCellDef="let data">
           <button mat-icon-button
                   color="primary"
                   matTooltip="Add users to group"
                   (click)="addUsersToGroup(data.group); $event.stopPropagation()">
-            <mat-icon>add</mat-icon>
+            <mat-icon>person_add</mat-icon>
           </button>
         </td>
       </ng-container>

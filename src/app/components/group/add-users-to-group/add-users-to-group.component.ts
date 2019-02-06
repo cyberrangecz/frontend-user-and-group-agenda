@@ -41,9 +41,9 @@ export class AddUsersToGroupComponent implements OnInit {
   }
 
   private isValidInput(): boolean {
-    const potentialErrorMessage = this.validateInput();
-    if (potentialErrorMessage !== '') {
-      this.alertService.addAlert(new Alert(AlertType.ERROR, potentialErrorMessage));
+    const potentionalErrorMessage = this.validateInput();
+    if (potentionalErrorMessage !== '') {
+      this.alertService.addAlert(new Alert(AlertType.ERROR, potentionalErrorMessage));
       return false;
     }
     return true;

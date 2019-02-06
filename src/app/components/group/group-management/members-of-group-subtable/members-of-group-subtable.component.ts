@@ -29,8 +29,7 @@ export class MembersOfGroupSubtableComponent implements OnInit {
   totalUsersCount = 0;
   selectedUsers: Set<User> = new Set<User>(user => user.login);
 
-  constructor(public dialog: MatDialog,
-              private groupFacade: GroupFacadeService,
+  constructor(private groupFacade: GroupFacadeService,
               private alertService: AlertService) { }
 
   ngOnInit() {
@@ -72,8 +71,7 @@ export class MembersOfGroupSubtableComponent implements OnInit {
         resp => {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
           this.unselectUser(userToRemove);
-          this.group.members.splice(this.group.members.findIndex(user => user.id === userToRemove.id));
-          this.createDataSource();
+          this.removeDeletedUsersFromTable([userToRemove.id]);
         },
         err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
   }
@@ -84,10 +82,8 @@ export class MembersOfGroupSubtableComponent implements OnInit {
       .subscribe(
         resp => {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Users were successfully deleted'));
-          const indexes = idsToRemove.map(id => this.group.members.findIndex(user => idsToRemove.includes(user.id)));
-          indexes.forEach(index => this.group.members.splice(index));
+          this.removeDeletedUsersFromTable(idsToRemove);
           this.unselectAll();
-          this.createDataSource();
         },
         err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Users were not deleted'), {error: err}));
   }
@@ -108,11 +104,13 @@ export class MembersOfGroupSubtableComponent implements OnInit {
 
   private selectUser(user: User) {
     this.selectedUsers.add(user);
+    this.selection.select(user);
     this.selectedUsersCount = this.selectedUsers.size();
   }
 
   private unselectUser(user: User) {
     this.selectedUsers.remove(user);
+    this.selection.deselect(user);
     this.selectedUsersCount = this.selectedUsers.size();
 
   }
@@ -121,6 +119,12 @@ export class MembersOfGroupSubtableComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.group.members);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.totalUsersCount = this.dataSource.data.length;
+  }
+
+  private removeDeletedUsersFromTable(removedIds: number[]) {
+    this.group.members = this.group.members.filter(user => !removedIds.includes(user.id));
+    this.createDataSource();
   }
 
 }

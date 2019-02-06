@@ -1,9 +1,12 @@
-h2 {
-  margin-top: 5px;
+.content {
+  margin: 10px;
+}
+
+.mat-sort-header-container {
+  align-items: center;
 }
 
 table {
-  margin: 10px;
   width: 100%;
 }
 

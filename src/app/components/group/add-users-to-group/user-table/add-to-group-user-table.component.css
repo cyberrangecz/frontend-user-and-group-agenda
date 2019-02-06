@@ -29,7 +29,7 @@ table {
 }
 
 td.select, th.select {
-  width: 5%;
+  width: 10%;
 }
 
 td.name, th.name {
@@ -41,7 +41,7 @@ td.login, th.login {
 }
 
 td.mail, th.mail {
-  width: 35%;
+  width: 30%;
 }
 
 td.select-count {

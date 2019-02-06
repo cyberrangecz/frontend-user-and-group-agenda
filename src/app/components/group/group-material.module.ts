@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
   MatCheckboxModule,
-  MatDialogModule, MatFormFieldModule, MatIconModule,
+  MatDialogModule, MatDividerModule, MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatPaginatorModule, MatProgressSpinnerModule,
   MatSortModule,
@@ -21,7 +21,8 @@ import {
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDividerModule
   ],
   exports: [
     MatButtonModule,
@@ -34,7 +35,8 @@ import {
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDividerModule
   ]
 })
 export class GroupMaterialModule {

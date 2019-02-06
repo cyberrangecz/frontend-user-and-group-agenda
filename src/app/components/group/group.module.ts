@@ -38,7 +38,8 @@ import {UserFacadeModule} from '../../services/user/user-facade.module';
     GroupManagementService
   ],
   entryComponents: [
-    GroupEditComponent
+    GroupEditComponent,
+    AddUsersToGroupComponent
   ]
 })
 export class GroupModule {

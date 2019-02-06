@@ -10,6 +10,7 @@ import {RoleMapperService} from '../role/role-mapper.service';
 import {UserMapperService} from '../user/user-mapper.service';
 import {NewGroupDTO} from '../../model/DTO/group/new-group-dto.model';
 import {UpdateGroupDTO} from '../../model/DTO/group/update-group-dto.model';
+import {AddUsersToGroupDTO} from '../../model/DTO/user/add-user-to-group-dto.model';
 
 @Injectable()
 export class GroupMapperService {
@@ -57,6 +58,14 @@ export class GroupMapperService {
     result.id = group.id;
     result.name = group.name;
     result.description = group.description;
+    return result;
+  }
+
+  createAddUsersToGroupDTO(groupId: number, userIds: number[], groupIds: number[]): AddUsersToGroupDTO {
+    const result = new AddUsersToGroupDTO();
+    result.group_id = groupId;
+    result.ids_of_users_to_be_add = userIds;
+    result.ids_of_groups_of_imported_users = groupIds;
     return result;
   }
 

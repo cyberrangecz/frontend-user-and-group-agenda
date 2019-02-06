@@ -4,7 +4,7 @@ import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {environment} from '../../../../../environments/environment';
-import {merge, of} from 'rxjs';
+import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
@@ -12,6 +12,7 @@ import {AlertService} from '../../../../services/alert/alert.service';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {Alert} from '../../../../model/alert/alert.model';
 import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
+import {Group} from '../../../../model/group/group.model';
 
 @Component({
   selector: 'app-add-to-group-user-table',
@@ -20,7 +21,7 @@ import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper'
 })
 export class AddToGroupUserTableComponent implements OnInit, OnChanges {
 
-  @Input() preselectedUsers: User[];
+  @Input() group: Group;
   @Output() userSelectionChange: EventEmitter<User[]> = new EventEmitter();
 
   selectedUsers: Set<User> = new Set<User>(user => user.login);
@@ -30,7 +31,6 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   isInErrorState = false;
   selectedUsersCount = 0;
   totalUsersCount: number;
-  initialSelectionLoaded = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -41,12 +41,10 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
               private alertService: AlertService) { }
 
   ngOnInit() {
-    this.initTableDataSource();
   }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if ('preselectedUsers' in changes && this.dataSource && !this.initialSelectionLoaded) {
-      this.setInitialSelection();
+    if ('group' in changes) {
+      this.initTableDataSource();
     }
   }
 
@@ -83,14 +81,6 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     return this.selection.selected.length === this.dataSource.data.length;
   }
 
-
-  private setInitialSelection() {
-    this.preselectedUsers.forEach( user => this.selectUser(user));
-    this.selection.select(...this.preselectedUsers);
-    this.selectedUsersCount = this.preselectedUsers.length;
-    this.initialSelectionLoaded = true;
-  }
-
   private fetchData() {
     this.isInErrorState = false;
     merge(this.sort.sortChange, this.paginator.page)
@@ -98,11 +88,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.userFacade.getUsers(
-            PaginationFactory.createWithSort(this.paginator.pageIndex,
-              this.paginator.pageSize,
-              this.sort.active,
-              this.sort.direction));
+          return this.sendRequestToLoadUsers();
         }),
       map(data => {
         this.isLoadingResults = false;
@@ -169,5 +155,17 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     this.selectedUsersCount--;
     this.selectedUsers.remove(user);
     this.userSelectionChange.emit(this.selectedUsers.toArray());
+  }
+
+  private sendRequestToLoadUsers(): Observable<TableDataWrapper<User[]>> {
+    const pagination = PaginationFactory.createWithSort(this.paginator.pageIndex,
+      this.paginator.pageSize,
+      this.sort.active,
+      this.sort.direction);
+    if (this.group) {
+      return this.userFacade.getUsersNotInGroup(this.group.id, pagination);
+    } else {
+      return this.userFacade.getUsers(pagination);
+    }
   }
 }

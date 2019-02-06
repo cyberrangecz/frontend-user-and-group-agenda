@@ -16,6 +16,7 @@ import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {GroupTableDataModel} from '../../../../model/table-data/group-table-data.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
 
 @Component({
   selector: 'app-group-table',
@@ -207,6 +208,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(result => {
         if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
+          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Group was successfully updated'));
           this.fetchData();
         }
       });
@@ -218,6 +220,13 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   }
 
   private openAddUsersToGroupPopup(group: Group) {
-
+    this.dialog.open(AddUsersToGroupComponent, { data: group })
+      .afterClosed()
+      .subscribe( result => {
+        if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
+          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Users were successfully added'));
+          this.fetchData();
+        }
+      });
   }
 }

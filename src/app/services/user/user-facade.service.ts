@@ -24,7 +24,8 @@ export class UserFacadeService {
         { params: PaginationHttpParams.createPaginationParams(pagination) })
         .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTableDataModel(resp)));
     }
-    return this.http.get<TableDataWrapper<UserTableDataModel[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
+    return this.http.get<RestResourceDTO<UserDTO>>(environment.userAndGroupRestBasePath + environment.usersPathExtension)
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTableDataModel(resp)));
   }
 
   getUsers(pagination = null): Observable<TableDataWrapper<User[]>> {
@@ -33,7 +34,8 @@ export class UserFacadeService {
         {params: PaginationHttpParams.createPaginationParams(pagination)})
         .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
     }
-    return this.http.get<TableDataWrapper<User[]>>(environment.userAndGroupRestBasePath + environment.usersPathExtension);
+    return this.http.get<RestResourceDTO<UserDTO>>(environment.userAndGroupRestBasePath + environment.usersPathExtension)
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
   }
 
   getUserById(id: number) {
@@ -62,11 +64,16 @@ export class UserFacadeService {
     return this.http.get(`${environment.userAndGroupRestBasePath + environment.usersPathExtension}info`);
   }
 
-  getUsersNotInGroup(groupId: number, pagination = null) {
+  getUsersNotInGroup(groupId: number, pagination = null): Observable<TableDataWrapper<User[]>> {
     if (pagination) {
-
+      return this.http.get<RestResourceDTO<UserDTO>>(
+        `${environment.userAndGroupRestBasePath + environment.usersPathExtension}not-in-groups/${groupId}`,
+        {params: PaginationHttpParams.createPaginationParams(pagination)})
+        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
     }
-    return this.http.get(`${environment.userAndGroupRestBasePath + environment.usersPathExtension}not-in-groups/${groupId}`);
+    return this.http.get<RestResourceDTO<UserDTO>>(
+      `${environment.userAndGroupRestBasePath + environment.usersPathExtension}not-in-groups/${groupId}`)
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
   }
 
   updateUser(user: User) {

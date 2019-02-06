@@ -76,17 +76,11 @@ export class GroupFacadeService {
   removeUsersFromGroup(groupId: number, userIds: number[]) {
     return this.http.put(environment.userAndGroupRestBasePath + environment.groupsPathExtension +
     groupId + '/users',
-      {
-        userIds: userIds
-      });
+      userIds);
   }
 
-  addUsersToGroup(groupId: number, userIds: number[]) {
-    const addUsersDTO = new AddUsersToGroupDTO();
-    addUsersDTO.group_id = groupId;
-    addUsersDTO.ids_of_users_to_be_add = userIds;
-    addUsersDTO.ids_of_groups_of_imported_users = []; // TODO Find out what this means
+  addUsersToGroup(groupId: number, userIds: number[], groupIds: number[] = []) {
     return this.http.put(environment.userAndGroupRestBasePath + environment.groupsPathExtension + environment.usersPathExtension,
-      { addUsers: addUsersDTO});
+        this.groupMapper.createAddUsersToGroupDTO(groupId, userIds, groupIds));
   }
 }

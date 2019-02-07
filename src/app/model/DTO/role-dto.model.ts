@@ -1,6 +1,6 @@
 export class RoleDTO {
   id: number;
   name_of_microservice: string;
-  microservice_id: number;
+  id_of_microservice: number;
   role_type: string;
 }

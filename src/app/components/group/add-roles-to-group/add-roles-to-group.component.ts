@@ -107,7 +107,7 @@ export class AddRolesToGroupComponent implements OnInit {
       .pipe(map(roles => {
        return roles.filter(role => // Excludes roles which the group already has
           !this.group.roles.some(assignedRole => assignedRole.id === role.id
-            && assignedRole.microservice === role.microservice)); // TODO change to microserviceID
+            && assignedRole.microserviceId === role.microserviceId));
       }));
   }
 }

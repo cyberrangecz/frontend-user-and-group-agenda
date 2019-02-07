@@ -15,13 +15,15 @@ import {AuthService} from './services/auth/auth.service';
 import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor';
 import {AppMaterialModule} from './app-material.module';
+import { NotFoundComponent } from './components/not-found-component/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LandingPageComponent,
-    AlertComponent
+    AlertComponent,
+    NotFoundComponent
   ],
   imports: [
     AppRoutingModule,

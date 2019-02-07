@@ -8,7 +8,7 @@ export const environment = {
   rolesPathExtension: 'roles/',
   usersPathExtension: 'users/',
   groupsPathExtension: 'groups/',
-  defaultPaginationSize: 0,
+  defaultPaginationSize: 5,
 
   // OIDC SETTINGS
   // Url of the Identity Provider
@@ -18,7 +18,7 @@ export const environment = {
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
   // The SPA's id. The SPA is registered with this id at the auth-server
-  clientId: '3693320b-6acb-442c-be51-86e18f574f9d', //'18cd6765-be1a-4de4-a6c0-6adf9b9882d1',
+  clientId: '3693320b-6acb-442c-be51-86e18f574f9d',
   // set the scope for the permissions the client should request
   scope: 'openid profile email',
   sessionChecksEnabled: false,

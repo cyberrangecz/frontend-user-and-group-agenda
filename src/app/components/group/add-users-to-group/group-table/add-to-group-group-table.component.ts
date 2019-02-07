@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-group-table',
+  selector: 'app-add-to-group-group-table',
   templateUrl: './add-to-group-group-table.component.html',
   styleUrls: ['./add-to-group-group-table.component.css']
 })

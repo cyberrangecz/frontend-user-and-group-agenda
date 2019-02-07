@@ -1,0 +1,19 @@
+.error {
+  color: red;
+}
+
+.success {
+  color: #6DF000;
+}
+
+.info {
+  color: #BED1FD;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}

@@ -1,0 +1,129 @@
+<div class="content">
+  <div class="users-table-wrapper">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)"
+             [disabled]="isInErrorState"
+             placeholder="Filter by name, login or email">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <div class="loading"
+           *ngIf="isLoadingResults || isInErrorState">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="loading-error" *ngIf="isInErrorState">
+          We had some trouble loading the data.
+          <button mat-icon-button (click)="fetchData()" color="primary"><mat-icon>refresh</mat-icon></button>
+        </div>
+      </div>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- SELECTION CHECKBOXES -->
+        <ng-container matColumnDef="select">
+          <th class="select" mat-header-cell *matHeaderCellDef>
+           <mat-checkbox
+              (change)="$event ? selectAllChange(): null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [disabled]="isInErrorState || isLoadingResults">
+            </mat-checkbox>
+          </th>
+          <td class="select" mat-cell *matCellDef="let data; let row">
+          <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null; selectChange($event, data.user)"
+              [disabled]="isInErrorState || isLoadingResults"
+              [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- NAME Column -->
+        <ng-container matColumnDef="name">
+          <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="full_name" [disabled]="isInErrorState">Name</th>
+          <td class="name" mat-cell *matCellDef="let data">
+            {{ data.user?.name }}
+          </td>
+        </ng-container>
+
+        <!-- LOGIN Column -->
+        <ng-container matColumnDef="login">
+          <th class="login" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Login</th>
+          <td class="login" mat-cell *matCellDef="let data"> {{ data.user?.login }}</td>
+        </ng-container>
+
+        <!-- EMAIL Column -->
+        <ng-container matColumnDef="email">
+          <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header="mail" [disabled]="isInErrorState">Email</th>
+          <td class="email" mat-cell *matCellDef="let data"> {{ data.user?.mail }}</td>
+        </ng-container>
+
+        <!-- ADMIN Column -->
+        <ng-container matColumnDef="admin">
+          <th class="admin" mat-header-cell *matHeaderCellDef>Admin</th>
+          <td class="admin" mat-cell *matCellDef="let data; let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? adminSelection.toggle(row) : null; changeIsAdmin($event, data.user)"
+              [disabled]="isInErrorState || isLoadingResults"
+              [checked]="adminSelection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- ROLES Column -->
+        <ng-container matColumnDef="roles">
+          <th class="roles" mat-header-cell *matHeaderCellDef>Roles</th>
+          <td class="roles" mat-cell *matCellDef="let data"> {{ data?.user?.roles | rolesToString }}</td>
+        </ng-container>
+
+        <!-- GROUPS Column -->
+        <ng-container matColumnDef="groups">
+          <th class="groups" mat-header-cell *matHeaderCellDef>Groups</th>
+          <td class="groups" mat-cell *matCellDef="let data"> {{ data?.groups | groupsToString }}</td>
+        </ng-container>
+
+        <!-- SOURCE Column -->
+        <ng-container matColumnDef="source">
+          <th class="source" mat-header-cell *matHeaderCellDef>Source</th>
+          <td class="source" mat-cell *matCellDef="let data"> {{ data.source }}</td>
+        </ng-container>
+
+        <!-- EDIT Column -->
+        <ng-container matColumnDef="edit">
+          <th class="edit" mat-header-cell *matHeaderCellDef></th>
+          <td class="edit" mat-cell *matCellDef="let data">
+            <button mat-icon-button
+                    color="primary"
+                    matTooltip="Edit user"
+                    (click)="editUser(data.user)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- DELETE Column -->
+        <ng-container matColumnDef="delete">
+          <th class="delete" mat-header-cell *matHeaderCellDef></th>
+          <td class="delete" mat-cell *matCellDef="let data">
+            <button mat-icon-button
+                    color="warn"
+                    matTooltip="Delete user"
+                    (click)="deleteUser(data.user)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- FOOTER column -->
+       <ng-container matColumnDef="select-count">
+          <td mat-footer-cell *matFooterCellDef colspan="10" class="select-count">
+           Selected {{ selectedUsersCount }} of total {{ totalUsersCount }} users
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="['select-count']" class="select-count"></tr>
+      </table>
+      <mat-paginator [length]="resultsLength" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

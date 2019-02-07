@@ -1,0 +1,17 @@
+<div class=mat-typography>
+  <div class="content">
+    <div [ngSwitch]="alert.type">
+      <mat-icon *ngSwitchCase="alertTypeEnums.ERROR">
+        block
+      </mat-icon>
+      <mat-icon *ngSwitchCase="alertTypeEnums.INFO">
+        info
+      </mat-icon>
+      <mat-icon *ngSwitchCase="alertTypeEnums.SUCCESS">
+        done
+      </mat-icon>
+    </div>
+    <p *ngFor="let message of messages" class="{{ alert.type }}"> {{ message }}</p>
+    <button mat-button (click)="dismiss()">OK</button>
+  </div>
+</div>

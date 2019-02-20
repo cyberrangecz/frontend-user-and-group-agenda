@@ -19,7 +19,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
    * @param next next http handler
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.authService.isAuthenticated() && req.url.startsWith(environment.userAndGroupRestBasePath)) {
+    if (req.url.startsWith(environment.userAndGroupRestBasePath)) {
       const clonedReq = req.clone({
         headers: req.headers.append('Authorization', this.authService.getAuthorizationToken())
       });
@@ -28,8 +28,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
           err => {
             if (err instanceof HttpErrorResponse) {
               if (err.status === 401) {
-                window.confirm('You cannot access this resource. You will be navigated to the login page.');
-                this.router.navigate(['login']);
+                window.confirm('You cannot access this resource.');
               }
             }
           }));

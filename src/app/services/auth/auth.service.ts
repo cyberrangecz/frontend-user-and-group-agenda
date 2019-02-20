@@ -7,21 +7,18 @@ import {Router} from '@angular/router';
 @Injectable()
 export class AuthService {
 
-  constructor(private oAuthService: OAuthService,
-              private router: Router) {
+  constructor(private oAuthService: OAuthService) {
   }
 
   login() {
-    this.oAuthService.initImplicitFlow();
-  }
+    this.oAuthService.loadDiscoveryDocumentAndLogin()
+      .then(() => {
+        // TODO: Inform components about the change
+      });  }
 
   logout() {
+    localStorage.clear();
     this.oAuthService.logOut(true);
-  }
-
-  getLoginName() {
-    const claims = this.oAuthService.getIdentityClaims();
-    return !claims ? null : claims[name];
   }
 
   isAuthenticated(): boolean {

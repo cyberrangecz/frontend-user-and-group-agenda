@@ -42,7 +42,7 @@ export class UserFacadeService {
     return this.http.get(`${environment.userAndGroupRestBasePath + environment.usersPathExtension}${id}`);
   }
 
-  deleteUsers(userIds: number[]) {
+  removeUsers(userIds: number[]) {
     return this.http.request('delete', environment.userAndGroupRestBasePath + environment.usersPathExtension,
       {
         body: {
@@ -51,7 +51,7 @@ export class UserFacadeService {
       });
   }
 
-  deleteUser(userId: number) {
+  removeUser(userId: number) {
     return this.http.request('delete', `${environment.userAndGroupRestBasePath + environment.usersPathExtension}${userId}`);
   }
 

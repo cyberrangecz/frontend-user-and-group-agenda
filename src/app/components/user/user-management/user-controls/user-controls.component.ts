@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserManagementService} from '../../../../services/user/user-management.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
@@ -8,6 +8,11 @@ import {Alert} from '../../../../model/alert/alert.model';
 import {UserEditComponent} from '../../user-edit/user-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {MatDialog} from '@angular/material';
+import {Set} from 'typescript-collections';
+import {User} from '../../../../model/user/user.model';
+import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
+import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-controls',
@@ -39,12 +44,23 @@ export class UserControlsComponent implements OnInit, OnDestroy {
     this.openCreateUserPopup();
   }
 
-  deleteUsers() {
-    this.sendDeleteUsersRequest();
+  removeUsers() {
+    this.userConfirmedRemovingSelectedUsers(this.userManagementService.getSelectedUsers())
+      .subscribe(confirmed => {
+        if (confirmed) {
+          this.sendRemoveUsersRequest();
+        }
+      });
   }
 
-  synchronizeUsers() {
-    // TODO
+  private userConfirmedRemovingSelectedUsers(usersToRemove: User[]): Observable<boolean> {
+    const dialogData = new ConfirmationDialogInputModel();
+    dialogData.title = 'Remove selected users';
+    dialogData.content = `Do you want to remove ${usersToRemove.length} selected users from database?`;
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: dialogData });
+    return dialogRef.afterClosed()
+      .pipe(map(result => result === DialogResultEnum.SUCCESS));
   }
 
   private getSelectedUserIds(): number[] {
@@ -52,8 +68,8 @@ export class UserControlsComponent implements OnInit, OnDestroy {
       .map(user => user.id);
   }
 
-  private sendDeleteUsersRequest() {
-    this.userFacade.deleteUsers(this.getSelectedUserIds())
+  private sendRemoveUsersRequest() {
+    this.userFacade.removeUsers(this.getSelectedUserIds())
       .subscribe(
         resp => {
           this.userManagementService.emitDataChange();

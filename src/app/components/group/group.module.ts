@@ -18,6 +18,8 @@ import { AddRolesToGroupComponent } from './add-roles-to-group/add-roles-to-grou
 import { RolesTableComponent } from './add-roles-to-group/roles-table/roles-table.component';
 import {RoleFacadeModule} from '../../services/role/role-facade.module';
 import {AddToGroupGroupTableComponent} from './add-users-to-group/group-table/add-to-group-group-table.component';
+import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import {AddToGroupGroupTableComponent} from './add-users-to-group/group-table/ad
   ],
   imports: [
     CommonModule,
+    SharedModule,
     GroupMaterialModule,
     GroupRoutingModule,
     FormsModule,
@@ -48,7 +51,8 @@ import {AddToGroupGroupTableComponent} from './add-users-to-group/group-table/ad
   entryComponents: [
     GroupEditComponent,
     AddUsersToGroupComponent,
-    AddRolesToGroupComponent
+    AddRolesToGroupComponent,
+    ConfirmationDialogComponent
   ]
 })
 export class GroupModule {

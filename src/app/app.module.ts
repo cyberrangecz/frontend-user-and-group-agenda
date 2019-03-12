@@ -10,12 +10,12 @@ import {LoginGuard} from './services/guards/login-guard.service';
 import {AuthGuard} from './services/guards/auth-guard.service';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AlertComponent } from './components/alert/alert.component';
-import {AlertService} from './services/alert/alert.service';
 import {AuthService} from './services/auth/auth.service';
 import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {AuthHttpInterceptor} from './services/interceptors/auth-http-interceptor';
 import {AppMaterialModule} from './app-material.module';
 import { NotFoundComponent } from './components/not-found-component/not-found.component';
+import {SharedModule} from './components/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { NotFoundComponent } from './components/not-found-component/not-found.co
   imports: [
     AppRoutingModule,
     AppMaterialModule,
+    SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -42,7 +43,6 @@ import { NotFoundComponent } from './components/not-found-component/not-found.co
   providers: [
     { provide: OAuthStorage, useValue: localStorage },
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
-    AlertService,
     AuthService,
     LoginGuard,
     AuthGuard

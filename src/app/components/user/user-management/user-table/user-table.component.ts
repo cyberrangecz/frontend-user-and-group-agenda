@@ -5,7 +5,7 @@ import {UserManagementService} from '../../../../services/user/user-management.s
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {environment} from '../../../../../environments/environment';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {merge, of, Subscription} from 'rxjs';
+import {merge, Observable, of, Subscription} from 'rxjs';
 import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
@@ -15,6 +15,9 @@ import {User} from '../../../../model/user/user.model';
 import {SelectionModel} from '@angular/cdk/collections';
 import {UserEditComponent} from '../../user-edit/user-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
+import {Set} from 'typescript-collections';
+import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
+import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-table',
@@ -107,14 +110,13 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.openEditUserPopup(user);
   }
 
-  deleteUser(user: User) {
-    this.userFacade.deleteUser(user.id)
-      .subscribe(
-        resp => {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
-          this.fetchData();
-        },
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
+  removeUser(user: User) {
+    this.userConfirmedRemovingUser(user)
+      .subscribe(confirmed => {
+        if (confirmed) {
+          this.sendRequestToRemoveUser(user);
+        }
+      });
   }
 
   /**
@@ -218,5 +220,25 @@ export class UserTableComponent implements OnInit, OnDestroy {
   private subscribeForEvents() {
     this.userManagementService.dataChange$
       .subscribe(change => this.fetchData());
+  }
+
+  private userConfirmedRemovingUser(userToRemove: User): Observable<boolean> {
+    const dialogData = new ConfirmationDialogInputModel();
+    dialogData.title = 'Remove user';
+    dialogData.content = `Do you want to remove ${userToRemove.name} from database?`;
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: dialogData });
+    return dialogRef.afterClosed()
+      .pipe(map(result => result === DialogResultEnum.SUCCESS));
+  }
+
+  private sendRequestToRemoveUser(user: User) {
+    this.userFacade.removeUser(user.id)
+      .subscribe(
+        resp => {
+          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
+          this.fetchData();
+        },
+        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
   }
 }

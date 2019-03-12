@@ -51,9 +51,9 @@ export class AddRolesToGroupComponent implements OnInit {
   }
 
   private isValidInput(): boolean {
-    const potentionalErrorMessage = this.validateInput();
-    if (potentionalErrorMessage !== '') {
-      this.alertService.addAlert(new Alert(AlertType.ERROR, potentionalErrorMessage));
+    const potentialErrorMessage = this.validateInput();
+    if (potentialErrorMessage !== '') {
+      this.alertService.addAlert(new Alert(AlertType.ERROR, potentialErrorMessage));
       return false;
     }
     return true;

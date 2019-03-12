@@ -10,6 +10,8 @@ import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../pipes/pipes.module';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
+import {SharedModule} from '../shared/shared.module';
+import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +26,15 @@ import {UserFacadeModule} from '../../services/user/user-facade.module';
     UserMaterialModule,
     UserRoutingModule,
     UserFacadeModule,
-    PipesModule
+    PipesModule,
+    SharedModule
   ],
   providers: [
     UserManagementService,
   ],
   entryComponents: [
-    UserEditComponent
+    UserEditComponent,
+    ConfirmationDialogComponent
   ]
 })
 export class UserModule {

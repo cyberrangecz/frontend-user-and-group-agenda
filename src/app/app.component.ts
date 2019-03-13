@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from './services/auth/auth.service';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
-import {authConfig} from './model/other/auth.config';
+import {AuthService} from './auth.service';
+import {authConfig} from './auth.config';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
             this.oAuthService.setupAutomaticSilentRefresh();
           });
       });
+    this.authService.login();
   }
 
   private subscribeOIDCEvents() {
@@ -42,7 +43,6 @@ export class AppComponent implements OnInit {
         || event.type === 'token_validation_error') {
         console.log(event.type);
         this.authService.logout();
-        this.router.navigate(['/login']);
       }
     });
   }

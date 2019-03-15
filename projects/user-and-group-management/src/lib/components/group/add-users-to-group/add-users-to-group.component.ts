@@ -9,7 +9,7 @@ import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 
 @Component({
-  selector: 'app-add-users-to-group',
+  selector: 'kypo2-add-users-to-group',
   templateUrl: './add-users-to-group.component.html',
   styleUrls: ['./add-users-to-group.component.css']
 })

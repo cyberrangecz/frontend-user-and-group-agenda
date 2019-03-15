@@ -20,7 +20,7 @@ import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-gr
 import {ConfigService} from '../../../../config/config.service';
 
 @Component({
-  selector: 'lib-group-table',
+  selector: 'kypo2-group-table',
   templateUrl: './group-table.component.html',
   styleUrls: ['./group-table.component.css'],
   animations: [

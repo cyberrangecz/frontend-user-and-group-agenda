@@ -9,7 +9,6 @@ export class ConfigService {
     return this._config;
   }
 
-
   constructor(config: UserAndGroupManagementConfig) {
     this._config = config;
   }

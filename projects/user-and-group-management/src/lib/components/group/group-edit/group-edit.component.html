@@ -22,11 +22,11 @@
   </div>
     <!-- USER PICKER IF CREATE MODE-->
   <div class="user-table">
-    <app-add-to-group-user-table
+    <kypo2-add-to-group-user-table
       *ngIf="!editMode"
       [group]="group"
       (userSelectionChange)="onUserSelectionChanged($event)">
-    </app-add-to-group-user-table>
+    </kypo2-add-to-group-user-table>
   </div>
 
 

@@ -9,7 +9,7 @@ import {AlertType} from '../../../model/enums/alert-type.enum';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 
 @Component({
-  selector: 'app-group-edit',
+  selector: 'kypo2-group-edit',
   templateUrl: './group-edit.component.html',
   styleUrls: ['./group-edit.component.css']
 })

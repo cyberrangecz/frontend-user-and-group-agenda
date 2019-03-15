@@ -8,7 +8,7 @@ import {Alert} from '../../../../model/alert/alert.model';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 
 @Component({
-  selector: 'app-roles-of-group-subtable',
+  selector: 'kypo2-roles-of-group-subtable',
   templateUrl: './roles-of-group-subtable.component.html',
   styleUrls: ['./roles-of-group-subtable.component.css']
 })

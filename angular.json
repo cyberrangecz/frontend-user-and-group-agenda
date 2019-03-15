@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kypo2-user-and-group-management": {
+    "user-and-group-management-example": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kypo2-user-and-group-management",
+            "outputPath": "dist/user-and-group-management-example",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -57,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "kypo2-user-and-group-management:build"
+            "browserTarget": "user-and-group-management-example:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "kypo2-user-and-group-management:build:production"
+              "browserTarget": "user-and-group-management-example:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kypo2-user-and-group-management:build"
+            "browserTarget": "user-and-group-management-example:build"
           }
         },
         "test": {
@@ -102,7 +102,7 @@
         }
       }
     },
-    "kypo2-user-and-group-management-e2e": {
+    "user-and-group-management-example-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -111,11 +111,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "kypo2-user-and-group-management:serve"
+            "devServerTarget": "user-and-group-management-example:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "kypo2-user-and-group-management:serve:production"
+              "devServerTarget": "user-and-group-management-example:serve:production"
             }
           }
         },
@@ -130,11 +130,11 @@
         }
       }
     },
-    "user-and-group-management": {
+    "kypo2-user-and-group-management": {
       "root": "projects/user-and-group-management",
       "sourceRoot": "projects/user-and-group-management/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "kypo2",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -166,5 +166,5 @@
       }
     }
   },
-  "defaultProject": "kypo2-user-and-group-management"
+  "defaultProject": "user-and-group-management-example"
 }

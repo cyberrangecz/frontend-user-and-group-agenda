@@ -24,12 +24,12 @@
           <div class="row-detail"
                [@detailExpand]="data == expandedRow ? 'expanded' : 'collapsed'">
             <div class="row-detail-content">
-              <app-roles-of-group-subtable *ngIf="data == expandedRow"
-                                           [group]="data.group">
-              </app-roles-of-group-subtable>
-              <app-members-of-group-subtable *ngIf="data == expandedRow"
+              <kypo2-roles-of-group-subtable *ngIf="data == expandedRow"
                                              [group]="data.group">
-              </app-members-of-group-subtable>
+              </kypo2-roles-of-group-subtable>
+              <kypo2-members-of-group-subtable *ngIf="data == expandedRow"
+                                               [group]="data.group">
+              </kypo2-members-of-group-subtable>
             </div>
           </div>
         </td>

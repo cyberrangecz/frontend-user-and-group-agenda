@@ -15,7 +15,7 @@ import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
 
 @Component({
-  selector: 'app-add-to-group-user-table',
+  selector: 'kypo2-add-to-group-user-table',
   templateUrl: './add-to-group-user-table.component.html',
   styleUrls: ['./add-to-group-user-table.component.css']
 })

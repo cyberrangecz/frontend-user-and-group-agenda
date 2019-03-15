@@ -6,7 +6,7 @@ import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@ang
 import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-roles-table',
+  selector: 'kypo2-roles-table',
   templateUrl: './roles-table.component.html',
   styleUrls: ['./roles-table.component.css']
 })

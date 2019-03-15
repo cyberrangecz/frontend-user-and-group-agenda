@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-add-to-group-group-table',
+  selector: 'kypo2-add-to-group-group-table',
   templateUrl: './add-to-group-group-table.component.html',
   styleUrls: ['./add-to-group-group-table.component.css']
 })

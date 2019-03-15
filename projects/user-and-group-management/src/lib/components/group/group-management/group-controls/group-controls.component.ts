@@ -10,7 +10,7 @@ import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 
 @Component({
-  selector: 'app-group-controls',
+  selector: 'kypo2-group-controls',
   templateUrl: './group-controls.component.html',
   styleUrls: ['./group-controls.component.css']
 })

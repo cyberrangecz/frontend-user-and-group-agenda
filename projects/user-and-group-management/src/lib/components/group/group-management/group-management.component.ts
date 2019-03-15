@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-group-management',
+  selector: 'kypo2-group-management',
   templateUrl: './group-management.component.html',
   styleUrls: ['./group-management.component.css']
 })

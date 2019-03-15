@@ -12,7 +12,7 @@ import {catchError, map} from 'rxjs/operators';
 import {RoleFacadeService} from '../../../services/role/role-facade.service';
 
 @Component({
-  selector: 'app-add-roles-to-group',
+  selector: 'kypo2-add-roles-to-group',
   templateUrl: './add-roles-to-group.component.html',
   styleUrls: ['./add-roles-to-group.component.css']
 })

@@ -15,7 +15,7 @@ import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 
 @Component({
-  selector: 'app-members-of-group-subtable',
+  selector: 'kypo2-members-of-group-subtable',
   templateUrl: './members-of-group-subtable.component.html',
   styleUrls: ['./members-of-group-subtable.component.css']
 })

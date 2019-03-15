@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Paths} from './components/shared/paths';
 
 @Component({
-  selector: 'lib-user-and-group-management',
+  selector: 'kypo2-user-and-group-management',
   templateUrl: './user-and-group-management.component.html',
   styleUrls: ['./user-and-group-management.component.css']
 })

@@ -1,0 +1,38 @@
+<div class="content">
+  <h2 *ngIf="!editMode">Create New Group</h2>
+  <h2 *ngIf="editMode">Edit {{ group?.name }}</h2>
+  <div class="form-container">
+    <!-- NAME field> -->
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" [(ngModel)]="name" required>
+      <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <!-- DESCRIPTION field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="Description" [(ngModel)]="description" required>
+      <button mat-button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+    <!-- USER PICKER IF CREATE MODE-->
+  <div class="user-table">
+    <kypo2-add-to-group-user-table
+      *ngIf="!editMode"
+      [group]="group"
+      (userSelectionChange)="onUserSelectionChanged($event)">
+    </kypo2-add-to-group-user-table>
+  </div>
+
+
+    <div class="button-wrapper">
+      <button mat-button color="warn" (click)="cancel()">Cancel</button>
+      <button mat-button color="primary" (click)="save()">Save</button>
+    </div>
+</div>
+

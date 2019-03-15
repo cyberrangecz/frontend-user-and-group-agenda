@@ -1,0 +1,169 @@
+<div class="content">
+  <div class="groups-table-wrapper">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)"
+             [disabled]="isInErrorState"
+             placeholder="Filter by name">
+    </mat-form-field>
+  </div>
+  <div class="mat-elevation-z8">
+    <div class="loading"
+         *ngIf="isLoadingResults || isInErrorState">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      <div class="loading-error" *ngIf="isInErrorState">
+        We had some trouble loading the data.
+        <button mat-icon-button (click)="fetchData()" color="primary"><mat-icon>refresh</mat-icon></button>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+
+
+      <!-- EXPANDED DETAIL COLUMN -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let data" [attr.colspan]="displayedColumns.length">
+          <div class="row-detail"
+               [@detailExpand]="data == expandedRow ? 'expanded' : 'collapsed'">
+            <div class="row-detail-content">
+              <kypo2-roles-of-group-subtable *ngIf="data == expandedRow"
+                                             [group]="data.group">
+              </kypo2-roles-of-group-subtable>
+              <kypo2-members-of-group-subtable *ngIf="data == expandedRow"
+                                               [group]="data.group">
+              </kypo2-members-of-group-subtable>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- SELECTION CHECKBOXES -->
+      <ng-container matColumnDef="select">
+        <th class="select" mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? selectAllChange(): null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [disabled]="isInErrorState || isLoadingResults">
+          </mat-checkbox>
+        </th>
+        <td class="select" mat-cell *matCellDef="let data; let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null; selectChange($event, data.group)"
+            [disabled]="isInErrorState || isLoadingResults"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- NAME Column -->
+      <ng-container matColumnDef="name">
+        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Name</th>
+        <td class="name" mat-cell *matCellDef="let data">
+          {{ data.group?.name }}
+        </td>
+      </ng-container>
+
+      <!-- DESCRIPTION Column -->
+      <ng-container matColumnDef="description">
+        <th class="description" mat-header-cell *matHeaderCellDef >Description</th>
+        <td class="description" mat-cell *matCellDef="let data">
+          {{ data.group?.description }}
+        </td>
+      </ng-container>
+
+      <!-- ROLES COUNT Column -->
+      <ng-container matColumnDef="rolesCount">
+        <th class="roles" mat-header-cell *matHeaderCellDef >Roles Count</th>
+        <td class="roles" mat-cell *matCellDef="let data">
+          {{ data.group?.roles?.length }}
+        </td>
+      </ng-container>
+
+      <!-- MEMBERS COUNT Column -->
+      <ng-container matColumnDef="membersCount">
+        <th class="membersCount" mat-header-cell *matHeaderCellDef >Members Count</th>
+        <td class="membersCount" mat-cell *matCellDef="let data">
+          {{ data.group?.members?.length }}
+        </td>
+      </ng-container>
+
+      <!-- SOURCE Column -->
+      <ng-container matColumnDef="source">
+        <th class="source" mat-header-cell *matHeaderCellDef >Source</th>
+        <td class="source" mat-cell *matCellDef="let data">
+          {{ data.group?.source }}
+        </td>
+      </ng-container>
+
+      <!-- ADD ROLES Column -->
+      <ng-container matColumnDef="add-roles">
+        <th class="add-roles" mat-header-cell *matHeaderCellDef></th>
+        <td class="add-roles" mat-cell *matCellDef="let data">
+          <button mat-icon-button
+                  color="primary"
+                  matTooltip="Add roles to group"
+                  (click)="addRolesToGroup(data.group); $event.stopPropagation()">
+            <mat-icon>category</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- ADD USERS Column -->
+      <ng-container matColumnDef="add-users">
+        <th class="add-users" mat-header-cell *matHeaderCellDef></th>
+        <td class="add-users" mat-cell *matCellDef="let data">
+          <button mat-icon-button
+                  color="primary"
+                  matTooltip="Add users to group"
+                  (click)="addUsersToGroup(data.group); $event.stopPropagation()">
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- EDIT Column -->
+      <ng-container matColumnDef="edit">
+        <th class="edit" mat-header-cell *matHeaderCellDef></th>
+        <td class="edit" mat-cell *matCellDef="let data">
+          <button mat-icon-button
+                  color="primary"
+                  matTooltip="Edit group"
+                  (click)="editGroup(data.group); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- DELETE Column -->
+      <ng-container matColumnDef="delete">
+        <th class="delete" mat-header-cell *matHeaderCellDef></th>
+        <td class="delete" mat-cell *matCellDef="let data">
+          <button mat-icon-button
+                  color="warn"
+                  matTooltip="Delete group"
+                  (click)="deleteGroup(data.group); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- FOOTER column -->
+      <ng-container matColumnDef="select-count">
+        <td mat-footer-cell *matFooterCellDef colspan="10" class="select-count">
+          Selected {{ selectedGroupsCount }} of total {{ totalGroupsCount }} groups
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+          *matRowDef="let row;
+          columns: displayedColumns;"
+          class="row"
+          [class.expanded-row]="expandedRow === row"
+          (click)="expandedRow = expandedRow === row ? null : row"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+      <tr mat-footer-row *matFooterRowDef="['select-count']" class="select-count"></tr>
+    </table>
+    <mat-paginator [length]="resultsLength" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
+</div>

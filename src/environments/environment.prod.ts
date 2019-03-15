@@ -1,10 +1,7 @@
 export const environment = {
   production: true,
-  userAndGroupRestBasePath: 'http://localhost:8084/kypo2-rest-user-and-group/api/v1/',
-  rolesPathExtension: 'roles/',
-  usersPathExtension: 'users/',
-  groupsPathExtension: 'groups/',
-  defaultPaginationSize: 5,
+  userAndGroupRestBasePath: 'http://147.251.21.216:8084/kypo2-rest-user-and-group/api/v1/',
+  defaultPaginationSize: 10,
 
   // OIDC SETTINGS
   // Url of the Identity Provider

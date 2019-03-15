@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "user-and-group-management": [
+        "dist/user-and-group-management"
+      ],
+      "user-and-group-management/*": [
+        "dist/user-and-group-management/*"
+      ]
+    }
   }
 }

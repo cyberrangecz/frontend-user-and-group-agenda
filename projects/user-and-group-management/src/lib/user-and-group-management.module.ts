@@ -1,6 +1,4 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-
-import {UserAndGroupManagementRoutingModule} from './user-and-group-management-routing.module';
 import {UserAndGroupManagementMaterialModule} from './user-and-group-management-material.module';
 import {SharedModule} from './components/shared/shared.module';
 import {CommonModule} from '@angular/common';
@@ -18,7 +16,6 @@ import {UserModule} from './components/user/user.module';
     CommonModule,
     GroupModule,
     UserModule,
-    UserAndGroupManagementRoutingModule,
     UserAndGroupManagementMaterialModule,
     SharedModule,
   ],

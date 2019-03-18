@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-user-overview',
+  selector: 'kypo2-user-overview',
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']
 })

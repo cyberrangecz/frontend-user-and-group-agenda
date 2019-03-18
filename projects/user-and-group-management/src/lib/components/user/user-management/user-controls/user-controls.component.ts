@@ -14,7 +14,7 @@ import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/c
 import {map} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-user-controls',
+  selector: 'kypo2-user-controls',
   templateUrl: './user-controls.component.html',
   styleUrls: ['./user-controls.component.css']
 })

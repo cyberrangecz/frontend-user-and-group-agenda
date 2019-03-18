@@ -4,7 +4,7 @@ import {ConfirmationDialogInputModel} from './confirmation-dialog-input.model';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 
 @Component({
-  selector: 'app-confirmation-dialog',
+  selector: 'kypo2-confirmation-dialog',
   templateUrl: './confirmation-dialog.component.html',
   styleUrls: ['./confirmation-dialog.component.css']
 })

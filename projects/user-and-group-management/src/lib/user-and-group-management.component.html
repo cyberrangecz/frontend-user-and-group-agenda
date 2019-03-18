@@ -1,11 +1,12 @@
-<nav mat-tab-nav-bar>
-  <a mat-tab-link
-     *ngFor="let link of links"
-     [routerLink]="link.path"
-     routerLinkActive #rla="routerLinkActive"
-     [active]="rla.isActive">
-    {{link.label}}
-  </a>
-</nav>
-
-<router-outlet></router-outlet>
+<mat-tab-group>
+  <mat-tab label="User Management">
+    <ng-template matTabContent>
+      <kypo2-user-overview></kypo2-user-overview>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Group Management">
+    <ng-template matTabContent>
+      <kypo2-group-management></kypo2-group-management>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

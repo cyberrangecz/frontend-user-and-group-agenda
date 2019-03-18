@@ -19,7 +19,7 @@ import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/c
 import {ConfigService} from '../../../../config/config.service';
 
 @Component({
-  selector: 'app-user-table',
+  selector: 'kypo2-user-table',
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.css']
 })

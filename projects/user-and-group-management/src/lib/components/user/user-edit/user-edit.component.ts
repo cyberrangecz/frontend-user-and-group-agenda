@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 
 @Component({
-  selector: 'app-user-edit',
+  selector: 'kypo2-user-edit',
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.css']
 })

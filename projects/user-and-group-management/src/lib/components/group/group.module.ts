@@ -39,7 +39,6 @@ import {SharedModule} from '../shared/shared.module';
     CommonModule,
     SharedModule,
     GroupMaterialModule,
-    GroupRoutingModule,
     FormsModule,
     GroupFacadeModule,
     UserFacadeModule,
@@ -53,6 +52,9 @@ import {SharedModule} from '../shared/shared.module';
     AddUsersToGroupComponent,
     AddRolesToGroupComponent,
     ConfirmationDialogComponent
+  ],
+  exports: [
+    GroupManagementComponent
   ]
 })
 export class GroupModule {

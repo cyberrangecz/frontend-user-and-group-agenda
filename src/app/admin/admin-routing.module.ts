@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {GroupManagementComponent} from './group-management/group-management.component';
+import {AdminOverviewComponent} from './admin-overview.component';
 
 const routes: Routes = [
   {
-   path: '',
-   component: GroupManagementComponent
+    path: '',
+    component: AdminOverviewComponent,
   }
 ];
 
@@ -13,6 +13,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class GroupRoutingModule {
+export class AdminRoutingModule {
 
 }

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserAndGroupManagementComponent } from './user-and-group-management.component';
 
-describe('UserAndGroupManagementComponent', () => {
+describe('UserAndGroupManagementWrapperComponent', () => {
   let component: UserAndGroupManagementComponent;
   let fixture: ComponentFixture<UserAndGroupManagementComponent>;
 

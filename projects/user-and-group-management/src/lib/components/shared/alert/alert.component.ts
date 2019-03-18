@@ -4,7 +4,7 @@ import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 
 @Component({
-  selector: 'app-alert',
+  selector: 'kypo2-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css']
 })

@@ -6,9 +6,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {OAuthModule, OAuthStorage} from 'angular-oauth2-oidc';
 import {AuthHttpInterceptor} from './auth-http-interceptor';
-import {CustomConfig} from './custom-config';
-import {UserAndGroupManagementModule} from '../../projects/user-and-group-management/src/public_api';
 import {AuthService} from './auth.service';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,7 @@ import {AuthService} from './auth.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    UserAndGroupManagementModule.forRoot(CustomConfig),
+    AppRoutingModule,
     OAuthModule.forRoot(
       {
         resourceServer: {

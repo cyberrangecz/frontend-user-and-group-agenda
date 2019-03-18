@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {GroupMaterialModule} from './group-material.module';
 import { GroupManagementComponent } from './group-management/group-management.component';
 import { GroupTableComponent } from './group-management/group-table/group-table.component';
-import {GroupRoutingModule} from './group-routing.module';
 import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-group.component';

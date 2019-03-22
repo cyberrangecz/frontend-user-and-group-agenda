@@ -5,7 +5,6 @@ import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {Alert} from '../../../../model/alert/alert.model';
-import {UserEditComponent} from '../../user-edit/user-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {MatDialog} from '@angular/material';
 import {User} from '../../../../model/user/user.model';

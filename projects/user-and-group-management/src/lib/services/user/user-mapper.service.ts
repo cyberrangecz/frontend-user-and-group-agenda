@@ -31,10 +31,6 @@ export class UserMapperService {
   mapUserDTOToUserTableDataModel(userDTO: UserDTO): UserTableDataModel {
     const result = new UserTableDataModel();
     result.user = this.mapUserDTOToUser(userDTO);
-    result.groups = [];
-    result.isAdmin = false;
-    result.source = '';
-    // TODO: Groups, isAdmin, source
     return result;
   }
 

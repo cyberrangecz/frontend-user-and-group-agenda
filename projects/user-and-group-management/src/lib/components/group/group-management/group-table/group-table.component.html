@@ -72,26 +72,18 @@
       </ng-container>
 
       <!-- ROLES COUNT Column -->
-      <ng-container matColumnDef="rolesCount">
-        <th class="roles" mat-header-cell *matHeaderCellDef >Roles Count</th>
-        <td class="roles" mat-cell *matCellDef="let data">
+      <ng-container matColumnDef="roles-count">
+        <th class="roles-count" mat-header-cell *matHeaderCellDef >Roles Count</th>
+        <td class="roles-count" mat-cell *matCellDef="let data">
           {{ data.group?.roles?.length }}
         </td>
       </ng-container>
 
       <!-- MEMBERS COUNT Column -->
-      <ng-container matColumnDef="membersCount">
-        <th class="membersCount" mat-header-cell *matHeaderCellDef >Members Count</th>
-        <td class="membersCount" mat-cell *matCellDef="let data">
+      <ng-container matColumnDef="members-count">
+        <th class="members-count" mat-header-cell *matHeaderCellDef >Members Count</th>
+        <td class="members-count" mat-cell *matCellDef="let data">
           {{ data.group?.members?.length }}
-        </td>
-      </ng-container>
-
-      <!-- SOURCE Column -->
-      <ng-container matColumnDef="source">
-        <th class="source" mat-header-cell *matHeaderCellDef >Source</th>
-        <td class="source" mat-cell *matCellDef="let data">
-          {{ data.group?.source }}
         </td>
       </ng-container>
 
@@ -138,7 +130,8 @@
       <ng-container matColumnDef="delete">
         <th class="delete" mat-header-cell *matHeaderCellDef></th>
         <td class="delete" mat-cell *matCellDef="let data">
-          <button mat-icon-button
+          <button *ngIf="data.group?.canBeDeleted"
+                  mat-icon-button
                   color="warn"
                   matTooltip="Delete group"
                   (click)="deleteGroup(data.group); $event.stopPropagation()">

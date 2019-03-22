@@ -38,7 +38,6 @@ export class GroupMapperService {
     result.name = groupDTO.name;
     result.description = groupDTO.description;
     result.canBeDeleted = groupDTO.can_be_deleted;
-    result.source = groupDTO.source;
     result.members = this.userMapper.mapUserForGroupsDTOsToUsers(groupDTO.users);
     result.roles = this.roleMapper.mapRoleDTOsToRoles(groupDTO.roles);
     return result;
@@ -48,7 +47,7 @@ export class GroupMapperService {
     const result = new NewGroupDTO();
     result.name = group.name;
     result.description = group.description;
-    result.group_ids_of_imported_users = []; // TODO: Find out what its supposed to be for
+    result.group_ids_of_imported_users = [];
     result.users = this.userMapper.mapUsersToUserForGroupDTOs(group.members);
     return result;
   }

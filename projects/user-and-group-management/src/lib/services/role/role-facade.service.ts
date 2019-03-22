@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Role} from '../../model/role.model';
+import {Role} from '../../model/role/role.model';
 import {Observable} from 'rxjs';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
 import {map} from 'rxjs/operators';

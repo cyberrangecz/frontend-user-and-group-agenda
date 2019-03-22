@@ -77,18 +77,16 @@ td.name, th.name {
 }
 
 td.description, th.description {
-  width: 30%;
+  width: 40%;
 }
 
-td.rolesCount, th.rolesCount {
+td.roles-count, th.roles-count {
+  text-align: center;
   width: 10%;
 }
 
-td.membersCount, th.membersCount {
-  width: 10%;
-}
-
-td.source, th.source {
+td.members-count, th.members-count {
+  text-align: center;
   width: 10%;
 }
 

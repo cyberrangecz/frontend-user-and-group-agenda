@@ -39,10 +39,6 @@ export class UserControlsComponent implements OnInit, OnDestroy {
     }
   }
 
-  createUser() {
-    this.openCreateUserPopup();
-  }
-
   removeUsers() {
     this.userConfirmedRemovingSelectedUsers(this.userManagementService.getSelectedUsers())
       .subscribe(confirmed => {
@@ -78,16 +74,6 @@ export class UserControlsComponent implements OnInit, OnDestroy {
           this.alertService.addAlert(new Alert(AlertType.ERROR, 'Selected users were not deleted'), {error: err});
         }
       );
-  }
-
-  private openCreateUserPopup() {
-    this.dialog.open(UserEditComponent, { data: null })
-      .afterClosed()
-      .subscribe(result => {
-        if (result && result === DialogResultEnum.SUCCESS) {
-          this.userManagementService.emitDataChange();
-        }
-      });
   }
 
   private subscribeSelectedUsers() {

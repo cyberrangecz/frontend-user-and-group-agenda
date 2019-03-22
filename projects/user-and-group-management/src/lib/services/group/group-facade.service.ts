@@ -82,9 +82,9 @@ export class GroupFacadeService {
   }
 
   removeUsersFromGroup(groupId: number, userIds: number[]) {
-    return this.http.put(this.config.userAndGroupRestBasePath + this.groupsPathExtension +
-    groupId + '/users',
-      userIds);
+    return this.http.request('delete',
+      `${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.usersPathExtension}`,
+      {body: userIds});
   }
 
   addUsersToGroup(groupId: number, userIds: number[], groupIds: number[] = []) {

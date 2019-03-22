@@ -7,7 +7,6 @@ import { UserControlsComponent } from './user-management/user-controls/user-cont
 import {UserManagementService} from '../../services/user/user-management.service';
 import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../pipes/pipes.module';
-import { UserEditComponent } from './user-edit/user-edit.component';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
 import {SharedModule} from '../shared/shared.module';
 import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
@@ -17,7 +16,6 @@ import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirm
   UserManagementComponent,
   UserTableComponent,
   UserControlsComponent,
-  UserEditComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +29,6 @@ import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirm
     UserManagementService,
   ],
   entryComponents: [
-    UserEditComponent,
     ConfirmationDialogComponent
   ],
   exports: [

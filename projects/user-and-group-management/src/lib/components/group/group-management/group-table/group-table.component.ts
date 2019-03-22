@@ -181,7 +181,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: GroupTableDataModel, filter: string) =>
-        data.group.name.toLowerCase().indexOf(filter) !== -1;
+        (data.group.name && data.group.name.toLowerCase().indexOf(filter) !== -1);
   }
 
   private unselectAll() {

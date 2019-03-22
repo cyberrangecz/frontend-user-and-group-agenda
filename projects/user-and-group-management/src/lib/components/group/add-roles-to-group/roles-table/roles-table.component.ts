@@ -80,7 +80,8 @@ export class RolesTableComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource(roles);
     this.dataSource.filterPredicate =
       (data: Role, filter: string) =>
-        data.name.toLowerCase().indexOf(filter) !== -1;
+        (data.name && data.name.toLowerCase().indexOf(filter) !== -1)
+        || (data.microservice && data.microservice.toLowerCase().indexOf(filter) !== -1);
   }
 
   private unselectAll() {

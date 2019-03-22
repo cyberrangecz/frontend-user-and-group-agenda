@@ -3,10 +3,10 @@
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)"
              [disabled]="isInErrorState"
-             placeholder="Filter by login">
+             placeholder="Filter by name or login">
     </mat-form-field>
   </div>
-  
+
   <div class="mat-elevation-z8">
     <div class="loading"
          *ngIf="isLoadingResults || isInErrorState">
@@ -39,7 +39,7 @@
 
       <!-- NAME Column -->
       <ng-container matColumnDef="name">
-        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="full_name" [disabled]="isInErrorState">Name</th>
+        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="name" [disabled]="isInErrorState">Name</th>
         <td class="name" mat-cell *matCellDef="let user">
           {{ user?.name }}
         </td>

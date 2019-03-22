@@ -7,6 +7,5 @@ export class GroupDTO {
   id: number;
   name: string;
   roles: RoleDTO[];
-  source: string;
   users: UserForGroupsDTO[];
 }

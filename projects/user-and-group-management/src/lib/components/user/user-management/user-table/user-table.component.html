@@ -15,6 +15,7 @@
         </div>
       </div>
       <table mat-table [dataSource]="dataSource" matSort>
+
         <!-- SELECTION CHECKBOXES -->
         <ng-container matColumnDef="select">
           <th class="select" mat-header-cell *matHeaderCellDef>
@@ -55,48 +56,10 @@
           <td class="email" mat-cell *matCellDef="let data"> {{ data.user?.mail }}</td>
         </ng-container>
 
-        <!-- ADMIN Column -->
-        <ng-container matColumnDef="admin">
-          <th class="admin" mat-header-cell *matHeaderCellDef>Admin</th>
-          <td class="admin" mat-cell *matCellDef="let data; let row">
-            <mat-checkbox
-              (click)="$event.stopPropagation()"
-              (change)="$event ? adminSelection.toggle(row) : null; changeIsAdmin($event, data.user)"
-              [disabled]="isInErrorState || isLoadingResults"
-              [checked]="adminSelection.isSelected(row)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
-
         <!-- ROLES Column -->
         <ng-container matColumnDef="roles">
           <th class="roles" mat-header-cell *matHeaderCellDef>Roles</th>
           <td class="roles" mat-cell *matCellDef="let data"> {{ data?.user?.roles | rolesToString }}</td>
-        </ng-container>
-
-        <!-- GROUPS Column -->
-        <ng-container matColumnDef="groups">
-          <th class="groups" mat-header-cell *matHeaderCellDef>Groups</th>
-          <td class="groups" mat-cell *matCellDef="let data"> {{ data?.groups | groupsToString }}</td>
-        </ng-container>
-
-        <!-- SOURCE Column -->
-        <ng-container matColumnDef="source">
-          <th class="source" mat-header-cell *matHeaderCellDef>Source</th>
-          <td class="source" mat-cell *matCellDef="let data"> {{ data.source }}</td>
-        </ng-container>
-
-        <!-- EDIT Column -->
-        <ng-container matColumnDef="edit">
-          <th class="edit" mat-header-cell *matHeaderCellDef></th>
-          <td class="edit" mat-cell *matCellDef="let data">
-            <button mat-icon-button
-                    color="primary"
-                    matTooltip="Edit user"
-                    (click)="editUser(data.user)">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </td>
         </ng-container>
 
         <!-- DELETE Column -->

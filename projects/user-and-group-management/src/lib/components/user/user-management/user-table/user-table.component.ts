@@ -12,7 +12,6 @@ import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {Alert} from '../../../../model/alert/alert.model';
 import {User} from '../../../../model/user/user.model';
 import {SelectionModel} from '@angular/cdk/collections';
-import {UserEditComponent} from '../../user-edit/user-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
@@ -30,11 +29,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     'name',
     'login',
     'email',
-    'admin',
     'roles',
-    'groups',
-    'source',
-    'edit',
     'delete'
   ];
 
@@ -49,7 +44,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<UserTableDataModel>;
   selection = new SelectionModel<UserTableDataModel>(true, []);
-  adminSelection = new SelectionModel<UserTableDataModel>(true, []);
 
   constructor(
     public dialog: MatDialog,
@@ -102,14 +96,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
      return this.selection.selected.length === this.dataSource.data.length;
   }
 
-  changeIsAdmin(event: MatCheckboxChange, user: User) {
-    // TODO REST API CALL?
-  }
-
-  editUser(user: User) {
-    this.openEditUserPopup(user);
-  }
-
   removeUser(user: User) {
     this.userConfirmedRemovingUser(user)
       .subscribe(confirmed => {
@@ -155,7 +141,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading users'));
+          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Error while loading users'));
           return of([]);
         }))
       .subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
@@ -169,16 +155,11 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.totalUsersCount = dataWrapper.tableData ? dataWrapper.tableData.length : 0;
     this.selectedUsersCount = 0;
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
-    this.resolvePreSelectedAdminCheckboxes(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: UserTableDataModel, filter: string) =>
         data.user.name.toLowerCase().indexOf(filter) !== -1
         || data.user.login.toLowerCase().indexOf(filter) !== -1
         || data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1;
-  }
-
-  private resolvePreSelectedAdminCheckboxes(data: UserTableDataModel[]) {
-    this.adminSelection.select(...data.filter(row => row.isAdmin));
   }
 
   private unselectAll() {
@@ -205,16 +186,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
   private unselectUser(user: User) {
     this.selectedUsersCount--;
     this.userManagementService.unselectUser(user);
-  }
-
-  private openEditUserPopup(user: User) {
-    this.dialog.open(UserEditComponent, { data: user })
-      .afterClosed()
-      .subscribe(result => {
-        if (result && result === DialogResultEnum.SUCCESS) {
-          this.fetchData();
-        }
-      });
   }
 
   private subscribeForEvents() {

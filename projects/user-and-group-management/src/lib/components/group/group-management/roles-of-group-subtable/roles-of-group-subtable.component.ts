@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Role} from '../../../../model/role.model';
+import {Role} from '../../../../model/role/role.model';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {Alert} from '../../../../model/alert/alert.model';
@@ -42,7 +42,7 @@ export class RolesOfGroupSubtableComponent implements OnInit {
   }
 
   removeRole(role: Role) {
-    this.groupFacade.removeRoleFromGroupInMicroservice(this.group.id, role.id, role.microserviceId)
+    this.groupFacade.removeRoleFromGroup(this.group.id, role.id)
       .subscribe(
         resp => {
           this.deleteRemovedRoleFromTable(role);
@@ -56,8 +56,7 @@ export class RolesOfGroupSubtableComponent implements OnInit {
 
   private deleteRemovedRoleFromTable(removedRole: Role) {
     this.group.roles = this.group.roles.filter(role =>
-      !(role.id === removedRole.id
-        && role.microserviceId === role.microserviceId));
+      !(role.id === removedRole.id));
     this.createDataSource();
   }
 }

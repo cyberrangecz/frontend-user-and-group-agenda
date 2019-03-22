@@ -62,15 +62,6 @@ export class UserFacadeService {
     return this.http.request('delete', `${this.config.userAndGroupRestBasePath + this.usersPathExtension}${userId}`);
   }
 
-  getUserRoles(userId: number) {
-    return this.http.get(`${this.config.userAndGroupRestBasePath
-    + this.usersPathExtension}/${userId}/${this.rolesPathExtension}`);
-  }
-
-  getLoggedUserInfo() {
-    return this.http.get(`${this.config.userAndGroupRestBasePath + this.usersPathExtension}info`);
-  }
-
   getUsersNotInGroup(groupId: number, pagination = null): Observable<TableDataWrapper<User[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(

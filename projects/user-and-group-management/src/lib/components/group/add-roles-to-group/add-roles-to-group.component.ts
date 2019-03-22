@@ -4,7 +4,7 @@ import {Group} from '../../../model/group/group.model';
 import {GroupFacadeService} from '../../../services/group/group-facade.service';
 import {AlertService} from '../../../services/alert/alert.service';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {Role} from '../../../model/role.model';
+import {Role} from '../../../model/role/role.model';
 import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 import {forkJoin, Observable, of} from 'rxjs';
@@ -46,8 +46,8 @@ export class AddRolesToGroupComponent implements OnInit {
     }
   }
 
-  onRoleSelectionChanged($event: Role[]) {
-    this.selectedRoles = $event;
+  onRoleSelectionChanged(roles: Role[]) {
+    this.selectedRoles = roles;
   }
 
   private isValidInput(): boolean {
@@ -79,7 +79,7 @@ export class AddRolesToGroupComponent implements OnInit {
   }
 
   private sendAddRoleToGroupRequest(role: Role): Observable<any> {
-    return this.groupFacadeService.assignRoleToGroupInMicroservice(this.group.id, role.id, role.microserviceId)
+    return this.groupFacadeService.assignRoleToGroup(this.group.id, role.id)
       .pipe(map(
         resp => resp),
         catchError(error => of('failed'))
@@ -105,9 +105,9 @@ export class AddRolesToGroupComponent implements OnInit {
   private getAvailableRoles() {
     this.availableRoles$ = this.roleFacadeService.getRoles()
       .pipe(map(roles => {
-       return roles.filter(role => // Excludes roles which the group already has
-          !this.group.roles.some(assignedRole => assignedRole.id === role.id
-            && assignedRole.microserviceId === role.microserviceId));
+       return roles.filter(role =>
+         !this.group.roles.some(assignedRole =>
+           assignedRole.id === role.id));
       }));
   }
 }

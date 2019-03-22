@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
-import {Role} from '../../../../model/role.model';
+import {Role} from '../../../../model/role/role.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';

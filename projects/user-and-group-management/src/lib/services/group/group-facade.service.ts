@@ -66,14 +66,15 @@ export class GroupFacadeService {
     return this.http.delete(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}${groupId}`);
   }
 
-  assignRoleToGroupInMicroservice(groupId: number, roleId: number, microserviceId: number): Observable<any> {
-    return this.http.put(this.config.userAndGroupRestBasePath + this.groupsPathExtension
-    + groupId + '/roles/' + roleId + '/microservices/' + microserviceId, {});
+  assignRoleToGroup(groupId: number, roleId: number): Observable<any> {
+    return this.http.put(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.rolesPathExtension}${roleId}`,
+      {});
   }
 
-  removeRoleFromGroupInMicroservice(groupId: number, roleId: number, microserviceId: number): Observable<any> {
-    return this.http.delete(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}
-    ${groupId}/roles/${roleId}/microservices/${microserviceId}`, {});
+  removeRoleFromGroup(groupId: number, roleId: number): Observable<any> {
+    return this.http.delete(
+      `${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.rolesPathExtension}${roleId}`
+    );
   }
 
   getRolesOfGroup(groupId: number) {
@@ -82,13 +83,13 @@ export class GroupFacadeService {
   }
 
   removeUsersFromGroup(groupId: number, userIds: number[]) {
-    return this.http.put(this.config.userAndGroupRestBasePath + this.groupsPathExtension +
-    groupId + '/users',
-      userIds);
+    return this.http.request('delete',
+      `${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.usersPathExtension}`,
+      {body: userIds});
   }
 
   addUsersToGroup(groupId: number, userIds: number[], groupIds: number[] = []) {
-    return this.http.put(this.config.userAndGroupRestBasePath + this.groupsPathExtension + this.usersPathExtension,
-        this.groupMapper.createAddUsersToGroupDTO(groupId, userIds, groupIds));
+    return this.http.put(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.usersPathExtension}`,
+        this.groupMapper.createAddUsersToGroupDTO(userIds, groupIds));
   }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RoleDTO} from '../../model/DTO/role-dto.model';
-import {Role} from '../../model/role.model';
+import {Role} from '../../model/role/role.model';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
 
 @Injectable()

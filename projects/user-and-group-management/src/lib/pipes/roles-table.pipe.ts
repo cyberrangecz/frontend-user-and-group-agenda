@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Role} from '../model/role.model';
+import {Role} from '../model/role/role.model';
 
 @Pipe({name: 'rolesToString'})
 export class RolesTablePipe implements  PipeTransform {

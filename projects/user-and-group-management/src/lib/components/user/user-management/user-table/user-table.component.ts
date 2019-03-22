@@ -157,9 +157,9 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: UserTableDataModel, filter: string) =>
-        data.user.name.toLowerCase().indexOf(filter) !== -1
-        || data.user.login.toLowerCase().indexOf(filter) !== -1
-        || data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1;
+        (data.user.name && data.user.name.toLowerCase().indexOf(filter) !== -1)
+        || (data.user.login && data.user.login.toLowerCase().indexOf(filter) !== -1)
+        || (data.user.mail && data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1);
   }
 
   private unselectAll() {

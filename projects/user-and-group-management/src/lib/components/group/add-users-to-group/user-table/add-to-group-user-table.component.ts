@@ -115,7 +115,8 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: User, filter: string) =>
-        data.login.toLowerCase().indexOf(filter) !== -1;
+      data.login.toLowerCase().indexOf(filter) !== -1
+      || (data.name && data.name.toLowerCase().indexOf(filter) !== -1);
   }
 
   /**

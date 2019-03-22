@@ -61,9 +61,8 @@ export class GroupMapperService {
     return result;
   }
 
-  createAddUsersToGroupDTO(groupId: number, userIds: number[], groupIds: number[]): AddUsersToGroupDTO {
+  createAddUsersToGroupDTO( userIds: number[], groupIds: number[]): AddUsersToGroupDTO {
     const result = new AddUsersToGroupDTO();
-    result.group_id = groupId;
     result.ids_of_users_to_be_add = userIds;
     result.ids_of_groups_of_imported_users = groupIds;
     return result;

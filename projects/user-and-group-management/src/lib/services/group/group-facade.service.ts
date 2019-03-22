@@ -88,7 +88,7 @@ export class GroupFacadeService {
   }
 
   addUsersToGroup(groupId: number, userIds: number[], groupIds: number[] = []) {
-    return this.http.put(this.config.userAndGroupRestBasePath + this.groupsPathExtension + this.usersPathExtension,
-        this.groupMapper.createAddUsersToGroupDTO(groupId, userIds, groupIds));
+    return this.http.put(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.usersPathExtension}`,
+        this.groupMapper.createAddUsersToGroupDTO(userIds, groupIds));
   }
 }

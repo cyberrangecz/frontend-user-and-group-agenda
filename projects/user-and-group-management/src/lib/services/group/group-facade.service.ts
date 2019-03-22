@@ -66,14 +66,15 @@ export class GroupFacadeService {
     return this.http.delete(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}${groupId}`);
   }
 
-  assignRoleToGroupInMicroservice(groupId: number, roleId: number, microserviceId: number): Observable<any> {
-    return this.http.put(this.config.userAndGroupRestBasePath + this.groupsPathExtension
-    + groupId + '/roles/' + roleId + '/microservices/' + microserviceId, {});
+  assignRoleToGroup(groupId: number, roleId: number): Observable<any> {
+    return this.http.put(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.rolesPathExtension}${roleId}`,
+      {});
   }
 
-  removeRoleFromGroupInMicroservice(groupId: number, roleId: number, microserviceId: number): Observable<any> {
-    return this.http.delete(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}
-    ${groupId}/roles/${roleId}/microservices/${microserviceId}`, {});
+  removeRoleFromGroup(groupId: number, roleId: number): Observable<any> {
+    return this.http.delete(
+      `${this.config.userAndGroupRestBasePath + this.groupsPathExtension + groupId}/${this.rolesPathExtension}${roleId}`
+    );
   }
 
   getRolesOfGroup(groupId: number) {

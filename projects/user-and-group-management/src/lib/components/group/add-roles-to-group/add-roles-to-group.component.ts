@@ -79,7 +79,7 @@ export class AddRolesToGroupComponent implements OnInit {
   }
 
   private sendAddRoleToGroupRequest(role: Role): Observable<any> {
-    return this.groupFacadeService.assignRoleToGroupInMicroservice(this.group.id, role.id, role.microserviceId)
+    return this.groupFacadeService.assignRoleToGroup(this.group.id, role.id)
       .pipe(map(
         resp => resp),
         catchError(error => of('failed'))
@@ -105,9 +105,9 @@ export class AddRolesToGroupComponent implements OnInit {
   private getAvailableRoles() {
     this.availableRoles$ = this.roleFacadeService.getRoles()
       .pipe(map(roles => {
-       return roles.filter(role => // Excludes roles which the group already has
-          !this.group.roles.some(assignedRole => assignedRole.id === role.id
-            && assignedRole.microserviceId === role.microserviceId));
+       return roles.filter(role =>
+         !this.group.roles.some(assignedRole =>
+           assignedRole.id === role.id));
       }));
   }
 }

@@ -43,6 +43,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
 
   ngOnInit() {
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if ('group' in changes) {
       this.initTableDataSource();
@@ -110,8 +111,9 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
    * @param dataWrapper Users fetched from server
    */
   private createDataSource(dataWrapper: TableDataWrapper<User[]>) {
-    this.totalUsersCount = dataWrapper.tableData.length;
-    this.selectedUsersCount = 0;
+    this.totalUsersCount = dataWrapper.pagination.totalElements;
+    this.selection.clear();
+    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.tableData));
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: User, filter: string) =>
@@ -132,30 +134,32 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   }
 
   private unselectAll() {
-    this.selectedUsersCount = 0;
+    this.selection.selected.forEach(user => {
+      this.selectedUsers.remove(user);
+    });
     this.selection.clear();
-    this.selectedUsers.clear();
+    this.selectedUsersCount = this.selectedUsers.size();
     this.userSelectionChange.emit(this.selectedUsers.toArray());
   }
 
   private selectAll() {
-    this.selectedUsersCount = this.totalUsersCount;
-    this.dataSource.data.forEach(row => {
-      this.selection.select(row);
-      this.selectedUsers.add(row);
+    this.dataSource.data.forEach(user => {
+      this.selectedUsers.add(user);
+      this.selection.select(user);
     });
+    this.selectedUsersCount = this.selectedUsers.size();
     this.userSelectionChange.emit(this.selectedUsers.toArray());
   }
 
   private selectUser(user: User) {
-    this.selectedUsersCount++;
     this.selectedUsers.add(user);
+    this.selectedUsersCount = this.selectedUsers.size();
     this.userSelectionChange.emit(this.selectedUsers.toArray());
   }
 
   private unselectUser(user: User) {
-    this.selectedUsersCount--;
     this.selectedUsers.remove(user);
+    this.selectedUsersCount = this.selectedUsers.size();
     this.userSelectionChange.emit(this.selectedUsers.toArray());
   }
 
@@ -169,5 +173,18 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     } else {
       return this.userFacade.getUsers(pagination);
     }
+  }
+
+  private isInSelection(userToCheck: User): boolean {
+    return this.selectedUsers.toArray()
+      .map(user => user.login)
+      .includes(userToCheck.login);
+  }
+
+  private findPreselectedUsers(users: User[]): User[] {
+    return users.filter(user => this.isInSelection(user));
+  }
+  private markCheckboxes(users: User[]) {
+    this.selection.select(...users);
   }
 }

@@ -96,8 +96,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   isAllSelected() {
-    console.log(this.selection.selected.length);
-    console.log(this.dataSource.data.length);
     return this.selection.selected.length === this.dataSource.data.length;
   }
 

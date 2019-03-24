@@ -86,7 +86,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="['select-count']" class="select-count"></tr>
       </table>
-      <mat-paginator [length]="resultsLength" [pageSizeOptions]="[1, 25, 50, 100]"></mat-paginator>
+      <mat-paginator [length]="resultsLength" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
     </div>
   </div>
 </div>

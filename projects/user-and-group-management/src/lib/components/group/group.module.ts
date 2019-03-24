@@ -9,7 +9,7 @@ import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-grou
 import { AddToGroupUserTableComponent } from './add-users-to-group/user-table/add-to-group-user-table.component';
 import { RolesOfGroupSubtableComponent } from './group-management/roles-of-group-subtable/roles-of-group-subtable.component';
 import { MembersOfGroupSubtableComponent } from './group-management/members-of-group-subtable/members-of-group-subtable.component';
-import {GroupManagementService} from '../../services/group/group-management.service';
+import {GroupSelectionService} from '../../services/group/group-selection.service';
 import {FormsModule} from '@angular/forms';
 import {GroupFacadeModule} from '../../services/group/group-facade.module';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
@@ -44,7 +44,7 @@ import {SharedModule} from '../shared/shared.module';
     RoleFacadeModule
   ],
   providers: [
-    GroupManagementService
+    GroupSelectionService
   ],
   entryComponents: [
     GroupEditComponent,

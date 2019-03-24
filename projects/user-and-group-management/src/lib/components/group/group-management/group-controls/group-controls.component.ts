@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material';
-import {GroupManagementService} from '../../../../services/group/group-management.service';
+import {GroupSelectionService} from '../../../../services/group/group-selection.service';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {Alert} from '../../../../model/alert/alert.model';
@@ -20,7 +20,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
   selectedGroupsCount = 0;
 
   constructor(public dialog: MatDialog,
-              private groupManagementService: GroupManagementService,
+              private groupManagementService: GroupSelectionService,
               private groupFacade: GroupFacadeService,
               private alertService: AlertService) {
 

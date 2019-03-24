@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource, SortDirection} from '@angular/material';
 import {UserTableDataModel} from '../../../../model/table-data/user-table-data.model';
 import {UserManagementService} from '../../../../services/user/user-management.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
@@ -112,8 +112,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
   private initTableDataSource() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.paginator.pageSize = this.configService.config.defaultPaginationSize;
-    this.sort.active = 'login';
-    this.sort.direction = 'desc';
+    this.sort.active = 'fullName';
     this.fetchData();
   }
 

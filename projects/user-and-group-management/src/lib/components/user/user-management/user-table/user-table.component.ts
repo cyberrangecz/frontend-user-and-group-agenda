@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource, SortDirection} from '@angular/material';
 import {UserTableDataModel} from '../../../../model/table-data/user-table-data.model';
-import {UserManagementService} from '../../../../services/user/user-management.service';
+import {UserSelectionService} from '../../../../services/user/user-selection.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {merge, Observable, of, Subscription} from 'rxjs';
@@ -36,9 +36,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
   resultsLength = 0;
   isLoadingResults = true;
   isInErrorState = false;
-  selectedUsersCount: number;
+  selectedUsersCount = 0;
   totalUsersCount: number;
   dataChangeSubscription: Subscription;
+  selectionChangeSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -47,7 +48,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private userManagementService: UserManagementService,
+    private userSelectionService: UserSelectionService,
     private configService: ConfigService,
     private userFacade: UserFacadeService,
     private alertService: AlertService) { }
@@ -60,6 +61,9 @@ export class UserTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.dataChangeSubscription) {
       this.dataChangeSubscription.unsubscribe();
+    }
+    if (this.selectionChangeSubscription) {
+      this.selectionChangeSubscription.unsubscribe();
     }
   }
 
@@ -91,9 +95,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-     return this.selection.selected.length === this.dataSource.data.length;
+    console.log(this.selection.selected.length);
+    console.log(this.dataSource.data.length);
+    return this.selection.selected.length === this.dataSource.data.length;
   }
 
   removeUser(user: User) {
@@ -151,8 +156,9 @@ export class UserTableComponent implements OnInit, OnDestroy {
    * @param dataWrapper Users fetched from server
    */
   private createDataSource(dataWrapper: TableDataWrapper<UserTableDataModel[]>) {
-    this.totalUsersCount = dataWrapper.tableData ? dataWrapper.tableData.length : 0;
-    this.selectedUsersCount = 0;
+    this.totalUsersCount = dataWrapper.pagination.totalElements;
+    this.selection.clear();
+    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.tableData));
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: UserTableDataModel, filter: string) =>
@@ -162,34 +168,39 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   private unselectAll() {
-    this.selectedUsersCount = 0;
+    this.selection.selected.forEach(tableData =>
+      this.userSelectionService.unselectUser(tableData.user));
     this.selection.clear();
-    this.userManagementService.unselectAllUsers();
   }
 
   private selectAll() {
-    this.selectedUsersCount = this.totalUsersCount;
-    const users = [];
     this.dataSource.data.forEach(row => {
       this.selection.select(row);
-      users.push(row.user);
+      this.userSelectionService.selectUser(row.user);
     });
-    this.userManagementService.selectUsers(users);
   }
 
   private selectUser(user: User) {
-    this.selectedUsersCount++;
-    this.userManagementService.selectUser(user);
+    this.userSelectionService.selectUser(user);
   }
 
   private unselectUser(user: User) {
-    this.selectedUsersCount--;
-    this.userManagementService.unselectUser(user);
+    this.userSelectionService.unselectUser(user);
+  }
+
+  private isInSelection(userToCheck: User): boolean {
+    return this.userSelectionService.getSelectedUsers()
+      .map(user => user.login)
+      .includes(userToCheck.login);
   }
 
   private subscribeForEvents() {
-    this.userManagementService.dataChange$
+    this.dataChangeSubscription = this.userSelectionService.dataChange$
       .subscribe(change => this.fetchData());
+
+    this.selectionChangeSubscription =  this.userSelectionService.selectionChange$
+      .subscribe(usersCount =>
+      this.selectedUsersCount = usersCount);
   }
 
   private userConfirmedRemovingUser(userToRemove: User): Observable<boolean> {
@@ -210,5 +221,12 @@ export class UserTableComponent implements OnInit, OnDestroy {
           this.fetchData();
         },
         err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
+  }
+
+  private findPreselectedUsers(userTableData: UserTableDataModel[]) {
+    return userTableData.filter(userDatum => this.isInSelection(userDatum.user));
+  }
+  private markCheckboxes(userTableData: UserTableDataModel[]) {
+    this.selection.select(...userTableData);
   }
 }

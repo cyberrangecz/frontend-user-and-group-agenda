@@ -5,11 +5,7 @@ import {Observable, Subject} from 'rxjs';
 import {UserFacadeService} from './user-facade.service';
 
 @Injectable()
-export class UserManagementService {
-
-  constructor(private userFacade: UserFacadeService) {
-
-  }
+export class UserSelectionService {
 
   private _selectedUsers: Set<User> = new Set<User>(user => user.login);
 

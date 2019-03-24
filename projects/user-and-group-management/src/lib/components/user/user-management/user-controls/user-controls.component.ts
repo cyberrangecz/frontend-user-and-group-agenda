@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserManagementService} from '../../../../services/user/user-management.service';
+import {UserSelectionService} from '../../../../services/user/user-selection.service';
 import {Observable, Subscription} from 'rxjs';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
@@ -23,7 +23,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
   selectedUsersCount = 0;
 
   constructor(public dialog: MatDialog,
-              private userManagementService: UserManagementService,
+              private userManagementService: UserSelectionService,
               private userFacade: UserFacadeService,
               private alertService: AlertService) {
   }

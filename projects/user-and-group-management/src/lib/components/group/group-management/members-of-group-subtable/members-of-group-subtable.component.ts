@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {User} from '../../../../model/user/user.model';
@@ -10,7 +10,7 @@ import {GroupFacadeService} from '../../../../services/group/group-facade.servic
 import {Set} from 'typescript-collections';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 
@@ -19,7 +19,7 @@ import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
   templateUrl: './members-of-group-subtable.component.html',
   styleUrls: ['./members-of-group-subtable.component.css']
 })
-export class MembersOfGroupSubtableComponent implements OnInit {
+export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   @Input() group: Group;
 
@@ -34,12 +34,20 @@ export class MembersOfGroupSubtableComponent implements OnInit {
   totalUsersCount = 0;
   selectedUsers: Set<User> = new Set<User>(user => user.login);
 
+  private paginationChangeSubscription: Subscription;
+
   constructor(private dialog: MatDialog,
               private groupFacade: GroupFacadeService,
               private alertService: AlertService) { }
 
   ngOnInit() {
     this.createDataSource();
+  }
+
+  ngOnDestroy(): void {
+    if (this.paginationChangeSubscription) {
+      this.paginationChangeSubscription.unsubscribe();
+    }
   }
 
   applyFilter(filterValue: string) {
@@ -68,7 +76,9 @@ export class MembersOfGroupSubtableComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return this.selection.selected.length === this.dataSource.data.length;
+    console.log(this.selection.selected.length);
+    console.log(this.dataSource._pageData(this.dataSource.data).length);
+    return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 
   removeUserFromGroup(userToRemove: User) {
@@ -90,17 +100,18 @@ export class MembersOfGroupSubtableComponent implements OnInit {
   }
 
   private unselectAll() {
-    this.selectedUsersCount = 0;
+    this.dataSource._pageData(this.dataSource.data).forEach(user =>
+      this.selectedUsers.remove(user));
     this.selection.clear();
-    this.selectedUsers.clear();
+    this.selectedUsersCount = this.selectedUsers.size();
   }
 
   private selectAll() {
-    this.selectedUsersCount = this.totalUsersCount;
-    this.dataSource.data.forEach(row => {
-      this.selection.select(row);
-      this.selectedUsers.add(row);
+    this.dataSource._pageData(this.dataSource.data).forEach(user => {
+      this.selection.select(user);
+      this.selectedUsers.add(user);
     });
+    this.selectedUsersCount = this.selectedUsers.size();
   }
 
   private selectUser(user: User) {
@@ -113,7 +124,6 @@ export class MembersOfGroupSubtableComponent implements OnInit {
     this.selectedUsers.remove(user);
     this.selection.deselect(user);
     this.selectedUsersCount = this.selectedUsers.size();
-
   }
 
   private createDataSource() {
@@ -121,6 +131,10 @@ export class MembersOfGroupSubtableComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.totalUsersCount = this.dataSource.data.length;
+    this.paginationChangeSubscription = this.paginator.page.subscribe(pageChange => {
+      this.selection.clear();
+      this.markCheckboxes(this.findPreselectedUsers(this.dataSource._pageData(this.dataSource.data)));
+    });
   }
 
   private removeDeletedUsersFromTable(removedIds: number[]) {
@@ -166,8 +180,28 @@ export class MembersOfGroupSubtableComponent implements OnInit {
         resp => {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Users were successfully deleted'));
           this.removeDeletedUsersFromTable(idsToRemove);
-          this.unselectAll();
+          this.resetSelection();
         },
         err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Users were not deleted'), {error: err}));
+  }
+
+  private resetSelection() {
+    this.selection.clear();
+    this.selectedUsers.clear();
+    this.totalUsersCount = this.dataSource.data.length;
+    this.selectedUsersCount = 0;
+  }
+
+  private isInSelection(userToCheck: User): boolean {
+    return this.selectedUsers.toArray()
+      .map(user => user.login)
+      .includes(userToCheck.login);
+  }
+
+  private findPreselectedUsers(users: User[]): User[] {
+    return users.filter(user => this.isInSelection(user));
+  }
+  private markCheckboxes(users: User[]) {
+    this.selection.select(...users);
   }
 }

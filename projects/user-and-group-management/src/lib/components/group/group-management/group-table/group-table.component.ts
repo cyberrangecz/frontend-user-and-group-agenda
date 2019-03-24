@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {merge, of, Subscription} from 'rxjs';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {GroupManagementService} from '../../../../services/group/group-management.service';
+import {GroupSelectionService} from '../../../../services/group/group-selection.service';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {Group} from '../../../../model/group/group.model';
@@ -51,6 +51,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   totalGroupsCount: number;
   expandedRow: GroupTableDataModel;
   dataChangeSubscription: Subscription;
+  selectionChangeSubscription: Subscription;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -58,7 +59,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<GroupTableDataModel>(true, []);
 
   constructor(public dialog: MatDialog,
-              private groupManagementService: GroupManagementService,
+              private groupSelectionService: GroupSelectionService,
               private configService: ConfigService,
               private groupFacade: GroupFacadeService,
               private alertService: AlertService) { }
@@ -71,6 +72,9 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.dataChangeSubscription) {
       this.dataChangeSubscription.unsubscribe();
+    }
+    if (this.selectionChangeSubscription) {
+      this.selectionChangeSubscription.unsubscribe();
     }
   }
 
@@ -176,8 +180,9 @@ export class GroupTableComponent implements OnInit, OnDestroy {
    * @param dataWrapper Groups fetched from server
    */
   private createDataSource(dataWrapper: TableDataWrapper<GroupTableDataModel[]>) {
-    this.totalGroupsCount = dataWrapper.tableData ? dataWrapper.tableData.length : 0;
-    this.selectedGroupsCount = 0;
+    this.totalGroupsCount = dataWrapper.pagination.totalElements;
+    this.selection.clear();
+    this.markCheckboxes(this.findPreselectedGroups(dataWrapper.tableData));
     this.dataSource = new MatTableDataSource(dataWrapper.tableData);
     this.dataSource.filterPredicate =
       (data: GroupTableDataModel, filter: string) =>
@@ -185,28 +190,37 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   }
 
   private unselectAll() {
-    this.selectedGroupsCount = 0;
+    this.selection.selected.forEach(tableData =>
+    this.groupSelectionService.unselectGroup(tableData.group));
     this.selection.clear();
-    this.groupManagementService.unselectAllGroups();
   }
 
   private selectAll() {
-    this.selectedGroupsCount = this.totalGroupsCount;
-    const groups = [];
     this.dataSource.data.forEach(row => {
       this.selection.select(row);
-      groups.push(row.group);
+      this.groupSelectionService.selectGroup(row.group);
     });
-    this.groupManagementService.selectGroups(groups);
   }
 
   private selectGroup(group: Group) {
-    this.selectedGroupsCount++;
-    this.groupManagementService.selectGroup(group);
+    this.groupSelectionService.selectGroup(group);
   }
   private unselectGroup(group: Group) {
-    this.selectedGroupsCount--;
-    this.groupManagementService.unselectGroup(group);
+    this.groupSelectionService.unselectGroup(group);
+  }
+
+  private isInSelection(groupToCheck: Group): boolean {
+    return this.groupSelectionService.getSelectedGroups()
+      .map(group => group.id)
+      .includes(groupToCheck.id);
+  }
+
+  private findPreselectedGroups(groupTableData: GroupTableDataModel[]) {
+    return groupTableData.filter(groupDatum =>
+      this.isInSelection(groupDatum.group));
+  }
+  private markCheckboxes(groupTableData: GroupTableDataModel[]) {
+    this.selection.select(...groupTableData);
   }
 
   private openEditGroupPopup(group: Group) {
@@ -256,7 +270,9 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   }
 
   private subscribeForEvents() {
-    this.groupManagementService.dataChange$
+    this.dataChangeSubscription = this.groupSelectionService.dataChange$
       .subscribe(change => this.fetchData());
+    this.selectionChangeSubscription = this.groupSelectionService.selectionChange$
+      .subscribe(groupsCount => this.selectedGroupsCount = groupsCount);
   }
 }

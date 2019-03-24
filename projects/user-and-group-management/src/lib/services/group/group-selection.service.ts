@@ -4,7 +4,7 @@ import {Group} from '../../model/group/group.model';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable()
-export class GroupManagementService {
+export class GroupSelectionService {
 
   private _selectedGroups: Set<Group> = new Set<Group>(group => group.id.toString());
 

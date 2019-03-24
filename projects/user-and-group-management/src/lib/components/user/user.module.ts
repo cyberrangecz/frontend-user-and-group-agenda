@@ -4,7 +4,7 @@ import {UserMaterialModule} from './user-material.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserTableComponent } from './user-management/user-table/user-table.component';
 import { UserControlsComponent } from './user-management/user-controls/user-controls.component';
-import {UserManagementService} from '../../services/user/user-management.service';
+import {UserSelectionService} from '../../services/user/user-selection.service';
 import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../pipes/pipes.module';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
@@ -26,7 +26,7 @@ import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirm
     SharedModule
   ],
   providers: [
-    UserManagementService,
+    UserSelectionService,
   ],
   entryComponents: [
     ConfirmationDialogComponent

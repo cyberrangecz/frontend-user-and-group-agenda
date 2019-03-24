@@ -101,7 +101,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   private unselectAll() {
     this.dataSource._pageData(this.dataSource.data).forEach(user =>
-    this.selectedUsers.remove(user));
+      this.selectedUsers.remove(user));
     this.selection.clear();
     this.selectedUsersCount = this.selectedUsers.size();
   }
@@ -124,7 +124,6 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.selectedUsers.remove(user);
     this.selection.deselect(user);
     this.selectedUsersCount = this.selectedUsers.size();
-
   }
 
   private createDataSource() {
@@ -132,7 +131,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.totalUsersCount = this.dataSource.data.length;
-    this.paginator.page.subscribe(pageChange => {
+    this.paginationChangeSubscription = this.paginator.page.subscribe(pageChange => {
       this.selection.clear();
       this.markCheckboxes(this.findPreselectedUsers(this.dataSource._pageData(this.dataSource.data)));
     });

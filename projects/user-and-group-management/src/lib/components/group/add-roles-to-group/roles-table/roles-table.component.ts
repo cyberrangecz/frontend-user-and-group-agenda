@@ -4,6 +4,7 @@ import {Role} from '../../../../model/role/role.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
+import {User} from '../../../../model/user/user.model';
 
 @Component({
   selector: 'kypo2-roles-table',
@@ -67,7 +68,7 @@ export class RolesTableComponent implements OnInit, OnChanges {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    return this.selection.selected.length === this.dataSource.data.length;
+    return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 
   /**
@@ -75,9 +76,14 @@ export class RolesTableComponent implements OnInit, OnChanges {
    * @param roles array of roles
    */
   private createDataSource(roles: Role[]) {
-    this.totalRolesCount = roles.length;
     this.selectedRolesCount = 0;
     this.dataSource = new MatTableDataSource(roles);
+    this.dataSource.paginator = this.paginator;
+    this.totalRolesCount = this.dataSource.data.length;
+    this.paginator.page.subscribe(pageChange => {
+      this.selection.clear();
+      this.markCheckboxes(this.findPreselectedRoles(this.dataSource._pageData(this.dataSource.data)));
+    });
     this.dataSource.filterPredicate =
       (data: Role, filter: string) =>
         (data.name && data.name.toLowerCase().indexOf(filter) !== -1)
@@ -85,30 +91,46 @@ export class RolesTableComponent implements OnInit, OnChanges {
   }
 
   private unselectAll() {
-    this.selectedRolesCount = 0;
+    this.dataSource._pageData(this.dataSource.data).forEach(role =>
+      this.selectedRoles.remove(role));
     this.selection.clear();
-    this.selectedRoles.clear();
+    this.selectedRolesCount = this.selectedRoles.size();
     this.roleSelectionChange.emit(this.selectedRoles.toArray());
   }
 
   private selectAll() {
-    this.selectedRolesCount = this.totalRolesCount;
-    this.dataSource.data.forEach(row => {
+    this.dataSource._pageData(this.dataSource.data).forEach(row => {
       this.selection.select(row);
       this.selectedRoles.add(row);
     });
+    this.selectedRolesCount = this.selectedRoles.size();
     this.roleSelectionChange.emit(this.selectedRoles.toArray());
   }
 
   private selectRole(role: Role) {
-    this.selectedRolesCount++;
     this.selectedRoles.add(role);
+    this.selection.select(role);
+    this.selectedRolesCount = this.selectedRoles.size();
     this.roleSelectionChange.emit(this.selectedRoles.toArray());
   }
 
   private unselectRole(role: Role) {
-    this.selectedRolesCount--;
     this.selectedRoles.remove(role);
+    this.selection.deselect(role);
+    this.selectedRolesCount = this.selectedRoles.size();
     this.roleSelectionChange.emit(this.selectedRoles.toArray());
+  }
+
+  private isInSelection(roleToCheck: Role): boolean {
+    return this.selectedRoles.toArray()
+      .map(role => role.id)
+      .includes(roleToCheck.id);
+  }
+
+  private findPreselectedRoles(roles: Role[]): Role[] {
+    return roles.filter(role => this.isInSelection(role));
+  }
+  private markCheckboxes(roles: Role[]) {
+    this.selection.select(...roles);
   }
 }

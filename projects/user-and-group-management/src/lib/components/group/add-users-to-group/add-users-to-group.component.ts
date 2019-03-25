@@ -15,7 +15,8 @@ import {AlertType} from '../../../model/enums/alert-type.enum';
 })
 export class AddUsersToGroupComponent implements OnInit {
 
-  selectedUsers: User[];
+  selectedUsers: User[] = [];
+  selectedGroups: Group[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<AddUsersToGroupComponent>,
@@ -40,6 +41,10 @@ export class AddUsersToGroupComponent implements OnInit {
     this.selectedUsers = $event;
   }
 
+  onGroupSelectionChanged($event: Group[]) {
+    this.selectedGroups = $event;
+  }
+
   private isValidInput(): boolean {
     const potentionalErrorMessage = this.validateInput();
     if (potentionalErrorMessage !== '') {
@@ -51,7 +56,8 @@ export class AddUsersToGroupComponent implements OnInit {
 
   private sendAddUsersToGroupRequest() {
     this.groupFacadeService.addUsersToGroup(this.group.id,
-      this.selectedUsers.map(user => user.id))
+      this.selectedUsers.map(user => user.id),
+      this.selectedGroups.map(group => group.id))
       .subscribe(
         resp => {
           this.dialogRef.close(DialogResultEnum.SUCCESS);

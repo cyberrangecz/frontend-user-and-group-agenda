@@ -29,7 +29,7 @@ export class GroupFacadeService {
     this.config = this.configService.config;
   }
 
-  getGroups(pagination = null): Observable<TableDataWrapper<GroupTableDataModel[]>> {
+  getGroupsInTableDataModel(pagination = null): Observable<TableDataWrapper<GroupTableDataModel[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })
@@ -38,13 +38,22 @@ export class GroupFacadeService {
     return this.http.get<TableDataWrapper<GroupTableDataModel[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
   }
 
+  getGroups(pagination = null): Observable<TableDataWrapper<Group[]>> {
+    if (pagination) {
+      return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
+        { params: PaginationHttpParams.createPaginationParams(pagination) })
+        .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableGroups(resp)));
+    }
+    return this.http.get<TableDataWrapper<Group[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
+  }
+
   getGroupById(groupId: number) {
     return this.http.get(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}${groupId}`);
   }
 
-  createGroup(group: Group) {
+  createGroup(group: Group, groupsToImportFromId: number[] = []) {
     return this.http.post(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
-      this.groupMapper.mapGroupToNewGroupDTO(group));
+      this.groupMapper.mapGroupToNewGroupDTO(group, groupsToImportFromId));
   }
 
   updateGroup(group: Group) {

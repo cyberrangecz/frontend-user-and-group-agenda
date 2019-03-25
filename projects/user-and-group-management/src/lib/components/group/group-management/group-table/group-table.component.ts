@@ -155,7 +155,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.groupFacade.getGroups(
+          return this.groupFacade.getGroupsInTableDataModel(
             PaginationFactory.createWithSort(this.paginator.pageIndex,
               this.paginator.pageSize,
               this.sort.active,

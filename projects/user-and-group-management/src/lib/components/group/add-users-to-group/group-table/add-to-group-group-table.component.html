@@ -1,3 +1,69 @@
-<p>
-  group-table works!
-</p>
+<div class="content">
+  <div class="groups-table-wrapper">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)"
+             [disabled]="isInErrorState"
+             placeholder="Filter by name">
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <div class="loading"
+         *ngIf="isLoadingResults || isInErrorState">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      <div class="loading-error" *ngIf="isInErrorState">
+        We had some trouble loading the data.
+        <button mat-icon-button (click)="fetchData()" color="primary"><mat-icon>refresh</mat-icon></button>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- SELECTION CHECKBOXES -->
+      <ng-container matColumnDef="select">
+        <th class="select" mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? selectAllChange(): null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [disabled]="isInErrorState || isLoadingResults">
+          </mat-checkbox>
+        </th>
+        <td class="select" mat-cell *matCellDef="let group; let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null; selectChange($event, group)"
+            [disabled]="isInErrorState || isLoadingResults"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- NAME Column -->
+      <ng-container matColumnDef="name">
+        <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="name" [disabled]="isInErrorState">Name</th>
+        <td class="name" mat-cell *matCellDef="let group">
+          {{ group?.name }}
+        </td>
+      </ng-container>
+
+      <!-- DESCRIPTION Column -->
+      <ng-container matColumnDef="description">
+        <th class="description" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Description</th>
+        <td class="description" mat-cell *matCellDef="let group">
+          {{ group?.description }}
+        </td>
+      </ng-container>
+
+      <!-- FOOTER column -->
+      <ng-container matColumnDef="select-count">
+        <td mat-footer-cell *matFooterCellDef colspan="10" class="select-count">
+          Selected {{ selectedGroupsCount }} of total {{ totalGroupsCount }} users
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row;columns: displayedColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="['select-count']" class="select-count"></tr>
+    </table>
+    <mat-paginator [length]="resultsLength" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
+</div>

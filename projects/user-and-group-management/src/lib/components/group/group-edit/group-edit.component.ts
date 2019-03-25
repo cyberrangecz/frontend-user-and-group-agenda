@@ -19,7 +19,8 @@ export class GroupEditComponent implements OnInit {
 
   name: string;
   description: string;
-  users: User[];
+  users: User[] = [];
+  groups: Group[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<GroupEditComponent>,
@@ -46,6 +47,10 @@ export class GroupEditComponent implements OnInit {
 
   onUserSelectionChanged($event: User[]) {
     this.users = $event;
+  }
+
+  onGroupSelectionChanged($event: Group[]) {
+    this.groups = $event;
   }
 
   private resolveInitialValues() {
@@ -109,7 +114,8 @@ export class GroupEditComponent implements OnInit {
   }
 
   private sendCreateRequest(group: Group) {
-    this.groupFacade.createGroup(group)
+    const groupIdsToImportUsers = this.groups.map(groupToBeImported => groupToBeImported.id);
+    this.groupFacade.createGroup(group, groupIdsToImportUsers)
       .subscribe(
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
         err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Creating group failed'), err)

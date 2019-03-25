@@ -26,6 +26,12 @@ export class GroupMapperService {
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
 
+  mapGroupDTOsWithPaginationToTableGroups(restResource: RestResourceDTO<GroupDTO>): TableDataWrapper<Group[]> {
+    return new TableDataWrapper<Group[]>(
+      restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
+      this.mapPaginationDTOToPaginationModel(restResource.pagination));
+  }
+
   mapGroupDTOToGroupTableDataModel(groupDTO: GroupDTO): GroupTableDataModel {
     const result = new GroupTableDataModel();
     result.group = this.mapGroupDTOToGroup(groupDTO);
@@ -43,11 +49,11 @@ export class GroupMapperService {
     return result;
   }
 
-  mapGroupToNewGroupDTO(group: Group): NewGroupDTO {
+  mapGroupToNewGroupDTO(group: Group, groupsToImportFromId: number[]): NewGroupDTO {
     const result = new NewGroupDTO();
     result.name = group.name;
     result.description = group.description;
-    result.group_ids_of_imported_users = [];
+    result.group_ids_of_imported_users = groupsToImportFromId;
     result.users = this.userMapper.mapUsersToUserForGroupDTOs(group.members);
     return result;
   }

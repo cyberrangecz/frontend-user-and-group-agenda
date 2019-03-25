@@ -6,7 +6,7 @@ import {
   MatInputModule,
   MatPaginatorModule, MatProgressSpinnerModule,
   MatSortModule,
-  MatTableModule, MatTooltipModule
+  MatTableModule, MatTabsModule, MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
@@ -23,6 +23,7 @@ import {
     MatDialogModule,
     MatFormFieldModule,
     MatDividerModule,
+    MatTabsModule
   ],
   exports: [
     MatButtonModule,
@@ -36,7 +37,8 @@ import {
     MatTooltipModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTabsModule
   ]
 })
 export class GroupMaterialModule {

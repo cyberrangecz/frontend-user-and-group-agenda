@@ -39,7 +39,11 @@ export class UserMapperService {
   }
 
   mapUserForGroupsDTOsToUsers(userForGroupsDTOs: UserForGroupsDTO[]): User[] {
-    return userForGroupsDTOs.map(userDTO => this.mapUserForGroupsDTOToUser(userDTO));
+    if (userForGroupsDTOs) {
+      return userForGroupsDTOs.map(userDTO => this.mapUserForGroupsDTOToUser(userDTO));
+    } else {
+      return [];
+    }
   }
 
   mapUserForGroupsDTOToUser(userForGroupDTO: UserForGroupsDTO): User {
@@ -62,7 +66,11 @@ export class UserMapperService {
   }
 
   mapUsersToUserForGroupDTOs(users: User[]): UserForGroupsDTO[] {
-    return users.map(user => this.mapUserToUserForGroupDTO(user));
+    if (users) {
+      return users.map(user => this.mapUserToUserForGroupDTO(user));
+    } else {
+      return [];
+    }
   }
 
   mapUserToUserForGroupDTO(user: User): UserForGroupsDTO {

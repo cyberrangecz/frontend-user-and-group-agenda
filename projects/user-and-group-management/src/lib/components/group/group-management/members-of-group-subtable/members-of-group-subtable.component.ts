@@ -76,8 +76,6 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    console.log(this.selection.selected.length);
-    console.log(this.dataSource._pageData(this.dataSource.data).length);
     return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 

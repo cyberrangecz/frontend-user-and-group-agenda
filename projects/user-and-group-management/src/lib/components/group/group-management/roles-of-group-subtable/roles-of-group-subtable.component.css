@@ -15,6 +15,18 @@ table {
   width: 100%;
 }
 
-td, th {
+td.select, th.select {
+  width: 10%;
+}
+
+td.name, th.name {
   width: 50%;
+}
+
+td.microservice, th.microservice {
+  width: 40%;
+}
+
+td.select-count {
+  color: darkslateblue;
 }

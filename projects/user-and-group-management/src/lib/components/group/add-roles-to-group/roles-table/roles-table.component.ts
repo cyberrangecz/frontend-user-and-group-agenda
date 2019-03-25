@@ -4,7 +4,7 @@ import {Role} from '../../../../model/role/role.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {User} from '../../../../model/user/user.model';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'kypo2-roles-table',
@@ -71,7 +71,7 @@ export class RolesTableComponent implements OnInit, OnChanges {
     return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 
-  /**
+    /**
    * Creates table data source from fetched data
    * @param roles array of roles
    */
@@ -130,6 +130,7 @@ export class RolesTableComponent implements OnInit, OnChanges {
   private findPreselectedRoles(roles: Role[]): Role[] {
     return roles.filter(role => this.isInSelection(role));
   }
+
   private markCheckboxes(roles: Role[]) {
     this.selection.select(...roles);
   }

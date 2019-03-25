@@ -1,11 +1,36 @@
+
 <div class="content">
   <h2>Roles of group {{ group?.name}}</h2>
+  <button mat-raised-button
+          color="warn"
+          [disabled]="selectedRolesCount === 0"
+          (click)="removeSelectedRolesFromGroup()">
+    Remove selected roles from group ({{ selectedRolesCount }})
+  </button>
   <div class="table-wrapper">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- SELECTION CHECKBOXES -->
+        <ng-container matColumnDef="select">
+          <th class="select" mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              (change)="$event ? selectAllChange(): null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td class="select" mat-cell *matCellDef="let role; let row">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null; selectChange($event, role)"
+              [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
         <!-- NAME Column -->
         <ng-container matColumnDef="name">
@@ -26,18 +51,25 @@
             <button mat-icon-button
                     color="warn"
                     matTooltip="Remove role from group"
-                    (click)="removeRole(role)">
+                    (click)="removeRoleFromGroup(role)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
         </ng-container>
 
+        <!-- FOOTER column -->
+        <ng-container matColumnDef="select-count">
+          <td mat-footer-cell *matFooterCellDef colspan="10" class="select-count">
+            Selected {{ selectedRolesCount }} of total {{ totalRolesCount }} roles
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-        </tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="['select-count']" class="select-count"></tr>
       </table>
 
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[1, 10, 25, 100]"></mat-paginator>
     </div>
   </div>
 </div>

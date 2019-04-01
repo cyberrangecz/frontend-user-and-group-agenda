@@ -23,7 +23,7 @@ import {
     MatDialogModule,
     MatFormFieldModule,
     MatDividerModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   exports: [
     MatButtonModule,

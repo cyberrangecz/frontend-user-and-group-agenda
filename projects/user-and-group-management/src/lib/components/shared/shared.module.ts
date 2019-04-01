@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AlertService} from '../../services/alert/alert.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import {MatButtonModule, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatIconModule} from '@angular/material';
 import {AlertComponent} from './alert/alert.component';
 
 @NgModule({
@@ -14,7 +14,8 @@ import {AlertComponent} from './alert/alert.component';
   imports: [
     CommonModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     AlertService,

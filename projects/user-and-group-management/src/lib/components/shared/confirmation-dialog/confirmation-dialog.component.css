@@ -1,11 +1,10 @@
-.content {
+mat-dialog-content {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.button-wrapper {
-  margin: 20px;
+mat-dialog-actions {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

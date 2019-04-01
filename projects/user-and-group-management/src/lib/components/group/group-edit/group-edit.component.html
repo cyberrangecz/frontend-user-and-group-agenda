@@ -1,53 +1,52 @@
-<mat-dialog-content class="mat-typography">
-  <div class="content">
-    <h2 *ngIf="!editMode">Create New Group</h2>
-    <h2 *ngIf="editMode">Edit {{ group?.name }}</h2>
-    <div class="form-container">
+<div class="dialog-container">
+  <div class="mat-typography">
+    <h2 mat-dialog-title *ngIf="!editMode">Create New Group</h2>
+    <h2 mat-dialog-title *ngIf="editMode">Edit {{ group?.name }}</h2>
+    <mat-dialog-content>
+      <div class="form-container">
 
-      <!-- NAME field> -->
-      <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="Name" [(ngModel)]="name" required>
-        <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
+        <!-- NAME field> -->
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Name" [(ngModel)]="name" required>
+          <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
 
-      <!-- DESCRIPTION field -->
-      <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
-        <input matInput placeholder="Description" [(ngModel)]="description" required>
-        <button mat-button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
-    <!-- USER PICKER IF CREATE MODE-->
-    <div *ngIf="!editMode" class="user-table">
-      <mat-tab-group>
-        <mat-tab label="Users">
-          <h2>Add users to group</h2>
-          <kypo2-add-to-group-user-table
-            [group]="group"
-            (userSelectionChange)="onUserSelectionChanged($event)">
-          </kypo2-add-to-group-user-table>
-        </mat-tab>
-        <mat-tab label="Groups">
-          <h2>Import users from other groups</h2>
-          <kypo2-add-to-group-group-table
-            [group]="group"
-            (groupSelectionChange)="onGroupSelectionChanged($event)">
-          </kypo2-add-to-group-group-table>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
+        <!-- DESCRIPTION field -->
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput placeholder="Description" [(ngModel)]="description" required>
+          <button mat-button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <!-- USER PICKER IF CREATE MODE-->
+      <div *ngIf="!editMode" class="user-table">
+        <mat-tab-group>
+          <mat-tab label="Users">
+            <h2>Add users to group</h2>
+            <kypo2-add-to-group-user-table
+              [group]="group"
+              (userSelectionChange)="onUserSelectionChanged($event)">
+            </kypo2-add-to-group-user-table>
+          </mat-tab>
+          <mat-tab label="Groups">
+            <h2>Import users from other groups</h2>
+            <kypo2-add-to-group-group-table
+              [group]="group"
+              (groupSelectionChange)="onGroupSelectionChanged($event)">
+            </kypo2-add-to-group-group-table>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </mat-dialog-content>
 
-
-    <div class="button-wrapper">
+    <mat-dialog-actions>
       <button mat-button color="warn" (click)="cancel()">Cancel</button>
       <button mat-button color="primary" (click)="save()">Save</button>
-    </div>
+    </mat-dialog-actions>
   </div>
-</mat-dialog-content>
-
-
+</div>

@@ -7,6 +7,7 @@ import {UserAndGroupManagementConfig} from './config/user-and-group-management-c
 import {UserAndGroupManagementComponent} from './user-and-group-management.component';
 import {GroupModule} from './components/group/group.module';
 import {UserModule} from './components/user/user.module';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from '@angular/material';
 
 @NgModule({
   declarations: [

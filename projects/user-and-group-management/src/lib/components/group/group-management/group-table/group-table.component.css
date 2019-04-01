@@ -25,11 +25,11 @@
 }
 
 kypo2-roles-of-group-subtable {
-  width: 40%;
+  flex-grow: 3;
 }
 
 kypo2-members-of-group-subtable {
-  width: 60%;
+  flex-grow: 4;
 }
 
 .row-detail-content {
@@ -110,9 +110,17 @@ td.select-count {
   color: darkslateblue;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   .row-detail-content {
     display: flex;
     flex-direction: column;
+  }
+
+  kypo2-roles-of-group-subtable {
+    width: 100%;
+  }
+
+  kypo2-members-of-group-subtable {
+    width: 100%;
   }
 }

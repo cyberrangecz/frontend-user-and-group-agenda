@@ -4,9 +4,15 @@ import {Role} from '../model/role/role.model';
 @Pipe({name: 'rolesToString'})
 export class RolesTablePipe implements  PipeTransform {
 
-  transform(value: Role[]): string {
-    return value && value.length > 0
-      ? value.map(role => role.name).join(', ')
+  transform(roles: Role[]): string {
+    return roles && roles.length > 0
+      ? this.createRolesCountText(roles)
       : '-';
+  }
+
+  private createRolesCountText(roles: Role[]): string {
+    return roles.length === 1
+    ? '1 role'
+    : roles.length + ' roles';
   }
 }

@@ -59,7 +59,9 @@
         <!-- ROLES Column -->
         <ng-container matColumnDef="roles">
           <th class="roles" mat-header-cell *matHeaderCellDef>Roles</th>
-          <td class="roles" mat-cell *matCellDef="let data"> {{ data?.user?.roles | rolesToString }}</td>
+          <td class="roles" mat-cell *matCellDef="let data"> {{ data?.user?.roles | rolesToString }}
+            <button *ngIf="data?.user?.roles?.length > 0" mat-button color="accent" (click)="showUserRoles(data?.user)">Show</button>
+          </td>
         </ng-container>
 
         <!-- DELETE Column -->

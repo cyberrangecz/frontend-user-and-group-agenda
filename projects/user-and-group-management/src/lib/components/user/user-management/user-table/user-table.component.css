@@ -34,19 +34,19 @@ td.select, th.select {
 }
 
 td.name, th.name {
-  width: 20%;
+  width: 25%;
 }
 
 td.login, th.login {
-  width: 15%;
+  width: 25%;
 }
 
 td.email, th.email {
-  width: 20%;
+  width: 25%;
 }
 
 td.roles, th.roles {
-  width: 40%;
+  width: 20%;
 }
 
 td.delete, th.delete {

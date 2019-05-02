@@ -16,6 +16,7 @@ import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfigService} from '../../../../config/config.service';
+import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
 
 @Component({
   selector: 'kypo2-user-table',
@@ -106,6 +107,14 @@ export class UserTableComponent implements OnInit, OnDestroy {
           this.sendRequestToRemoveUser(user);
         }
       });
+  }
+
+  showUserRoles(user: User) {
+    this.dialog.open(UserRolesDialogComponent, {
+      data: {
+        user: user
+      }
+    });
   }
 
   /**
@@ -227,4 +236,5 @@ export class UserTableComponent implements OnInit, OnDestroy {
   private markCheckboxes(userTableData: UserTableDataModel[]) {
     this.selection.select(...userTableData);
   }
+
 }

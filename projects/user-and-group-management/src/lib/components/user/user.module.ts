@@ -10,12 +10,14 @@ import {PipesModule} from '../../pipes/pipes.module';
 import {UserFacadeModule} from '../../services/user/user-facade.module';
 import {SharedModule} from '../shared/shared.module';
 import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { UserRolesDialogComponent } from './user-management/user-table/user-roles-dialog/user-roles-dialog.component';
 
 @NgModule({
   declarations: [
   UserManagementComponent,
   UserTableComponent,
   UserControlsComponent,
+  UserRolesDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,7 @@ import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirm
     UserSelectionService,
   ],
   entryComponents: [
-    ConfirmationDialogComponent
+    UserRolesDialogComponent
   ],
   exports: [
     UserManagementComponent

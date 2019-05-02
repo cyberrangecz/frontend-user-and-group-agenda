@@ -24,7 +24,8 @@ import {AlertComponent} from './alert/alert.component';
     ConfirmationDialogComponent
   ],
   entryComponents: [
-    AlertComponent
+    AlertComponent,
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule { }

@@ -18,6 +18,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
 import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-group.component';
 import {ConfigService} from '../../../../config/config.service';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-group-table',
@@ -62,6 +63,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
               private groupSelectionService: GroupSelectionService,
               private configService: ConfigService,
               private groupFacade: GroupFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) { }
 
   ngOnInit() {
@@ -130,7 +132,8 @@ export class GroupTableComponent implements OnInit, OnDestroy {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Group was successfully deleted'));
           this.fetchData();
         },
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Group was not deleted'), {error: err}));
+        err => this.errorHandler.displayInAlert(err, 'Deleting group')
+      );
   }
 
   /**
@@ -169,7 +172,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading groups'), err);
+          this.errorHandler.displayInAlert(err, 'Loading groups');
           return of([]);
         }))
       .subscribe((data: TableDataWrapper<GroupTableDataModel[]>) => this.createDataSource(data));

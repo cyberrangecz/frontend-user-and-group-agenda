@@ -12,6 +12,7 @@ import {Alert} from '../../../../model/alert/alert.model';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-add-to-group-group-table',
@@ -38,7 +39,8 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
 
   constructor(private groupFacade: GroupFacadeService,
               private configService: ConfigService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private errorHandler: ErrorHandlerService) { }
 
   ngOnInit() {
   }
@@ -99,7 +101,7 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading groups'), err);
+          this.errorHandler.displayInAlert(err, 'Loading groups');
           return of([]);
         }))
       .subscribe((data: TableDataWrapper<Group[]>) => this.createDataSource(data));

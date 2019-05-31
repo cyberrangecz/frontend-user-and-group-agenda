@@ -13,6 +13,7 @@ import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/
 import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-members-of-group-subtable',
@@ -38,6 +39,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   constructor(private dialog: MatDialog,
               private groupFacade: GroupFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) { }
 
   ngOnInit() {
@@ -168,7 +170,8 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
           this.unselectUser(userToRemove);
           this.removeDeletedUsersFromTable([userToRemove.id]);
         },
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
+        err => this.errorHandler.displayInAlert(err, 'Deleting user')
+      );
   }
 
   private requestRemoveSelectedUsersFromGroup() {
@@ -180,7 +183,8 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
           this.removeDeletedUsersFromTable(idsToRemove);
           this.resetSelection();
         },
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Users were not deleted'), {error: err}));
+        err => this.errorHandler.displayInAlert(err, 'Deleting users')
+      );
   }
 
   private resetSelection() {

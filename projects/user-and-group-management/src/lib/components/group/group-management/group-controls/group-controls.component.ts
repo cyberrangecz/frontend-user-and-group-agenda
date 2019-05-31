@@ -8,6 +8,7 @@ import {Alert} from '../../../../model/alert/alert.model';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-group-controls',
@@ -22,6 +23,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
               private groupManagementService: GroupSelectionService,
               private groupFacade: GroupFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) {
 
   }
@@ -57,7 +59,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Selected groups were successfully deleted'));
         },
         err => {
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Selected groups were not deleted'), {error: err});
+          this.errorHandler.displayInAlert(err, 'Deleting groups');
         }
       );
   }

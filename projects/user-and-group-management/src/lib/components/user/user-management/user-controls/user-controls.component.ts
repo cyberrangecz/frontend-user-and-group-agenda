@@ -11,6 +11,7 @@ import {User} from '../../../../model/user/user.model';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {map} from 'rxjs/operators';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-user-controls',
@@ -25,6 +26,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
               private userManagementService: UserSelectionService,
               private userFacade: UserFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) {
   }
 
@@ -69,9 +71,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
           this.userManagementService.emitDataChange();
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Selected users were successfully deleted'));
         },
-        err => {
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Selected users were not deleted'), {error: err});
-        }
+        err => this.errorHandler.displayInAlert(err, 'Deleting users')
       );
   }
 

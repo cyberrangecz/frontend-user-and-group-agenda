@@ -4,6 +4,7 @@ import {AlertService} from '../../services/alert/alert.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import {MatButtonModule, MatDialogModule, MatIconModule} from '@angular/material';
 import {AlertComponent} from './alert/alert.component';
+import {ErrorHandlerService} from '../../services/alert/error-handler.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {AlertComponent} from './alert/alert.component';
   ],
   providers: [
     AlertService,
+    ErrorHandlerService
   ],
   exports: [
     ConfirmationDialogComponent

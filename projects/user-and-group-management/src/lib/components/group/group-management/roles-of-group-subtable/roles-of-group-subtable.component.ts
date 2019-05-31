@@ -10,6 +10,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {Set} from 'typescript-collections';
 import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',
@@ -35,6 +36,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
 
   constructor(private groupFacade: GroupFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) { }
 
   ngOnInit() {
@@ -83,9 +85,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Role was successfully removed'));
           this.resetSelection();
         },
-        err => {
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Role was not removed'), err);
-        }
+        err => this.errorHandler.displayInAlert(err, 'Removing role')
       );
   }
 

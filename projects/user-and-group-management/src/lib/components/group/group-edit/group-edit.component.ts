@@ -7,6 +7,7 @@ import {AlertService} from '../../../services/alert/alert.service';
 import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
+import {ErrorHandlerService} from '../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-group-edit',
@@ -25,6 +26,7 @@ export class GroupEditComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<GroupEditComponent>,
               private groupFacade: GroupFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) {
   }
 
@@ -109,8 +111,8 @@ export class GroupEditComponent implements OnInit {
     this.groupFacade.updateGroup(group)
       .subscribe(
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Updating group failed'), err)
-      );
+        err => this.errorHandler.displayInAlert(err, 'Updating group')
+  );
   }
 
   private sendCreateRequest(group: Group) {
@@ -118,7 +120,8 @@ export class GroupEditComponent implements OnInit {
     this.groupFacade.createGroup(group, groupIdsToImportUsers)
       .subscribe(
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'Creating group failed'), err)
-      );
+        err => this.errorHandler.displayInAlert(err, 'Creating group')
+
+  );
   }
 }

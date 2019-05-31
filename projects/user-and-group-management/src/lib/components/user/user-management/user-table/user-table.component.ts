@@ -17,6 +17,7 @@ import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfigService} from '../../../../config/config.service';
 import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-user-table',
@@ -52,6 +53,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     private userSelectionService: UserSelectionService,
     private configService: ConfigService,
     private userFacade: UserFacadeService,
+    private errorHandler: ErrorHandlerService,
     private alertService: AlertService) { }
 
   ngOnInit() {
@@ -152,7 +154,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Error while loading users'));
+          this.errorHandler.displayInAlert(err, 'Loading users');
           return of([]);
         }))
       .subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
@@ -227,7 +229,8 @@ export class UserTableComponent implements OnInit, OnDestroy {
           this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
           this.fetchData();
         },
-        err => this.alertService.addAlert(new Alert(AlertType.ERROR, 'User was not deleted'), {error: err}));
+        err => this.errorHandler.displayInAlert(err, 'Deleting user')
+      );
   }
 
   private findPreselectedUsers(userTableData: UserTableDataModel[]) {

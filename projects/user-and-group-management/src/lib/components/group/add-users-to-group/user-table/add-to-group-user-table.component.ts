@@ -8,11 +8,10 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
-import {Alert} from '../../../../model/alert/alert.model';
 import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
 import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
+import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-add-to-group-user-table',
@@ -39,7 +38,8 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
 
   constructor(private userFacade: UserFacadeService,
               private configService: ConfigService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private errorHandler: ErrorHandlerService) { }
 
   ngOnInit() {
   }
@@ -100,7 +100,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
       catchError((err) => {
         this.isLoadingResults = false;
         this.isInErrorState = true;
-        this.alertService.addAlert(new Alert(AlertType.ERROR, 'Loading users'), err);
+        this.errorHandler.displayInAlert(err, 'Loading users');
         return of([]);
       }))
       .subscribe((data: TableDataWrapper<User[]>) => this.createDataSource(data));

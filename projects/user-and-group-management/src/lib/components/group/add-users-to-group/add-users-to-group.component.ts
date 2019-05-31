@@ -7,6 +7,7 @@ import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 import {User} from '../../../model/user/user.model';
 import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
+import {ErrorHandlerService} from '../../../services/alert/error-handler.service';
 
 @Component({
   selector: 'kypo2-add-users-to-group',
@@ -21,6 +22,7 @@ export class AddUsersToGroupComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<AddUsersToGroupComponent>,
               private groupFacadeService: GroupFacadeService,
+              private errorHandler: ErrorHandlerService,
               private alertService: AlertService) {
   }
 
@@ -63,7 +65,7 @@ export class AddUsersToGroupComponent implements OnInit {
           this.dialogRef.close(DialogResultEnum.SUCCESS);
         },
         err => {
-          this.alertService.addAlert(new Alert(AlertType.ERROR, 'Adding users to group failed'), err);
+          this.errorHandler.displayInAlert(err, 'Adding users to group');
         }
       );
   }

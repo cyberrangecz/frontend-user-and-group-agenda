@@ -58,7 +58,8 @@ export class UserMapperService {
   mapUserDTOToUser(userDTO: UserDTO): User {
     const result = new User();
     result.id = userDTO.id;
-    result.name = userDTO.full_name;
+    result.name = `${userDTO.given_name} ${userDTO.family_name}`;
+    result.nameWithAcademicTitles = userDTO.full_name;
     result.mail = userDTO.mail;
     result.login = userDTO.login;
     result.roles = this.roleMapper.mapRoleDTOsToRoles(userDTO.roles);

@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "build-lib": "ng build kypo2-user-and-group-management",
     "create-package": "cd dist/user-and-group-management && npm pack",
-    "build-and-pack": "npm install && npm run build-lib && npm run create-package"
+    "build-and-pack": "npm install && npm run build-lib && npm run create-package",
+    "publish": "npm run build-and-pack && cd dist/user-and-group-management && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted"
   },
   "private": true,
   "dependencies": {

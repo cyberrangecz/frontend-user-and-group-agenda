@@ -17,6 +17,11 @@ export class RoleMapperService {
   mapRoleDTOToRole(roleDTO: RoleDTO): Role {
     const result = new Role();
     result.name = roleDTO.role_type;
+    if (roleDTO.description === null || roleDTO.description === undefined || roleDTO.description === "") {
+      result.description = 'No description provided';
+    } else {
+      result.description = roleDTO.description;
+    }
     result.microservice = roleDTO.name_of_microservice;
     result.microserviceId = roleDTO.id_of_microservice;
     result.id = roleDTO.id;

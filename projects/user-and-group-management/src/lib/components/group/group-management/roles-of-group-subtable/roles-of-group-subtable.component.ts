@@ -11,11 +11,19 @@ import {Set} from 'typescript-collections';
 import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',
   templateUrl: './roles-of-group-subtable.component.html',
-  styleUrls: ['./roles-of-group-subtable.component.css']
+  styleUrls: ['./roles-of-group-subtable.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
@@ -25,6 +33,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'microservice', 'remove'];
+  expandedRow: Role;
   dataSource: MatTableDataSource<Role>;
   selection = new SelectionModel<Role>(true, []);
 

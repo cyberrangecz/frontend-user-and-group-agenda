@@ -5,11 +5,19 @@ import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {forkJoin} from 'rxjs';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'kypo2-roles-table',
   templateUrl: './roles-table.component.html',
-  styleUrls: ['./roles-table.component.css']
+  styleUrls: ['./roles-table.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class RolesTableComponent implements OnInit, OnChanges {
 
@@ -19,6 +27,7 @@ export class RolesTableComponent implements OnInit, OnChanges {
 
   selectedRoles: Set<Role> = new Set<Role>(role => role.id.toString());
   displayedColumns: string[] = ['select', 'name', 'microservice'];
+  expandedRow: Role;
   selectedRolesCount = 0;
   totalRolesCount: number;
 

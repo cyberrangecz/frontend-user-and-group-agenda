@@ -46,6 +46,9 @@ export class GroupMapperService {
     result.canBeDeleted = groupDTO.can_be_deleted;
     result.members = this.userMapper.mapUserForGroupsDTOsToUsers(groupDTO.users);
     result.roles = this.roleMapper.mapRoleDTOsToRoles(groupDTO.roles);
+    if (groupDTO.expiration_date) {
+      result.expirationDate = new Date(groupDTO.expiration_date);
+    }
     return result;
   }
 
@@ -55,6 +58,9 @@ export class GroupMapperService {
     result.description = group.description;
     result.group_ids_of_imported_users = groupsToImportFromId;
     result.users = this.userMapper.mapUsersToUserForGroupDTOs(group.members);
+    if (group.expirationDate) {
+      result.expiration_date = group.expirationDate.toISOString();
+    }
     return result;
   }
 
@@ -63,6 +69,9 @@ export class GroupMapperService {
     result.id = group.id;
     result.name = group.name;
     result.description = group.description;
+    if (group.expirationDate) {
+      result.expiration_date = group.expirationDate.toISOString();
+    }
     return result;
   }
 

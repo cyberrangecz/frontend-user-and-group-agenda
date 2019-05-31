@@ -38,6 +38,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     'select',
     'name',
     'description',
+    'expiration-date',
     'roles-count',
     'members-count',
     'add-roles',

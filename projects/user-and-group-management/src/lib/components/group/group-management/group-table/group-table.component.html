@@ -70,6 +70,14 @@
         </td>
       </ng-container>
 
+      <!-- EXPIRATION DATE Column -->
+      <ng-container matColumnDef="expiration-date">
+        <th class="expiration-date" mat-header-cell *matHeaderCellDef >Expiration date</th>
+        <td class="expiration-date" mat-cell *matCellDef="let data">
+          {{ data.group?.expirationDate }}
+        </td>
+      </ng-container>
+
       <!-- ROLES COUNT Column -->
       <ng-container matColumnDef="roles-count">
         <th class="roles-count" mat-header-cell *matHeaderCellDef >Roles Count</th>
@@ -116,7 +124,8 @@
       <ng-container matColumnDef="edit">
         <th class="edit" mat-header-cell *matHeaderCellDef></th>
         <td class="edit" mat-cell *matCellDef="let data">
-          <button mat-icon-button
+          <button *ngIf="data.group?.canBeDeleted"
+                  mat-icon-button
                   color="primary"
                   matTooltip="Edit group"
                   (click)="editGroup(data.group); $event.stopPropagation()">

@@ -7,6 +7,7 @@ export class Group {
   description: string;
   roles: Role[];
   members: User[];
+  expirationDate: Date;
   canBeDeleted: boolean;
 }
 

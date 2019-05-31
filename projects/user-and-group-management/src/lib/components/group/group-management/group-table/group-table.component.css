@@ -77,7 +77,11 @@ td.name, th.name {
 }
 
 td.description, th.description {
-  width: 40%;
+  width: 30%;
+}
+
+td.expiration-date, th.expiration-date {
+  width: 10%;
 }
 
 td.roles-count, th.roles-count {

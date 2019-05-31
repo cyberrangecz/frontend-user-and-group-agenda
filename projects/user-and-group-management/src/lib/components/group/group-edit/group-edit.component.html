@@ -22,7 +22,23 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
+
+        <!-- EXPIRATION Date field -->
+        <mat-form-field
+          [owlDateTimeTrigger]="expirationDatePicker"
+          appearance="outline">
+          <mat-label>Expiration Date</mat-label>
+          <input matInput
+                 placeholder="Expires on"
+                 [(ngModel)]="expirationDate"
+                 [min]="tomorrow"
+                 [owlDateTime]="expirationDatePicker">
+          <owl-date-time #expirationDatePicker
+                         [startAt]="expirationDate">
+          </owl-date-time>
+        </mat-form-field>
       </div>
+
       <!-- USER PICKER IF CREATE MODE-->
       <div *ngIf="!editMode" class="user-table">
         <mat-tab-group>

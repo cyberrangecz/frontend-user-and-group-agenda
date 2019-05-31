@@ -8,4 +8,5 @@ export class GroupDTO {
   name: string;
   roles: RoleDTO[];
   users: UserForGroupsDTO[];
+  expiration_date: Date;
 }

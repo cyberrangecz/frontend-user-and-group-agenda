@@ -20,6 +20,8 @@ export class GroupEditComponent implements OnInit {
 
   name: string;
   description: string;
+  expirationDate: Date;
+  tomorrow: Date;
   users: User[] = [];
   groups: Group[] = [];
 
@@ -31,6 +33,8 @@ export class GroupEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    const today = new Date();
+    this.tomorrow = new Date(new Date(today.setDate(today.getDate() + 1)).setHours(0, 0 , 0));
     if (this.group) {
       this.resolveInitialValues();
     }
@@ -66,6 +70,7 @@ export class GroupEditComponent implements OnInit {
     this.name = this.group.name;
     this.description = this.group.description;
     this.users = this.group.members;
+    this.expirationDate = this.group.expirationDate;
   }
 
   private isValidInput(): boolean {
@@ -96,6 +101,7 @@ export class GroupEditComponent implements OnInit {
     editedGroup.name = this.name;
     editedGroup.description = this.description;
     editedGroup.members = this.users;
+    editedGroup.expirationDate = this.expirationDate;
     return editedGroup;
   }
 

@@ -74,7 +74,7 @@
       <ng-container matColumnDef="expiration-date">
         <th class="expiration-date" mat-header-cell *matHeaderCellDef >Expiration date</th>
         <td class="expiration-date" mat-cell *matCellDef="let data">
-          {{ data.group?.expirationDate }}
+          {{ data.group.expirationDate | dateFormat }}
         </td>
       </ng-container>
 

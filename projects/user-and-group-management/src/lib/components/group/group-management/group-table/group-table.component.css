@@ -81,6 +81,7 @@ td.description, th.description {
 }
 
 td.expiration-date, th.expiration-date {
+  text-align: center;
   width: 10%;
 }
 

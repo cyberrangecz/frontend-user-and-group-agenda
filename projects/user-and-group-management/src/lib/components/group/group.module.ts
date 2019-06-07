@@ -19,6 +19,7 @@ import {RoleFacadeModule} from '../../services/role/role-facade.module';
 import {AddToGroupGroupTableComponent} from './add-users-to-group/group-table/add-to-group-group-table.component';
 import {SharedModule} from '../shared/shared.module';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
+import {PipesModule} from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
     FormsModule,
     GroupFacadeModule,
     UserFacadeModule,
-    RoleFacadeModule
+    RoleFacadeModule,
+    PipesModule
   ],
   declarations: [
     GroupManagementComponent,

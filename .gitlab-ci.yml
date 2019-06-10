@@ -28,6 +28,8 @@ before_script:
     - echo $DEBIAN_PACKAGE
     # Set additional Apt repository
     - echo "$APT_SOURCE_LIST" > /etc/apt/sources.list.d/kypo.list
+    # Install Angular dependencies
+    - npm install
 
 unitTests:
     stage: unitTests

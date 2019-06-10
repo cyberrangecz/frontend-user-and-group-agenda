@@ -35,7 +35,7 @@ before_script:
 unitTests:
     stage: unitTests
     script:
-        - ng test
+        - ng test --browsers ChromeHeadless
     only:
         - triggers
         - branches

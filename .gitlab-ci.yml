@@ -12,6 +12,7 @@ variables:
 stages:
     - unitTests
 #    - integrationTests #TODO, Not implemented yet
+    - buildAngular
     - buildDebian
     - deployDebian
 

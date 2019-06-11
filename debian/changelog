@@ -1,0 +1,8 @@
+kypo2-user-and-group-management (0.0.0) stable; urgency=medium
+
+  * [df37384a] Add popup to confirm removing user from group
+  * [7009059b] Fix login issues
+  * [a2a31796] Devel
+  * [04182c04] Devel
+
+ -- Martin Machac <machacm@ics.muni.cz>  Tue, 11 Jun 2019 15:42:01 +0200

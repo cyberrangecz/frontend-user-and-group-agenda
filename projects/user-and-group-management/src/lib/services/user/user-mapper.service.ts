@@ -49,7 +49,8 @@ export class UserMapperService {
   mapUserForGroupsDTOToUser(userForGroupDTO: UserForGroupsDTO): User {
     const result = new User();
     result.id = userForGroupDTO.id;
-    result.name = userForGroupDTO.full_name;
+    result.name = `${userForGroupDTO.given_name} ${userForGroupDTO.family_name}`;
+    result.nameWithAcademicTitles = userForGroupDTO.full_name;
     result.mail = userForGroupDTO.mail;
     result.login = userForGroupDTO.login;
     return result;
@@ -76,7 +77,7 @@ export class UserMapperService {
 
   mapUserToUserForGroupDTO(user: User): UserForGroupsDTO {
     const result = new UserForGroupsDTO();
-    result.full_name = user.name;
+    result.full_name = user.nameWithAcademicTitles;
     result.id = user.id;
     result.login = user.login;
     result.mail = user.mail;

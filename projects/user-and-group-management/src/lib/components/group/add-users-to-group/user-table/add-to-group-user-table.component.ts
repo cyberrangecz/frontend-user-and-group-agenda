@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {User} from '../../../../model/user/user.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -31,8 +31,9 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   selectedUsersCount = 0;
   totalUsersCount: number;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   dataSource: MatTableDataSource<User>;
   selection = new SelectionModel<User>(true, []);
 

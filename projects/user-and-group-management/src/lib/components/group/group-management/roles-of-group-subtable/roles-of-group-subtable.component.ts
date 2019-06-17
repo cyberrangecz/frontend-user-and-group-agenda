@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Role} from '../../../../model/role/role.model';
@@ -29,8 +29,8 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   @Input() group: Group;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'microservice', 'remove'];
   expandedRow: Role;

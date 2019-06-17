@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {Role} from '../../../../model/role/role.model';
 import {Set} from 'typescript-collections';
@@ -31,8 +31,8 @@ export class RolesTableComponent implements OnInit, OnChanges {
   selectedRolesCount = 0;
   totalRolesCount: number;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   dataSource: MatTableDataSource<Role>;
   selection = new SelectionModel<Role>(true, []);
 

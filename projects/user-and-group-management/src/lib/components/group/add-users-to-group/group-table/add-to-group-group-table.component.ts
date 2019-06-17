@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -32,8 +32,9 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
   selectedGroupsCount = 0;
   totalGroupsCount: number;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   dataSource: MatTableDataSource<Group>;
   selection = new SelectionModel<Group>(true, []);
 

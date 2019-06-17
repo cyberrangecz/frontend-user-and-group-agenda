@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {User} from '../../../../model/user/user.model';
@@ -24,8 +24,8 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   @Input() group: Group;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'login', 'remove'];
   dataSource: MatTableDataSource<User>;

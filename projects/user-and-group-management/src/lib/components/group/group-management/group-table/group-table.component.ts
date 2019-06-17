@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {merge, of, Subscription} from 'rxjs';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -55,8 +55,8 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   dataChangeSubscription: Subscription;
   selectionChangeSubscription: Subscription;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   dataSource: MatTableDataSource<GroupTableDataModel>;
   selection = new SelectionModel<GroupTableDataModel>(true, []);
 

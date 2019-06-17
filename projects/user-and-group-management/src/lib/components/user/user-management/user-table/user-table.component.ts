@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource, SortDirection} from '@angular/material';
+import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {UserTableDataModel} from '../../../../model/table-data/user-table-data.model';
 import {UserSelectionService} from '../../../../services/user/user-selection.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
@@ -43,8 +43,9 @@ export class UserTableComponent implements OnInit, OnDestroy {
   dataChangeSubscription: Subscription;
   selectionChangeSubscription: Subscription;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   dataSource: MatTableDataSource<UserTableDataModel>;
   selection = new SelectionModel<UserTableDataModel>(true, []);
 

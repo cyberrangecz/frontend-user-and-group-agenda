@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatIconModule, MatSnackBarModule, MatTabsModule} from '@angular/material';
+import {MatTabsModule} from '@angular/material';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   imports: [

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminOverviewComponent} from './admin-overview.component';
 
-const routes: Routes = [
+export const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminOverviewComponent,
@@ -10,7 +10,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(ADMIN_ROUTES)],
   exports: [RouterModule]
 })
 export class AdminRoutingModule {

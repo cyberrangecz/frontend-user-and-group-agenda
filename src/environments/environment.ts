@@ -4,21 +4,18 @@
 
 export const environment = {
   production: false,
-  userAndGroupRestBasePath: 'http://147.251.21.216:8084/kypo2-rest-user-and-group/api/v1/',
-  rolesPathExtension: 'roles/',
-  usersPathExtension: 'users/',
-  groupsPathExtension: 'groups/',
+  userAndGroupRestBasePath: 'http://147.251.124.129:8084/kypo2-rest-user-and-group/api/v1/',
   defaultPaginationSize: 10,
 
   // OIDC SETTINGS
   // Url of the Identity Provider
-  issuer: 'https://oidc.ics.muni.cz/oidc/',
+  issuer: 'https://oidc.muni.cz/oidc/',
   // URL of the SPA to redirect the user after silent refresh
   silentRefreshRedirectUri: window.location.origin,
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin,
   // The SPA's id. The SPA is registered with this id at the auth-server
-  clientId: '3693320b-6acb-442c-be51-86e18f574f9d',
+  clientId: 'b53f2660-8fa0-4d32-94e4-23a59d7e7077',
   // set the scope for the permissions the client should request
   scope: 'openid profile email',
   sessionChecksEnabled: false,

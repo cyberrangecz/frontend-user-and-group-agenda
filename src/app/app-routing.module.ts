@@ -1,33 +1,25 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {AuthGuard} from './services/guards/auth-guard.service';
 
-const routes: Routes = [
+export const APP_ROUTES: Routes = [
   {
-    path: 'user',
-    loadChildren: 'app/components/user/user.module#UserModule',
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'group',
-    loadChildren: 'app/components/group/group.module#GroupModule',
-    canActivate: [AuthGuard]
+    path: 'admin',
+    loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule),
   },
   {
     path: '',
-    redirectTo: 'user',
+    redirectTo: 'admin',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'user'
+    redirectTo: 'admin'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(APP_ROUTES)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-
 }

@@ -10,11 +10,12 @@ variables:
     LC_ALL: C.UTF-8
 
 stages:
-    - unitTests
+#    - unitTests #TODO, Not implemented yet
 #    - integrationTests #TODO, Not implemented yet
     - buildAngular
     - buildDebian
     - deployDebian
+    - deployAngular
 
 before_script:
     # Get version.
@@ -32,14 +33,15 @@ before_script:
     # Install Angular dependencies
     - npm install
 
-unitTests:
-    stage: unitTests
-    script:
-        - ng test --browsers ChromeHeadless
-    only:
-        - triggers
-        - branches
-        - tags
+#TODO, not implemented yet
+#unitTests:
+#    stage: unitTests
+#    script:
+#        - ng test --browsers ChromeHeadless
+#    only:
+#        - triggers
+#        - branches
+#        - tags
 
 #TODO, not implemented yet
 #integrationTests:
@@ -101,3 +103,9 @@ deployDebian:
     only:
         - tags
 
+deployAngular:
+    stage: deployAngular
+    script:
+        - 'npm run build-and-pack && cd dist/user-and-group-management && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted'
+    only:
+        - tags

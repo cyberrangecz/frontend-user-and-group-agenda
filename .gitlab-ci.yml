@@ -31,7 +31,6 @@ before_script:
     # Set additional Apt repository
     - echo "$APT_SOURCE_LIST" > /etc/apt/sources.list.d/kypo.list
     # Install Angular dependencies
-    - npm install
 
 #TODO, not implemented yet
 #unitTests:
@@ -56,12 +55,16 @@ before_script:
 buildAngular:
     stage: buildAngular
     script:
+        - npm install 
         - ng build --configuration=production
     only:
         - triggers
         - branches
         - tags
-
+    artifacts:
+        paths:
+            - dist
+        expire_in: 1 hour
 buildDebian:
     image: gitbuildpackage
     stage: buildDebian

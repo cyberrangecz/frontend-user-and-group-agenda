@@ -12,12 +12,16 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/';
 
 @NgModule({
   imports: [
     MatButtonModule,
     MatTableModule,
     MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,
@@ -33,6 +37,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatButtonModule,
     MatTableModule,
     MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatInputModule,
     MatPaginatorModule,
     MatSortModule,

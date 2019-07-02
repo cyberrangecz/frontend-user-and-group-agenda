@@ -18,14 +18,11 @@ import { RolesTableComponent } from './add-roles-to-group/roles-table/roles-tabl
 import {RoleFacadeModule} from '../../services/role/role-facade.module';
 import {AddToGroupGroupTableComponent} from './add-users-to-group/group-table/add-to-group-group-table.component';
 import {SharedModule} from '../shared/shared.module';
-import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 import {PipesModule} from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     SharedModule,
     GroupMaterialModule,
     FormsModule,

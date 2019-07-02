@@ -61,25 +61,24 @@ buildAngular:
         - triggers
         - branches
         - tags
-    artifacts:
-        paths:
-            - dist
-        expire_in: 1 hour
+    cache:
+      paths:
+        - dist
+
 buildDebian:
     image: gitbuildpackage
     stage: buildDebian
     script:
         # --distribution $DEBIAN_DISTRIBUTION
-        - >
-            gbp dch
-             --debian-tag="v%(version)s"
-            --new-version $VERSION
-            --distribution stable
-            --force-distribution
-            --release
-            --spawn-editor none
-            --id-length 8
-            --ignore-branch
+        - gbp dch \
+            --debian-tag="v%(version)s" \
+            --new-version $VERSION \
+            --distribution stable \
+            --force-distribution \
+            --release \ 
+            --spawn-editor none \
+            --id-length 8 \
+            --ignore-branch \
             --git-log="--merges --grep=into[[:space:]]'master'"
         # -uc do not sign .changes file, -us do not sign source package (see dpkg-buildpackage)
         # -i -I exclude .git directory (see dpkg-source)

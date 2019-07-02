@@ -24,18 +24,11 @@
         </mat-form-field>
 
         <!-- EXPIRATION Date field -->
-        <mat-form-field
-          [owlDateTimeTrigger]="expirationDatePicker"
-          appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Expiration Date</mat-label>
-          <input matInput
-                 placeholder="Expires on"
-                 [(ngModel)]="expirationDate"
-                 [min]="tomorrow"
-                 [owlDateTime]="expirationDatePicker">
-          <owl-date-time #expirationDatePicker
-                         [startAt]="expirationDate">
-          </owl-date-time>
+          <input matInput [min]="tomorrow" [matDatepicker]="picker" [(ngModel)]="expirationDate" placeholder="Expires on">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
 

@@ -61,9 +61,10 @@ buildAngular:
         - triggers
         - branches
         - tags
-    cache:
+    artifacts:
       paths:
-        - dist
+        - ./dist
+      expire_in: 1 hour
 
 buildDebian:
     image: gitbuildpackage

@@ -75,7 +75,7 @@ editVersion:
         - git clone git@gitlab.ics.muni.cz:kypo2/frontend-new/kypo2-user-and-group-management.git
         - cd $CI_PROJECT_NAME
         - git config --global user.name "KYPO CI" && git config --global user.email "kyposervice@ics.muni.cz"
-        - "sed 's/  "version":.*/  "version": "'$VERSION'",/' projects/user-and-group-management/package.json"
+        - sed -i -e 's/  "version":.*/  "version": "'$VERSION'",/' projects/user-and-group-management/package.json
         - git commit -am "Update project package.json version based on GitLab tag. Done by CI" && sleep 1
         - git push
     only:

@@ -56,6 +56,8 @@ before_script:
 buildAngular:
     stage: buildAngular
     script:
+        - pwd 
+        - cp /usr/local/npmrc ~/.npmrc
         - npm install 
         - ng build --configuration=production
     only:
@@ -113,6 +115,7 @@ deployDebian:
 deployAngular:
     stage: deployAngular
     script:
+        - cp /usr/local/npmrc ~/.npmrc
         - 'npm run build-and-pack && cd dist/user-and-group-management && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted'
     only:
         - tags

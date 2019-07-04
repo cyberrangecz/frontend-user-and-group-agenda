@@ -13,6 +13,7 @@ stages:
 #    - unitTests #TODO, Not implemented yet
 #    - integrationTests #TODO, Not implemented yet
     - buildAngular
+    - editVersion
     - buildDebian
     - deployDebian
     - deployAngular
@@ -65,6 +66,20 @@ buildAngular:
       paths:
         - ./dist
       expire_in: 1 hour
+
+editVersion:
+    stage: editVersion
+    script:
+        - export GIT_SSH_COMMAND='ssh -i ~/.ssh/kyposervicekey'
+        - ssh -o "StrictHostKeyChecking no" git@gitlab.ics.muni.cz && sleep 1
+        - git clone git@gitlab.ics.muni.cz:kypo2/frontend-new/kypo2-user-and-group-management.git
+        - cd $CI_PROJECT_NAME
+        - git config --global user.name "KYPO CI" && git config --global user.email "kyposervice@ics.muni.cz"
+        - sed 's/  "version":.*/  "version": "'$VERSION'",/' projects/user-and-group-management/package.json
+        - git commit -am "Update project package.json version based on GitLab tag. Done by CI" && sleep 1
+        - git push
+    only:
+        - tags
 
 buildDebian:
     image: gitbuildpackage

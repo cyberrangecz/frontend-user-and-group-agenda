@@ -33,20 +33,28 @@ td.select, th.select {
   width: 5%;
 }
 
+td.id, th.id {
+  width: 5%;
+}
+
 td.name, th.name {
-  width: 25%;
+  width: 20%;
 }
 
 td.login, th.login {
-  width: 25%;
+  width: 20%;
+}
+
+td.issuer, th.issuer {
+  width: 15%;
 }
 
 td.email, th.email {
-  width: 25%;
+  width: 20%;
 }
 
 td.roles, th.roles {
-  width: 20%;
+  width: 10%;
 }
 
 td.delete, th.delete {

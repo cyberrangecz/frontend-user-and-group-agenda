@@ -27,7 +27,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  displayedColumns = ['select', 'name', 'login', 'remove'];
+  displayedColumns = ['select', 'name', 'login', 'issuer', 'remove'];
   dataSource: MatTableDataSource<User>;
   selection = new SelectionModel<User>(true, []);
 

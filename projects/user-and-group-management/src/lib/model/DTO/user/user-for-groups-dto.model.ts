@@ -5,4 +5,5 @@ export class UserForGroupsDTO {
   id: number;
   login: string;
   mail: string;
+  iss: string;
 }

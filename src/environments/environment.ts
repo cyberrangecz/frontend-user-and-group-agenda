@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  userAndGroupRestBasePath: 'http://147.251.124.129:8084/kypo2-rest-user-and-group/api/v1/',
+  userAndGroupRestBasePath: 'https://147.251.124.129:8084/kypo2-rest-user-and-group/api/v1/',
   defaultPaginationSize: 10,
 
   // OIDC SETTINGS

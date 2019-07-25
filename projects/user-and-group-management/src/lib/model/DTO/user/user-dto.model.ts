@@ -7,5 +7,6 @@ export class UserDTO {
   id: number;
   login: string;
   mail: string;
+  iss: string;
   roles: RoleDTO[];
 }

@@ -33,11 +33,19 @@ td.select, th.select {
   width: 5%;
 }
 
+td.id, th.id {
+  width: 5%;
+}
+
 td.name, th.name {
   width: 25%;
 }
 
 td.login, th.login {
+  width: 25%;
+}
+
+td.issuer, th.issuer {
   width: 25%;
 }
 

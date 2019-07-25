@@ -50,6 +50,7 @@ export class UserMapperService {
     const result = new User();
     result.id = userForGroupDTO.id;
     result.name = `${userForGroupDTO.given_name} ${userForGroupDTO.family_name}`;
+    result.issuer = userForGroupDTO.iss;
     result.nameWithAcademicTitles = userForGroupDTO.full_name;
     result.mail = userForGroupDTO.mail;
     result.login = userForGroupDTO.login;
@@ -59,6 +60,7 @@ export class UserMapperService {
   mapUserDTOToUser(userDTO: UserDTO): User {
     const result = new User();
     result.id = userDTO.id;
+    result.issuer = userDTO.iss;
     result.name = `${userDTO.given_name} ${userDTO.family_name}`;
     result.nameWithAcademicTitles = userDTO.full_name;
     result.mail = userDTO.mail;
@@ -80,6 +82,7 @@ export class UserMapperService {
     result.full_name = user.nameWithAcademicTitles;
     result.id = user.id;
     result.login = user.login;
+    result.iss = user.issuer;
     result.mail = user.mail;
     return result;
   }

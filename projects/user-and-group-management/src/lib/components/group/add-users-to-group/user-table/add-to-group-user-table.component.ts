@@ -24,7 +24,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   @Output() userSelectionChange: EventEmitter<User[]> = new EventEmitter();
 
   selectedUsers: Set<User> = new Set<User>(user => user.login);
-  displayedColumns: string[] = ['select', 'name', 'login', 'email'];
+  displayedColumns: string[] = ['select', 'name', 'login', 'issuer'];
   resultsLength = 0;
   isLoadingResults = true;
   isInErrorState = false;

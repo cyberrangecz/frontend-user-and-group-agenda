@@ -36,6 +36,14 @@
           </td>
         </ng-container>
 
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th class="id" mat-header-cell *matHeaderCellDef>ID</th>
+          <td class="id" mat-cell *matCellDef="let data">
+            {{ data.user?.id }}
+          </td>
+        </ng-container>
+
         <!-- NAME Column -->
         <ng-container matColumnDef="name">
           <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="fullName" [disabled]="isInErrorState">Name</th>
@@ -48,6 +56,14 @@
         <ng-container matColumnDef="login">
           <th class="login" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Login</th>
           <td class="login" mat-cell *matCellDef="let data"> {{ data.user?.login }}</td>
+        </ng-container>
+
+        <!-- ISSUER Column -->
+        <ng-container matColumnDef="issuer">
+          <th class="issuer" mat-header-cell *matHeaderCellDef>Issuer</th>
+          <td class="issuer" mat-cell *matCellDef="let data">
+            {{ data.user?.issuer }}
+          </td>
         </ng-container>
 
         <!-- EMAIL Column -->

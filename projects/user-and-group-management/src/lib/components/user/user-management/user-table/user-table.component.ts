@@ -28,8 +28,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = [
     'select',
+    'id',
     'name',
     'login',
+    'issuer',
     'email',
     'roles',
     'delete'

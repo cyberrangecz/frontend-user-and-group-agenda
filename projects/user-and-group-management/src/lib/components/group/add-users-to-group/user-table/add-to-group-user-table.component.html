@@ -53,11 +53,11 @@
         </td>
       </ng-container>
 
-      <!-- EMAIL Column -->
-      <ng-container matColumnDef="email">
-        <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header="mail" [disabled]="isInErrorState">Email</th>
-        <td class="email" mat-cell *matCellDef="let user">
-          {{ user?.mail }}
+      <!-- ISSUER Column -->
+      <ng-container matColumnDef="issuer">
+        <th class="issuer" mat-header-cell *matHeaderCellDef mat-sort-header="mail" [disabled]="isInErrorState">Issuer</th>
+        <td class="issuer" mat-cell *matCellDef="let user">
+          {{ user?.issuer }}
         </td>
       </ng-container>
 

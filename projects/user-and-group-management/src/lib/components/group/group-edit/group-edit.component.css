@@ -18,8 +18,19 @@ mat-dialog-actions {
   justify-items: flex-end;
   width: 100%;
 }
+
 button {
   margin-right: 10px;
+}
+
+kypo2-add-to-group-user-table {
+  width: 90%;
+}
+kypo2-add-to-group-group-table {
+  width: 90%;
+}
+mat-tab-group {
+  padding: 10px;
 }
 
 .user-table {

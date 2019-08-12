@@ -4,10 +4,10 @@ import {Group} from '../../../model/group/group.model';
 import {AlertService} from '../../../services/alert/alert.service';
 import {GroupFacadeService} from '../../../services/group/group-facade.service';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {User} from '../../../model/user/user.model';
 import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 import {ErrorHandlerService} from '../../../services/alert/error-handler.service';
+import {User} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-add-users-to-group',

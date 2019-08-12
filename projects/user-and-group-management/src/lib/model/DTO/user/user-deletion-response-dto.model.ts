@@ -1,4 +1,4 @@
-import {UserDTO} from './user-dto.model';
+import {UserDTO} from 'kypo2-auth';
 
 export class UserDeletionResponseDTO {
   status: string;

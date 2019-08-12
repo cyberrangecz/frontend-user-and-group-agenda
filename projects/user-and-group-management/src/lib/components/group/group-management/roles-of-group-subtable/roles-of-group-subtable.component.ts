@@ -1,7 +1,6 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Role} from '../../../../model/role/role.model';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {Alert} from '../../../../model/alert/alert.model';
@@ -12,6 +11,7 @@ import {forkJoin, Observable, of, Subscription} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {UserRole} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',
@@ -33,13 +33,13 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'microservice', 'remove'];
-  expandedRow: Role;
-  dataSource: MatTableDataSource<Role>;
-  selection = new SelectionModel<Role>(true, []);
+  expandedRow: UserRole;
+  dataSource: MatTableDataSource<UserRole>;
+  selection = new SelectionModel<UserRole>(true, []);
 
   selectedRolesCount = 0;
   totalRolesCount = 0;
-  selectedRoles: Set<Role> = new Set<Role>(role => role.id.toString());
+  selectedRoles: Set<UserRole> = new Set<UserRole>(role => role.id.toString());
 
   private paginationChangeSubscription: Subscription;
 
@@ -74,7 +74,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectChange(event: MatCheckboxChange, role: Role) {
+  selectChange(event: MatCheckboxChange, role: UserRole) {
     if (event.checked) {
       this.selectRole(role);
     } else {
@@ -86,7 +86,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
     return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 
-  removeRoleFromGroup(role: Role) {
+  removeRoleFromGroup(role: UserRole) {
     this.groupFacade.removeRoleFromGroup(this.group.id, role.id)
       .subscribe(
         resp => {
@@ -110,7 +110,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
       );
   }
 
-  private sendRemoveRoleFromGroupRequestWithoutError(role: Role): Observable<any> {
+  private sendRemoveRoleFromGroupRequestWithoutError(role: UserRole): Observable<any> {
     return this.groupFacade.removeRoleFromGroup(this.group.id, role.id)
       .pipe(map(
         resp => {
@@ -135,7 +135,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
 
-  private deleteRemovedRoleFromTable(removedRole: Role) {
+  private deleteRemovedRoleFromTable(removedRole: UserRole) {
     this.group.roles = this.group.roles.filter(role =>
       !(role.id === removedRole.id));
     this.createDataSource();
@@ -156,13 +156,13 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.selectedRolesCount = this.selectedRoles.size();
   }
 
-  private selectRole(role: Role) {
+  private selectRole(role: UserRole) {
     this.selectedRoles.add(role);
     this.selection.select(role);
     this.selectedRolesCount = this.selectedRoles.size();
   }
 
-  private unselectRole(role: Role) {
+  private unselectRole(role: UserRole) {
     this.selectedRoles.remove(role);
     this.selection.deselect(role);
     this.selectedRolesCount = this.selectedRoles.size();
@@ -186,16 +186,16 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.selectedRolesCount = 0;
   }
 
-  private isInSelection(roleToCheck: Role): boolean {
+  private isInSelection(roleToCheck: UserRole): boolean {
     return this.selectedRoles.toArray()
       .map(role => role.id)
       .includes(roleToCheck.id);
   }
 
-  private findPreselectedRoles(roles: Role[]): Role[] {
+  private findPreselectedRoles(roles: UserRole[]): UserRole[] {
     return roles.filter(role => this.isInSelection(role));
   }
-  private markCheckboxes(roles: Role[]) {
+  private markCheckboxes(roles: UserRole[]) {
     this.selection.select(...roles);
   }
 }

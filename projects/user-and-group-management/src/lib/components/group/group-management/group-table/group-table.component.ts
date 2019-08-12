@@ -10,10 +10,10 @@ import {Alert} from '../../../../model/alert/alert.model';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
+import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {GroupTableDataModel} from '../../../../model/table-data/group-table-data.model';
+import {GroupTableRow} from '../../../../model/table-data/group-table.row';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
 import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-group.component';
@@ -51,14 +51,14 @@ export class GroupTableComponent implements OnInit, OnDestroy {
   isInErrorState = false;
   selectedGroupsCount: number;
   totalGroupsCount: number;
-  expandedRow: GroupTableDataModel;
+  expandedRow: GroupTableRow;
   dataChangeSubscription: Subscription;
   selectionChangeSubscription: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  dataSource: MatTableDataSource<GroupTableDataModel>;
-  selection = new SelectionModel<GroupTableDataModel>(true, []);
+  dataSource: MatTableDataSource<GroupTableRow>;
+  selection = new SelectionModel<GroupTableRow>(true, []);
 
   constructor(public dialog: MatDialog,
               private groupSelectionService: GroupSelectionService,
@@ -176,20 +176,20 @@ export class GroupTableComponent implements OnInit, OnDestroy {
           this.errorHandler.displayInAlert(err, 'Loading groups');
           return of([]);
         }))
-      .subscribe((data: TableDataWrapper<GroupTableDataModel[]>) => this.createDataSource(data));
+      .subscribe((data: TableAdapter<GroupTableRow[]>) => this.createDataSource(data));
   }
 
   /**
    * Creates table data source from fetched data
    * @param dataWrapper Groups fetched from server
    */
-  private createDataSource(dataWrapper: TableDataWrapper<GroupTableDataModel[]>) {
+  private createDataSource(dataWrapper: TableAdapter<GroupTableRow[]>) {
     this.totalGroupsCount = dataWrapper.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedGroups(dataWrapper.tableData));
-    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
+    this.markCheckboxes(this.findPreselectedGroups(dataWrapper.content));
+    this.dataSource = new MatTableDataSource(dataWrapper.content);
     this.dataSource.filterPredicate =
-      (data: GroupTableDataModel, filter: string) =>
+      (data: GroupTableRow, filter: string) =>
         (data.group.name && data.group.name.toLowerCase().indexOf(filter) !== -1);
   }
 
@@ -219,11 +219,11 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .includes(groupToCheck.id);
   }
 
-  private findPreselectedGroups(groupTableData: GroupTableDataModel[]) {
+  private findPreselectedGroups(groupTableData: GroupTableRow[]) {
     return groupTableData.filter(groupDatum =>
       this.isInSelection(groupDatum.group));
   }
-  private markCheckboxes(groupTableData: GroupTableDataModel[]) {
+  private markCheckboxes(groupTableData: GroupTableRow[]) {
     this.selection.select(...groupTableData);
   }
 

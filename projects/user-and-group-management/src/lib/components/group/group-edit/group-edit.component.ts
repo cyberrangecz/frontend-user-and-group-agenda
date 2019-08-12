@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {User} from '../../../model/user/user.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Group} from '../../../model/group/group.model';
 import {GroupFacadeService} from '../../../services/group/group-facade.service';
@@ -8,6 +7,7 @@ import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 import {ErrorHandlerService} from '../../../services/alert/error-handler.service';
+import {User} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-group-edit',

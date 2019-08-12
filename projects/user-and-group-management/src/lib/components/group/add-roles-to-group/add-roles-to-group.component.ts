@@ -4,12 +4,12 @@ import {Group} from '../../../model/group/group.model';
 import {GroupFacadeService} from '../../../services/group/group-facade.service';
 import {AlertService} from '../../../services/alert/alert.service';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {Role} from '../../../model/role/role.model';
 import {Alert} from '../../../model/alert/alert.model';
 import {AlertType} from '../../../model/enums/alert-type.enum';
 import {forkJoin, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {RoleFacadeService} from '../../../services/role/role-facade.service';
+import {UserRole} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-add-roles-to-group',
@@ -18,8 +18,8 @@ import {RoleFacadeService} from '../../../services/role/role-facade.service';
 })
 export class AddRolesToGroupComponent implements OnInit {
 
-  selectedRoles: Role[];
-  availableRoles$: Observable<Role[]>;
+  selectedRoles: UserRole[];
+  availableRoles$: Observable<UserRole[]>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<AddRolesToGroupComponent>,
@@ -46,7 +46,7 @@ export class AddRolesToGroupComponent implements OnInit {
     }
   }
 
-  onRoleSelectionChanged(roles: Role[]) {
+  onRoleSelectionChanged(roles: UserRole[]) {
     this.selectedRoles = roles;
   }
 
@@ -78,7 +78,7 @@ export class AddRolesToGroupComponent implements OnInit {
       );
   }
 
-  private sendAddRoleToGroupRequest(role: Role): Observable<any> {
+  private sendAddRoleToGroupRequest(role: UserRole): Observable<any> {
     return this.groupFacadeService.assignRoleToGroup(this.group.id, role.id)
       .pipe(map(
         resp => resp),

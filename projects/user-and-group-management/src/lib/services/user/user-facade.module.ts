@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {UserMapperService} from './user-mapper.service';
-import {RoleMapperService} from '../role/role-mapper.service';
 import {UserFacadeService} from './user-facade.service';
 
 @NgModule({
@@ -11,7 +10,6 @@ import {UserFacadeService} from './user-facade.service';
   providers: [
     UserFacadeService,
     UserMapperService,
-    RoleMapperService
   ]
 })
 export class UserFacadeModule {

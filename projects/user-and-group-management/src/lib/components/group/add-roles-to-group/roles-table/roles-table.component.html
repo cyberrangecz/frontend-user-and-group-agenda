@@ -30,7 +30,7 @@
       <ng-container matColumnDef="name">
         <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="name">Name</th>
         <td class="name" mat-cell *matCellDef="let role">
-          {{ role?.name }}
+          {{ role?.roleType }}
         </td>
       </ng-container>
 
@@ -38,7 +38,7 @@
       <ng-container matColumnDef="microservice">
         <th class="microservice" mat-header-cell *matHeaderCellDef mat-sort-header>Microservice</th>
         <td class="microservice" mat-cell *matCellDef="let role">
-          {{ role?.microservice }}
+          {{ role?.microserviceName }}
         </td>
       </ng-container>
 
@@ -49,7 +49,7 @@
                [@detailExpand]="role == expandedRow ? 'expanded' : 'collapsed'">
             <div class="row-detail-content">
               <h2 class="mat-h3">Description:</h2>
-              <p class="mat-body">{{ role.description }}</p>
+              <p class="mat-body">{{ role?.description }}</p>
             </div>
           </div>
         </td>

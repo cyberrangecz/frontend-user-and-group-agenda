@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource} from '@angular/material';
-import {Role} from '../../../../../model/role/role.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {GroupTableDataModel} from '../../../../../model/table-data/group-table-data.model';
+import {UserRole} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-user-roles-dialog',
@@ -19,8 +18,8 @@ import {GroupTableDataModel} from '../../../../../model/table-data/group-table-d
 export class UserRolesDialogComponent implements OnInit {
 
   displayedColumns = ['name', 'microservice'];
-  expandedRow: Role;
-  dataSource: MatTableDataSource<Role>;
+  expandedRow: UserRole;
+  dataSource: MatTableDataSource<UserRole>;
 
   constructor(public dialogRef: MatDialogRef<UserRolesDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data) {

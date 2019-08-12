@@ -5,6 +5,8 @@ import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@ang
 import {SelectionModel} from '@angular/cdk/collections';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {UserRole} from 'kypo2-auth';
+import {StringNormalizer} from '../../../../model/utils/string-normalizer';
+import {RoleTableRow} from '../../../../model/table-data/role-table-row';
 
 @Component({
   selector: 'kypo2-roles-table',
@@ -32,7 +34,7 @@ export class RolesTableComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  dataSource: MatTableDataSource<UserRole>;
+  dataSource: MatTableDataSource<RoleTableRow>;
   selection = new SelectionModel<UserRole>(true, []);
 
   constructor() { }
@@ -51,7 +53,7 @@ export class RolesTableComponent implements OnInit, OnChanges {
    * @param filterValue value by which the data should be filtered. Inserted by user
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -85,22 +87,23 @@ export class RolesTableComponent implements OnInit, OnChanges {
    */
   private createDataSource(roles: UserRole[]) {
     this.selectedRolesCount = 0;
-    this.dataSource = new MatTableDataSource(roles);
+    const tableRows = roles.map(role => new RoleTableRow(role));
+    this.dataSource = new MatTableDataSource(tableRows);
     this.dataSource.paginator = this.paginator;
     this.totalRolesCount = this.dataSource.data.length;
     this.paginator.page.subscribe(pageChange => {
       this.selection.clear();
-      this.markCheckboxes(this.findPreselectedRoles(this.dataSource._pageData(this.dataSource.data)));
+      this.markCheckboxes(this.findPreselectedRoles(this.dataSource._pageData(this.dataSource.data).map(row => row.role)));
     });
     this.dataSource.filterPredicate =
-      (data: UserRole, filter: string) =>
-        (data.roleType && data.roleType.toLowerCase().indexOf(filter) !== -1)
-        || (data.microserviceName && data.microserviceName.toLowerCase().indexOf(filter) !== -1);
+      (data: RoleTableRow, filter: string) =>
+        (data.normalizedRoleName.indexOf(filter) !== -1)
+        || (data.normalizedMicroserviceName.indexOf(filter) !== -1);
   }
 
   private unselectAll() {
-    this.dataSource._pageData(this.dataSource.data).forEach(role =>
-      this.selectedRoles.remove(role));
+    this.dataSource._pageData(this.dataSource.data).forEach(row =>
+      this.selectedRoles.remove(row.role));
     this.selection.clear();
     this.selectedRolesCount = this.selectedRoles.size();
     this.roleSelectionChange.emit(this.selectedRoles.toArray());
@@ -108,8 +111,8 @@ export class RolesTableComponent implements OnInit, OnChanges {
 
   private selectAll() {
     this.dataSource._pageData(this.dataSource.data).forEach(row => {
-      this.selection.select(row);
-      this.selectedRoles.add(row);
+      this.selection.select(row.role);
+      this.selectedRoles.add(row.role);
     });
     this.selectedRolesCount = this.selectedRoles.size();
     this.roleSelectionChange.emit(this.selectedRoles.toArray());

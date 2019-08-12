@@ -12,6 +12,8 @@ import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 import {User} from 'kypo2-auth';
+import {StringNormalizer} from '../../../../model/utils/string-normalizer';
+import {UserTableRow} from '../../../../model/table-data/user-table-row';
 
 @Component({
   selector: 'kypo2-add-to-group-user-table',
@@ -34,7 +36,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  dataSource: MatTableDataSource<User>;
+  dataSource: MatTableDataSource<UserTableRow>;
   selection = new SelectionModel<User>(true, []);
 
   constructor(private userFacade: UserFacadeService,
@@ -56,7 +58,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
    * @param filterValue value by which the data should be filtered. Inserted by user
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -104,22 +106,22 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
         this.errorHandler.displayInAlert(err, 'Loading users');
         return of([]);
       }))
-      .subscribe((data: TableAdapter<User[]>) => this.createDataSource(data));
+      .subscribe((data: TableAdapter<UserTableRow[]>) => this.createDataSource(data));
   }
 
   /**
    * Creates table data source from fetched data
-   * @param dataWrapper Users fetched from server
+   * @param tableAdapter Users fetched from server
    */
-  private createDataSource(dataWrapper: TableAdapter<User[]>) {
-    this.totalUsersCount = dataWrapper.pagination.totalElements;
+  private createDataSource(tableAdapter: TableAdapter<UserTableRow[]>) {
+    this.totalUsersCount = tableAdapter.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.content));
-    this.dataSource = new MatTableDataSource(dataWrapper.content);
+    this.markCheckboxes(this.findPreselectedUsers(tableAdapter.content.map(row => row.user)));
+    this.dataSource = new MatTableDataSource(tableAdapter.content);
     this.dataSource.filterPredicate =
-      (data: User, filter: string) =>
-      data.login.toLowerCase().indexOf(filter) !== -1
-      || (data.name && data.name.toLowerCase().indexOf(filter) !== -1);
+      (row: UserTableRow, filter: string) =>
+      row.normalizedLogin.indexOf(filter) !== -1
+      || row.normalizedName.indexOf(filter) !== -1;
   }
 
   /**
@@ -144,9 +146,9 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   }
 
   private selectAll() {
-    this.dataSource.data.forEach(user => {
-      this.selectedUsers.add(user);
-      this.selection.select(user);
+    this.dataSource.data.forEach(row => {
+      this.selectedUsers.add(row.user);
+      this.selection.select(row.user);
     });
     this.selectedUsersCount = this.selectedUsers.size();
     this.userSelectionChange.emit(this.selectedUsers.toArray());
@@ -164,7 +166,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     this.userSelectionChange.emit(this.selectedUsers.toArray());
   }
 
-  private sendRequestToLoadUsers(): Observable<TableAdapter<User[]>> {
+  private sendRequestToLoadUsers(): Observable<TableAdapter<UserTableRow[]>> {
     const pagination = PaginationFactory.createWithSort(this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.active,
@@ -172,7 +174,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     if (this.group) {
       return this.userFacade.getUsersNotInGroup(this.group.id, pagination);
     } else {
-      return this.userFacade.getUsers(pagination);
+      return this.userFacade.getUsersTable(pagination);
     }
   }
 

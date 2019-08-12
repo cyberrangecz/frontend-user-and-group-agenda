@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Group} from '../../model/group/group.model';
 import {TableAdapter} from '../../model/table-data/table-adapter';
-import {GroupTableRow} from '../../model/table-data/group-table.row';
+import {GroupTableRow} from '../../model/table-data/group-table-row';
 import {Observable} from 'rxjs';
 import {PaginationHttpParams} from '../../model/other/pagination-http-params';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
@@ -29,7 +29,7 @@ export class GroupFacadeService {
     this.config = this.configService.config;
   }
 
-  getGroupsInTableDataModel(pagination = null): Observable<TableAdapter<GroupTableRow[]>> {
+  getGroupsTable(pagination = null): Observable<TableAdapter<GroupTableRow[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })

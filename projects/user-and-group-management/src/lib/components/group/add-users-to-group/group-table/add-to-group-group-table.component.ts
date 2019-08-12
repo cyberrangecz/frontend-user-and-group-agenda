@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -8,11 +8,11 @@ import {AlertService} from '../../../../services/alert/alert.service';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {Alert} from '../../../../model/alert/alert.model';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
+
 import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {GroupTableRow} from '../../../../model/table-data/group-table-row';
 
 @Component({
   selector: 'kypo2-add-to-group-group-table',
@@ -35,7 +35,7 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  dataSource: MatTableDataSource<Group>;
+  dataSource: MatTableDataSource<GroupTableRow>;
   selection = new SelectionModel<Group>(true, []);
 
   constructor(private groupFacade: GroupFacadeService,
@@ -105,17 +105,17 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
           this.errorHandler.displayInAlert(err, 'Loading groups');
           return of([]);
         }))
-      .subscribe((data: TableAdapter<Group[]>) => this.createDataSource(data));
+      .subscribe((data: TableAdapter<GroupTableRow[]>) => this.createDataSource(data));
   }
 
-  private createDataSource(dataWrapper: TableAdapter<Group[]>) {
-    this.totalGroupsCount = dataWrapper.pagination.totalElements;
+  private createDataSource(tableAdapter: TableAdapter<GroupTableRow[]>) {
+    this.totalGroupsCount = tableAdapter.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedGroups(dataWrapper.content));
-    this.dataSource = new MatTableDataSource(dataWrapper.content);
+    this.markCheckboxes(this.findPreselectedGroups(tableAdapter.content.map(row => row.group)));
+    this.dataSource = new MatTableDataSource(tableAdapter.content);
     this.dataSource.filterPredicate =
-      (data: Group, filter: string) =>
-        data.name && data.name.toLowerCase().indexOf(filter) !== -1;
+      (row: GroupTableRow, filter: string) =>
+        row.normalizedName.indexOf(filter) !== -1;
   }
 
   private initTableDataSource() {
@@ -136,9 +136,9 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
   }
 
   private selectAll() {
-    this.dataSource.data.forEach(group => {
-      this.selectedGroups.add(group);
-      this.selection.select(group);
+    this.dataSource.data.forEach(row => {
+      this.selectedGroups.add(row.group);
+      this.selection.select(row.group);
     });
     this.selectedGroupsCount = this.selectedGroups.size();
     this.groupSelectionChange.emit(this.selectedGroups.toArray());
@@ -156,12 +156,12 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
     this.groupSelectionChange.emit(this.selectedGroups.toArray());
   }
 
-  private sendRequestToLoadGroups(): Observable<TableAdapter<Group[]>> {
+  private sendRequestToLoadGroups(): Observable<TableAdapter<GroupTableRow[]>> {
     const pagination = PaginationFactory.createWithSort(this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.active,
       this.sort.direction);
-      return this.groupFacade.getGroups(pagination);
+      return this.groupFacade.getGroupsTable(pagination);
   }
 
   private isInSelection(groupToCheck: Group): boolean {

@@ -1,4 +1,4 @@
-export class TableDataPagination {
+export class TablePagination {
 
   page: number;
   numberOfElements: number;

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Set} from 'typescript-collections';
-import {User} from '../../model/user/user.model';
+import {User} from 'kypo2-auth';
 import {Observable, Subject} from 'rxjs';
-import {UserFacadeService} from './user-facade.service';
 
 @Injectable()
 export class UserSelectionService {

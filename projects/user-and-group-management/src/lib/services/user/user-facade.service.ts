@@ -1,16 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {PaginationHttpParams} from '../../model/other/pagination-http-params';
-import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
+import {TableAdapter} from '../../model/table-data/table-adapter';
 import {Observable} from 'rxjs';
-import {UserTableDataModel} from '../../model/table-data/user-table-data.model';
-import {User} from '../../model/user/user.model';
-import {UserDTO} from '../../model/DTO/user/user-dto.model';
+import {UserTableRow} from '../../model/table-data/user-table.row';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
 import {ConfigService} from '../../config/config.service';
+import {User, UserDTO} from 'kypo2-auth';
 
 @Injectable()
 export class UserFacadeService {
@@ -25,17 +24,17 @@ export class UserFacadeService {
     this.config = this.configService.config;
   }
 
-  getUsersTableData(pagination = null): Observable<TableDataWrapper<UserTableDataModel[]>> {
+  getUsersTable(pagination = null): Observable<TableAdapter<UserTableRow[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })
-        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTableDataModel(resp)));
+        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
     }
     return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension)
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTableDataModel(resp)));
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
   }
 
-  getUsers(pagination = null): Observable<TableDataWrapper<User[]>> {
+  getUsers(pagination = null): Observable<TableAdapter<User[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
         {params: PaginationHttpParams.createPaginationParams(pagination)})
@@ -62,7 +61,7 @@ export class UserFacadeService {
     return this.http.request('delete', `${this.config.userAndGroupRestBasePath + this.usersPathExtension}${userId}`);
   }
 
-  getUsersNotInGroup(groupId: number, pagination = null): Observable<TableDataWrapper<User[]>> {
+  getUsersNotInGroup(groupId: number, pagination = null): Observable<TableAdapter<User[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(
         `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,
@@ -72,12 +71,5 @@ export class UserFacadeService {
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`)
       .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
-  }
-
-  updateUser(user: User) {
-  }
-
-  createUser(user: User) {
-
   }
 }

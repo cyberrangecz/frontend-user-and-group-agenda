@@ -1,6 +1,5 @@
 # User and Group Management
 
-**Current version: 1.1.0**
 
 If you wish to use this library locally, you will need to run backend service as well. [Guide](https://gitlab.ics.muni.cz/kypo2/services-and-portlets/kypo2-user-and-group)
 

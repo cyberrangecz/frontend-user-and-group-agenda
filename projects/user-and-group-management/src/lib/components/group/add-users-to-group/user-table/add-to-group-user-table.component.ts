@@ -1,5 +1,4 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {User} from '../../../../model/user/user.model';
 import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -8,10 +7,11 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {AlertService} from '../../../../services/alert/alert.service';
-import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
+import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {User} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-add-to-group-user-table',
@@ -104,18 +104,18 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
         this.errorHandler.displayInAlert(err, 'Loading users');
         return of([]);
       }))
-      .subscribe((data: TableDataWrapper<User[]>) => this.createDataSource(data));
+      .subscribe((data: TableAdapter<User[]>) => this.createDataSource(data));
   }
 
   /**
    * Creates table data source from fetched data
    * @param dataWrapper Users fetched from server
    */
-  private createDataSource(dataWrapper: TableDataWrapper<User[]>) {
+  private createDataSource(dataWrapper: TableAdapter<User[]>) {
     this.totalUsersCount = dataWrapper.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.tableData));
-    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
+    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.content));
+    this.dataSource = new MatTableDataSource(dataWrapper.content);
     this.dataSource.filterPredicate =
       (data: User, filter: string) =>
       data.login.toLowerCase().indexOf(filter) !== -1
@@ -164,7 +164,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
     this.userSelectionChange.emit(this.selectedUsers.toArray());
   }
 
-  private sendRequestToLoadUsers(): Observable<TableDataWrapper<User[]>> {
+  private sendRequestToLoadUsers(): Observable<TableAdapter<User[]>> {
     const pagination = PaginationFactory.createWithSort(this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.active,

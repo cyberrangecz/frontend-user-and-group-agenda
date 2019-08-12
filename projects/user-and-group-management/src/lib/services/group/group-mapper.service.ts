@@ -5,7 +5,7 @@ import {PaginationDTO} from '../../model/DTO/pagination-dto.model';
 import {TablePagination} from '../../model/table-data/table-pagination';
 import {GroupDTO} from '../../model/DTO/group/group-dto.model';
 import {Group} from '../../model/group/group.model';
-import {GroupTableRow} from '../../model/table-data/group-table.row';
+import {GroupTableRow} from '../../model/table-data/group-table-row';
 import {UserMapperService} from '../user/user-mapper.service';
 import {NewGroupDTO} from '../../model/DTO/group/new-group-dto.model';
 import {UpdateGroupDTO} from '../../model/DTO/group/update-group-dto.model';
@@ -32,9 +32,7 @@ export class GroupMapperService {
   }
 
   mapGroupDTOToGroupTableDataModel(groupDTO: GroupDTO): GroupTableRow {
-    const result = new GroupTableRow();
-    result.group = this.mapGroupDTOToGroup(groupDTO);
-    return result;
+    return new GroupTableRow(this.mapGroupDTOToGroup(groupDTO));
   }
 
   mapGroupDTOToGroup(groupDTO: GroupDTO): Group {

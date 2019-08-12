@@ -27,12 +27,12 @@
             [disabled]="isInErrorState || isLoadingResults">
           </mat-checkbox>
         </th>
-        <td class="select" mat-cell *matCellDef="let user; let row">
+        <td class="select" mat-cell *matCellDef="let row">
           <mat-checkbox
             (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(row) : null; selectChange($event, user)"
+            (change)="$event ? selection.toggle(row.user) : null; selectChange($event, row.user)"
             [disabled]="isInErrorState || isLoadingResults"
-            [checked]="selection.isSelected(row)">
+            [checked]="selection.isSelected(row.user)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -40,24 +40,24 @@
       <!-- NAME Column -->
       <ng-container matColumnDef="name">
         <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="name" [disabled]="isInErrorState">Name</th>
-        <td class="name" mat-cell *matCellDef="let user">
-          {{ user?.name }}
+        <td class="name" mat-cell *matCellDef="let row">
+          {{ row.user?.name }}
         </td>
       </ng-container>
 
       <!-- LOGIN Column -->
       <ng-container matColumnDef="login">
         <th class="login" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Login</th>
-        <td class="login" mat-cell *matCellDef="let user">
-          {{ user?.login }}
+        <td class="login" mat-cell *matCellDef="let row">
+          {{ row.user?.login }}
         </td>
       </ng-container>
 
       <!-- ISSUER Column -->
       <ng-container matColumnDef="issuer">
         <th class="issuer" mat-header-cell *matHeaderCellDef mat-sort-header="mail" [disabled]="isInErrorState">Issuer</th>
-        <td class="issuer" mat-cell *matCellDef="let user">
-          {{ user?.issuer }}
+        <td class="issuer" mat-cell *matCellDef="let row">
+          {{ row.user?.issuer }}
         </td>
       </ng-container>
 

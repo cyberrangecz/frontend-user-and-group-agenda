@@ -27,12 +27,12 @@
             [disabled]="isInErrorState || isLoadingResults">
           </mat-checkbox>
         </th>
-        <td class="select" mat-cell *matCellDef="let group; let row">
+        <td class="select" mat-cell *matCellDef="let row">
           <mat-checkbox
             (click)="$event.stopPropagation()"
-            (change)="$event ? selection.toggle(row) : null; selectChange($event, group)"
+            (change)="$event ? selection.toggle(row.group) : null; selectChange($event, row.group)"
             [disabled]="isInErrorState || isLoadingResults"
-            [checked]="selection.isSelected(row)">
+            [checked]="selection.isSelected(row.group)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -40,16 +40,16 @@
       <!-- NAME Column -->
       <ng-container matColumnDef="name">
         <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header="name" [disabled]="isInErrorState">Name</th>
-        <td class="name" mat-cell *matCellDef="let group">
-          {{ group?.name }}
+        <td class="name" mat-cell *matCellDef="let row">
+          {{ row?.group?.name }}
         </td>
       </ng-container>
 
       <!-- DESCRIPTION Column -->
       <ng-container matColumnDef="description">
         <th class="description" mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="isInErrorState">Description</th>
-        <td class="description" mat-cell *matCellDef="let group">
-          {{ group?.description }}
+        <td class="description" mat-cell *matCellDef="let row">
+          {{ row?.group?.description }}
         </td>
       </ng-container>
 

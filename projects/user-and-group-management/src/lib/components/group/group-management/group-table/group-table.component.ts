@@ -13,12 +13,13 @@ import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {GroupTableRow} from '../../../../model/table-data/group-table.row';
+import {GroupTableRow} from '../../../../model/table-data/group-table-row';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
 import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-group.component';
 import {ConfigService} from '../../../../config/config.service';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 
 @Component({
   selector: 'kypo2-group-table',
@@ -86,7 +87,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
    * @param filterValue value by which the data should be filtered. Inserted by user
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -159,7 +160,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.groupFacade.getGroupsInTableDataModel(
+          return this.groupFacade.getGroupsTable(
             PaginationFactory.createWithSort(this.paginator.pageIndex,
               this.paginator.pageSize,
               this.sort.active,
@@ -188,9 +189,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     this.selection.clear();
     this.markCheckboxes(this.findPreselectedGroups(dataWrapper.content));
     this.dataSource = new MatTableDataSource(dataWrapper.content);
-    this.dataSource.filterPredicate =
-      (data: GroupTableRow, filter: string) =>
-        (data.group.name && data.group.name.toLowerCase().indexOf(filter) !== -1);
+    this.dataSource.filterPredicate = (row: GroupTableRow, filter: string) => row.normalizedName.indexOf(filter) !== -1;
   }
 
   private unselectAll() {

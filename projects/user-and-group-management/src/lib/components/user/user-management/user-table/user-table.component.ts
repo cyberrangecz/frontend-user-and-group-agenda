@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserTableRow} from '../../../../model/table-data/user-table.row';
+import {UserTableRow} from '../../../../model/table-data/user-table-row';
 import {UserSelectionService} from '../../../../services/user/user-selection.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
@@ -18,6 +18,7 @@ import {ConfigService} from '../../../../config/config.service';
 import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 import {User} from 'kypo2-auth';
+import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 
 @Component({
   selector: 'kypo2-user-table',
@@ -78,7 +79,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
    * @param filterValue value by which the data should be filtered. Inserted by user
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -173,10 +174,9 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.markCheckboxes(this.findPreselectedUsers(dataWrapper.content));
     this.dataSource = new MatTableDataSource(dataWrapper.content);
     this.dataSource.filterPredicate =
-      (data: UserTableRow, filter: string) =>
-        (data.user.name && data.user.name.toLowerCase().indexOf(filter) !== -1)
-        || (data.user.login && data.user.login.toLowerCase().indexOf(filter) !== -1)
-        || (data.user.mail && data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1);
+      (row: UserTableRow, filter: string) =>
+        row.normalizedName.indexOf(filter) !== -1
+        || row.normalizedLogin.indexOf(filter) !== -1;
   }
 
   private unselectAll() {

@@ -1,6 +1,6 @@
 import {TableAdapter} from '../../model/table-data/table-adapter';
 import {User, UserDTO} from 'kypo2-auth';
-import {UserTableRow} from '../../model/table-data/user-table.row';
+import {UserTableRow} from '../../model/table-data/user-table-row';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../model/DTO/pagination-dto.model';
 import {TablePagination} from '../../model/table-data/table-pagination';
@@ -23,9 +23,7 @@ export class UserMapperService {
   }
 
   mapUserDTOToUserTable(userDTO: UserDTO): UserTableRow {
-    const result = new UserTableRow();
-    result.user = this.mapUserDTOToUser(userDTO);
-    return result;
+    return new UserTableRow(this.mapUserDTOToUser(userDTO));
   }
 
   mapUserDTOsToUsers(userDTOs: UserDTO[]): User[] {

@@ -14,6 +14,8 @@ import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 import {User} from 'kypo2-auth';
+import {StringNormalizer} from '../../../../model/utils/string-normalizer';
+import {UserTableRow} from '../../../../model/table-data/user-table-row';
 
 @Component({
   selector: 'kypo2-members-of-group-subtable',
@@ -28,12 +30,12 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'login', 'issuer', 'remove'];
-  dataSource: MatTableDataSource<User>;
+  dataSource: MatTableDataSource<UserTableRow>;
   selection = new SelectionModel<User>(true, []);
 
   selectedUsersCount = 0;
   totalUsersCount = 0;
-  selectedUsers: Set<User> = new Set<User>(user => user.login);
+  selectedUsers: Set<User> = new Set<User>(user => user.id.toString());
 
   private paginationChangeSubscription: Subscription;
 
@@ -53,7 +55,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -100,16 +102,16 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   private unselectAll() {
-    this.dataSource._pageData(this.dataSource.data).forEach(user =>
-      this.selectedUsers.remove(user));
+    this.dataSource._pageData(this.dataSource.data).forEach(row =>
+      this.selectedUsers.remove(row.user));
     this.selection.clear();
     this.selectedUsersCount = this.selectedUsers.size();
   }
 
   private selectAll() {
-    this.dataSource._pageData(this.dataSource.data).forEach(user => {
-      this.selection.select(user);
-      this.selectedUsers.add(user);
+    this.dataSource._pageData(this.dataSource.data).forEach(row => {
+      this.selection.select(row.user);
+      this.selectedUsers.add(row.user);
     });
     this.selectedUsersCount = this.selectedUsers.size();
   }
@@ -127,13 +129,17 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   private createDataSource() {
-    this.dataSource = new MatTableDataSource(this.group.members);
+    this.dataSource = new MatTableDataSource(this.group.members.map(user => new UserTableRow(user)));
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.totalUsersCount = this.dataSource.data.length;
+    this.dataSource.filterPredicate =
+      (row: UserTableRow, filter: string) =>
+        row.normalizedLogin.indexOf(filter) !== -1
+        || row.normalizedName.indexOf(filter) !== -1;
     this.paginationChangeSubscription = this.paginator.page.subscribe(pageChange => {
       this.selection.clear();
-      this.markCheckboxes(this.findPreselectedUsers(this.dataSource._pageData(this.dataSource.data)));
+      this.markCheckboxes(this.findPreselectedUsers(this.dataSource._pageData(this.dataSource.data).map(row => row.user)));
     });
   }
 

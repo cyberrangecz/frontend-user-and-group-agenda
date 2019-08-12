@@ -12,6 +12,9 @@ import {catchError, map} from 'rxjs/operators';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {UserRole} from 'kypo2-auth';
+import {RoleTableRow} from '../../../../model/table-data/role-table-row';
+import {StringNormalizer} from '../../../../model/utils/string-normalizer';
+import {GroupTableRow} from '../../../../model/table-data/group-table-row';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',
@@ -33,8 +36,8 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'microservice', 'remove'];
-  expandedRow: UserRole;
-  dataSource: MatTableDataSource<UserRole>;
+  expandedRow: RoleTableRow;
+  dataSource: MatTableDataSource<RoleTableRow>;
   selection = new SelectionModel<UserRole>(true, []);
 
   selectedRolesCount = 0;
@@ -59,7 +62,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
@@ -82,7 +85,9 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
     }
   }
 
-  isAllSelected() {
+  isAllSelected(): boolean {
+    console.log(this.selection.selected.length);
+    console.log(this.selection.selected);
     return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 
@@ -142,16 +147,16 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   private unselectAll() {
-    this.dataSource._pageData(this.dataSource.data).forEach(role =>
-      this.selectedRoles.remove(role));
+    this.dataSource._pageData(this.dataSource.data).forEach(row =>
+      this.selectedRoles.remove(row.role));
     this.selection.clear();
     this.selectedRolesCount = this.selectedRoles.size();
   }
 
   private selectAll() {
-    this.dataSource._pageData(this.dataSource.data).forEach(role => {
-      this.selection.select(role);
-      this.selectedRoles.add(role);
+    this.dataSource._pageData(this.dataSource.data).forEach(row => {
+      this.selection.select(row.role);
+      this.selectedRoles.add(row.role);
     });
     this.selectedRolesCount = this.selectedRoles.size();
   }
@@ -169,13 +174,16 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   private createDataSource() {
-    this.dataSource = new MatTableDataSource(this.group.roles);
+    this.dataSource = new MatTableDataSource(this.group.roles.map( role => new RoleTableRow(role)));
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.totalRolesCount = this.dataSource.data.length;
+    this.dataSource.filterPredicate =
+      (row: RoleTableRow, filter: string) =>
+        row.normalizedRoleName.indexOf(filter) !== -1 || row.normalizedMicroserviceName.indexOf(filter) !== -1;
     this.paginationChangeSubscription = this.paginator.page.subscribe(pageChange => {
       this.selection.clear();
-      this.markCheckboxes(this.findPreselectedRoles(this.dataSource._pageData(this.dataSource.data)));
+      this.markCheckboxes(this.findPreselectedRoles(this.dataSource._pageData(this.dataSource.data).map(row => row.role)));
     });
   }
 

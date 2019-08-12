@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {PaginationHttpParams} from '../../model/other/pagination-http-params';
 import {TableAdapter} from '../../model/table-data/table-adapter';
 import {Observable} from 'rxjs';
-import {UserTableRow} from '../../model/table-data/user-table.row';
+import {UserTableRow} from '../../model/table-data/user-table-row';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
@@ -61,15 +61,15 @@ export class UserFacadeService {
     return this.http.request('delete', `${this.config.userAndGroupRestBasePath + this.usersPathExtension}${userId}`);
   }
 
-  getUsersNotInGroup(groupId: number, pagination = null): Observable<TableAdapter<User[]>> {
+  getUsersNotInGroup(groupId: number, pagination = null): Observable<TableAdapter<UserTableRow[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(
         `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,
         {params: PaginationHttpParams.createPaginationParams(pagination)})
-        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
+        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
     }
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`)
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
   }
 }

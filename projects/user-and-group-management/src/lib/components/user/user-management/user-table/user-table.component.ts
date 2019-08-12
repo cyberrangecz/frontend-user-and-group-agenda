@@ -1,16 +1,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserTableDataModel} from '../../../../model/table-data/user-table-data.model';
+import {UserTableRow} from '../../../../model/table-data/user-table.row';
 import {UserSelectionService} from '../../../../services/user/user-selection.service';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {merge, Observable, of, Subscription} from 'rxjs';
-import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
+import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
 import {Alert} from '../../../../model/alert/alert.model';
-import {User} from '../../../../model/user/user.model';
 import {SelectionModel} from '@angular/cdk/collections';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
@@ -18,6 +17,7 @@ import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/c
 import {ConfigService} from '../../../../config/config.service';
 import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {User} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-user-table',
@@ -48,8 +48,8 @@ export class UserTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  dataSource: MatTableDataSource<UserTableDataModel>;
-  selection = new SelectionModel<UserTableDataModel>(true, []);
+  dataSource: MatTableDataSource<UserTableRow>;
+  selection = new SelectionModel<UserTableRow>(true, []);
 
   constructor(
     public dialog: MatDialog,
@@ -143,7 +143,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.userFacade.getUsersTableData(
+          return this.userFacade.getUsersTable(
             PaginationFactory.createWithSort(this.paginator.pageIndex,
               this.paginator.pageSize,
               this.sort.active,
@@ -160,20 +160,20 @@ export class UserTableComponent implements OnInit, OnDestroy {
           this.errorHandler.displayInAlert(err, 'Loading users');
           return of([]);
         }))
-      .subscribe((data: TableDataWrapper<UserTableDataModel[]>) => this.createDataSource(data));
+      .subscribe((data: TableAdapter<UserTableRow[]>) => this.createDataSource(data));
   }
 
   /**
    * Creates table data source from fetched data
    * @param dataWrapper Users fetched from server
    */
-  private createDataSource(dataWrapper: TableDataWrapper<UserTableDataModel[]>) {
+  private createDataSource(dataWrapper: TableAdapter<UserTableRow[]>) {
     this.totalUsersCount = dataWrapper.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.tableData));
-    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
+    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.content));
+    this.dataSource = new MatTableDataSource(dataWrapper.content);
     this.dataSource.filterPredicate =
-      (data: UserTableDataModel, filter: string) =>
+      (data: UserTableRow, filter: string) =>
         (data.user.name && data.user.name.toLowerCase().indexOf(filter) !== -1)
         || (data.user.login && data.user.login.toLowerCase().indexOf(filter) !== -1)
         || (data.user.mail && data.user.mail.toLocaleLowerCase().indexOf(filter) !== -1);
@@ -236,10 +236,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
       );
   }
 
-  private findPreselectedUsers(userTableData: UserTableDataModel[]) {
+  private findPreselectedUsers(userTableData: UserTableRow[]) {
     return userTableData.filter(userDatum => this.isInSelection(userDatum.user));
   }
-  private markCheckboxes(userTableData: UserTableDataModel[]) {
+  private markCheckboxes(userTableData: UserTableRow[]) {
     this.selection.select(...userTableData);
   }
 

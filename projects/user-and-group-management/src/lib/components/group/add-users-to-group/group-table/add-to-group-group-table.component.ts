@@ -10,7 +10,7 @@ import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {Alert} from '../../../../model/alert/alert.model';
 import {AlertType} from '../../../../model/enums/alert-type.enum';
-import {TableDataWrapper} from '../../../../model/table-data/table-data-wrapper';
+import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
 
@@ -105,14 +105,14 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
           this.errorHandler.displayInAlert(err, 'Loading groups');
           return of([]);
         }))
-      .subscribe((data: TableDataWrapper<Group[]>) => this.createDataSource(data));
+      .subscribe((data: TableAdapter<Group[]>) => this.createDataSource(data));
   }
 
-  private createDataSource(dataWrapper: TableDataWrapper<Group[]>) {
+  private createDataSource(dataWrapper: TableAdapter<Group[]>) {
     this.totalGroupsCount = dataWrapper.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedGroups(dataWrapper.tableData));
-    this.dataSource = new MatTableDataSource(dataWrapper.tableData);
+    this.markCheckboxes(this.findPreselectedGroups(dataWrapper.content));
+    this.dataSource = new MatTableDataSource(dataWrapper.content);
     this.dataSource.filterPredicate =
       (data: Group, filter: string) =>
         data.name && data.name.toLowerCase().indexOf(filter) !== -1;
@@ -156,7 +156,7 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
     this.groupSelectionChange.emit(this.selectedGroups.toArray());
   }
 
-  private sendRequestToLoadGroups(): Observable<TableDataWrapper<Group[]>> {
+  private sendRequestToLoadGroups(): Observable<TableAdapter<Group[]>> {
     const pagination = PaginationFactory.createWithSort(this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.active,

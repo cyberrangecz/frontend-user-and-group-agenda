@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Group} from '../../model/group/group.model';
-import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
-import {GroupTableDataModel} from '../../model/table-data/group-table-data.model';
+import {TableAdapter} from '../../model/table-data/table-adapter';
+import {GroupTableRow} from '../../model/table-data/group-table.row';
 import {Observable} from 'rxjs';
 import {PaginationHttpParams} from '../../model/other/pagination-http-params';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
@@ -29,22 +29,22 @@ export class GroupFacadeService {
     this.config = this.configService.config;
   }
 
-  getGroupsInTableDataModel(pagination = null): Observable<TableDataWrapper<GroupTableDataModel[]>> {
+  getGroupsInTableDataModel(pagination = null): Observable<TableAdapter<GroupTableRow[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })
         .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableDataWrapper(resp)));
     }
-    return this.http.get<TableDataWrapper<GroupTableDataModel[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
+    return this.http.get<TableAdapter<GroupTableRow[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
   }
 
-  getGroups(pagination = null): Observable<TableDataWrapper<Group[]>> {
+  getGroups(pagination = null): Observable<TableAdapter<Group[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })
         .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableGroups(resp)));
     }
-    return this.http.get<TableDataWrapper<Group[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
+    return this.http.get<TableAdapter<Group[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
   }
 
   getGroupById(groupId: number) {

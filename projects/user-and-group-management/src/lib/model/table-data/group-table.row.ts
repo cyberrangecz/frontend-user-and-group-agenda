@@ -1,5 +1,5 @@
 import {Group} from '../group/group.model';
 
-export class GroupTableDataModel {
+export class GroupTableRow {
   group: Group;
 }

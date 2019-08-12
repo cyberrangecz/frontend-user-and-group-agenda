@@ -1,35 +1,29 @@
-import {TableDataWrapper} from '../../model/table-data/table-data-wrapper';
-import {UserDTO} from '../../model/DTO/user/user-dto.model';
-import {UserTableDataModel} from '../../model/table-data/user-table-data.model';
+import {TableAdapter} from '../../model/table-data/table-adapter';
+import {User, UserDTO} from 'kypo2-auth';
+import {UserTableRow} from '../../model/table-data/user-table.row';
 import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../model/DTO/pagination-dto.model';
-import {TableDataPagination} from '../../model/table-data/table-data-pagination';
-import {User} from '../../model/user/user.model';
+import {TablePagination} from '../../model/table-data/table-pagination';
 import {Injectable} from '@angular/core';
-import {RoleMapperService} from '../role/role-mapper.service';
 import {UserForGroupsDTO} from '../../model/DTO/user/user-for-groups-dto.model';
 
 @Injectable()
 export class UserMapperService {
 
-  constructor(private roleMapper: RoleMapperService) {
-
-  }
-
-  mapUserDTOsWithPaginationToUserTableDataModel(restResource: RestResourceDTO<UserDTO>): TableDataWrapper<UserTableDataModel[]> {
-    return new TableDataWrapper<UserTableDataModel[]>(
-      restResource.content.map(userDTO => this.mapUserDTOToUserTableDataModel(userDTO)),
+  mapUserDTOsWithPaginationToUserTable(restResource: RestResourceDTO<UserDTO>): TableAdapter<UserTableRow[]> {
+    return new TableAdapter<UserTableRow[]>(
+      restResource.content.map(userDTO => this.mapUserDTOToUserTable(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
 
-  mapUserDTOsWithPaginationToUsers(restResource: RestResourceDTO<UserDTO>): TableDataWrapper<User[]> {
-    return new TableDataWrapper<User[]>(
+  mapUserDTOsWithPaginationToUsers(restResource: RestResourceDTO<UserDTO>): TableAdapter<User[]> {
+    return new TableAdapter<User[]>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
 
-  mapUserDTOToUserTableDataModel(userDTO: UserDTO): UserTableDataModel {
-    const result = new UserTableDataModel();
+  mapUserDTOToUserTable(userDTO: UserDTO): UserTableRow {
+    const result = new UserTableRow();
     result.user = this.mapUserDTOToUser(userDTO);
     return result;
   }
@@ -47,7 +41,7 @@ export class UserMapperService {
   }
 
   mapUserForGroupsDTOToUser(userForGroupDTO: UserForGroupsDTO): User {
-    const result = new User();
+    const result = new User([]);
     result.id = userForGroupDTO.id;
     result.name = `${userForGroupDTO.given_name} ${userForGroupDTO.family_name}`;
     result.issuer = userForGroupDTO.iss;
@@ -58,15 +52,7 @@ export class UserMapperService {
   }
 
   mapUserDTOToUser(userDTO: UserDTO): User {
-    const result = new User();
-    result.id = userDTO.id;
-    result.issuer = userDTO.iss;
-    result.name = `${userDTO.given_name} ${userDTO.family_name}`;
-    result.nameWithAcademicTitles = userDTO.full_name;
-    result.mail = userDTO.mail;
-    result.login = userDTO.login;
-    result.roles = this.roleMapper.mapRoleDTOsToRoles(userDTO.roles);
-    return result;
+    return User.fromDTO(userDTO);
   }
 
   mapUsersToUserForGroupDTOs(users: User[]): UserForGroupsDTO[] {
@@ -87,8 +73,8 @@ export class UserMapperService {
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): TableDataPagination {
-    return new TableDataPagination(
+  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): TablePagination {
+    return new TablePagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,
       paginationDTO.size,

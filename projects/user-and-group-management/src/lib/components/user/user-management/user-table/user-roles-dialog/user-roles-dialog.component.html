@@ -6,13 +6,13 @@
       <!-- NAME Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let role"> {{ role.name }} </td>
+        <td mat-cell *matCellDef="let role"> {{ role.roleType }} </td>
       </ng-container>
 
       <!-- MICROSERVICE Column -->
       <ng-container matColumnDef="microservice">
         <th mat-header-cell *matHeaderCellDef> Microservice </th>
-        <td mat-cell *matCellDef="let role"> {{ role.microservice }} </td>
+        <td mat-cell *matCellDef="let role"> {{ role.microserviceName }} </td>
       </ng-container>
 
       <!-- EXPANDED DETAIL COLUMN -->
@@ -22,7 +22,7 @@
                [@detailExpand]="role == expandedRow ? 'expanded' : 'collapsed'">
             <div class="row-detail-content">
               <h2 class="mat-h3">Description:</h2>
-              <p class="mat-body">{{ role.description }}</p>
+              <p class="mat-body">{{ role?.description }}</p>
             </div>
           </div>
         </td>

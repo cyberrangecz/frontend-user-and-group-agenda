@@ -1,7 +1,6 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {User} from '../../../../model/user/user.model';
 import {SelectionModel} from '@angular/cdk/collections';
 import {AlertService} from '../../../../services/alert/alert.service';
 import {Alert} from '../../../../model/alert/alert.model';
@@ -14,6 +13,7 @@ import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {User} from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-members-of-group-subtable',

@@ -20,6 +20,10 @@ import {GroupModule} from './group/group.module';
     Kypo2UserAndGroupNotificationService,
     ErrorHandlerService
   ],
+  exports: [
+    UserModule,
+    GroupModule
+  ]
 })
 export class UserAndGroupManagementModule {
   constructor(@Optional() @SkipSelf() parentModule: UserAndGroupManagementModule) {

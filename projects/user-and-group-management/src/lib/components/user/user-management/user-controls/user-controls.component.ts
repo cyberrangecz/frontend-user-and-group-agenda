@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserSelectionService} from '../../../../services/user/user-selection.service';
 import {Observable, Subscription} from 'rxjs';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
-import {AlertService} from '../../../../services/alert/alert.service';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
-import {Alert} from '../../../../model/alert/alert.model';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {NotificationType} from '../../../../model/enums/alert-type.enum';
+import {Notification} from '../../../../model/alert/alert.model';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
@@ -27,7 +27,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
               private userManagementService: UserSelectionService,
               private userFacade: UserFacadeService,
               private errorHandler: ErrorHandlerService,
-              private alertService: AlertService) {
+              private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
       .subscribe(
         resp => {
           this.userManagementService.emitDataChange();
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Selected users were successfully deleted'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Selected users were successfully deleted'));
         },
         err => this.errorHandler.displayInAlert(err, 'Deleting users')
       );

@@ -2,10 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Group} from '../../../model/group/group.model';
 import {GroupFacadeService} from '../../../services/group/group-facade.service';
-import {AlertService} from '../../../services/alert/alert.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../services/alert/kypo2-user-and-group-notification.service';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {Alert} from '../../../model/alert/alert.model';
-import {AlertType} from '../../../model/enums/alert-type.enum';
+import {Notification} from '../../../model/alert/alert.model';
+import {NotificationType} from '../../../model/enums/alert-type.enum';
 import {forkJoin, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {RoleFacadeService} from '../../../services/role/role-facade.service';
@@ -25,7 +25,7 @@ export class AddRolesToGroupComponent implements OnInit {
               public dialogRef: MatDialogRef<AddRolesToGroupComponent>,
               private roleFacadeService: RoleFacadeService,
               private groupFacadeService: GroupFacadeService,
-              private alertService: AlertService) {
+              private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class AddRolesToGroupComponent implements OnInit {
   private isValidInput(): boolean {
     const potentialErrorMessage = this.validateInput();
     if (potentialErrorMessage !== '') {
-      this.alertService.addAlert(new Alert(AlertType.ERROR, potentialErrorMessage));
+      this.alertService.addNotification(new Notification(NotificationType.ERROR, potentialErrorMessage));
       return false;
     }
     return true;

@@ -1,27 +1,27 @@
 import {Injectable} from '@angular/core';
-import {AlertService} from './alert.service';
+import {Kypo2UserAndGroupNotificationService} from './kypo2-user-and-group-notification.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Alert} from '../../model/alert/alert.model';
-import {AlertType} from '../../model/enums/alert-type.enum';
+import {Notification} from '../../model/alert/alert.model';
+import {NotificationType} from '../../model/enums/alert-type.enum';
 
 @Injectable()
 export class ErrorHandlerService {
 
-  constructor(private alertService: AlertService) {
+  constructor(private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
   displayInAlert(err: HttpErrorResponse, operation: string) {
     if (!err || err.status === 404 || err.status === 0) {
-      this.alertService.addAlert(new Alert(AlertType.ERROR,
+      this.alertService.addNotification(new Notification(NotificationType.ERROR,
         `${operation} failed. Cannot reach the server`));
     } else if (err.status === 401) {
-      this.alertService.addAlert(new Alert(AlertType.ERROR,
+      this.alertService.addNotification(new Notification(NotificationType.ERROR,
         `${operation} failed because you are unauthorized. Try to refresh page or login again`));
     } else if (err.status === 403) {
-      this.alertService.addAlert(new Alert(AlertType.ERROR,
+      this.alertService.addNotification(new Notification(NotificationType.ERROR,
         `${operation} failed. You may not have access rights to requested resource. Contact system administrator.`));
     } else {
-      this.alertService.addAlert(new Alert(AlertType.ERROR,
+      this.alertService.addNotification(new Notification(NotificationType.ERROR,
         `${operation} failed with following message: ${err.error.message}`));
     }
   }

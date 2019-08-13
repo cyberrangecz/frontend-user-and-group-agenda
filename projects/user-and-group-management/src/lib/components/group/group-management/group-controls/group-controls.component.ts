@@ -3,9 +3,9 @@ import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material';
 import {GroupSelectionService} from '../../../../services/group/group-selection.service';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
-import {AlertService} from '../../../../services/alert/alert.service';
-import {Alert} from '../../../../model/alert/alert.model';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {Notification} from '../../../../model/alert/alert.model';
+import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
@@ -24,7 +24,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
               private groupManagementService: GroupSelectionService,
               private groupFacade: GroupFacadeService,
               private errorHandler: ErrorHandlerService,
-              private alertService: AlertService) {
+              private alertService: Kypo2UserAndGroupNotificationService) {
 
   }
 
@@ -56,7 +56,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
       .subscribe(
         resp => {
           this.groupManagementService.emitDataChange();
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Selected groups were successfully deleted'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Selected groups were successfully deleted'));
         },
         err => {
           this.errorHandler.displayInAlert(err, 'Deleting groups');

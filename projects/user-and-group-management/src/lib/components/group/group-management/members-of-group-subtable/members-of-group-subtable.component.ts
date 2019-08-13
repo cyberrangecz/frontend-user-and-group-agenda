@@ -2,9 +2,9 @@ import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {AlertService} from '../../../../services/alert/alert.service';
-import {Alert} from '../../../../model/alert/alert.model';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {Notification} from '../../../../model/alert/alert.model';
+import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {Set} from 'typescript-collections';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
@@ -42,7 +42,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog,
               private groupFacade: GroupFacadeService,
               private errorHandler: ErrorHandlerService,
-              private alertService: AlertService) { }
+              private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
     this.createDataSource();
@@ -172,7 +172,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.groupFacade.removeUsersFromGroup(this.group.id, [userToRemove.id])
       .subscribe(
         resp => {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'User was successfully deleted'));
           this.unselectUser(userToRemove);
           this.removeDeletedUsersFromTable([userToRemove.id]);
         },
@@ -185,7 +185,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.groupFacade.removeUsersFromGroup(this.group.id, idsToRemove)
       .subscribe(
         resp => {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Users were successfully deleted'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Users were successfully deleted'));
           this.removeDeletedUsersFromTable(idsToRemove);
           this.resetSelection();
         },

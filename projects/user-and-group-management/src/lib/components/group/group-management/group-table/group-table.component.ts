@@ -4,10 +4,10 @@ import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource}
 import {SelectionModel} from '@angular/cdk/collections';
 import {GroupSelectionService} from '../../../../services/group/group-selection.service';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
-import {AlertService} from '../../../../services/alert/alert.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
 import {Group} from '../../../../model/group/group.model';
-import {Alert} from '../../../../model/alert/alert.model';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
+import {Notification} from '../../../../model/alert/alert.model';
+import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {TableAdapter} from '../../../../model/table-data/table-adapter';
@@ -66,7 +66,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
               private configService: ConfigService,
               private groupFacade: GroupFacadeService,
               private errorHandler: ErrorHandlerService,
-              private alertService: AlertService) { }
+              private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
     this.subscribeForEvents();
@@ -131,7 +131,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     this.groupFacade.deleteGroup(group.id)
       .subscribe(
         resp => {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Group was successfully deleted'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Group was successfully deleted'));
           this.fetchData();
         },
         err => this.errorHandler.displayInAlert(err, 'Deleting group')
@@ -231,7 +231,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(result => {
         if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Group was successfully updated'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Group was successfully updated'));
           this.fetchData();
         }
       });
@@ -242,7 +242,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe( result => {
         if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Users were successfully added'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Users were successfully added'));
           this.fetchData();
         }
       });
@@ -263,11 +263,11 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     if (result === undefined || result === null || result.status === DialogResultEnum.CANCELED) {
       return;
     } else if (result.status === DialogResultEnum.SUCCESS) {
-      this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Roles were successfully added'));
+      this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Roles were successfully added'));
       this.fetchData();
     } else if (result.status === DialogResultEnum.FAILED) {
-      this.alertService.addAlert(new Alert(
-        AlertType.ERROR,
+      this.alertService.addNotification(new Notification(
+        NotificationType.ERROR,
         `Adding ${result.failedCount} role(s) of ${result.totalCount} requested failed.`));
     }
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ClientNotificationService} from './client-notification.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../projects/user-and-group-management/src/lib/services/alert/kypo2-user-and-group-notification.service';
 @Component({
   selector: 'app-admin-overview',
   templateUrl: './admin-overview.component.html',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminOverviewComponent implements OnInit {
 
-  constructor() { }
+  navLinks = [];
+
+  constructor(private notificationService: Kypo2UserAndGroupNotificationService,
+              private clientNotificationService: ClientNotificationService) {
+    this.notificationService.notification$.subscribe(notification => this.clientNotificationService.addNotification(notification));
+  }
 
   ngOnInit() {
+    this.navLinks = [
+      {
+        path: 'user',
+        label: 'User',
+      },
+      {
+        path: 'group',
+        label: 'Group',
+      }
+    ];
   }
 
 }

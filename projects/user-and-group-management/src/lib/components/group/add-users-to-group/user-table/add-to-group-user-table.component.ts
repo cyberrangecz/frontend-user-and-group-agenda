@@ -6,7 +6,7 @@ import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {UserFacadeService} from '../../../../services/user/user-facade.service';
-import {AlertService} from '../../../../services/alert/alert.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
 import {TableAdapter} from '../../../../model/table-data/table-adapter';
 import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
@@ -41,7 +41,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
 
   constructor(private userFacade: UserFacadeService,
               private configService: ConfigService,
-              private alertService: AlertService,
+              private alertService: Kypo2UserAndGroupNotificationService,
               private errorHandler: ErrorHandlerService) { }
 
   ngOnInit() {

@@ -1,10 +1,10 @@
-import {AlertType} from '../enums/alert-type.enum';
+import {NotificationType} from '../enums/alert-type.enum';
 
-export class Alert {
-  type: AlertType;
+export class Notification {
+  type: NotificationType;
   message: string;
 
-  constructor(type: AlertType, message: string) {
+  constructor(type: NotificationType, message: string) {
     this.type = type;
     this.message = message;
   }

@@ -1,30 +1,25 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {UserAndGroupManagementMaterialModule} from './user-and-group-management-material.module';
-import {SharedModule} from './components/shared/shared.module';
 import {CommonModule} from '@angular/common';
-import {ConfigService} from './config/config.service';
-import {UserAndGroupManagementConfig} from './config/user-and-group-management-config';
-import {UserAndGroupManagementComponent} from './user-and-group-management.component';
-import {GroupModule} from './components/group/group.module';
-import {UserModule} from './components/user/user.module';
+import {ConfigService} from '../config/config.service';
+import {UserAndGroupManagementConfig} from '../config/user-and-group-management-config';
+import {Kypo2UserAndGroupNotificationService} from '../services/alert/kypo2-user-and-group-notification.service';
+import {ErrorHandlerService} from '../services/alert/error-handler.service';
+import {UserModule} from './user/user.module';
+import {GroupModule} from './group/group.module';
 
 @NgModule({
   declarations: [
-    UserAndGroupManagementComponent,
   ],
   imports: [
     CommonModule,
-    GroupModule,
     UserModule,
-    UserAndGroupManagementMaterialModule,
-    SharedModule,
+    GroupModule
   ],
   providers: [
-    ConfigService
+    ConfigService,
+    Kypo2UserAndGroupNotificationService,
+    ErrorHandlerService
   ],
-  exports: [
-    UserAndGroupManagementComponent
-  ]
 })
 export class UserAndGroupManagementModule {
   constructor(@Optional() @SkipSelf() parentModule: UserAndGroupManagementModule) {
@@ -38,6 +33,8 @@ export class UserAndGroupManagementModule {
     return {
       ngModule: UserAndGroupManagementModule,
       providers: [
+        Kypo2UserAndGroupNotificationService,
+        ErrorHandlerService,
         {provide: UserAndGroupManagementConfig, useValue: config}
       ]
     };

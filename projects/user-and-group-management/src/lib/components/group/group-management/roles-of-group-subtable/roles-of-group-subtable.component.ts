@@ -2,9 +2,9 @@ import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
-import {AlertService} from '../../../../services/alert/alert.service';
-import {Alert} from '../../../../model/alert/alert.model';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {Notification} from '../../../../model/alert/alert.model';
+import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {SelectionModel} from '@angular/cdk/collections';
 import {Set} from 'typescript-collections';
 import {forkJoin, Observable, of, Subscription} from 'rxjs';
@@ -49,7 +49,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   constructor(private groupFacade: GroupFacadeService,
               private errorHandler: ErrorHandlerService,
-              private alertService: AlertService) { }
+              private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
     this.createDataSource();
@@ -96,7 +96,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
       .subscribe(
         resp => {
           this.deleteRemovedRoleFromTable(role);
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'Role was successfully removed'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Role was successfully removed'));
           this.resetSelection();
         },
         err => this.errorHandler.displayInAlert(err, 'Removing role')
@@ -128,12 +128,12 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   private evaluateMultipleRoleRemovalRequests(failedRequests, totalCount: number) {
     if (failedRequests.length > 0) {
-      this.alertService.addAlert(new Alert(
-        AlertType.ERROR,
+      this.alertService.addNotification(new Notification(
+        NotificationType.ERROR,
         `${failedRequests.length} of ${totalCount} roles were not successfully removed.`));
     } else {
-      this.alertService.addAlert(new Alert(
-        AlertType.SUCCESS,
+      this.alertService.addNotification(new Notification(
+        NotificationType.SUCCESS,
         'Roles were successfully removed'
       ));
     }

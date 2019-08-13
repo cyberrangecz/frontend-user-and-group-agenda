@@ -6,7 +6,7 @@ export const APP_ROUTES: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule),
-    canActivate: [Kypo2AuthGuardWithLogin]
+    canActivate: [Kypo2AuthGuardWithLogin],
   },
   {
     path: 'login',
@@ -17,10 +17,6 @@ export const APP_ROUTES: Routes = [
     path: '',
     redirectTo: 'admin',
     pathMatch: 'full'
-  },
-  {
-    path: '**',
-    redirectTo: 'admin'
   }
 ];
 

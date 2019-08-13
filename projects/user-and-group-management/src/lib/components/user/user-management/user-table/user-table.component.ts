@@ -6,10 +6,10 @@ import {UserFacadeService} from '../../../../services/user/user-facade.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {merge, Observable, of, Subscription} from 'rxjs';
 import {TableAdapter} from '../../../../model/table-data/table-adapter';
-import {AlertService} from '../../../../services/alert/alert.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {AlertType} from '../../../../model/enums/alert-type.enum';
-import {Alert} from '../../../../model/alert/alert.model';
+import {NotificationType} from '../../../../model/enums/alert-type.enum';
+import {Notification} from '../../../../model/alert/alert.model';
 import {SelectionModel} from '@angular/cdk/collections';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
@@ -58,7 +58,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private userFacade: UserFacadeService,
     private errorHandler: ErrorHandlerService,
-    private alertService: AlertService) { }
+    private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
     this.subscribeForEvents();
@@ -229,7 +229,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.userFacade.removeUser(user.id)
       .subscribe(
         resp => {
-          this.alertService.addAlert(new Alert(AlertType.SUCCESS, 'User was successfully deleted'));
+          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'User was successfully deleted'));
           this.fetchData();
         },
         err => this.errorHandler.displayInAlert(err, 'Deleting user')

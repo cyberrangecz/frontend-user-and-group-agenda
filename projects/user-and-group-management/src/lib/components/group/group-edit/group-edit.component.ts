@@ -2,9 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Group} from '../../../model/group/group.model';
 import {GroupFacadeService} from '../../../services/group/group-facade.service';
-import {AlertService} from '../../../services/alert/alert.service';
-import {Alert} from '../../../model/alert/alert.model';
-import {AlertType} from '../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationService} from '../../../services/alert/kypo2-user-and-group-notification.service';
+import {Notification} from '../../../model/alert/alert.model';
+import {NotificationType} from '../../../model/enums/alert-type.enum';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 import {ErrorHandlerService} from '../../../services/alert/error-handler.service';
 import {User} from 'kypo2-auth';
@@ -29,7 +29,7 @@ export class GroupEditComponent implements OnInit {
               public dialogRef: MatDialogRef<GroupEditComponent>,
               private groupFacade: GroupFacadeService,
               private errorHandler: ErrorHandlerService,
-              private alertService: AlertService) {
+              private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
   ngOnInit() {
@@ -76,7 +76,7 @@ export class GroupEditComponent implements OnInit {
   private isValidInput(): boolean {
     const potentialErrorMessage = this.validateInput();
     if (potentialErrorMessage !== '') {
-      this.alertService.addAlert(new Alert(AlertType.ERROR, potentialErrorMessage));
+      this.alertService.addNotification(new Notification(NotificationType.ERROR, potentialErrorMessage));
       return false;
     }
     return true;

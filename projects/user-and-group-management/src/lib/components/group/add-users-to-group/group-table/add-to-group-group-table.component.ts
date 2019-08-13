@@ -4,7 +4,7 @@ import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ConfigService} from '../../../../config/config.service';
-import {AlertService} from '../../../../services/alert/alert.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
 import {GroupFacadeService} from '../../../../services/group/group-facade.service';
 import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
@@ -40,7 +40,7 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
 
   constructor(private groupFacade: GroupFacadeService,
               private configService: ConfigService,
-              private alertService: AlertService,
+              private alertService: Kypo2UserAndGroupNotificationService,
               private errorHandler: ErrorHandlerService) { }
 
   ngOnInit() {

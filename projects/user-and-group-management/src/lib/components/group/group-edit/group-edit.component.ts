@@ -1,13 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Group} from '../../../model/group/group.model';
-import {GroupFacadeService} from '../../../services/group/group-facade.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../services/alert/kypo2-user-and-group-notification.service';
-import {Notification} from '../../../model/alert/alert.model';
-import {NotificationType} from '../../../model/enums/alert-type.enum';
-import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {ErrorHandlerService} from '../../../services/alert/error-handler.service';
-import {User} from 'kypo2-auth';
+import { GroupEditFormGroup } from './group-edit-form-group';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Group } from '../../../model/group/group.model';
+import { GroupFacadeService } from '../../../services/group/group-facade.service';
+import { Kypo2UserAndGroupNotificationService } from '../../../services/alert/kypo2-user-and-group-notification.service';
+import { Notification } from '../../../model/alert/alert.model';
+import { NotificationType } from '../../../model/enums/alert-type.enum';
+import { DialogResultEnum } from '../../../model/enums/dialog-result.enum';
+import { ErrorHandlerService } from '../../../services/alert/error-handler.service';
+import { User } from 'kypo2-auth';
 
 @Component({
   selector: 'kypo2-group-edit',
@@ -17,35 +18,39 @@ import {User} from 'kypo2-auth';
 export class GroupEditComponent implements OnInit {
 
   editMode = false;
-
-  name: string;
-  description: string;
-  expirationDate: Date;
   tomorrow: Date;
   users: User[] = [];
   groups: Group[] = [];
 
+  groupEditFormGroup: GroupEditFormGroup;
+
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
-              public dialogRef: MatDialogRef<GroupEditComponent>,
-              private groupFacade: GroupFacadeService,
-              private errorHandler: ErrorHandlerService,
-              private alertService: Kypo2UserAndGroupNotificationService) {
+    public dialogRef: MatDialogRef<GroupEditComponent>,
+    private groupFacade: GroupFacadeService,
+    private errorHandler: ErrorHandlerService,
+    private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
   ngOnInit() {
+    this.groupEditFormGroup = new GroupEditFormGroup();
     const today = new Date();
-    this.tomorrow = new Date(new Date(today.setDate(today.getDate() + 1)).setHours(0, 0 , 0));
+    this.tomorrow = new Date(new Date(today.setDate(today.getDate() + 1)).setHours(0, 0, 0));
     if (this.group) {
       this.resolveInitialValues();
     }
   }
+
+
+  get name() { return this.groupEditFormGroup.formGroup.get('name'); }
+  get description() { return this.groupEditFormGroup.formGroup.get('description'); }
+  get expirationDate() { return this.groupEditFormGroup.formGroup.get('expirationDate'); }
 
   cancel() {
     this.dialogRef.close(DialogResultEnum.CANCELED);
   }
 
   save() {
-    if (this.isValidInput()) {
+    if (this.groupEditFormGroup.formGroup.valid) {
       const editedGroup = this.setValuesToGroupObject();
       this.sendSaveRequest(editedGroup);
     }
@@ -67,30 +72,10 @@ export class GroupEditComponent implements OnInit {
   }
 
   private setValuesFromGroup() {
-    this.name = this.group.name;
-    this.description = this.group.description;
+    this.name.setValue(this.group.name);
+    this.description.setValue(this.group.description);
     this.users = this.group.members;
-    this.expirationDate = this.group.expirationDate;
-  }
-
-  private isValidInput(): boolean {
-    const potentialErrorMessage = this.validateInput();
-    if (potentialErrorMessage !== '') {
-      this.alertService.addNotification(new Notification(NotificationType.ERROR, potentialErrorMessage));
-      return false;
-    }
-    return true;
-  }
-
-  private validateInput(): string {
-    let errorMessage = '';
-    if (!this.name || this.name.replace(/\s/g, '') === '') {
-      errorMessage += 'Name cannot be empty\n';
-    }
-    if (!this.description || this.description.replace(/\s/g, '') === '') {
-      errorMessage += 'Description cannot be empty\n';
-    }
-    return errorMessage;
+    this.expirationDate.setValue(this.group.expirationDate);
   }
 
   private setValuesToGroupObject(): Group {
@@ -98,10 +83,10 @@ export class GroupEditComponent implements OnInit {
     if (this.editMode) {
       editedGroup.id = this.group.id;
     }
-    editedGroup.name = this.name;
-    editedGroup.description = this.description;
+    editedGroup.name = this.name.value;
+    editedGroup.description = this.description.value;
     editedGroup.members = this.users;
-    editedGroup.expirationDate = this.expirationDate;
+    editedGroup.expirationDate = this.expirationDate.value;
     return editedGroup;
   }
 
@@ -118,7 +103,7 @@ export class GroupEditComponent implements OnInit {
       .subscribe(
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
         err => this.errorHandler.displayInAlert(err, 'Updating group')
-  );
+      );
   }
 
   private sendCreateRequest(group: Group) {
@@ -128,6 +113,6 @@ export class GroupEditComponent implements OnInit {
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
         err => this.errorHandler.displayInAlert(err, 'Creating group')
 
-  );
+      );
   }
 }

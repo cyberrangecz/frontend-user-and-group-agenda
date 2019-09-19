@@ -1,20 +1,20 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Group} from '../../../../model/group/group.model';
-import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {GroupFacadeService} from '../../../../services/group/group-facade.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
-import {Notification} from '../../../../model/alert/alert.model';
-import {NotificationType} from '../../../../model/enums/alert-type.enum';
-import {SelectionModel} from '@angular/cdk/collections';
-import {Set} from 'typescript-collections';
-import {forkJoin, Observable, of, Subscription} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {UserRole} from 'kypo2-auth';
-import {RoleTableRow} from '../../../../model/table-data/role-table-row';
-import {StringNormalizer} from '../../../../model/utils/string-normalizer';
-import {GroupTableRow} from '../../../../model/table-data/group-table-row';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Group } from '../../../../model/group/group.model';
+import { MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { GroupFacadeService } from '../../../../services/group/group-facade.service';
+import { Kypo2UserAndGroupNotificationService } from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import { Notification } from '../../../../model/alert/alert.model';
+import { NotificationType } from '../../../../model/enums/alert-type.enum';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Set } from 'typescript-collections';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { ErrorHandlerService } from '../../../../services/alert/error-handler.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { UserRole } from 'kypo2-auth';
+import { RoleTableRow } from '../../../../model/table-data/role-table-row';
+import { StringNormalizer } from '../../../../model/utils/string-normalizer';
+import { GroupTableRow } from '../../../../model/table-data/group-table-row';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',
@@ -22,8 +22,8 @@ import {GroupTableRow} from '../../../../model/table-data/group-table-row';
   styleUrls: ['./roles-of-group-subtable.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -32,8 +32,8 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   @Input() group: Group;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns = ['select', 'name', 'microservice', 'remove'];
   expandedRow: RoleTableRow;
@@ -48,8 +48,8 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
 
   constructor(private groupFacade: GroupFacadeService,
-              private errorHandler: ErrorHandlerService,
-              private alertService: Kypo2UserAndGroupNotificationService) { }
+    private errorHandler: ErrorHandlerService,
+    private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
     this.createDataSource();
@@ -86,8 +86,6 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   isAllSelected(): boolean {
-    console.log(this.selection.selected.length);
-    console.log(this.selection.selected);
     return this.selection.selected.length === this.dataSource._pageData(this.dataSource.data).length;
   }
 
@@ -174,7 +172,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
   }
 
   private createDataSource() {
-    this.dataSource = new MatTableDataSource(this.group.roles.map( role => new RoleTableRow(role)));
+    this.dataSource = new MatTableDataSource(this.group.roles.map(role => new RoleTableRow(role)));
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.totalRolesCount = this.dataSource.data.length;

@@ -51,6 +51,6 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatTabsModule
   ]
 })
-export class GroupMaterialModule {
+export class Kypo2GroupMaterialModule {
 
 }

@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GroupMaterialModule } from './group-material.module';
+import { Kypo2GroupMaterialModule } from './kypo2-group-material.module';
 import { GroupManagementComponent } from './group-management/group-management.component';
 import { GroupTableComponent } from './group-management/group-table/group-table.component';
 import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
@@ -19,12 +19,16 @@ import { RoleFacadeModule } from '../../services/role/role-facade.module';
 import { AddToGroupGroupTableComponent } from './add-users-to-group/group-table/add-to-group-group-table.component';
 import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import {Kypo2UserAndGroupNotificationService} from '../../services/alert/kypo2-user-and-group-notification.service';
+import {ErrorHandlerService} from '../../services/alert/error-handler.service';
+import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
+import {ConfigService} from '../../config/config.service';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    GroupMaterialModule,
+    Kypo2GroupMaterialModule,
     FormsModule,
     GroupFacadeModule,
     UserFacadeModule,
@@ -46,7 +50,10 @@ import { PipesModule } from '../../pipes/pipes.module';
     RolesTableComponent
   ],
   providers: [
-    GroupSelectionService
+    GroupSelectionService,
+    Kypo2UserAndGroupNotificationService,
+    ErrorHandlerService,
+    ConfigService
   ],
   entryComponents: [
     GroupEditComponent,
@@ -57,6 +64,20 @@ import { PipesModule } from '../../pipes/pipes.module';
     GroupManagementComponent
   ]
 })
-export class GroupModule {
+export class Kypo2GroupModule {
+  constructor(@Optional() @SkipSelf() parentModule: Kypo2GroupModule) {
+    if (parentModule) {
+      throw new Error(
+        'GroupModule is already loaded. Import it in the main module only');
+    }
+  }
 
+  static forRoot(config: UserAndGroupManagementConfig): ModuleWithProviders {
+    return {
+      ngModule: Kypo2GroupModule,
+      providers: [
+        {provide: UserAndGroupManagementConfig, useValue: config}
+      ]
+    };
+  }
 }

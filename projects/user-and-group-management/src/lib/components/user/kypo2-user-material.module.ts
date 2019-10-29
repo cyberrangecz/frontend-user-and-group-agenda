@@ -39,6 +39,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatFormFieldModule,
   ],
 })
-export class UserMaterialModule {
+export class Kypo2UserMaterialModule {
 
 }

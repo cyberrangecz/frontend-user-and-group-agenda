@@ -6,7 +6,6 @@ import {MatButtonModule, MatDialogModule, MatIconModule} from '@angular/material
 @NgModule({
   declarations: [
     ConfirmationDialogComponent,
-
   ],
   imports: [
     CommonModule,

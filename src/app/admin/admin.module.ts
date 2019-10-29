@@ -4,9 +4,9 @@ import {AdminOverviewComponent} from './admin-overview.component';
 import {AdminRoutingModule} from './admin-routing.module';
 import {MatButtonModule, MatIconModule, MatSnackBarModule, MatTabsModule} from '@angular/material';
 import {NotificationComponent} from './notification/notification.component';
-import {UserAndGroupManagementModule} from '../../../projects/user-and-group-management/src/lib/components/user-and-group-management.module';
 import {CustomConfig} from '../custom-config';
 import {ClientNotificationService} from './client-notification.service';
+import {Kypo2GroupModule, Kypo2UserModule} from '../../../projects/user-and-group-management/src/public_api';
 
 
 @NgModule({
@@ -16,7 +16,8 @@ import {ClientNotificationService} from './client-notification.service';
   ],
   imports: [
     CommonModule,
-    UserAndGroupManagementModule.forRoot(CustomConfig),
+    Kypo2UserModule.forRoot(CustomConfig),
+    Kypo2GroupModule.forRoot(CustomConfig),
     AdminRoutingModule,
     MatIconModule,
     MatTabsModule,

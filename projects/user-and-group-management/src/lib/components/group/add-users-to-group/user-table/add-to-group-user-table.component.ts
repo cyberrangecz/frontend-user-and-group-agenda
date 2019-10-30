@@ -5,15 +5,15 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {UserFacadeService} from '../../../../services/user/user-facade.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
-import {TableAdapter} from '../../../../model/table-data/table-adapter';
+import {UserFacadeService} from '../../../../services/facade/user/user-facade.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
+import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
 import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
 import {User} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
-import {UserTableRow} from '../../../../model/table-data/user-table-row';
+import {UserTableRow} from '../../../../model/table-adapters/user-table-row';
 
 @Component({
   selector: 'kypo2-add-to-group-user-table',

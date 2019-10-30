@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Set} from 'typescript-collections';
-import {Group} from '../../model/group/group.model';
+import {Group} from '../../../model/group/group.model';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable()

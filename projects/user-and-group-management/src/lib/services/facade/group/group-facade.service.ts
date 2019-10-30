@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Group} from '../../model/group/group.model';
-import {TableAdapter} from '../../model/table-data/table-adapter';
-import {GroupTableRow} from '../../model/table-data/group-table-row';
+import {Group} from '../../../model/group/group.model';
+import {TableAdapter} from '../../../model/table-adapters/table-adapter';
+import {GroupTableRow} from '../../../model/table-adapters/group-table-row';
 import {Observable} from 'rxjs';
-import {PaginationHttpParams} from '../../model/other/pagination-http-params';
-import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
-import {GroupDTO} from '../../model/DTO/group/group-dto.model';
+import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
+import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
+import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {map} from 'rxjs/operators';
 import {GroupMapperService} from './group-mapper.service';
 import {UserMapperService} from '../user/user-mapper.service';
-import {ConfigService} from '../../config/config.service';
-import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
+import {ConfigService} from '../../../config/config.service';
+import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
 
 @Injectable()
 export class GroupFacadeService {

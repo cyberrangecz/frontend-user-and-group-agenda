@@ -2,20 +2,20 @@ import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import {Notification} from '../../../../model/alert/alert.model';
 import {NotificationType} from '../../../../model/enums/alert-type.enum';
-import {GroupFacadeService} from '../../../../services/group/group-facade.service';
+import {GroupFacadeService} from '../../../../services/facade/group/group-facade.service';
 import {Set} from 'typescript-collections';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
 import {User} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
-import {UserTableRow} from '../../../../model/table-data/user-table-row';
+import {UserTableRow} from '../../../../model/table-adapters/user-table-row';
 
 @Component({
   selector: 'kypo2-members-of-group-subtable',

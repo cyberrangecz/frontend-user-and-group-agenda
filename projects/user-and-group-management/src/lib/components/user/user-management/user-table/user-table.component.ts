@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {UserTableRow} from '../../../../model/table-data/user-table-row';
-import {UserSelectionService} from '../../../../services/user/user-selection.service';
-import {UserFacadeService} from '../../../../services/user/user-facade.service';
+import {UserTableRow} from '../../../../model/table-adapters/user-table-row';
+import {UserSelectionService} from '../../../../services/facade/user/user-selection.service';
+import {UserFacadeService} from '../../../../services/facade/user/user-facade.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {merge, Observable, of, Subscription} from 'rxjs';
-import {TableAdapter} from '../../../../model/table-data/table-adapter';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {Notification} from '../../../../model/alert/alert.model';
@@ -16,7 +16,7 @@ import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfigService} from '../../../../config/config.service';
 import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
 import {User} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 

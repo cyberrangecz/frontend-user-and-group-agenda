@@ -1,14 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Group} from '../../../model/group/group.model';
-import {GroupFacadeService} from '../../../services/group/group-facade.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../services/alert/kypo2-user-and-group-notification.service';
+import {GroupFacadeService} from '../../../services/facade/group/group-facade.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../services/notification/kypo2-user-and-group-notification.service';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 import {Notification} from '../../../model/alert/alert.model';
 import {NotificationType} from '../../../model/enums/alert-type.enum';
 import {forkJoin, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {RoleFacadeService} from '../../../services/role/role-facade.service';
+import {RoleFacadeService} from '../../../services/facade/role/role-facade.service';
 import {UserRole} from 'kypo2-auth';
 
 @Component({

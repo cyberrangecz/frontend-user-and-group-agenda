@@ -1,20 +1,20 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Group } from '../../../../model/group/group.model';
 import { MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { GroupFacadeService } from '../../../../services/group/group-facade.service';
-import { Kypo2UserAndGroupNotificationService } from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import { GroupFacadeService } from '../../../../services/facade/group/group-facade.service';
+import { Kypo2UserAndGroupNotificationService } from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import { Notification } from '../../../../model/alert/alert.model';
 import { NotificationType } from '../../../../model/enums/alert-type.enum';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Set } from 'typescript-collections';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ErrorHandlerService } from '../../../../services/alert/error-handler.service';
+import { ErrorHandlerService } from '../../../../services/notification/error-handler.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserRole } from 'kypo2-auth';
-import { RoleTableRow } from '../../../../model/table-data/role-table-row';
+import { RoleTableRow } from '../../../../model/table-adapters/role-table-row';
 import { StringNormalizer } from '../../../../model/utils/string-normalizer';
-import { GroupTableRow } from '../../../../model/table-data/group-table-row';
+import { GroupTableRow } from '../../../../model/table-adapters/group-table-row';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',

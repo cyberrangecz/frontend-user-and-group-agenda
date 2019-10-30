@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
+import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {map} from 'rxjs/operators';
 import {RoleDTO, UserRole} from 'kypo2-auth';
-import {PaginationHttpParams} from '../../model/other/pagination-http-params';
-import {ConfigService} from '../../config/config.service';
-import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
+import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
+import {ConfigService} from '../../../config/config.service';
+import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
 
 @Injectable()
 export class RoleFacadeService {

@@ -6,7 +6,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {UserRole} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
-import {RoleTableRow} from '../../../../model/table-data/role-table-row';
+import {RoleTableRow} from '../../../../model/table-adapters/role-table-row';
 
 @Component({
   selector: 'kypo2-roles-table',

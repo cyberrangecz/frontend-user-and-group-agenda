@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ClientNotificationService} from './client-notification.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../projects/user-and-group-management/src/lib/services/alert/kypo2-user-and-group-notification.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../projects/user-and-group-management/src/lib/services/notification/kypo2-user-and-group-notification.service';
 @Component({
   selector: 'app-admin-overview',
   templateUrl: './admin-overview.component.html',

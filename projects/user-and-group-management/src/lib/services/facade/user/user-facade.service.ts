@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {PaginationHttpParams} from '../../model/other/pagination-http-params';
-import {TableAdapter} from '../../model/table-data/table-adapter';
+import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
+import {TableAdapter} from '../../../model/table-adapters/table-adapter';
 import {Observable} from 'rxjs';
-import {UserTableRow} from '../../model/table-data/user-table-row';
+import {UserTableRow} from '../../../model/table-adapters/user-table-row';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';
-import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
-import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
-import {ConfigService} from '../../config/config.service';
+import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
+import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
+import {ConfigService} from '../../../config/config.service';
 import {User, UserDTO} from 'kypo2-auth';
 
 @Injectable()

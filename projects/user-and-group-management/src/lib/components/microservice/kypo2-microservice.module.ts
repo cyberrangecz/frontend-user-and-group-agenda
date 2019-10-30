@@ -2,9 +2,7 @@ import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
 import {Kypo2MicroserviceMaterialModule} from './kypo2-microservice-material.module';
-import {Kypo2UserAndGroupNotificationService} from '../../services/alert/kypo2-user-and-group-notification.service';
-import {ErrorHandlerService} from '../../services/alert/error-handler.service';
-import {ConfigService} from '../../config/config.service';
+
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
 
 @NgModule({
@@ -13,11 +11,6 @@ import {UserAndGroupManagementConfig} from '../../config/user-and-group-manageme
     CommonModule,
     SharedModule,
     Kypo2MicroserviceMaterialModule,
-  ],
-  providers: [
-    Kypo2UserAndGroupNotificationService,
-    ErrorHandlerService,
-    ConfigService
   ],
   exports: []
 })

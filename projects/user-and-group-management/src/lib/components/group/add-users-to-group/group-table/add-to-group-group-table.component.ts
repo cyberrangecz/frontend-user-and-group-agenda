@@ -4,15 +4,15 @@ import {Set} from 'typescript-collections';
 import {MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ConfigService} from '../../../../config/config.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
-import {GroupFacadeService} from '../../../../services/group/group-facade.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
+import {GroupFacadeService} from '../../../../services/facade/group/group-facade.service';
 import {merge, Observable, of} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 
-import {TableAdapter} from '../../../../model/table-data/table-adapter';
+import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
-import {GroupTableRow} from '../../../../model/table-data/group-table-row';
+import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {GroupTableRow} from '../../../../model/table-adapters/group-table-row';
 
 @Component({
   selector: 'kypo2-add-to-group-group-table',

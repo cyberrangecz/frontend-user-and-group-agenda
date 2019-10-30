@@ -4,16 +4,13 @@ import {Kypo2UserMaterialModule} from './kypo2-user-material.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserTableComponent } from './user-management/user-table/user-table.component';
 import { UserControlsComponent } from './user-management/user-controls/user-controls.component';
-import {UserSelectionService} from '../../services/user/user-selection.service';
+import {UserSelectionService} from '../../services/facade/user/user-selection.service';
 import {FormsModule} from '@angular/forms';
 import {PipesModule} from '../../pipes/pipes.module';
-import {UserFacadeModule} from '../../services/user/user-facade.module';
+import {UserFacadeModule} from '../../services/facade/user/user-facade.module';
 import {SharedModule} from '../shared/shared.module';
 import { UserRolesDialogComponent } from './user-management/user-table/user-roles-dialog/user-roles-dialog.component';
-import {Kypo2UserAndGroupNotificationService} from '../../services/alert/kypo2-user-and-group-notification.service';
-import {ErrorHandlerService} from '../../services/alert/error-handler.service';
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
-import {ConfigService} from '../../config/config.service';
 
 @NgModule({
   declarations: [
@@ -32,9 +29,6 @@ import {ConfigService} from '../../config/config.service';
   ],
   providers: [
     UserSelectionService,
-    Kypo2UserAndGroupNotificationService,
-    ErrorHandlerService,
-    ConfigService
   ],
   entryComponents: [
     UserRolesDialogComponent

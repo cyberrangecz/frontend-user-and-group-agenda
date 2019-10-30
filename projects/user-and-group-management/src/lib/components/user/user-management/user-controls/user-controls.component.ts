@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {UserSelectionService} from '../../../../services/user/user-selection.service';
+import {UserSelectionService} from '../../../../services/facade/user/user-selection.service';
 import {Observable, Subscription} from 'rxjs';
-import {UserFacadeService} from '../../../../services/user/user-facade.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {UserFacadeService} from '../../../../services/facade/user/user-facade.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {Notification} from '../../../../model/alert/alert.model';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {map} from 'rxjs/operators';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
 import {User} from 'kypo2-auth';
 
 @Component({

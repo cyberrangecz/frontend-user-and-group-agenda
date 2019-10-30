@@ -9,20 +9,17 @@ import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-grou
 import { AddToGroupUserTableComponent } from './add-users-to-group/user-table/add-to-group-user-table.component';
 import { RolesOfGroupSubtableComponent } from './group-management/roles-of-group-subtable/roles-of-group-subtable.component';
 import { MembersOfGroupSubtableComponent } from './group-management/members-of-group-subtable/members-of-group-subtable.component';
-import { GroupSelectionService } from '../../services/group/group-selection.service';
+import { GroupSelectionService } from '../../services/facade/group/group-selection.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GroupFacadeModule } from '../../services/group/group-facade.module';
-import { UserFacadeModule } from '../../services/user/user-facade.module';
+import { GroupFacadeModule } from '../../services/facade/group/group-facade.module';
+import { UserFacadeModule } from '../../services/facade/user/user-facade.module';
 import { AddRolesToGroupComponent } from './add-roles-to-group/add-roles-to-group.component';
 import { RolesTableComponent } from './add-roles-to-group/roles-table/roles-table.component';
-import { RoleFacadeModule } from '../../services/role/role-facade.module';
+import { RoleFacadeModule } from '../../services/facade/role/role-facade.module';
 import { AddToGroupGroupTableComponent } from './add-users-to-group/group-table/add-to-group-group-table.component';
 import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../../pipes/pipes.module';
-import {Kypo2UserAndGroupNotificationService} from '../../services/alert/kypo2-user-and-group-notification.service';
-import {ErrorHandlerService} from '../../services/alert/error-handler.service';
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
-import {ConfigService} from '../../config/config.service';
 
 @NgModule({
   imports: [
@@ -51,9 +48,6 @@ import {ConfigService} from '../../config/config.service';
   ],
   providers: [
     GroupSelectionService,
-    Kypo2UserAndGroupNotificationService,
-    ErrorHandlerService,
-    ConfigService
   ],
   entryComponents: [
     GroupEditComponent,

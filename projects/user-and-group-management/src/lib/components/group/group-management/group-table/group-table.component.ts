@@ -2,23 +2,23 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {merge, of, Subscription} from 'rxjs';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {GroupSelectionService} from '../../../../services/group/group-selection.service';
-import {GroupFacadeService} from '../../../../services/group/group-facade.service';
-import {Kypo2UserAndGroupNotificationService} from '../../../../services/alert/kypo2-user-and-group-notification.service';
+import {GroupSelectionService} from '../../../../services/facade/group/group-selection.service';
+import {GroupFacadeService} from '../../../../services/facade/group/group-facade.service';
+import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import {Group} from '../../../../model/group/group.model';
 import {Notification} from '../../../../model/alert/alert.model';
 import {NotificationType} from '../../../../model/enums/alert-type.enum';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {TableAdapter} from '../../../../model/table-data/table-adapter';
+import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
 import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {GroupTableRow} from '../../../../model/table-data/group-table-row';
+import {GroupTableRow} from '../../../../model/table-adapters/group-table-row';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
 import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-group.component';
 import {ConfigService} from '../../../../config/config.service';
-import {ErrorHandlerService} from '../../../../services/alert/error-handler.service';
+import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 
 @Component({

@@ -1,11 +1,11 @@
-import {TableAdapter} from '../../model/table-data/table-adapter';
+import {TableAdapter} from '../../../model/table-adapters/table-adapter';
 import {User, UserDTO} from 'kypo2-auth';
-import {UserTableRow} from '../../model/table-data/user-table-row';
-import {RestResourceDTO} from '../../model/DTO/rest-resource-dto.model';
-import {PaginationDTO} from '../../model/DTO/pagination-dto.model';
-import {TablePagination} from '../../model/table-data/table-pagination';
+import {UserTableRow} from '../../../model/table-adapters/user-table-row';
+import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
+import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
+import {TablePagination} from '../../../model/table-adapters/table-pagination';
 import {Injectable} from '@angular/core';
-import {UserForGroupsDTO} from '../../model/DTO/user/user-for-groups-dto.model';
+import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.model';
 
 @Injectable()
 export class UserMapperService {

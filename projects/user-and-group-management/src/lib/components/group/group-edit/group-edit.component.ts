@@ -2,12 +2,12 @@ import { GroupEditFormGroup } from './group-edit-form-group';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Group } from '../../../model/group/group.model';
-import { GroupFacadeService } from '../../../services/group/group-facade.service';
-import { Kypo2UserAndGroupNotificationService } from '../../../services/alert/kypo2-user-and-group-notification.service';
+import { GroupFacadeService } from '../../../services/facade/group/group-facade.service';
+import { Kypo2UserAndGroupNotificationService } from '../../../services/notification/kypo2-user-and-group-notification.service';
 import { Notification } from '../../../model/alert/alert.model';
 import { NotificationType } from '../../../model/enums/alert-type.enum';
 import { DialogResultEnum } from '../../../model/enums/dialog-result.enum';
-import { ErrorHandlerService } from '../../../services/alert/error-handler.service';
+import { ErrorHandlerService } from '../../../services/notification/error-handler.service';
 import { User } from 'kypo2-auth';
 
 @Component({

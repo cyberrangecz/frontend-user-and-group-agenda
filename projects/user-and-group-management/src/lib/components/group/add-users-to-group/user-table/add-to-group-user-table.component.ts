@@ -10,10 +10,11 @@ import {Kypo2UserAndGroupNotificationService} from '../../../../services/notific
 import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
 import {Group} from '../../../../model/group/group.model';
 import {ConfigService} from '../../../../config/config.service';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {User} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 import {UserTableRow} from '../../../../model/table-adapters/user-table-row';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-add-to-group-user-table',
@@ -42,7 +43,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
   constructor(private userFacade: UserFacadeService,
               private configService: ConfigService,
               private alertService: Kypo2UserAndGroupNotificationService,
-              private errorHandler: ErrorHandlerService) { }
+              private errorHandler: Kypo2UserAndGroupErrorService) { }
 
   ngOnInit() {
   }
@@ -103,7 +104,7 @@ export class AddToGroupUserTableComponent implements OnInit, OnChanges {
       catchError((err) => {
         this.isLoadingResults = false;
         this.isInErrorState = true;
-        this.errorHandler.displayInAlert(err, 'Loading users');
+        this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Loading users'));
         return of([]);
       }))
       .subscribe((data: TableAdapter<UserTableRow[]>) => this.createDataSource(data));

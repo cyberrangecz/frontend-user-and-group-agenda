@@ -4,10 +4,11 @@ import {Group} from '../../../model/group/group.model';
 import {Kypo2UserAndGroupNotificationService} from '../../../services/notification/kypo2-user-and-group-notification.service';
 import {GroupFacadeService} from '../../../services/facade/group/group-facade.service';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {Notification} from '../../../model/alert/alert.model';
-import {NotificationType} from '../../../model/enums/alert-type.enum';
-import {ErrorHandlerService} from '../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupNotification} from '../../../model/events/kypo2-user-and-group-notification';
+import {Kypo2UserAndGroupNotificationType} from '../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupErrorService} from '../../../services/notification/kypo2-user-and-group-error.service';
 import {User} from 'kypo2-auth';
+import {Kypo2UserAndGroupError} from '../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-add-users-to-group',
@@ -22,7 +23,7 @@ export class AddUsersToGroupComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
               public dialogRef: MatDialogRef<AddUsersToGroupComponent>,
               private groupFacadeService: GroupFacadeService,
-              private errorHandler: ErrorHandlerService,
+              private errorHandler: Kypo2UserAndGroupErrorService,
               private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
@@ -50,7 +51,7 @@ export class AddUsersToGroupComponent implements OnInit {
   private isValidInput(): boolean {
     const potentionalErrorMessage = this.validateInput();
     if (potentionalErrorMessage !== '') {
-      this.alertService.addNotification(new Notification(NotificationType.ERROR, potentionalErrorMessage));
+      this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.ERROR, potentionalErrorMessage));
       return false;
     }
     return true;
@@ -65,7 +66,7 @@ export class AddUsersToGroupComponent implements OnInit {
           this.dialogRef.close(DialogResultEnum.SUCCESS);
         },
         err => {
-          this.errorHandler.displayInAlert(err, 'Adding users to group');
+          this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Adding users to group'));
         }
       );
   }

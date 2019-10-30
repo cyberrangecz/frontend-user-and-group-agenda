@@ -11,8 +11,10 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 
 import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {GroupTableRow} from '../../../../model/table-adapters/group-table-row';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-add-to-group-group-table',
@@ -41,7 +43,7 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
   constructor(private groupFacade: GroupFacadeService,
               private configService: ConfigService,
               private alertService: Kypo2UserAndGroupNotificationService,
-              private errorHandler: ErrorHandlerService) { }
+              private errorHandler: Kypo2UserAndGroupErrorService) { }
 
   ngOnInit() {
   }
@@ -102,7 +104,7 @@ export class AddToGroupGroupTableComponent implements OnInit, OnChanges {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.errorHandler.displayInAlert(err, 'Loading groups');
+          this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Loading groups'));
           return of([]);
         }))
       .subscribe((data: TableAdapter<GroupTableRow[]>) => this.createDataSource(data));

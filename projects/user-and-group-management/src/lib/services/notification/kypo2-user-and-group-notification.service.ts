@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Notification} from '../../model/alert/alert.model';
+import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable()
 export class Kypo2UserAndGroupNotificationService {
 
-  private notificationSubject: Subject<Notification> = new Subject<Notification>();
-  notification$: Observable<Notification> = this.notificationSubject.asObservable();
+  private notificationSubject: Subject<Kypo2UserAndGroupNotification> = new Subject<Kypo2UserAndGroupNotification>();
+  notification$: Observable<Kypo2UserAndGroupNotification> = this.notificationSubject.asObservable();
 
-  addNotification(notification: Notification) {
+  notify(notification: Kypo2UserAndGroupNotification) {
     this.notificationSubject.next(notification);
   }
 }

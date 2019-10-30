@@ -3,15 +3,16 @@ import {UserSelectionService} from '../../../../services/facade/user/user-select
 import {Observable, Subscription} from 'rxjs';
 import {UserFacadeService} from '../../../../services/facade/user/user-facade.service';
 import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
-import {NotificationType} from '../../../../model/enums/alert-type.enum';
-import {Notification} from '../../../../model/alert/alert.model';
+import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {map} from 'rxjs/operators';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {User} from 'kypo2-auth';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-user-controls',
@@ -26,7 +27,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
               private userManagementService: UserSelectionService,
               private userFacade: UserFacadeService,
-              private errorHandler: ErrorHandlerService,
+              private errorHandler: Kypo2UserAndGroupErrorService,
               private alertService: Kypo2UserAndGroupNotificationService) {
   }
 
@@ -69,9 +70,9 @@ export class UserControlsComponent implements OnInit, OnDestroy {
       .subscribe(
         resp => {
           this.userManagementService.emitDataChange();
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Selected users were successfully deleted'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Selected users were successfully deleted'));
         },
-        err => this.errorHandler.displayInAlert(err, 'Deleting users')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting users'))
       );
   }
 

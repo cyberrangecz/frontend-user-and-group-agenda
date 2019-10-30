@@ -4,11 +4,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Group } from '../../../model/group/group.model';
 import { GroupFacadeService } from '../../../services/facade/group/group-facade.service';
 import { Kypo2UserAndGroupNotificationService } from '../../../services/notification/kypo2-user-and-group-notification.service';
-import { Notification } from '../../../model/alert/alert.model';
-import { NotificationType } from '../../../model/enums/alert-type.enum';
+import { Kypo2UserAndGroupNotification } from '../../../model/events/kypo2-user-and-group-notification';
+import { Kypo2UserAndGroupNotificationType } from '../../../model/enums/alert-type.enum';
 import { DialogResultEnum } from '../../../model/enums/dialog-result.enum';
-import { ErrorHandlerService } from '../../../services/notification/error-handler.service';
+import { Kypo2UserAndGroupErrorService } from '../../../services/notification/kypo2-user-and-group-error.service';
 import { User } from 'kypo2-auth';
+import {Kypo2UserAndGroupError} from '../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-group-edit',
@@ -27,8 +28,7 @@ export class GroupEditComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public group: Group,
     public dialogRef: MatDialogRef<GroupEditComponent>,
     private groupFacade: GroupFacadeService,
-    private errorHandler: ErrorHandlerService,
-    private alertService: Kypo2UserAndGroupNotificationService) {
+    private errorHandler: Kypo2UserAndGroupErrorService) {
   }
 
   ngOnInit() {
@@ -102,7 +102,7 @@ export class GroupEditComponent implements OnInit {
     this.groupFacade.updateGroup(group)
       .subscribe(
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
-        err => this.errorHandler.displayInAlert(err, 'Updating group')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Updating group'))
       );
   }
 
@@ -111,8 +111,7 @@ export class GroupEditComponent implements OnInit {
     this.groupFacade.createGroup(group, groupIdsToImportUsers)
       .subscribe(
         resp => this.dialogRef.close(DialogResultEnum.SUCCESS),
-        err => this.errorHandler.displayInAlert(err, 'Creating group')
-
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Creating group'))
       );
   }
 }

@@ -4,11 +4,12 @@ import {MatDialog} from '@angular/material';
 import {GroupSelectionService} from '../../../../services/facade/group/group-selection.service';
 import {GroupFacadeService} from '../../../../services/facade/group/group-facade.service';
 import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
-import {Notification} from '../../../../model/alert/alert.model';
-import {NotificationType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
+import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-type.enum';
 import {GroupEditComponent} from '../../group-edit/group-edit.component';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-group-controls',
@@ -23,7 +24,7 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
               private groupManagementService: GroupSelectionService,
               private groupFacade: GroupFacadeService,
-              private errorHandler: ErrorHandlerService,
+              private errorHandler: Kypo2UserAndGroupErrorService,
               private alertService: Kypo2UserAndGroupNotificationService) {
 
   }
@@ -56,10 +57,10 @@ export class GroupControlsComponent implements OnInit, OnDestroy {
       .subscribe(
         resp => {
           this.groupManagementService.emitDataChange();
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Selected groups were successfully deleted'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Selected groups were successfully deleted'));
         },
         err => {
-          this.errorHandler.displayInAlert(err, 'Deleting groups');
+          this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting groups'));
         }
       );
   }

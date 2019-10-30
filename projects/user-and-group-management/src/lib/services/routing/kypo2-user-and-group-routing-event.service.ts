@@ -1,5 +1,5 @@
 import {Observable, Subject} from 'rxjs';
-import {Kypo2UserAndGroupRouteEvent} from '../../model/routing/kypo2-user-and-group-route-event';
+import {Kypo2UserAndGroupRouteEvent} from '../../model/events/kypo2-user-and-group-route-event';
 
 export class Kypo2UserAndGroupRoutingEventService {
   private navigateSubject: Subject<Kypo2UserAndGroupRouteEvent> = new Subject();

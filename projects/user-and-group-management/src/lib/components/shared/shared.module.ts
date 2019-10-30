@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import {MatButtonModule, MatDialogModule, MatIconModule} from '@angular/material';
 import {Kypo2UserAndGroupNotificationService} from '../../services/notification/kypo2-user-and-group-notification.service';
-import {ErrorHandlerService} from '../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../services/notification/kypo2-user-and-group-error.service';
 import {ConfigService} from '../../config/config.service';
 import {Kypo2UserAndGroupRoutingEventService} from '../../services/routing/kypo2-user-and-group-routing-event.service';
 
@@ -23,7 +23,7 @@ import {Kypo2UserAndGroupRoutingEventService} from '../../services/routing/kypo2
   providers: [
     Kypo2UserAndGroupNotificationService,
     Kypo2UserAndGroupRoutingEventService,
-    ErrorHandlerService,
+    Kypo2UserAndGroupErrorService,
     ConfigService
   ],
   entryComponents: [

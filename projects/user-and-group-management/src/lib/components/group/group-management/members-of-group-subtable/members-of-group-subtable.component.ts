@@ -3,8 +3,8 @@ import {Group} from '../../../../model/group/group.model';
 import {MatCheckboxChange, MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
-import {Notification} from '../../../../model/alert/alert.model';
-import {NotificationType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
+import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-type.enum';
 import {GroupFacadeService} from '../../../../services/facade/group/group-facade.service';
 import {Set} from 'typescript-collections';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
@@ -12,10 +12,11 @@ import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/
 import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {User} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 import {UserTableRow} from '../../../../model/table-adapters/user-table-row';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-members-of-group-subtable',
@@ -41,7 +42,7 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   constructor(private dialog: MatDialog,
               private groupFacade: GroupFacadeService,
-              private errorHandler: ErrorHandlerService,
+              private errorHandler: Kypo2UserAndGroupErrorService,
               private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
@@ -172,11 +173,11 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.groupFacade.removeUsersFromGroup(this.group.id, [userToRemove.id])
       .subscribe(
         resp => {
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'User was successfully deleted'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'User was successfully deleted'));
           this.unselectUser(userToRemove);
           this.removeDeletedUsersFromTable([userToRemove.id]);
         },
-        err => this.errorHandler.displayInAlert(err, 'Deleting user')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting user'))
       );
   }
 
@@ -185,11 +186,11 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.groupFacade.removeUsersFromGroup(this.group.id, idsToRemove)
       .subscribe(
         resp => {
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Users were successfully deleted'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Users were successfully deleted'));
           this.removeDeletedUsersFromTable(idsToRemove);
           this.resetSelection();
         },
-        err => this.errorHandler.displayInAlert(err, 'Deleting users')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting users'))
       );
   }
 

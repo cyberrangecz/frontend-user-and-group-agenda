@@ -6,8 +6,8 @@ import {GroupSelectionService} from '../../../../services/facade/group/group-sel
 import {GroupFacadeService} from '../../../../services/facade/group/group-facade.service';
 import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import {Group} from '../../../../model/group/group.model';
-import {Notification} from '../../../../model/alert/alert.model';
-import {NotificationType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
+import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-type.enum';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
@@ -18,8 +18,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AddUsersToGroupComponent} from '../../add-users-to-group/add-users-to-group.component';
 import {AddRolesToGroupComponent} from '../../add-roles-to-group/add-roles-to-group.component';
 import {ConfigService} from '../../../../config/config.service';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-group-table',
@@ -65,7 +66,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
               private groupSelectionService: GroupSelectionService,
               private configService: ConfigService,
               private groupFacade: GroupFacadeService,
-              private errorHandler: ErrorHandlerService,
+              private errorHandler: Kypo2UserAndGroupErrorService,
               private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
@@ -131,10 +132,10 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     this.groupFacade.deleteGroup(group.id)
       .subscribe(
         resp => {
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Group was successfully deleted'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Group was successfully deleted'));
           this.fetchData();
         },
-        err => this.errorHandler.displayInAlert(err, 'Deleting group')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting group'))
       );
   }
 
@@ -174,7 +175,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.errorHandler.displayInAlert(err, 'Loading groups');
+          this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Loading groups'));
           return of([]);
         }))
       .subscribe((data: TableAdapter<GroupTableRow[]>) => this.createDataSource(data));
@@ -231,7 +232,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe(result => {
         if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Group was successfully updated'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Group was successfully updated'));
           this.fetchData();
         }
       });
@@ -242,7 +243,7 @@ export class GroupTableComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe( result => {
         if ((result !== undefined || result !== null) && result === DialogResultEnum.SUCCESS) {
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Users were successfully added'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Users were successfully added'));
           this.fetchData();
         }
       });
@@ -263,11 +264,11 @@ export class GroupTableComponent implements OnInit, OnDestroy {
     if (result === undefined || result === null || result.status === DialogResultEnum.CANCELED) {
       return;
     } else if (result.status === DialogResultEnum.SUCCESS) {
-      this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Roles were successfully added'));
+      this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Roles were successfully added'));
       this.fetchData();
     } else if (result.status === DialogResultEnum.FAILED) {
-      this.alertService.addNotification(new Notification(
-        NotificationType.ERROR,
+      this.alertService.notify(new Kypo2UserAndGroupNotification(
+        Kypo2UserAndGroupNotificationType.ERROR,
         `Adding ${result.failedCount} role(s) of ${result.totalCount} requested failed.`));
     }
   }

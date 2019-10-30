@@ -3,18 +3,18 @@ import { Group } from '../../../../model/group/group.model';
 import { MatCheckboxChange, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { GroupFacadeService } from '../../../../services/facade/group/group-facade.service';
 import { Kypo2UserAndGroupNotificationService } from '../../../../services/notification/kypo2-user-and-group-notification.service';
-import { Notification } from '../../../../model/alert/alert.model';
-import { NotificationType } from '../../../../model/enums/alert-type.enum';
+import { Kypo2UserAndGroupNotification } from '../../../../model/events/kypo2-user-and-group-notification';
+import { Kypo2UserAndGroupNotificationType } from '../../../../model/enums/alert-type.enum';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Set } from 'typescript-collections';
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ErrorHandlerService } from '../../../../services/notification/error-handler.service';
+import { Kypo2UserAndGroupErrorService } from '../../../../services/notification/kypo2-user-and-group-error.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { UserRole } from 'kypo2-auth';
 import { RoleTableRow } from '../../../../model/table-adapters/role-table-row';
 import { StringNormalizer } from '../../../../model/utils/string-normalizer';
-import { GroupTableRow } from '../../../../model/table-adapters/group-table-row';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-roles-of-group-subtable',
@@ -48,7 +48,7 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
 
   constructor(private groupFacade: GroupFacadeService,
-    private errorHandler: ErrorHandlerService,
+    private errorHandler: Kypo2UserAndGroupErrorService,
     private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
@@ -94,10 +94,10 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
       .subscribe(
         resp => {
           this.deleteRemovedRoleFromTable(role);
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'Role was successfully removed'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Role was successfully removed'));
           this.resetSelection();
         },
-        err => this.errorHandler.displayInAlert(err, 'Removing role')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Removing role'))
       );
   }
 
@@ -126,12 +126,12 @@ export class RolesOfGroupSubtableComponent implements OnInit, OnDestroy {
 
   private evaluateMultipleRoleRemovalRequests(failedRequests, totalCount: number) {
     if (failedRequests.length > 0) {
-      this.alertService.addNotification(new Notification(
-        NotificationType.ERROR,
+      this.alertService.notify(new Kypo2UserAndGroupNotification(
+        Kypo2UserAndGroupNotificationType.ERROR,
         `${failedRequests.length} of ${totalCount} roles were not successfully removed.`));
     } else {
-      this.alertService.addNotification(new Notification(
-        NotificationType.SUCCESS,
+      this.alertService.notify(new Kypo2UserAndGroupNotification(
+        Kypo2UserAndGroupNotificationType.SUCCESS,
         'Roles were successfully removed'
       ));
     }

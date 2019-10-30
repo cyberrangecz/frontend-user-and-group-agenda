@@ -8,17 +8,18 @@ import {merge, Observable, of, Subscription} from 'rxjs';
 import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
 import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
 import {PaginationFactory} from '../../../../model/other/pagination-factory';
-import {NotificationType} from '../../../../model/enums/alert-type.enum';
-import {Notification} from '../../../../model/alert/alert.model';
+import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
 import {SelectionModel} from '@angular/cdk/collections';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfigService} from '../../../../config/config.service';
 import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
-import {ErrorHandlerService} from '../../../../services/notification/error-handler.service';
+import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {User} from 'kypo2-auth';
 import {StringNormalizer} from '../../../../model/utils/string-normalizer';
+import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
 
 @Component({
   selector: 'kypo2-user-table',
@@ -57,7 +58,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
     private userSelectionService: UserSelectionService,
     private configService: ConfigService,
     private userFacade: UserFacadeService,
-    private errorHandler: ErrorHandlerService,
+    private errorHandler: Kypo2UserAndGroupErrorService,
     private alertService: Kypo2UserAndGroupNotificationService) { }
 
   ngOnInit() {
@@ -158,7 +159,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         catchError((err) => {
           this.isLoadingResults = false;
           this.isInErrorState = true;
-          this.errorHandler.displayInAlert(err, 'Loading users');
+          this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Loading users'));
           return of([]);
         }))
       .subscribe((data: TableAdapter<UserTableRow[]>) => this.createDataSource(data));
@@ -229,10 +230,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
     this.userFacade.removeUser(user.id)
       .subscribe(
         resp => {
-          this.alertService.addNotification(new Notification(NotificationType.SUCCESS, 'User was successfully deleted'));
+          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'User was successfully deleted'));
           this.fetchData();
         },
-        err => this.errorHandler.displayInAlert(err, 'Deleting user')
+        err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting user'))
       );
   }
 

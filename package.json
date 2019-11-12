@@ -32,6 +32,7 @@
     "typescript-collections": "^1.3.2",
     "zone.js": "~0.9.1",
     "kypo2-auth": "1.3.5",
+    "kypo2-table": "1.1.7",
     "angular-oauth2-oidc": "^5.0.2"
   },
   "devDependencies": {

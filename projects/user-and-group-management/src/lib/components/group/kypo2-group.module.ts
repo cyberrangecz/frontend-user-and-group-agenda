@@ -1,8 +1,7 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Kypo2GroupMaterialModule } from './kypo2-group-material.module';
-import { GroupManagementComponent } from './group-management/group-management.component';
-import { GroupTableComponent } from './group-management/group-table/group-table.component';
+import { GroupOverviewComponent } from './group-management/group-overview.component';
 import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { AddUsersToGroupComponent } from './add-users-to-group/add-users-to-group.component';
@@ -20,6 +19,9 @@ import { AddToGroupGroupTableComponent } from './add-users-to-group/group-table/
 import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
+import {Kypo2TableModule} from 'kypo2-table';
+import {GroupOverviewService} from '../../services/shared/group-overview.service';
+import {GroupOverviewConcreteService} from '../../services/group/group-overview.concrete.service';
 
 @NgModule({
   imports: [
@@ -31,11 +33,11 @@ import {UserAndGroupManagementConfig} from '../../config/user-and-group-manageme
     UserFacadeModule,
     RoleFacadeModule,
     PipesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Kypo2TableModule
   ],
   declarations: [
-    GroupManagementComponent,
-    GroupTableComponent,
+    GroupOverviewComponent,
     GroupControlsComponent,
     GroupEditComponent,
     AddUsersToGroupComponent,
@@ -47,6 +49,7 @@ import {UserAndGroupManagementConfig} from '../../config/user-and-group-manageme
     RolesTableComponent
   ],
   providers: [
+    {provide: GroupOverviewService, useClass: GroupOverviewConcreteService},
     GroupSelectionService,
   ],
   entryComponents: [
@@ -55,7 +58,7 @@ import {UserAndGroupManagementConfig} from '../../config/user-and-group-manageme
     AddRolesToGroupComponent,
   ],
   exports: [
-    GroupManagementComponent
+    GroupOverviewComponent
   ]
 })
 export class Kypo2GroupModule {

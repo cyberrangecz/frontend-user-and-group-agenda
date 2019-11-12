@@ -1,13 +1,14 @@
 <div class="content">
   <button mat-raised-button
-          color="warn"
-          [disabled]="selectedGroupsCount <= 0"
-          (click)="deleteGroups()">
-    Delete selected groups ({{ selectedGroupsCount }})
-  </button>
-  <button mat-raised-button
           color="primary"
           (click)="createGroup()">
-    Create new group
+    Create
+  </button>
+  <button mat-raised-button
+          color="warn"
+          [disabled]="selectedGroups <= 0"
+          (click)="deleteGroups()">
+    <span *ngIf="selectedGroups <=0 else show">Delete</span>
+    <ng-template #show>Delete ({{ selectedGroups }})</ng-template>
   </button>
 </div>

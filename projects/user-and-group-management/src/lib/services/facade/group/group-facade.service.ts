@@ -12,6 +12,9 @@ import {GroupMapperService} from './group-mapper.service';
 import {UserMapperService} from '../user/user-mapper.service';
 import {ConfigService} from '../../../config/config.service';
 import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
+import {FilterParams} from '../../../model/other/filter-params';
+import {Filter} from '../../../model/utils/Filter';
+import {ParamsMerger} from '../../../model/other/params-merger';
 
 @Injectable()
 export class GroupFacadeService {
@@ -29,10 +32,15 @@ export class GroupFacadeService {
     this.config = this.configService.config;
   }
 
-  getGroupsTable(pagination = null): Observable<TableAdapter<GroupTableRow[]>> {
+  getGroupsTable(pagination = null, filter?: Filter[]): Observable<TableAdapter<GroupTableRow[]>> {
     if (pagination) {
+      let params = PaginationHttpParams.createPaginationParams(pagination);
+
+      if (filter) {
+        params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
+      }
       return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
-        { params: PaginationHttpParams.createPaginationParams(pagination) })
+        { params: params })
         .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableDataWrapper(resp)));
     }
     return this.http.get<TableAdapter<GroupTableRow[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);

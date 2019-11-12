@@ -173,7 +173,9 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.groupFacade.removeUsersFromGroup(this.group.id, [userToRemove.id])
       .subscribe(
         resp => {
-          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'User was successfully deleted'));
+          this.alertService.notify(
+            new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS,
+              'User was successfully deleted'));
           this.unselectUser(userToRemove);
           this.removeDeletedUsersFromTable([userToRemove.id]);
         },
@@ -186,7 +188,9 @@ export class MembersOfGroupSubtableComponent implements OnInit, OnDestroy {
     this.groupFacade.removeUsersFromGroup(this.group.id, idsToRemove)
       .subscribe(
         resp => {
-          this.alertService.notify(new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS, 'Users were successfully deleted'));
+          this.alertService.notify(
+            new Kypo2UserAndGroupNotification(Kypo2UserAndGroupNotificationType.SUCCESS,
+              'Users were successfully deleted'));
           this.removeDeletedUsersFromTable(idsToRemove);
           this.resetSelection();
         },

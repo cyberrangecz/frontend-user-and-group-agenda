@@ -13,7 +13,7 @@
         <th class="select" mat-header-cell *matHeaderCellDef>
           <mat-checkbox
             (change)="$event ? selectAllChange(): null"
-            [checked]="selection.hasValue() && isAllSelected()"
+            [checked]="selection.hasValue() && isAllSelected()" new
             [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
         </th>

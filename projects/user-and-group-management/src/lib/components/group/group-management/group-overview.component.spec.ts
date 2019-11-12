@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GroupTableComponent } from './group-table.component';
+import { GroupOverviewComponent } from './group-overview.component';
 
-describe('AddToGroupGroupTableComponent', () => {
-  let component: GroupTableComponent;
-  let fixture: ComponentFixture<GroupTableComponent>;
+describe('GroupOverviewComponent', () => {
+  let component: GroupOverviewComponent;
+  let fixture: ComponentFixture<GroupOverviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupTableComponent ]
+      declarations: [ GroupOverviewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GroupTableComponent);
+    fixture = TestBed.createComponent(GroupOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

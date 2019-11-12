@@ -1,0 +1,41 @@
+<form [formGroup]="microserviceRoleFormGroup.formGroup">
+  <div class="form-container">
+
+    <!-- DEFAULT checkbox-->
+    <div class="form-line">
+      <div class="form-line-content">
+        <button mat-button
+                type="button"
+                color="warn"
+                (click)="removeRole()">
+          Remove
+        </button>
+        <span class="spacer"></span>
+        <mat-checkbox matTooltip="When active, role is selected as default"
+                      labelPosition="before"
+                      formControlName="default">
+          Default
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION field-->
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput placeholder="Description" formControlName="description">
+      <button mat-button *ngIf="description.value" matSuffix mat-icon-button aria-label="Clear" (click)="description.setValue(''); onClear();">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <!-- TYPE field-->
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <input matInput placeholder="Type" formControlName="type" required>
+      <button mat-button *ngIf="type.value" matSuffix mat-icon-button aria-label="Clear" (click)="type.setValue(''); onClear();">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error>Type cannot be empty</mat-error>
+    </mat-form-field>
+  </div>
+</form>

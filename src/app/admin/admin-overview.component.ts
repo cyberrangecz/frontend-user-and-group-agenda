@@ -43,6 +43,10 @@ export class AdminOverviewComponent implements OnInit, OnDestroy {
       {
         path: 'group',
         label: 'Group',
+      },
+      {
+        path: 'microservices',
+        label: 'Microservices',
       }
     ];
   }

@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminOverviewComponent} from './admin-overview.component';
-import {UserManagementComponent} from '../../../projects/user-and-group-management/src/lib/components/user/user-management/user-management.component';
-import {GroupOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/group/group-management/group-overview.component';
+import {MicroserviceOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/microservice/microservice-overview.component';
+import {GroupOverviewComponent, UserManagementComponent} from '../../../projects/user-and-group-management/src/public_api';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -22,6 +22,11 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'group',
         component: GroupOverviewComponent,
+        outlet: 'tab'
+      },
+      {
+        path: 'microservices',
+        component: MicroserviceOverviewComponent,
         outlet: 'tab'
       },
       {

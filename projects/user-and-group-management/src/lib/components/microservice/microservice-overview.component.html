@@ -1,0 +1,15 @@
+<div class="content">
+  <h2>Microservice</h2>
+  <kypo2-microservice-create
+    (formValid)="updateMicroservice($event)"
+    [microservice]="microservice"
+    [isCleared]="clear$">
+  </kypo2-microservice-create>
+
+  <kypo2-microservice-controls
+    (create)="createMiscroservice()"
+    (clear)="clearContent()"
+    [hasDefaultRole]="hasDefaultRole"
+    [isFormValid]="formValid">
+  </kypo2-microservice-controls>
+</div>

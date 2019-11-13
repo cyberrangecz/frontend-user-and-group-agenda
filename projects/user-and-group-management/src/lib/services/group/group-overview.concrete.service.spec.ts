@@ -8,7 +8,7 @@ import {throwError} from 'rxjs';
 import {skip} from 'rxjs/operators';
 
 describe('GroupOverviewConcreteService', () => {
-  let GroupFacadeServiceSpy = jasmine.createSpyObj('GroupFacadeService', ['getGroupsTable', 'deleteGroups', 'deleteGroup']);
+  let GroupFacadeServiceSpy = jasmine.createSpyObj('GroupFacadeService', ['getGroups', 'deleteGroups', 'deleteGroup']);
   let GroupSelectionServiceSpy = jasmine.createSpyObj('GroupSelectionService', ['emitDataChange']);
   let Kypo2UserAndGroupNotificationServiceSpy = jasmine.createSpyObj('Kypo2UserAndGroupNotificationService', ['notify']);
   let Kypo2UserAndGroupErrorServiceSpy = jasmine.createSpyObj('Kypo2UserAndGroupErrorService', ['emit']);
@@ -32,18 +32,18 @@ describe('GroupOverviewConcreteService', () => {
   });
 
   it('should call error handler on err', done => {
-    GroupFacadeServiceSpy.getGroupsTable.and.returnValue(throwError(null));
+    GroupFacadeServiceSpy.getGroups.and.returnValue(throwError(null));
 
     service.getAll().subscribe( _ => fail,
       _ => {
         expect(Kypo2UserAndGroupErrorServiceSpy.emit).toHaveBeenCalledTimes(1);
         done();
       });
-    expect(GroupFacadeServiceSpy.getGroupsTable).toHaveBeenCalledTimes(1);
+    expect(GroupFacadeServiceSpy.getGroups).toHaveBeenCalledTimes(1);
   });
 
   it('should emit hasError observable on err', done => {
-    GroupFacadeServiceSpy.getGroupsTable.and.returnValue(throwError(null));
+    GroupFacadeServiceSpy.getGroups.and.returnValue(throwError(null));
 
     service.hasError$
       .pipe(

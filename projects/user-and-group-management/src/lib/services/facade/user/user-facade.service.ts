@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
-import {TableAdapter} from '../../../model/table-adapters/table-adapter';
+import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {Observable} from 'rxjs';
 import {UserTableRow} from '../../../model/table-adapters/user-table-row';
 import {map} from 'rxjs/operators';
@@ -10,6 +10,10 @@ import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
 import {ConfigService} from '../../../config/config.service';
 import {User, UserDTO} from 'kypo2-auth';
+import {RequestedPagination} from '../../../model/other/requested-pagination';
+import {Filter} from '../../../model/filters/filter';
+import {ParamsMerger} from '../../../model/other/params-merger';
+import {FilterParams} from '../../../model/other/filter-params';
 
 @Injectable()
 export class UserFacadeService {
@@ -24,7 +28,7 @@ export class UserFacadeService {
     this.config = this.configService.config;
   }
 
-  getUsersTable(pagination = null): Observable<TableAdapter<UserTableRow[]>> {
+  getUsersTable(pagination = null): Observable<PaginatedResource<UserTableRow[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
         { params: PaginationHttpParams.createPaginationParams(pagination) })
@@ -34,7 +38,7 @@ export class UserFacadeService {
       .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
   }
 
-  getUsers(pagination = null): Observable<TableAdapter<User[]>> {
+  getUsers(pagination = null): Observable<PaginatedResource<User[]>> {
     if (pagination) {
       return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
         {params: PaginationHttpParams.createPaginationParams(pagination)})
@@ -61,15 +65,20 @@ export class UserFacadeService {
     return this.http.request('delete', `${this.config.userAndGroupRestBasePath + this.usersPathExtension}${userId}`);
   }
 
-  getUsersNotInGroup(groupId: number, pagination = null): Observable<TableAdapter<UserTableRow[]>> {
-    if (pagination) {
-      return this.http.get<RestResourceDTO<UserDTO>>(
-        `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,
-        {params: PaginationHttpParams.createPaginationParams(pagination)})
-        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
-    }
+  getUsersNotInGroup(groupId: number, pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<User[]>> {
+    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
     return this.http.get<RestResourceDTO<UserDTO>>(
-      `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`)
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
+      `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,
+      {params: params})
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
+  }
+
+  getUsersInGroups(groupIds: number[], pagination: RequestedPagination, filters: Filter[] = []) {
+    const idParams = new HttpParams().set('ids', groupIds.toString());
+    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters), idParams]);
+    return this.http.get<RestResourceDTO<UserDTO>>(
+      `${this.config.userAndGroupRestBasePath + this.usersPathExtension}groups`,
+      {params: params})
+      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
   }
 }

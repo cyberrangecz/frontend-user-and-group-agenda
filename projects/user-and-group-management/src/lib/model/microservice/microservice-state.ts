@@ -1,8 +1,8 @@
-import {Role} from './role.model';
+import {MicroserviceRole} from './microservice-role.model';
 
 export class MicroserviceState {
   name: string;
   endpoint: string;
-  roles: Role[];
+  roles: MicroserviceRole[];
   valid: boolean;
 }

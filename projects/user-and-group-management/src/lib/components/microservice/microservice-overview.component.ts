@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Microservice} from '../../model/microservice/microservice.model';
 import {MicroserviceState} from '../../model/microservice/microservice-state';
-import {Role} from '../../model/microservice/role.model';
+import {MicroserviceRole} from '../../model/microservice/microservice-role.model';
 import {MicroserviceFacadeService} from '../../services/facade/microservice/microservice-facade.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupErrorService} from '../../services/notification/kypo2-user-and-group-error.service';
@@ -60,7 +60,7 @@ export class MicroserviceOverviewComponent implements OnInit {
     this.initMicroservice();
   }
 
-  private miscroserviceHasDefaultRole(roles: Role[]): boolean {
+  private miscroserviceHasDefaultRole(roles: MicroserviceRole[]): boolean {
     for (let i = 0 ; i < roles.length; i++) {
       if (roles[i].default) {
         return roles[i].default;

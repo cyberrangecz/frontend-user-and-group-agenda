@@ -1,11 +1,10 @@
 import { Injectable} from '@angular/core';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {TableAdapter} from '../../../model/table-adapters/table-adapter';
+import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {TablePagination} from '../../../model/table-adapters/table-pagination';
+import {Pagination} from '../../../model/table-adapters/pagination';
 import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {Group} from '../../../model/group/group.model';
-import {GroupTableRow} from '../../../model/table-adapters/group-table-row';
 import {UserMapperService} from '../user/user-mapper.service';
 import {NewGroupDTO} from '../../../model/DTO/group/new-group-dto.model';
 import {UpdateGroupDTO} from '../../../model/DTO/group/update-group-dto.model';
@@ -16,23 +15,12 @@ import {UserRole} from 'kypo2-auth';
 export class GroupMapperService {
 
   constructor(private userMapper: UserMapperService) {
-
   }
 
-  mapGroupDTOsWithPaginationToTableDataWrapper(restResource: RestResourceDTO<GroupDTO>): TableAdapter<GroupTableRow[]> {
-    return new TableAdapter<GroupTableRow[]>(
-      restResource.content.map(groupDTO => this.mapGroupDTOToGroupTableDataModel(groupDTO)),
-      this.mapPaginationDTOToPaginationModel(restResource.pagination));
-  }
-
-  mapGroupDTOsWithPaginationToTableGroups(restResource: RestResourceDTO<GroupDTO>): TableAdapter<Group[]> {
-    return new TableAdapter<Group[]>(
+  mapGroupDTOsWithPaginationToTableGroups(restResource: RestResourceDTO<GroupDTO>): PaginatedResource<Group[]> {
+    return new PaginatedResource<Group[]>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
-  }
-
-  mapGroupDTOToGroupTableDataModel(groupDTO: GroupDTO): GroupTableRow {
-    return new GroupTableRow(this.mapGroupDTOToGroup(groupDTO));
   }
 
   mapGroupDTOToGroup(groupDTO: GroupDTO): Group {
@@ -56,7 +44,7 @@ export class GroupMapperService {
     result.group_ids_of_imported_users = groupsToImportFromId;
     result.users = this.userMapper.mapUsersToUserForGroupDTOs(group.members);
     if (group.expirationDate) {
-      result.expiration_date = group.expirationDate.toISOString();
+      result.expiration_date = group.getExpirationDateUTC().toISOString();
     }
     return result;
   }
@@ -67,7 +55,7 @@ export class GroupMapperService {
     result.name = group.name;
     result.description = group.description;
     if (group.expirationDate) {
-      result.expiration_date = group.expirationDate.toISOString();
+      result.expiration_date = group.getExpirationDateUTC().toISOString();
     }
     return result;
   }
@@ -79,8 +67,8 @@ export class GroupMapperService {
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): TablePagination {
-    return new TablePagination(
+  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): Pagination {
+    return new Pagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,
       paginationDTO.size,

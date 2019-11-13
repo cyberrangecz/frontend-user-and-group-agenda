@@ -1,7 +1,6 @@
-import {GroupTableRow} from './group-table-row';
 import {Group} from '../group/group.model';
 
-export class GroupTableRowAdapter extends GroupTableRow {
+export class GroupTableRowAdapter {
   groupId: number;
   groupName: string;
   groupDescription: string;
@@ -10,12 +9,11 @@ export class GroupTableRowAdapter extends GroupTableRow {
   membersCount: number;
 
   constructor(group: Group) {
-    super(group);
     this.groupId = group.id;
     this.groupName = group.name;
     this.groupDescription = group.description;
     if (group.expirationDate) {
-      this.expirationDate = group.expirationDate.toString();
+      this.expirationDate = `${group.expirationDate.getFullYear()}-${group.expirationDate.getMonth()}-${group.expirationDate.getDate()}`;
     } else {
       this.expirationDate = '-';
     }

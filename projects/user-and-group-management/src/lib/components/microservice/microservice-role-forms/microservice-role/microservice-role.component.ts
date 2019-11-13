@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Role} from '../../../../model/microservice/role.model';
+import {MicroserviceRole} from '../../../../model/microservice/microservice-role.model';
 import {MicroserviceRoleForm} from './microservice-role-form';
 import {takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../../model/base-component';
-import {RoleItem} from '../../../../model/microservice/role-item';
+import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-role-item';
 
 @Component({
   selector: 'kypo2-microservice-role',
@@ -13,9 +13,9 @@ import {RoleItem} from '../../../../model/microservice/role-item';
 })
 export class MicroserviceRoleComponent extends BaseComponent implements OnInit, OnChanges {
 
-  @Input() role: Role;
+  @Input() role: MicroserviceRole;
   @Output() remove = new EventEmitter();
-  @Output() roleChange: EventEmitter<RoleItem> = new EventEmitter();
+  @Output() roleChange: EventEmitter<MicroserviceRoleItem> = new EventEmitter();
   microserviceRoleFormGroup: MicroserviceRoleForm;
 
   constructor() {

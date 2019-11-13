@@ -1,23 +1,23 @@
 import {Column, Kypo2Table, Row} from 'kypo2-table';
 import {GroupTableRowAdapter} from './group-table-row-adapter';
-import {TableAdapter} from './table-adapter';
-import {GroupTableRow} from './group-table-row';
+import {PaginatedResource} from './paginated-resource';
 import {of} from 'rxjs';
+import {Group} from '../group/group.model';
 
 export class GroupTableCreator {
-  static create(resource: TableAdapter<GroupTableRow[]>): Kypo2Table<GroupTableRowAdapter> {
+  static create(resource: PaginatedResource<Group[]>): Kypo2Table<GroupTableRowAdapter> {
 
-    const resources = this.mapGroupTableRowToGroupTableModel(resource);
+    const resources = this.mapGroupToTableAdapter(resource);
     const actions = [
       {
-        label: 'Edit Group',
+        label: 'edit',
         icon: 'edit',
         color: 'primary',
         tooltip: 'Edit Group',
         disabled$: of(false)
       },
       {
-        label: 'Delete Group',
+        label: 'delete',
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Group',
@@ -26,7 +26,7 @@ export class GroupTableCreator {
     ];
 
     const table = new Kypo2Table<GroupTableRowAdapter>(
-      resources.content.map(group => new Row(group, actions)),
+      resources.elements.map(group => new Row(group, actions)),
       [
         new Column('groupId', 'id', false),
         new Column('groupName', 'name', true),
@@ -43,13 +43,8 @@ export class GroupTableCreator {
     return table;
   }
 
-  private static mapGroupTableRowToGroupTableModel(groups: TableAdapter<GroupTableRow[]>)
-    : TableAdapter<GroupTableRowAdapter[]> {
-    const elements: GroupTableRowAdapter[] = [];
-    groups.content.forEach( group => {
-      elements.push(new GroupTableRowAdapter(group.group));
-    });
-
-    return new TableAdapter<GroupTableRowAdapter[]>(elements, groups.pagination);
+  private static mapGroupToTableAdapter(resource: PaginatedResource<Group[]>): PaginatedResource<GroupTableRowAdapter[]> {
+    const elements = resource.elements.map(group => new GroupTableRowAdapter(group));
+    return new PaginatedResource<GroupTableRowAdapter[]>(elements, resource.pagination);
   }
 }

@@ -5,21 +5,20 @@ import {UserSelectionService} from '../../../../services/facade/user/user-select
 import {UserFacadeService} from '../../../../services/facade/user/user-facade.service';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {merge, Observable, of, Subscription} from 'rxjs';
-import {TableAdapter} from '../../../../model/table-adapters/table-adapter';
+import {PaginatedResource} from '../../../../model/table-adapters/paginated-resource';
 import {Kypo2UserAndGroupNotificationService} from '../../../../services/notification/kypo2-user-and-group-notification.service';
-import {PaginationFactory} from '../../../../model/other/pagination-factory';
 import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-type.enum';
 import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
 import {SelectionModel} from '@angular/cdk/collections';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
-import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
+import {ConfirmationDialogInput} from '../../../shared/confirmation-dialog/confirmation-dialog.input';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {ConfigService} from '../../../../config/config.service';
 import {UserRolesDialogComponent} from './user-roles-dialog/user-roles-dialog.component';
 import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
 import {User} from 'kypo2-auth';
-import {StringNormalizer} from '../../../../model/utils/string-normalizer';
 import {Kypo2UserAndGroupError} from '../../../../model/events/kypo2-user-and-group-error';
+import {RequestedPagination} from '../../../../model/other/requested-pagination';
 
 @Component({
   selector: 'kypo2-user-table',
@@ -80,10 +79,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
    * @param filterValue value by which the data should be filtered. Inserted by user
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = StringNormalizer.normalizeDiacritics(filterValue.trim().toLowerCase());
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -146,7 +142,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.userFacade.getUsersTable(
-            PaginationFactory.createWithSort(this.paginator.pageIndex,
+            new RequestedPagination(this.paginator.pageIndex,
               this.paginator.pageSize,
               this.sort.active,
               this.sort.direction));
@@ -162,22 +158,18 @@ export class UserTableComponent implements OnInit, OnDestroy {
           this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Loading users'));
           return of([]);
         }))
-      .subscribe((data: TableAdapter<UserTableRow[]>) => this.createDataSource(data));
+      .subscribe((data: PaginatedResource<UserTableRow[]>) => this.createDataSource(data));
   }
 
   /**
    * Creates table data source from fetched data
    * @param dataWrapper Users fetched from server
    */
-  private createDataSource(dataWrapper: TableAdapter<UserTableRow[]>) {
+  private createDataSource(dataWrapper: PaginatedResource<UserTableRow[]>) {
     this.totalUsersCount = dataWrapper.pagination.totalElements;
     this.selection.clear();
-    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.content));
-    this.dataSource = new MatTableDataSource(dataWrapper.content);
-    this.dataSource.filterPredicate =
-      (row: UserTableRow, filter: string) =>
-        row.normalizedName.indexOf(filter) !== -1
-        || row.normalizedLogin.indexOf(filter) !== -1;
+    this.markCheckboxes(this.findPreselectedUsers(dataWrapper.elements));
+    this.dataSource = new MatTableDataSource(dataWrapper.elements);
   }
 
   private unselectAll() {
@@ -217,7 +209,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   private userConfirmedRemovingUser(userToRemove: User): Observable<boolean> {
-    const dialogData = new ConfirmationDialogInputModel();
+    const dialogData = new ConfirmationDialogInput();
     dialogData.title = 'Remove user';
     dialogData.content = `Do you want to remove ${userToRemove.name} from database?`;
 

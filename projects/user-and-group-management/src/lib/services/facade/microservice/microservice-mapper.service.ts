@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Microservice} from '../../../model/microservice/microservice.model';
 import {MicroserviceDTO} from '../../../model/DTO/microservice/microservice-dto.model';
-import {Role} from '../../../model/microservice/role.model';
+import {MicroserviceRole} from '../../../model/microservice/microservice-role.model';
 import {MicroserviceRoleDTO} from '../../../model/DTO/microservice/microservice-role-dto';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class MicroserviceMapperService {
     return result;
   }
 
-  private mapMicroserviceRolesToMicroserviceRolesDTO(roles: Role[]): MicroserviceRoleDTO[] {
+  private mapMicroserviceRolesToMicroserviceRolesDTO(roles: MicroserviceRole[]): MicroserviceRoleDTO[] {
     const result: MicroserviceRoleDTO[] = [];
     roles.forEach(role => {
       const res = new MicroserviceRoleDTO();

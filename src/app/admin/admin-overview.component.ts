@@ -5,6 +5,8 @@ import {Kypo2UserAndGroupErrorService} from '../../../projects/user-and-group-ma
 import {Kypo2UserAndGroupNotification} from '../../../projects/user-and-group-management/src/lib/model/events/kypo2-user-and-group-notification';
 import {Kypo2UserAndGroupNotificationType} from '../../../projects/user-and-group-management/src/lib/model/enums/alert-type.enum';
 import {takeWhile} from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {Kypo2UserAndGroupRoutingEventService} from '../../../projects/user-and-group-management/src/lib/services/routing/kypo2-user-and-group-routing-event.service';
 
 @Component({
   selector: 'app-admin-overview',
@@ -18,6 +20,8 @@ export class AdminOverviewComponent implements OnInit, OnDestroy {
 
   constructor(private notificationService: Kypo2UserAndGroupNotificationService,
               private errorService: Kypo2UserAndGroupErrorService,
+              private router: Router,
+              private userAndGroupRouting: Kypo2UserAndGroupRoutingEventService,
               private clientNotificationService: ClientNotificationService) {
     this.notificationService.notification$
       .pipe(
@@ -32,6 +36,17 @@ export class AdminOverviewComponent implements OnInit, OnDestroy {
       .subscribe(error => this.clientNotificationService.addNotification(new Kypo2UserAndGroupNotification(
         Kypo2UserAndGroupNotificationType.ERROR,
         `Http error while ${error.action}`)));
+
+    this.userAndGroupRouting.navigate$
+      .subscribe(navigateEvent => {
+        if (navigateEvent.actionType && navigateEvent.resourceId) {
+          return this.router.navigate(['admin', navigateEvent.resourceType.toLowerCase() , navigateEvent.resourceId, navigateEvent.actionType.toLowerCase()]);
+        }
+        if (navigateEvent.actionType) {
+          return this.router.navigate(['admin', navigateEvent.resourceType.toLowerCase(), navigateEvent.actionType.toLowerCase()]);
+        }
+        return this.router.navigate(['admin', navigateEvent.resourceType.toLowerCase()]);
+      });
   }
 
   ngOnInit() {

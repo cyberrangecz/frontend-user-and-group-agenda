@@ -11,6 +11,14 @@ export const ADMIN_ROUTES: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'group/new',
+    loadChildren: () => import('app/admin/group-detail.module').then(m => m.GroupDetailModule),
+  },
+  {
+    path: 'group/:groupId/edit',
+    loadChildren: () => import('app/admin/group-detail.module').then(m => m.GroupDetailModule),
+  },
+  {
     path: 'a',
     component: AdminOverviewComponent,
     children: [

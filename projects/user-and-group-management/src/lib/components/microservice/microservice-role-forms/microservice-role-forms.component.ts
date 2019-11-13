@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Role} from '../../../model/microservice/role.model';
-import {RoleItem} from '../../../model/microservice/role-item';
-import {RolesState} from '../../../model/microservice/roles-state';
+import {MicroserviceRole} from '../../../model/microservice/microservice-role.model';
+import {MicroserviceRoleItem} from '../../../model/microservice/microservice-role-item';
+import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
 
 @Component({
   selector: 'kypo2-microservice-role-forms',
@@ -11,12 +11,12 @@ import {RolesState} from '../../../model/microservice/roles-state';
 })
 export class MicroserviceRoleFormsComponent implements OnInit, OnChanges {
 
-  roles: Role[] = [];
+  roles: MicroserviceRole[] = [];
   rolesFormValidity = true;
   rolesValidity: boolean[] = [];
 
   @Input() cleared: boolean;
-  @Output() microserviceRoles: EventEmitter<RolesState> = new EventEmitter();
+  @Output() microserviceRoles: EventEmitter<MicroserviceRolesState> = new EventEmitter();
 
   constructor() { }
 
@@ -52,7 +52,7 @@ export class MicroserviceRoleFormsComponent implements OnInit, OnChanges {
     });
   }
 
-  onRoleChange(event: RoleItem, index: number) {
+  onRoleChange(event: MicroserviceRoleItem, index: number) {
     this.roles[index] = event.role;
     this.rolesFormValidity = this.updateValidity(event.valid, index);
     this.microserviceRoles.emit({

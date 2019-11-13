@@ -7,7 +7,7 @@ import {Kypo2UserAndGroupNotificationType} from '../../../../model/enums/alert-t
 import {Kypo2UserAndGroupNotification} from '../../../../model/events/kypo2-user-and-group-notification';
 import {DialogResultEnum} from '../../../../model/enums/dialog-result.enum';
 import {MatDialog} from '@angular/material';
-import {ConfirmationDialogInputModel} from '../../../shared/confirmation-dialog/confirmation-dialog-input.model';
+import {ConfirmationDialogInput} from '../../../shared/confirmation-dialog/confirmation-dialog.input';
 import {ConfirmationDialogComponent} from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import {map} from 'rxjs/operators';
 import {Kypo2UserAndGroupErrorService} from '../../../../services/notification/kypo2-user-and-group-error.service';
@@ -51,7 +51,7 @@ export class UserControlsComponent implements OnInit, OnDestroy {
   }
 
   private userConfirmedRemovingSelectedUsers(usersToRemove: User[]): Observable<boolean> {
-    const dialogData = new ConfirmationDialogInputModel();
+    const dialogData = new ConfirmationDialogInput();
     dialogData.title = 'Remove selected users';
     dialogData.content = `Do you want to remove ${usersToRemove.length} selected users from database?`;
 

@@ -1,5 +1,5 @@
 import {HttpParams} from '@angular/common/http';
-import {Filter} from '../utils/Filter';
+import {Filter} from '../filters/filter';
 
 export class FilterParams {
   static create(filters: Filter[]): HttpParams {

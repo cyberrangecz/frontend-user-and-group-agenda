@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Group} from '../../../model/group/group.model';
-import {TableAdapter} from '../../../model/table-adapters/table-adapter';
-import {GroupTableRow} from '../../../model/table-adapters/group-table-row';
+import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {Observable} from 'rxjs';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
@@ -13,8 +12,10 @@ import {UserMapperService} from '../user/user-mapper.service';
 import {ConfigService} from '../../../config/config.service';
 import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
 import {FilterParams} from '../../../model/other/filter-params';
-import {Filter} from '../../../model/utils/Filter';
+import {Filter} from '../../../model/filters/filter';
 import {ParamsMerger} from '../../../model/other/params-merger';
+import {RoleDTO, UserRole} from 'kypo2-auth';
+import {RequestedPagination} from '../../../model/other/requested-pagination';
 
 @Injectable()
 export class GroupFacadeService {
@@ -32,36 +33,24 @@ export class GroupFacadeService {
     this.config = this.configService.config;
   }
 
-  getGroupsTable(pagination = null, filter?: Filter[]): Observable<TableAdapter<GroupTableRow[]>> {
-    if (pagination) {
-      let params = PaginationHttpParams.createPaginationParams(pagination);
-
-      if (filter) {
-        params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
-      }
-      return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
-        { params: params })
-        .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableDataWrapper(resp)));
-    }
-    return this.http.get<TableAdapter<GroupTableRow[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
+  getGroups(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<Group[]>> {
+    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
+    return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
+      { params: params })
+      .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableGroups(resp)));
   }
 
-  getGroups(pagination = null): Observable<TableAdapter<Group[]>> {
-    if (pagination) {
-      return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
-        { params: PaginationHttpParams.createPaginationParams(pagination) })
-        .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableGroups(resp)));
-    }
-    return this.http.get<TableAdapter<Group[]>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension);
+  getGroupById(groupId: number): Observable<Group> {
+    return this.http.get<GroupDTO>(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}${groupId}`)
+      .pipe(map(groupDTO => this.groupMapper.mapGroupDTOToGroup(groupDTO)));
   }
 
-  getGroupById(groupId: number) {
-    return this.http.get(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}${groupId}`);
-  }
-
-  createGroup(group: Group, groupsToImportFromId: number[] = []) {
-    return this.http.post(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
-      this.groupMapper.mapGroupToNewGroupDTO(group, groupsToImportFromId));
+  createGroup(group: Group, groupsToImportFromId: number[] = []): Observable<number> {
+    return this.http.post<GroupDTO>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
+      this.groupMapper.mapGroupToNewGroupDTO(group, groupsToImportFromId))
+      .pipe(
+        map(groupDTO => groupDTO.id)
+      );
   }
 
   updateGroup(group: Group) {
@@ -73,9 +62,7 @@ export class GroupFacadeService {
     return this.http.request('delete',
       this.config.userAndGroupRestBasePath + this.groupsPathExtension,
       {
-        body: {
-          ids: groupIds
-        }
+        body: groupIds
       });
   }
 
@@ -94,9 +81,12 @@ export class GroupFacadeService {
     );
   }
 
-  getRolesOfGroup(groupId: number) {
-    return this.http.get(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}
-    ${groupId}/${this.rolesPathExtension}`);
+  getRolesOfGroup(groupId: number): Observable<UserRole[]> {
+    return this.http.get<RoleDTO[]>(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}
+    ${groupId}/${this.rolesPathExtension}`)
+      .pipe(
+        map(roleDTOs => roleDTOs.map(roleDTO => UserRole.fromDTO(roleDTO)))
+      );
   }
 
   removeUsersFromGroup(groupId: number, userIds: number[]) {

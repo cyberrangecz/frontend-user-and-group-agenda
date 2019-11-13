@@ -1,8 +1,8 @@
 import {HttpParams} from '@angular/common/http';
-import {Pagination} from './pagination';
+import {RequestedPagination} from './requested-pagination';
 
 export class PaginationHttpParams {
-  static createPaginationParams(pagination: Pagination): HttpParams {
+  static createPaginationParams(pagination: RequestedPagination): HttpParams {
     return new HttpParams()
       .set('page', pagination.page.toString())
       .set('size', pagination.size.toString())

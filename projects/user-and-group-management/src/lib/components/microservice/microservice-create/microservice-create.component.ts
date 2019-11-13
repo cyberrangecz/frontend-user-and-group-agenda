@@ -4,7 +4,7 @@ import {Microservice} from '../../../model/microservice/microservice.model';
 import {FormArray, FormControl} from '@angular/forms';
 import {takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
-import {RolesState} from '../../../model/microservice/roles-state';
+import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
 import {MicroserviceState} from '../../../model/microservice/microservice-state';
 import {Observable} from 'rxjs';
 
@@ -50,7 +50,7 @@ export class MicroserviceCreateComponent extends BaseComponent implements OnInit
     }
   }
 
-  rolesChange(event: RolesState) {
+  rolesChange(event: MicroserviceRolesState) {
     this.formValidity = (this.microserviceFormGroup.formGroup.valid && event.validity);
     if (event.isAdded) {
       (this.roles as FormArray).push(new FormControl(''));

@@ -35,6 +35,7 @@ export class GroupOverviewComponent extends BaseComponent implements OnInit {
   }
 
   fetchData(event?: LoadTableEvent) {
+    this.selectedGroups = [];
     this.groupOverviewService.getAll(event.pagination, event.filter)
       .pipe(
         takeWhile(_ => this.isAlive),
@@ -43,13 +44,13 @@ export class GroupOverviewComponent extends BaseComponent implements OnInit {
   }
 
   tableEvent(event: TableActionEvent<GroupTableRowAdapter>) {
-    if (event.action.label.toLocaleLowerCase() === 'delete group') {
-      this.deleteSelectedGroup(event.element.group.id);
-    } else if (event.action.label.toLocaleLowerCase() === 'edit group') {
+    if (event.action.label.toLocaleLowerCase() === 'delete') {
+      this.deleteGroup(event.element.groupId);
+    } else if (event.action.label.toLocaleLowerCase() === 'edit') {
       const route: Kypo2UserAndGroupRouteEvent = {
-        actionType: 'NEW',
+        actionType: 'EDIT',
         resourceType: 'GROUP',
-        resourceId: event.element.group.id
+        resourceId: event.element.groupId
       };
       this.kypo2UserAndGroupRoutingEventService.navigate(route);
     }
@@ -58,12 +59,12 @@ export class GroupOverviewComponent extends BaseComponent implements OnInit {
   selectedRows(event: GroupTableRowAdapter[]) {
     this.selectedGroups = [];
     event.forEach( selectedGroup => {
-      this.selectedGroups.push(selectedGroup.group.id);
+      this.selectedGroups.push(selectedGroup.groupId);
     });
   }
 
   deleteSelectedGroups() {
-    this.groupOverviewService.deleteGroups(this.selectedGroups)
+    this.groupOverviewService.delete(this.selectedGroups)
       .pipe(
         takeWhile(_ => this.isAlive),
       )
@@ -73,8 +74,7 @@ export class GroupOverviewComponent extends BaseComponent implements OnInit {
   createGroup() {
     const route: Kypo2UserAndGroupRouteEvent = {
       actionType: 'NEW',
-      resourceType: 'GROUP',
-      resourceId: ''
+      resourceType: 'GROUP'
     };
     this.kypo2UserAndGroupRoutingEventService.navigate(route);
   }
@@ -91,14 +91,14 @@ export class GroupOverviewComponent extends BaseComponent implements OnInit {
 
     this.groups$ = this.groupOverviewService.groups$
       .pipe(
-        map(trainingRuns => GroupTableCreator.create(trainingRuns))
+        map(groups => GroupTableCreator.create(groups))
       );
     this.groupsTableHasError$ = this.groupOverviewService.hasError$;
     this.groupTableTotalLength$ = this.groupOverviewService.totalLength$;
   }
 
-  private deleteSelectedGroup(id: number) {
-    this.groupOverviewService.delete(id)
+  private deleteGroup(id: number) {
+    this.groupOverviewService.delete([id])
       .pipe(
         takeWhile(_ => this.isAlive),
       )

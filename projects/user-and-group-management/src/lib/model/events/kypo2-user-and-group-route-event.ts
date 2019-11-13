@@ -1,5 +1,5 @@
 export class Kypo2UserAndGroupRouteEvent {
-  resourceId: number | string;
+  resourceId?: number | string;
   resourceType: 'USER' | 'GROUP' | 'MICROSERVICE';
-  actionType: 'EDIT' | 'NEW' | 'DETAIL';
+  actionType?: 'EDIT' | 'NEW' | 'DETAIL';
 }

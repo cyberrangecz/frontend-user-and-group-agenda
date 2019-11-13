@@ -8,5 +8,9 @@ export class Group {
   members: User[];
   expirationDate: Date;
   canBeDeleted: boolean;
+
+  getExpirationDateUTC(): Date {
+    return new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate()));
+  }
 }
 

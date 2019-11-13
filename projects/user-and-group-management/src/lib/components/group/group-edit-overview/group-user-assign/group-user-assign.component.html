@@ -1,0 +1,71 @@
+<div class="controls">
+  <button mat-flat-button color="primary" [disabled]="selectedUsersToAssign.length === 0 && selectedGroupsToImport.length === 0" (click)="assign()">Add</button>
+</div>
+<div class="add-content">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">person_add</mat-icon>
+      </div>
+      <mat-card-title>Add users</mat-card-title>
+      <mat-card-subtitle>Add users individually</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <kypo2-resource-selector
+        searchPlaceholder="Search users by surname"
+        [resources]="users$ | async"
+        [selected]="selectedUsersToAssign"
+        [resourceMapping]="userMapping"
+        (selectionChange)="onUserToAssignSelection($event)"
+        (fetch)="searchUsers($event)">
+      </kypo2-resource-selector>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">group_add</mat-icon>
+      </div>
+      <mat-card-title>Import users</mat-card-title>
+      <mat-card-subtitle>Import users from already existing groups</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <kypo2-resource-selector
+        searchPlaceholder="Search groups by name"
+        [resources]="groups$ | async"
+        [selected]="selectedGroupsToImport"
+        [resourceMapping]="groupMapping"
+        (selectionChange)="onGroupToImportSelection($event)"
+        (fetch)="searchGroups($event)">
+      </kypo2-resource-selector>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="controls">
+  <button *ngIf="this.selectedAssignedUsers.length <= 0 else selectedUsersButton" mat-flat-button color="warn" disabled (click)="deleteSelectedAssignedUsers()">Delete</button>
+  <ng-template #selectedUsersButton>
+    <button mat-flat-button color="warn" (click)="deleteSelectedAssignedUsers()">Delete ({{ this.selectedAssignedUsers.length }})</button>
+  </ng-template>
+</div>
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon color="primary">person</mat-icon>
+    </div>
+    <mat-card-title> Members of group {{ resource.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <kypo2-table elevation="0"
+                 [hasError]="assignedUsersHasError$ | async"
+                 [data]="assignedUsers$ | async"
+                 [isLoading]="isLoadingAssignedUsers$ | async"
+                 [totalElements]="assignedUsersTotalLength$ | async"
+                 (rowAction)="onAssignedUsersTableAction($event)"
+                 (rowSelection)="onAssignedUsersSelection($event)"
+                 (refresh)="onAssignedLoadEvent($event)">
+    </kypo2-table>
+  </mat-card-content>
+</mat-card>
+

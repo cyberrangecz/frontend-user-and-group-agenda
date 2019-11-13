@@ -1,23 +1,27 @@
-import {TableAdapter} from '../../../model/table-adapters/table-adapter';
+import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {User, UserDTO} from 'kypo2-auth';
 import {UserTableRow} from '../../../model/table-adapters/user-table-row';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {TablePagination} from '../../../model/table-adapters/table-pagination';
+import {Pagination} from '../../../model/table-adapters/pagination';
 import {Injectable} from '@angular/core';
 import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.model';
 
 @Injectable()
 export class UserMapperService {
 
-  mapUserDTOsWithPaginationToUserTable(restResource: RestResourceDTO<UserDTO>): TableAdapter<UserTableRow[]> {
-    return new TableAdapter<UserTableRow[]>(
+  /**
+   * @deprecated
+   * @param restResource
+   */
+  mapUserDTOsWithPaginationToUserTable(restResource: RestResourceDTO<UserDTO>): PaginatedResource<UserTableRow[]> {
+    return new PaginatedResource<UserTableRow[]>(
       restResource.content.map(userDTO => this.mapUserDTOToUserTable(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
 
-  mapUserDTOsWithPaginationToUsers(restResource: RestResourceDTO<UserDTO>): TableAdapter<User[]> {
-    return new TableAdapter<User[]>(
+  mapUserDTOsWithPaginationToUsers(restResource: RestResourceDTO<UserDTO>): PaginatedResource<User[]> {
+    return new PaginatedResource<User[]>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
@@ -71,8 +75,8 @@ export class UserMapperService {
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): TablePagination {
-    return new TablePagination(
+  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): Pagination {
+    return new Pagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,
       paginationDTO.size,

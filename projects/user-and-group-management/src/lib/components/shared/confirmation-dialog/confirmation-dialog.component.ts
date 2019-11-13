@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {ConfirmationDialogInputModel} from './confirmation-dialog-input.model';
+import {ConfirmationDialogInput} from './confirmation-dialog.input';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 
 @Component({
@@ -10,7 +10,7 @@ import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 })
 export class ConfirmationDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogInputModel,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogInput,
               public dialogRef: MatDialogRef<ConfirmationDialogComponent>) {
   }
 

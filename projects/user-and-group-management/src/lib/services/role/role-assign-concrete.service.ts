@@ -1,4 +1,4 @@
-import {RoleAssignService} from './role-assign.service';
+import {Kypo2RoleAssignService} from './kypo2-role-assign.service';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
@@ -12,7 +12,7 @@ import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 import {RoleFilter} from '../../model/filters/role-filter';
 
 @Injectable()
-export class RoleAssignConcreteService extends RoleAssignService {
+export class RoleAssignConcreteService extends Kypo2RoleAssignService {
 
   private assignedRolesSubject$: BehaviorSubject<UserRole[]> = new BehaviorSubject([]);
   assignedRoles$: Observable<UserRole[]> = this.assignedRolesSubject$.asObservable();

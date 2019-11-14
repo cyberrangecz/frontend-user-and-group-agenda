@@ -1,4 +1,4 @@
-export class UserAndGroupManagementConfig {
+export class UserAndGroupConfig {
   userAndGroupRestBasePath: string;
   defaultPaginationSize: number;
 }

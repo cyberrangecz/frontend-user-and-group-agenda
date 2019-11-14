@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {UserAndGroupManagementConfig} from './user-and-group-management-config';
+import {UserAndGroupConfig} from './user-and-group-config';
 
 @Injectable()
 export class ConfigService {
-  private readonly _config: UserAndGroupManagementConfig;
+  private readonly _config: UserAndGroupConfig;
 
-  get config(): UserAndGroupManagementConfig {
+  get config(): UserAndGroupConfig {
     return this._config;
   }
 
-  constructor(config: UserAndGroupManagementConfig) {
+  constructor(config: UserAndGroupConfig) {
     this._config = config;
   }
 }

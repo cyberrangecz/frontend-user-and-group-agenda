@@ -1,46 +1,32 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../shared/shared.module';
-import {Kypo2MicroserviceEditMaterialModule} from './kypo2-microservice-edit-material.module';
-import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
-import {MicroserviceEditOverviewComponent} from './microservice-edit-overview.component';
-import {MicroserviceEditComponent} from './microservice-edit/microservice-edit.component';
-import {MicroserviceEditControlsComponent} from './microservice-edit-controls/microservice-edit-controls.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {MicroserviceRoleListComponent} from './microservice-role-list/microservice-role-list.component';
-import {MicroserviceRoleComponent} from './microservice-role-list/microservice-role/microservice-role.component';
+import {UserAndGroupConfig} from '../../config/user-and-group-config';
 import {MicroserviceFacadeModule} from '../../services/facade/microservice/microservice-facade.module';
+import {Kypo2MicroserviceEditComponentsModule} from './kypo2-microservice-edit-components.module';
 
 @NgModule({
-  declarations: [
-    MicroserviceEditOverviewComponent,
-    MicroserviceEditComponent,
-    MicroserviceEditControlsComponent,
-    MicroserviceRoleListComponent,
-    MicroserviceRoleComponent
-  ],
   imports: [
     CommonModule,
-    SharedModule,
+    Kypo2MicroserviceEditComponentsModule,
     MicroserviceFacadeModule,
-    Kypo2MicroserviceEditMaterialModule,
-    ReactiveFormsModule
   ],
-  exports: []
+  exports: [
+    Kypo2MicroserviceEditComponentsModule
+  ]
 })
 export class Kypo2MicroserviceEditModule {
   constructor(@Optional() @SkipSelf() parentModule: Kypo2MicroserviceEditModule) {
     if (parentModule) {
       throw new Error(
-        'MicroserviceModule is already loaded. Import it in the main module only');
+        'Kypo2MicroserviceEditModule is already loaded. Import it in the main module only');
     }
   }
 
-  static forRoot(config: UserAndGroupManagementConfig): ModuleWithProviders {
+  static forRoot(config: UserAndGroupConfig): ModuleWithProviders {
     return {
       ngModule: Kypo2MicroserviceEditModule,
       providers: [
-        {provide: UserAndGroupManagementConfig, useValue: config}
+        {provide: UserAndGroupConfig, useValue: config}
       ]
     };
   }

@@ -6,7 +6,7 @@ import {RequestedPagination} from 'kypo2-table';
 import {Group} from '../../model/group/group.model';
 
 @Injectable()
-export abstract class GroupOverviewService extends PaginatedResourceService {
+export abstract class Kypo2GroupOverviewService extends PaginatedResourceService {
 
   abstract groups$: Observable<PaginatedResource<Group[]>>;
 

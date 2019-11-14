@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Kypo2Table, LoadTableEvent, RequestedPagination, TableActionEvent} from 'kypo2-table';
 import {GroupTableRowAdapter} from '../../../model/table-adapters/group-table-row-adapter';
-import {GroupOverviewService} from '../../../services/group/group-overview.service';
+import {Kypo2GroupOverviewService} from '../../../services/group/kypo2-group-overview.service';
 import {map, takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
 import {GroupTableCreator} from '../../../model/table-adapters/group-table-creator';
@@ -12,11 +12,11 @@ import {ConfigService} from '../../../config/config.service';
 
 @Component({
   selector: 'kypo2-group-management',
-  templateUrl: './group-overview.component.html',
-  styleUrls: ['./group-overview.component.css'],
+  templateUrl: './kypo2-group-overview.component.html',
+  styleUrls: ['./kypo2-group-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupOverviewComponent extends BaseComponent implements OnInit {
+export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit {
 
   groups$: Observable<Kypo2Table<GroupTableRowAdapter>>;
   groupsHasError$: Observable<boolean>;
@@ -24,7 +24,7 @@ export class GroupOverviewComponent extends BaseComponent implements OnInit {
 
   selectedGroupIds: number[] = [];
 
-  constructor(private groupService: GroupOverviewService,
+  constructor(private groupService: Kypo2GroupOverviewService,
               private configService: ConfigService,
               private kypo2UserAndGroupRoutingEventService: Kypo2UserAndGroupRoutingEventService,) {
     super();

@@ -1,4 +1,4 @@
-import {Kypo2UserAndGroupNotificationType} from '../enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationType} from '../enums/kypo2-user-and-group-notification-type.enum';
 
 export class Kypo2UserAndGroupNotification {
   type: Kypo2UserAndGroupNotificationType;

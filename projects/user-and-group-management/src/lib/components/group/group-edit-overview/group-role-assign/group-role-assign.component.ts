@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import {Kypo2Table, TableActionEvent} from 'kypo2-table';
-import {RoleAssignService} from '../../../../services/role/role-assign.service';
+import {Kypo2RoleAssignService} from '../../../../services/role/kypo2-role-assign.service';
 import {map, take, takeWhile} from 'rxjs/operators';
 import {RoleTableCreator} from '../../../../model/table-adapters/role-table-creator';
 import {Group} from '../../../../model/group/group.model';
@@ -31,7 +31,7 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
   selectedRolesToAssign: UserRole[] = [];
   selectedAssignedRoles: UserRole[] = [];
 
-  constructor(private roleAssignService: RoleAssignService) {
+  constructor(private roleAssignService: Kypo2RoleAssignService) {
     super();
     this.roleMapping = {
       id: 'id',

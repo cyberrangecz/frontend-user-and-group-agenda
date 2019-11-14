@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Group} from '../../../model/group/group.model';
 import {Observable, of} from 'rxjs';
-import {GroupEditService} from '../../../services/group/group-edit.service';
+import {Kypo2GroupEditService} from '../../../services/group/kypo2-group-edit.service';
 import {GroupChangedEvent} from '../../../model/events/group-changed-event';
 import {map, takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
@@ -32,7 +32,7 @@ export class GroupEditOverviewComponent extends BaseComponent implements OnInit 
     public dialog: MatDialog,
     private routingService: Kypo2UserAndGroupRoutingEventService,
     private activeRoute: ActivatedRoute,
-    private editService: GroupEditService) {
+    private editService: Kypo2GroupEditService) {
     super();
     this.group$ = this.editService.group$;
     this.editMode$ = this.editService.editMode$;

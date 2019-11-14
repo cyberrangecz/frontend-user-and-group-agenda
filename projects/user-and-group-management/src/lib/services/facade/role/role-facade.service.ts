@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {RoleDTO, UserRole} from 'kypo2-auth';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
 import {ConfigService} from '../../../config/config.service';
-import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
+import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {Pagination} from '../../../model/table-adapters/pagination';
 import {RequestedPagination} from '../../../model/other/requested-pagination';
@@ -16,7 +16,7 @@ import {FilterParams} from '../../../model/other/filter-params';
 
 @Injectable()
 export class RoleFacadeService {
-  private readonly config: UserAndGroupManagementConfig;
+  private readonly config: UserAndGroupConfig;
 
   private readonly rolesPathExtension = 'roles/';
 

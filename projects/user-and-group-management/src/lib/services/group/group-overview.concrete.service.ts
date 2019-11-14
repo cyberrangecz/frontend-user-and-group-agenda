@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {GroupOverviewService} from './group-overview.service';
+import {Kypo2GroupOverviewService} from './kypo2-group-overview.service';
 import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {GroupFacadeService} from '../facade/group/group-facade.service';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
@@ -15,7 +15,7 @@ import {Group} from '../../model/group/group.model';
 import {ConfigService} from '../../config/config.service';
 
 @Injectable()
-export class GroupOverviewConcreteService extends GroupOverviewService {
+export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
 
   private lastPagination: RequestedPagination;
   private lastFilter: string;

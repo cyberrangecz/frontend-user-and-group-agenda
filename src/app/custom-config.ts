@@ -1,7 +1,7 @@
 import {environment} from '../environments/environment';
-import {UserAndGroupManagementConfig} from '../../projects/user-and-group-management/src/public_api';
+import {UserAndGroupConfig} from '../../projects/user-and-group-management/src/public_api';
 
-export const CustomConfig: UserAndGroupManagementConfig = {
+export const CustomConfig: UserAndGroupConfig = {
   userAndGroupRestBasePath: environment.userAndGroupRestBasePath,
   defaultPaginationSize: environment.defaultPaginationSize
 };

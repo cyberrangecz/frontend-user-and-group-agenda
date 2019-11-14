@@ -7,11 +7,11 @@ import {Kypo2UserAndGroupRoutingEventService} from '../../services/routing/kypo2
 
 @Component({
   selector: 'kypo2-microservice-edit-overview',
-  templateUrl: './microservice-edit-overview.component.html',
-  styleUrls: ['./microservice-edit-overview.component.css'],
+  templateUrl: './kypo2-microservice-edit-overview.component.html',
+  styleUrls: ['./kypo2-microservice-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MicroserviceEditOverviewComponent implements OnInit {
+export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
 
   microservice: Microservice;
   hasDefaultRole: boolean;

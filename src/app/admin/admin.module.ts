@@ -6,7 +6,7 @@ import {MatButtonModule, MatIconModule, MatSnackBarModule, MatTabsModule} from '
 import {NotificationComponent} from './notification/notification.component';
 import {CustomConfig} from '../custom-config';
 import {ClientNotificationService} from './client-notification.service';
-import {Kypo2GroupModule, Kypo2MicroserviceModule, Kypo2UserModule} from '../../../projects/user-and-group-management/src/public_api';
+import {Kypo2GroupModule, Kypo2MicroserviceEditModule, Kypo2UserModule} from '../../../projects/user-and-group-management/src/public_api';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import {Kypo2GroupModule, Kypo2MicroserviceModule, Kypo2UserModule} from '../../
   ],
   imports: [
     CommonModule,
-    Kypo2MicroserviceModule.forRoot(CustomConfig),
+    Kypo2MicroserviceEditModule.forRoot(CustomConfig),
     Kypo2UserModule.forRoot(CustomConfig),
     Kypo2GroupModule.forRoot(CustomConfig),
     AdminRoutingModule,

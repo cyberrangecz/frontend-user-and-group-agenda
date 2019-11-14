@@ -36,10 +36,6 @@ export class MicroserviceRoleComponent extends BaseComponent implements OnInit, 
   ngOnChanges(changes: SimpleChanges) {
     if ('role' in changes) {
       this.microserviceRoleFormGroup = new MicroserviceRoleForm(this.role);
-      if (changes.role.isFirstChange()) {
-        this.description.markAsTouched();
-        this.type.markAsTouched();
-      }
       this.setupOnFormChangedEvent();
     }
   }

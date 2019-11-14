@@ -1,26 +1,24 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {MicroserviceFormGroup} from './microservice-form-group';
+import {MicroserviceEditFormGroup} from './microservice-edit-form-group';
 import {Microservice} from '../../../model/microservice/microservice.model';
 import {FormArray, FormControl} from '@angular/forms';
 import {takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
 import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
-import {MicroserviceState} from '../../../model/microservice/microservice-state';
-import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'kypo2-microservice-create',
-  templateUrl: './microservice-create.component.html',
-  styleUrls: ['./microservice-create.component.css'],
+  selector: 'kypo2-microservice-edit',
+  templateUrl: './microservice-edit.component.html',
+  styleUrls: ['./microservice-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MicroserviceCreateComponent extends BaseComponent implements OnInit, OnChanges {
+export class MicroserviceEditComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() microservice: Microservice;
-  @Input() isCleared: Observable<boolean>;
-  @Output() formValid: EventEmitter<MicroserviceState> = new EventEmitter<MicroserviceState>();
-  formValidity: boolean;
-  microserviceFormGroup: MicroserviceFormGroup;
+  @Output() microserviceChange: EventEmitter<Microservice> = new EventEmitter<Microservice>();
+
+  microserviceFormGroup: MicroserviceEditFormGroup;
+  private rolesValidity: boolean;
 
   constructor() {
     super();
@@ -43,13 +41,12 @@ export class MicroserviceCreateComponent extends BaseComponent implements OnInit
 
   ngOnChanges(changes: SimpleChanges) {
     if ('microservice' in changes) {
-      this.microserviceFormGroup = new MicroserviceFormGroup(this.microservice);
+      this.microserviceFormGroup = new MicroserviceEditFormGroup(this.microservice);
       this.setupOnFormChangedEvent();
     }
   }
 
-  rolesChange(event: MicroserviceRolesState) {
-    this.formValidity = (this.microserviceFormGroup.formGroup.valid && event.validity);
+  onRolesChanged(event: MicroserviceRolesState) {
     if (event.isAdded) {
       (this.roles as FormArray).push(new FormControl(''));
     } else if (event.isRemoved) {
@@ -57,22 +54,8 @@ export class MicroserviceCreateComponent extends BaseComponent implements OnInit
     } else {
       this.roles.at(event.roleIndex).setValue(event.roles[event.roleIndex]);
     }
-    this.formValid.emit({
-      roles: this.roles.value,
-      name: this.name.value,
-      endpoint: this.endpoint.value,
-      valid: this.formValidity
-    });
-  }
-
-  onClear() {
-    this.microserviceFormGroup.setValuesToMicroservice(this.microservice);
-    this.formValid.emit({
-      roles: this.roles.value,
-      name: this.name.value,
-      endpoint: this.endpoint.value,
-      valid: false
-    });
+    this.rolesValidity = event.validity;
+    this.onChanged();
   }
 
   private setupOnFormChangedEvent() {
@@ -84,12 +67,8 @@ export class MicroserviceCreateComponent extends BaseComponent implements OnInit
 
   private onChanged() {
     this.microserviceFormGroup.setValuesToMicroservice(this.microservice);
-    this.formValid.emit({
-      roles: this.roles.value,
-      name: this.name.value,
-      endpoint: this.endpoint.value,
-      valid: this.formValidity
-    });
+    this.microservice.valid = this.microserviceFormGroup.formGroup.valid && this.rolesValidity;
+    this.microserviceChange.emit(this.microservice);
   }
 
 }

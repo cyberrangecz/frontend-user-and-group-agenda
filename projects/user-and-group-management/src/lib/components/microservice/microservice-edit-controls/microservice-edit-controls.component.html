@@ -5,11 +5,6 @@
           (click)="onCreate()">
     Register
   </button>
-  <button mat-raised-button
-          color="warn"
-          (click)="onReset()">
-    Reset
-  </button>
 </div>
 <div class="error-state">
   <mat-error *ngIf="!hasDefaultRole">Microservice has to have a default role</mat-error>

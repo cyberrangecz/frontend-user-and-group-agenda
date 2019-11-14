@@ -32,5 +32,5 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule
   ]
 })
-export class Kypo2MicroserviceMaterialModule {
+export class Kypo2MicroserviceEditMaterialModule {
 }

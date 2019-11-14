@@ -13,7 +13,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
           <input matInput placeholder="Name" formControlName="name" required>
-          <button mat-button *ngIf="name.value" matSuffix mat-icon-button aria-label="Clear" (click)="name.setValue(''); onClear();">
+          <button mat-button *ngIf="name.value" matSuffix mat-icon-button aria-label="Clear" (click)="name.setValue('');">
             <mat-icon>close</mat-icon>
           </button>
           <mat-error>Name cannot be empty</mat-error>
@@ -23,13 +23,13 @@
         <mat-form-field appearance="outline">
           <mat-label>Endpoint</mat-label>
           <input matInput placeholder="Example: /your-service/api/v1" formControlName="endpoint" required>
-          <button mat-button *ngIf="endpoint.value" matSuffix mat-icon-button aria-label="Clear" (click)="endpoint.setValue(''); onClear();">
+          <button mat-button *ngIf="endpoint.value" matSuffix mat-icon-button aria-label="Clear" (click)="endpoint.setValue('');">
             <mat-icon>close</mat-icon>
           </button>
           <mat-error>Endpoint cannot be empty</mat-error>
         </mat-form-field>
 
-        <kypo2-microservice-role-list [cleared]="isCleared | async" (microserviceRoles)="rolesChange($event)"></kypo2-microservice-role-list>
+        <kypo2-microservice-role-list (microserviceRoles)="onRolesChanged($event)"></kypo2-microservice-role-list>
       </div>
     </form>
   </mat-card-content>

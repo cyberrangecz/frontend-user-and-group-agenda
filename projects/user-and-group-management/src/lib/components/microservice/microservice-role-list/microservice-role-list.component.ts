@@ -15,7 +15,6 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
   rolesFormValidity = true;
   rolesValidity: boolean[] = [];
 
-  @Input() cleared: boolean;
   @Output() microserviceRoles: EventEmitter<MicroserviceRolesState> = new EventEmitter();
 
   constructor() { }
@@ -25,12 +24,6 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if ('cleared' in changes) {
-      if (this.cleared) {
-        this.roles = [];
-        this.addRole();
-      }
-    }
   }
 
   addRole() {
@@ -62,16 +55,9 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
     });
   }
 
-  private updateValidity(valid: boolean, index: number): boolean {
-    let validity = true;
-    this.rolesValidity[index] = valid;
-
-    this.rolesValidity.forEach( roleState => {
-      if (!roleState) {
-        validity = roleState;
-      }
-    });
-    return validity;
+  private updateValidity(isUpdatedValid: boolean, index: number): boolean {
+    this.rolesValidity[index] = isUpdatedValid;
+    return this.rolesValidity.every(roleValidity => roleValidity);
   }
 
   private createRole() {

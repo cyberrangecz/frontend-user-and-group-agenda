@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminOverviewComponent} from './admin-overview.component';
-import {MicroserviceOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/microservice/microservice-overview.component';
+import {MicroserviceEditOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/microservice/microservice-edit-overview.component';
 import {GroupOverviewComponent, UserOverviewComponent} from '../../../projects/user-and-group-management/src/public_api';
 
 export const ADMIN_ROUTES: Routes = [
@@ -34,7 +34,7 @@ export const ADMIN_ROUTES: Routes = [
       },
       {
         path: 'microservices',
-        component: MicroserviceOverviewComponent,
+        component: MicroserviceEditOverviewComponent,
         outlet: 'tab'
       },
       {

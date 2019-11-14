@@ -1,17 +1,16 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'kypo2-microservice-controls',
-  templateUrl: './microservice-controls.component.html',
-  styleUrls: ['./microservice-controls.component.css'],
+  selector: 'kypo2-microservice-edit-controls',
+  templateUrl: './microservice-edit-controls.component.html',
+  styleUrls: ['./microservice-edit-controls.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MicroserviceControlsComponent implements OnInit {
+export class MicroserviceEditControlsComponent implements OnInit {
 
   @Input() isFormValid: boolean;
   @Input() hasDefaultRole: boolean;
   @Output() create = new EventEmitter();
-  @Output() reset = new EventEmitter();
 
   constructor() { }
 
@@ -20,9 +19,5 @@ export class MicroserviceControlsComponent implements OnInit {
 
   onCreate() {
     this.create.emit();
-  }
-
-  onReset() {
-    this.reset.emit();
   }
 }

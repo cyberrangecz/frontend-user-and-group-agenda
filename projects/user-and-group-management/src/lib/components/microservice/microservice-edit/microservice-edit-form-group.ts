@@ -1,7 +1,7 @@
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Microservice} from '../../../model/microservice/microservice.model';
 
-export class MicroserviceFormGroup {
+export class MicroserviceEditFormGroup {
   formGroup: FormGroup;
 
   constructor(microservice: Microservice) {

@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatTooltipModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatListModule
   ],
   exports: [
     MatButtonModule,
@@ -37,6 +39,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatTooltipModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatListModule
   ],
 })
 export class Kypo2UserMaterialModule {

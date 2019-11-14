@@ -9,7 +9,7 @@ import {UserAssignService} from '../../../../services/user/user-assign.service';
 import {RequestedPagination} from '../../../../model/other/requested-pagination';
 import {ConfigService} from '../../../../config/config.service';
 import {map, takeWhile} from 'rxjs/operators';
-import {UserBasicInfoTableCreator} from '../../../../model/table-adapters/user-basic-info-table-creator';
+import {GroupMemberTableCreator} from '../../../../model/table-adapters/group-member-table-creator';
 
 @Component({
   selector: 'kypo2-group-user-assign',
@@ -133,7 +133,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
       new RequestedPagination(0, this.configService.config.defaultPaginationSize, '', ''));
     this.assignedUsers$ = this.userAssignService.assignedUsers$
       .pipe(
-        map(paginatedUsers => UserBasicInfoTableCreator.create(paginatedUsers))
+        map(paginatedUsers => GroupMemberTableCreator.create(paginatedUsers))
       );
     this.assignedUsersHasError$ = this.userAssignService.hasError$;
     this.assignedUsersTotalLength$ = this.userAssignService.totalLength$;

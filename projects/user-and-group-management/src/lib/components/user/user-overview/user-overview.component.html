@@ -1,0 +1,12 @@
+<kypo2-user-controls
+  [selectedUsersCount]="selectedUserIds.length"
+  (deleteSelected)="deleteSelectedUsers()">
+</kypo2-user-controls>
+<kypo2-table
+  [data]="users$ | async"
+  [hasError]="usersHasError$ | async"
+  [totalElements]="usersTotalLength$ | async"
+  (refresh)="fetchData($event)"
+  (rowAction)="onTableEvent($event)"
+  (rowSelection)="onUserSelected($event)">
+</kypo2-table>

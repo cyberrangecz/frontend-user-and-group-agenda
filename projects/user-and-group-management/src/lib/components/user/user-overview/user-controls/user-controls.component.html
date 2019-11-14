@@ -1,0 +1,9 @@
+<div class="content">
+  <button mat-raised-button
+          color="warn"
+          [disabled]="selectedUsersCount <= 0"
+          (click)="deleteUsers()">
+    <span *ngIf="selectedUsersCount <= 0 else deleteWithCount">Delete</span>
+    <ng-template #deleteWithCount>Delete ({{ selectedUsersCount }})</ng-template>
+  </button>
+</div>

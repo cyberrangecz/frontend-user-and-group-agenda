@@ -1,6 +1,5 @@
 import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {User, UserDTO} from 'kypo2-auth';
-import {UserTableRow} from '../../../model/table-adapters/user-table-row';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
 import {Pagination} from '../../../model/table-adapters/pagination';
@@ -10,28 +9,10 @@ import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.mode
 @Injectable()
 export class UserMapperService {
 
-  /**
-   * @deprecated
-   * @param restResource
-   */
-  mapUserDTOsWithPaginationToUserTable(restResource: RestResourceDTO<UserDTO>): PaginatedResource<UserTableRow[]> {
-    return new PaginatedResource<UserTableRow[]>(
-      restResource.content.map(userDTO => this.mapUserDTOToUserTable(userDTO)),
-      this.mapPaginationDTOToPaginationModel(restResource.pagination));
-  }
-
-  mapUserDTOsWithPaginationToUsers(restResource: RestResourceDTO<UserDTO>): PaginatedResource<User[]> {
+  mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): PaginatedResource<User[]> {
     return new PaginatedResource<User[]>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
-  }
-
-  mapUserDTOToUserTable(userDTO: UserDTO): UserTableRow {
-    return new UserTableRow(this.mapUserDTOToUser(userDTO));
-  }
-
-  mapUserDTOsToUsers(userDTOs: UserDTO[]): User[] {
-    return userDTOs.map(userDTO => this.mapUserDTOToUser(userDTO));
   }
 
   mapUserForGroupsDTOsToUsers(userForGroupsDTOs: UserForGroupsDTO[]): User[] {

@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
+import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {ConfigService} from '../../../config/config.service';
 import {User, UserDTO} from 'kypo2-auth';
 import {RequestedPagination} from '../../../model/other/requested-pagination';
@@ -16,7 +16,7 @@ import {FilterParams} from '../../../model/other/filter-params';
 
 @Injectable()
 export class UserFacadeService {
-  private readonly config: UserAndGroupManagementConfig;
+  private readonly config: UserAndGroupConfig;
   private readonly usersPathExtension = 'users/';
 
   constructor(private http: HttpClient,

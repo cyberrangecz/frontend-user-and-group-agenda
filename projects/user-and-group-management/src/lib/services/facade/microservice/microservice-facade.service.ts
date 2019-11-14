@@ -4,13 +4,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MicroserviceDTO} from '../../../model/DTO/microservice/microservice-dto.model';
 import {Observable} from 'rxjs';
 import {MicroserviceMapperService} from './microservice-mapper.service';
-import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
+import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {ConfigService} from '../../../config/config.service';
 
 @Injectable()
 export class MicroserviceFacadeService {
 
-  private readonly config: UserAndGroupManagementConfig;
+  private readonly config: UserAndGroupConfig;
 
 
   constructor(private http: HttpClient,

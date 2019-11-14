@@ -2,7 +2,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
 import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 
-export abstract class RoleAssignService {
+export abstract class Kypo2RoleAssignService {
 
   protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();

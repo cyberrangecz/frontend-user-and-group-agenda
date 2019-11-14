@@ -3,7 +3,7 @@ import {ClientNotificationService} from './client-notification.service';
 import {Kypo2UserAndGroupNotificationService} from '../../../projects/user-and-group-management/src/lib/services/notification/kypo2-user-and-group-notification.service';
 import {Kypo2UserAndGroupErrorService} from '../../../projects/user-and-group-management/src/lib/services/notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupNotification} from '../../../projects/user-and-group-management/src/lib/model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../../projects/user-and-group-management/src/lib/model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationType} from '../../../projects/user-and-group-management/src/lib/model/enums/kypo2-user-and-group-notification-type.enum';
 import {takeWhile} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Kypo2UserAndGroupRoutingEventService} from '../../../projects/user-and-group-management/src/lib/services/routing/kypo2-user-and-group-routing-event.service';

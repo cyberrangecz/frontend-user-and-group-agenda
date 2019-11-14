@@ -1,4 +1,4 @@
-import {UserAssignService} from './user-assign.service';
+import {Kypo2UserAssignService} from './kypo2-user-assign.service';
 import {User} from 'kypo2-auth';
 import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -16,7 +16,7 @@ import {UserFilter} from '../../model/filters/user-filter';
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class UserAssignConcreteService extends UserAssignService {
+export class UserAssignConcreteService extends Kypo2UserAssignService {
 
   constructor(private groupFacade: GroupFacadeService,
               private userFacade: UserFacadeService,

@@ -4,7 +4,7 @@ import {Kypo2Table, LoadTableEvent, RequestedPagination, TableActionEvent} from 
 import {User} from 'kypo2-auth';
 import {map, switchMap, takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
-import {UserOverviewService} from '../../../services/user/user-overview.service';
+import {Kypo2UserOverviewService} from '../../../services/user/kypo2-user-overview.service';
 import {ConfirmationDialogInput} from '../../shared/confirmation-dialog/confirmation-dialog.input';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
@@ -14,11 +14,11 @@ import {UserTableCreator} from '../../../model/table-adapters/user-table-creator
 
 @Component({
   selector: 'kypo2-user-overview',
-  templateUrl: './user-overview.component.html',
-  styleUrls: ['./user-overview.component.css'],
+  templateUrl: './kypo2-user-overview.component.html',
+  styleUrls: ['./kypo2-user-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserOverviewComponent extends BaseComponent implements OnInit {
+export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit {
 
   users$: Observable<Kypo2Table<User>>;
   usersHasError$: Observable<boolean>;
@@ -28,7 +28,7 @@ export class UserOverviewComponent extends BaseComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               private configService: ConfigService,
-              private userService: UserOverviewService) {
+              private userService: Kypo2UserOverviewService) {
     super();
   }
 

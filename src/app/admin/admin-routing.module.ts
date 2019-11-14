@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AdminOverviewComponent} from './admin-overview.component';
-import {MicroserviceEditOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/microservice/microservice-edit-overview.component';
-import {GroupOverviewComponent, UserOverviewComponent} from '../../../projects/user-and-group-management/src/public_api';
+import {Kypo2MicroserviceEditOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/microservice/kypo2-microservice-edit-overview.component';
+import {Kypo2GroupOverviewComponent, Kypo2UserOverviewComponent} from '../../../projects/user-and-group-management/src/public_api';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -24,17 +24,17 @@ export const ADMIN_ROUTES: Routes = [
     children: [
       {
         path: 'user',
-        component: UserOverviewComponent,
+        component: Kypo2UserOverviewComponent,
         outlet: 'tab'
       },
       {
         path: 'group',
-        component: GroupOverviewComponent,
+        component: Kypo2GroupOverviewComponent,
         outlet: 'tab'
       },
       {
         path: 'microservices',
-        component: MicroserviceEditOverviewComponent,
+        component: Kypo2MicroserviceEditOverviewComponent,
         outlet: 'tab'
       },
       {

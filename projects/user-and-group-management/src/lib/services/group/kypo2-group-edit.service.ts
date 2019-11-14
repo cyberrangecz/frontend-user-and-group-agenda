@@ -3,7 +3,7 @@ import {Group} from '../../model/group/group.model';
 import {ResourceSavedEvent} from '../../model/events/resource-saved-event';
 import {GroupChangedEvent} from '../../model/events/group-changed-event';
 
-export abstract class GroupEditService {
+export abstract class Kypo2GroupEditService {
   abstract group$: Observable<Group>;
   abstract editMode$: Observable<boolean>;
   abstract saveDisabled$: Observable<boolean>;

@@ -1,4 +1,4 @@
-import {UserOverviewService} from './user-overview.service';
+import {Kypo2UserOverviewService} from './kypo2-user-overview.service';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
@@ -13,10 +13,10 @@ import {GroupFilter} from '../../model/filters/group-filter';
 import {switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 
 @Injectable()
-export class UserOverviewConcreteService extends UserOverviewService {
+export class UserOverviewConcreteService extends Kypo2UserOverviewService {
   private lastPagination: RequestedPagination;
   private lastFilter: string;
 

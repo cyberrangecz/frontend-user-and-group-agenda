@@ -10,7 +10,7 @@ import {map} from 'rxjs/operators';
 import {GroupMapperService} from './group-mapper.service';
 import {UserMapperService} from '../user/user-mapper.service';
 import {ConfigService} from '../../../config/config.service';
-import {UserAndGroupManagementConfig} from '../../../config/user-and-group-management-config';
+import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {FilterParams} from '../../../model/other/filter-params';
 import {Filter} from '../../../model/filters/filter';
 import {ParamsMerger} from '../../../model/other/params-merger';
@@ -20,7 +20,7 @@ import {RequestedPagination} from '../../../model/other/requested-pagination';
 @Injectable()
 export class GroupFacadeService {
 
-  private readonly config: UserAndGroupManagementConfig;
+  private readonly config: UserAndGroupConfig;
   private readonly groupsPathExtension = 'groups/';
   private readonly usersPathExtension = 'users/';
   private readonly rolesPathExtension = 'roles/';

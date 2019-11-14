@@ -4,7 +4,7 @@ import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 import {RequestedPagination} from '../../model/other/requested-pagination';
 import {Group} from '../../model/group/group.model';
 
-export abstract class UserAssignService {
+export abstract class Kypo2UserAssignService {
   protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();
 

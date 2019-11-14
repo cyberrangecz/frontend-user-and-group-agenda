@@ -1,4 +1,4 @@
-import {GroupEditService} from './group-edit.service';
+import {Kypo2GroupEditService} from './kypo2-group-edit.service';
 import {GroupChangedEvent} from '../../model/events/group-changed-event';
 import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {Group} from '../../model/group/group.model';
@@ -8,12 +8,12 @@ import {map, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../model/enums/alert-type.enum';
+import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class GroupEditConcreteService extends GroupEditService {
+export class GroupEditConcreteService extends Kypo2GroupEditService {
 
   private editModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   editMode$: Observable<boolean> = this.editModeSubject$.asObservable();

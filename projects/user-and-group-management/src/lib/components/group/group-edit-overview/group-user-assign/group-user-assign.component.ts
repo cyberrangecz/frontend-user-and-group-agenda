@@ -5,7 +5,7 @@ import {User} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
 import {BaseComponent} from '../../../../model/base-component';
-import {UserAssignService} from '../../../../services/user/user-assign.service';
+import {Kypo2UserAssignService} from '../../../../services/user/kypo2-user-assign.service';
 import {RequestedPagination} from '../../../../model/other/requested-pagination';
 import {ConfigService} from '../../../../config/config.service';
 import {map, takeWhile} from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
   selectedGroupsToImport: Group[] = [];
   selectedAssignedUsers: User[] = [];
 
-  constructor(private userAssignService: UserAssignService,
+  constructor(private userAssignService: Kypo2UserAssignService,
               private configService: ConfigService) {
     super();
     this.userMapping = {

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {GroupEditComponent} from './group-edit/group-edit.component';
-import {GroupEditOverviewComponent} from './group-edit-overview.component';
+import {Kypo2GroupEditOverviewComponent} from './kypo2-group-edit-overview.component';
 import {Kypo2GroupEditMaterialModule} from './kypo2-group-edit-material.module';
 import {CommonModule} from '@angular/common';
 import {GroupEditControlsComponent} from './group-edit-controls/group-edit-controls.component';
@@ -12,7 +12,7 @@ import {GroupUserAssignComponent} from './group-user-assign/group-user-assign.co
 
 @NgModule({
   declarations: [
-    GroupEditOverviewComponent,
+    Kypo2GroupEditOverviewComponent,
     GroupEditComponent,
     GroupEditControlsComponent,
     GroupRoleAssignComponent,
@@ -29,7 +29,7 @@ import {GroupUserAssignComponent} from './group-user-assign/group-user-assign.co
   exports: [
     Kypo2GroupEditMaterialModule,
     GroupEditComponent,
-    GroupEditOverviewComponent,
+    Kypo2GroupEditOverviewComponent,
     GroupEditControlsComponent,
     GroupRoleAssignComponent,
     GroupUserAssignComponent

@@ -3,7 +3,7 @@ import {Group} from '../../../model/group/group.model';
 import {Observable, of} from 'rxjs';
 import {Kypo2GroupEditService} from '../../../services/group/kypo2-group-edit.service';
 import {GroupChangedEvent} from '../../../model/events/group-changed-event';
-import {map, takeWhile} from 'rxjs/operators';
+import {map, take, takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
 import {ActivatedRoute} from '@angular/router';
 import {ResourceSavedEvent} from '../../../model/events/resource-saved-event';
@@ -15,11 +15,11 @@ import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'kypo2-group-edit-overview',
-  templateUrl: './group-edit-overview.component.html',
-  styleUrls: ['./group-edit-overview.component.css'],
+  templateUrl: './kypo2-group-edit-overview.component.html',
+  styleUrls: ['./kypo2-group-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupEditOverviewComponent extends BaseComponent implements OnInit {
+export class Kypo2GroupEditOverviewComponent extends BaseComponent implements OnInit {
 
   group$: Observable<Group>;
   editMode$: Observable<boolean>;
@@ -58,7 +58,10 @@ export class GroupEditOverviewComponent extends BaseComponent implements OnInit 
 
       const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data: dialogData});
       return dialogRef.afterClosed()
-        .pipe(map(result => result === DialogResultEnum.SUCCESS));
+        .pipe(
+          take(1),
+          map(result => result === DialogResultEnum.SUCCESS)
+        );
     } else {
       return of(true);
     }

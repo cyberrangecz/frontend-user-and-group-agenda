@@ -8,7 +8,7 @@ import {RoleAssignConcreteService} from '../../../services/role/role-assign-conc
 import {Kypo2UserAssignService} from '../../../services/user/kypo2-user-assign.service';
 import {UserAssignConcreteService} from '../../../services/user/user-assign-concrete.service';
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
-import {GroupEditOverviewComponent} from './group-edit-overview.component';
+import {Kypo2GroupEditOverviewComponent} from './kypo2-group-edit-overview.component';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import {GroupEditOverviewComponent} from './group-edit-overview.component';
     { provide: Kypo2UserAssignService, useClass: UserAssignConcreteService }
   ],
   exports: [
-    GroupEditOverviewComponent
+    Kypo2GroupEditOverviewComponent
   ]
 })
 export class Kypo2GroupEditModule {

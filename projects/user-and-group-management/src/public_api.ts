@@ -13,6 +13,9 @@ export {Kypo2GroupOverviewComponent} from './lib/components/group/group-overview
 export {Kypo2RoleAssignService} from './lib/services/role/kypo2-role-assign.service';
 export {Kypo2GroupOverviewService} from './lib/services/group/kypo2-group-overview.service';
 export {Kypo2GroupEditService} from './lib/services/group/kypo2-group-edit.service';
+export {Kypo2GroupResolverHelperService} from './lib/services/group/kypo2-group-resolver-helper.service';
+export {Kypo2GroupEditCanDeactivate} from './lib/services/group/kypo2-group-edit-can-deactivate.service';
+
 
 // USERS
 export {Kypo2UserModule} from './lib/components/user/kypo2-user.module';
@@ -25,6 +28,7 @@ export {Kypo2UserOverviewService} from './lib/services/user/kypo2-user-overview.
 export {Kypo2MicroserviceEditModule} from './lib/components/microservice/kypo2-microservice-edit.module';
 export {Kypo2MicroserviceEditComponentsModule} from './lib/components/microservice/kypo2-microservice-edit-components.module';
 export {Kypo2MicroserviceEditOverviewComponent} from './lib/components/microservice/kypo2-microservice-edit-overview.component';
+
 
 // COMMONS
 export {Kypo2UserAndGroupNotificationService} from './lib/services/notification/kypo2-user-and-group-notification.service';

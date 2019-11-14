@@ -40,7 +40,7 @@ export class GroupFacadeService {
       .pipe(map(resp => this.groupMapper.mapGroupDTOsWithPaginationToTableGroups(resp)));
   }
 
-  getGroupById(groupId: number): Observable<Group> {
+  getById(groupId: number): Observable<Group> {
     return this.http.get<GroupDTO>(`${this.config.userAndGroupRestBasePath + this.groupsPathExtension}${groupId}`)
       .pipe(map(groupDTO => this.groupMapper.mapGroupDTOToGroup(groupDTO)));
   }

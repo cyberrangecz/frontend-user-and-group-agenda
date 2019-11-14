@@ -8,6 +8,7 @@ import {
   MatInputModule,
   MatTooltipModule
 } from '@angular/material';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
+    MatCardModule
   ],
   exports: [
     MatFormFieldModule,
@@ -26,7 +28,8 @@ import {
     MatDividerModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule
   ]
 })
 export class Kypo2MicroserviceMaterialModule {

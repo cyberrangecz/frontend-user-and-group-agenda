@@ -2,13 +2,13 @@
   <button mat-raised-button
           color="primary"
           [disabled]="!isFormValid"
-          (click)="createMicroservice()">
+          (click)="onCreate()">
     Register
   </button>
   <button mat-raised-button
           color="warn"
-          (click)="clearMicroservice()">
-    Clear
+          (click)="onReset()">
+    Reset
   </button>
 </div>
 <div class="error-state">

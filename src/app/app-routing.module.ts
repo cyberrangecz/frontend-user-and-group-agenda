@@ -6,7 +6,7 @@ export const APP_ROUTES: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule),
-    canActivate: [Kypo2AuthGuardWithLogin],
+    canActivate: [],
   },
   {
     path: 'login',

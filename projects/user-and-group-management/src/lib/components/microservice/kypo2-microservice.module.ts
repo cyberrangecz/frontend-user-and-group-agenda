@@ -7,7 +7,7 @@ import {MicroserviceOverviewComponent} from './microservice-overview.component';
 import {MicroserviceCreateComponent} from './microservice-create/microservice-create.component';
 import {MicroserviceControlsComponent} from './microservice-controls/microservice-controls.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MicroserviceRoleFormsComponent} from './microservice-role-forms/microservice-role-forms.component';
+import {MicroserviceRoleListComponent} from './microservice-role-forms/microservice-role-list.component';
 import {MicroserviceRoleComponent} from './microservice-role-forms/microservice-role/microservice-role.component';
 import {MicroserviceFacadeModule} from '../../services/facade/microservice/microservice-facade.module';
 
@@ -16,7 +16,7 @@ import {MicroserviceFacadeModule} from '../../services/facade/microservice/micro
     MicroserviceOverviewComponent,
     MicroserviceCreateComponent,
     MicroserviceControlsComponent,
-    MicroserviceRoleFormsComponent,
+    MicroserviceRoleListComponent,
     MicroserviceRoleComponent
   ],
   imports: [

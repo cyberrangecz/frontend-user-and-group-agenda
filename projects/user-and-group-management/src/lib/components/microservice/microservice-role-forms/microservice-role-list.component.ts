@@ -4,12 +4,12 @@ import {MicroserviceRoleItem} from '../../../model/microservice/microservice-rol
 import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
 
 @Component({
-  selector: 'kypo2-microservice-role-forms',
-  templateUrl: './microservice-role-forms.component.html',
-  styleUrls: ['./microservice-role-forms.component.css'],
+  selector: 'kypo2-microservice-role-list',
+  templateUrl: './microservice-role-list.component.html',
+  styleUrls: ['./microservice-role-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MicroserviceRoleFormsComponent implements OnInit, OnChanges {
+export class MicroserviceRoleListComponent implements OnInit, OnChanges {
 
   roles: MicroserviceRole[] = [];
   rolesFormValidity = true;

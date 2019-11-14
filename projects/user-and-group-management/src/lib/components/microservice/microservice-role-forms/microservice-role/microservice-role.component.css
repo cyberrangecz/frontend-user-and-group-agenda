@@ -1,16 +1,13 @@
-.form-line {
-  margin-bottom: 30px;
+.remove-role {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.form-line-content {
+.form-line {
   display: flex;
   flex-direction: row;
-  align-items: baseline;
-  place-content: space-between;
-}
-
-.form-line-content p {
-  color: grey;
+  justify-items: flex-end;
+  margin-bottom: 30px;
 }
 
 .spacer {

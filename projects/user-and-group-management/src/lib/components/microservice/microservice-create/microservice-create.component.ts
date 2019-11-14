@@ -44,8 +44,6 @@ export class MicroserviceCreateComponent extends BaseComponent implements OnInit
   ngOnChanges(changes: SimpleChanges) {
     if ('microservice' in changes) {
       this.microserviceFormGroup = new MicroserviceFormGroup(this.microservice);
-      this.name.markAsTouched();
-      this.endpoint.markAsTouched();
       this.setupOnFormChangedEvent();
     }
   }

@@ -44,7 +44,7 @@ export class MicroserviceRoleComponent extends BaseComponent implements OnInit, 
     }
   }
 
-  removeRole() {
+  deleteRole() {
     this.remove.emit();
   }
 

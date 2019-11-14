@@ -11,18 +11,18 @@ export class MicroserviceControlsComponent implements OnInit {
   @Input() isFormValid: boolean;
   @Input() hasDefaultRole: boolean;
   @Output() create = new EventEmitter();
-  @Output() clear = new EventEmitter();
+  @Output() reset = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  createMicroservice() {
+  onCreate() {
     this.create.emit();
   }
 
-  clearMicroservice() {
-    this.clear.emit();
+  onReset() {
+    this.reset.emit();
   }
 }

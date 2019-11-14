@@ -1,40 +1,39 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Kypo2UserMaterialModule} from './kypo2-user-material.module';
-import { UserManagementComponent } from './user-management/user-management.component';
-import { UserTableComponent } from './user-management/user-table/user-table.component';
-import { UserControlsComponent } from './user-management/user-controls/user-controls.component';
-import {UserSelectionService} from '../../services/facade/user/user-selection.service';
+import { UserOverviewComponent } from './user-overview/user-overview.component';
+import { UserControlsComponent } from './user-overview/user-controls/user-controls.component';
 import {FormsModule} from '@angular/forms';
-import {PipesModule} from '../../pipes/pipes.module';
 import {UserFacadeModule} from '../../services/facade/user/user-facade.module';
 import {SharedModule} from '../shared/shared.module';
-import { UserRolesDialogComponent } from './user-management/user-table/user-roles-dialog/user-roles-dialog.component';
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
+import {Kypo2TableModule} from 'kypo2-table';
+import {UserOverviewService} from '../../services/user/user-overview.service';
+import {UserOverviewConcreteService} from '../../services/user/user-overview-concrete.service';
+import {UserDetailComponent} from './user-overview/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
-  UserManagementComponent,
-  UserTableComponent,
-  UserControlsComponent,
-  UserRolesDialogComponent,
+    UserOverviewComponent,
+    UserDetailComponent,
+    UserControlsComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    Kypo2TableModule,
     Kypo2UserMaterialModule,
     UserFacadeModule,
-    PipesModule,
     SharedModule
   ],
   providers: [
-    UserSelectionService,
+    { provide: UserOverviewService, useClass: UserOverviewConcreteService }
   ],
   entryComponents: [
-    UserRolesDialogComponent
+    UserDetailComponent
   ],
   exports: [
-    UserManagementComponent
+    UserOverviewComponent
   ]
 })
 export class Kypo2UserModule {

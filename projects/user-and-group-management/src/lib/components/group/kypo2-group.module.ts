@@ -1,18 +1,16 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Kypo2GroupMaterialModule } from './kypo2-group-material.module';
-import { GroupOverviewComponent } from './group-management/group-overview.component';
-import { GroupControlsComponent } from './group-management/group-controls/group-controls.component';
-import { GroupSelectionService } from '../../services/facade/group/group-selection.service';
+import { GroupOverviewComponent } from './group-overview/group-overview.component';
+import { GroupControlsComponent } from './group-overview/group-controls/group-controls.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupFacadeModule } from '../../services/facade/group/group-facade.module';
 import { UserFacadeModule } from '../../services/facade/user/user-facade.module';
 import { RoleFacadeModule } from '../../services/facade/role/role-facade.module';
 import { SharedModule } from '../shared/shared.module';
-import { PipesModule } from '../../pipes/pipes.module';
 import {UserAndGroupManagementConfig} from '../../config/user-and-group-management-config';
 import {Kypo2TableModule} from 'kypo2-table';
-import {GroupOverviewService} from '../../services/shared/group-overview.service';
+import {GroupOverviewService} from '../../services/group/group-overview.service';
 import {GroupOverviewConcreteService} from '../../services/group/group-overview.concrete.service';
 
 @NgModule({
@@ -24,7 +22,6 @@ import {GroupOverviewConcreteService} from '../../services/group/group-overview.
     GroupFacadeModule,
     UserFacadeModule,
     RoleFacadeModule,
-    PipesModule,
     ReactiveFormsModule,
     Kypo2TableModule
   ],
@@ -34,7 +31,6 @@ import {GroupOverviewConcreteService} from '../../services/group/group-overview.
   ],
   providers: [
     {provide: GroupOverviewService, useClass: GroupOverviewConcreteService},
-    GroupSelectionService,
   ],
   exports: [
     GroupOverviewComponent

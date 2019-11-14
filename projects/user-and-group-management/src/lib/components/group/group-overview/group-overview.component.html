@@ -1,0 +1,13 @@
+  <kypo2-group-controls
+    [selectedGroupsCount]="selectedGroupIds.length"
+    (deleteSelected)="deleteSelectedGroups()"
+    (createNewGroup)="createGroup()">
+  </kypo2-group-controls>
+  <kypo2-table
+    [data]="groups$ | async"
+    [hasError]="groupsHasError$ | async"
+    [totalElements]="groupsTotalLength$ | async"
+    (refresh)="fetchData($event)"
+    (rowAction)="onTableEvent($event)"
+    (rowSelection)="onGroupSelected($event)">
+  </kypo2-table>

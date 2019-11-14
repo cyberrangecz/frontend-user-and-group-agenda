@@ -3,7 +3,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
 import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
 import {Observable} from 'rxjs';
-import {UserTableRow} from '../../../model/table-adapters/user-table-row';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
@@ -19,8 +18,6 @@ import {FilterParams} from '../../../model/other/filter-params';
 export class UserFacadeService {
   private readonly config: UserAndGroupManagementConfig;
   private readonly usersPathExtension = 'users/';
-  private readonly rolesPathExtension = 'roles/';
-
 
   constructor(private http: HttpClient,
               private configService: ConfigService,
@@ -28,41 +25,22 @@ export class UserFacadeService {
     this.config = this.configService.config;
   }
 
-  getUsersTable(pagination = null): Observable<PaginatedResource<UserTableRow[]>> {
-    if (pagination) {
-      return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
-        { params: PaginationHttpParams.createPaginationParams(pagination) })
-        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
-    }
-    return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension)
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUserTable(resp)));
-  }
-
-  getUsers(pagination = null): Observable<PaginatedResource<User[]>> {
-    if (pagination) {
-      return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
-        {params: PaginationHttpParams.createPaginationParams(pagination)})
-        .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
-    }
-    return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension)
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
+  getUsers(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<User[]>> {
+    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
+    return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
+      { params: params })
+      .pipe(map(resp => this.userMapper.mapUserDTOsToUsers(resp)));
   }
 
   getUserById(id: number) {
     return this.http.get(`${this.config.userAndGroupRestBasePath + this.usersPathExtension}${id}`);
   }
 
-  removeUsers(userIds: number[]) {
+  deleteUsers(userIds: number[]) {
     return this.http.request('delete', this.config.userAndGroupRestBasePath + this.usersPathExtension,
       {
-        body: {
-          ids: userIds
-        }
+        body: userIds
       });
-  }
-
-  removeUser(userId: number) {
-    return this.http.request('delete', `${this.config.userAndGroupRestBasePath + this.usersPathExtension}${userId}`);
   }
 
   getUsersNotInGroup(groupId: number, pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<User[]>> {
@@ -70,7 +48,7 @@ export class UserFacadeService {
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,
       {params: params})
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
+      .pipe(map(resp => this.userMapper.mapUserDTOsToUsers(resp)));
   }
 
   getUsersInGroups(groupIds: number[], pagination: RequestedPagination, filters: Filter[] = []) {
@@ -79,6 +57,6 @@ export class UserFacadeService {
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}groups`,
       {params: params})
-      .pipe(map(resp => this.userMapper.mapUserDTOsWithPaginationToUsers(resp)));
+      .pipe(map(resp => this.userMapper.mapUserDTOsToUsers(resp)));
   }
 }

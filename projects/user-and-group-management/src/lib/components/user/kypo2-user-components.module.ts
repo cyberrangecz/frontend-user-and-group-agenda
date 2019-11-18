@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Kypo2TableModule} from 'kypo2-table';
 import {Kypo2UserMaterialModule} from './kypo2-user-material.module';
-import {SharedModule} from '../shared/shared.module';
+import {InternalSharedModule} from '../shared/internal-shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import {SharedModule} from '../shared/shared.module';
     FormsModule,
     Kypo2TableModule,
     Kypo2UserMaterialModule,
-    SharedModule
+    InternalSharedModule
   ],
   entryComponents: [
     UserDetailComponent

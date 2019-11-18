@@ -48,7 +48,6 @@ export class Kypo2GroupEditOverviewComponent extends BaseComponent implements On
 
   /**
    * Determines if all changes in sub components are saved and user can navigate to different component
-   * @returns {Observable<boolean>} true if saved all his changes or agreed with leaving without saving them, false otherwise
    */
   canDeactivate(): Observable<boolean> {
     if (!this.canDeactivateGroupEdit || !this.canDeactivateMembers || !this.canDeactivateRoles) {

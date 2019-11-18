@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Kypo2GroupOverviewComponent} from './kypo2-group-overview.component';
 import {GroupControlsComponent} from './group-controls/group-controls.component';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../../shared/shared.module';
+import {InternalSharedModule} from '../../shared/internal-shared.module';
 import {Kypo2GroupOverviewMaterialModule} from './kypo2-group-overview-material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Kypo2TableModule} from 'kypo2-table';
@@ -10,7 +10,7 @@ import {Kypo2TableModule} from 'kypo2-table';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule,
+    InternalSharedModule,
     Kypo2GroupOverviewMaterialModule,
     FormsModule,
     ReactiveFormsModule,

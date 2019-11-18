@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from '../shared/shared.module';
+import {InternalSharedModule} from '../shared/internal-shared.module';
 import {Kypo2MicroserviceEditMaterialModule} from './kypo2-microservice-edit-material.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Kypo2MicroserviceEditOverviewComponent} from './kypo2-microservice-edit-overview.component';
@@ -12,7 +12,7 @@ import {CommonModule} from '@angular/common';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule,
+    InternalSharedModule,
     Kypo2MicroserviceEditMaterialModule,
     ReactiveFormsModule,
   ],

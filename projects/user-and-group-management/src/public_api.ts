@@ -9,6 +9,7 @@ export {Kypo2GroupOverviewModule} from './lib/components/group/group-overview/ky
 export {Kypo2GroupOverviewComponentsModule} from './lib/components/group/group-overview/kypo2-group-overview-components.module';
 export {Kypo2GroupEditModule} from './lib/components/group/group-edit-overview/kypo2-group-edit.module';
 export {Kypo2GroupEditComponentsModule} from './lib/components/group/group-edit-overview/kypo2-group-edit-components.module';
+export {Kypo2GroupEditOverviewComponent} from './lib/components/group/group-edit-overview/kypo2-group-edit-overview.component'
 export {Kypo2GroupOverviewComponent} from './lib/components/group/group-overview/kypo2-group-overview.component';
 export {Kypo2RoleAssignService} from './lib/services/role/kypo2-role-assign.service';
 export {Kypo2GroupOverviewService} from './lib/services/group/kypo2-group-overview.service';
@@ -31,6 +32,7 @@ export {Kypo2MicroserviceEditOverviewComponent} from './lib/components/microserv
 
 
 // COMMONS
+export {Kypo2UserAndGroupEventModule} from './lib/components/shared/kypo2-user-and-group-event.module';
 export {Kypo2UserAndGroupNotificationService} from './lib/services/notification/kypo2-user-and-group-notification.service';
 export {Kypo2UserAndGroupRoutingEventService} from './lib/services/routing/kypo2-user-and-group-routing-event.service';
 export {Kypo2UserAndGroupErrorService} from './lib/services/notification/kypo2-user-and-group-error.service';

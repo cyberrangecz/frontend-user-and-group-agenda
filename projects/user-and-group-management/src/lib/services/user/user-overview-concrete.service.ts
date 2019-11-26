@@ -14,6 +14,7 @@ import {switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
 import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
+import {UserFilter} from '../../model/filters/user-filter';
 
 @Injectable()
 export class UserOverviewConcreteService extends Kypo2UserOverviewService {
@@ -33,7 +34,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
   getAll(pagination?: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User[]>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
-    const filters = filterValue ? [new GroupFilter(filterValue)] : [];
+    const filters = filterValue ? [new UserFilter(filterValue)] : [];
     this.hasErrorSubject$.next(false);
     return this.userFacade.getUsers(pagination, filters)
       .pipe(

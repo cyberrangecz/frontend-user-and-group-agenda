@@ -49,6 +49,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
         switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
       );
   }
+
   getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User[]>> {
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
     this.lastAssignedPagination = pagination;
@@ -88,7 +89,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
       new RequestedPagination(0, pageSize, 'name', 'asc'),
       [new GroupFilter(filterValue)])
       .pipe(
-        tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching users'))})
+        tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching groups'))})
       );
   }
 

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Group} from '../../../model/group/group.model';
 import {Observable, of} from 'rxjs';
 import {Kypo2GroupEditService} from '../../../services/group/kypo2-group-edit.service';
@@ -20,6 +20,8 @@ import {MatDialog} from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Kypo2GroupEditOverviewComponent extends BaseComponent implements OnInit {
+
+  @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();
 
   group$: Observable<Group>;
   editMode$: Observable<boolean>;
@@ -87,6 +89,7 @@ export class Kypo2GroupEditOverviewComponent extends BaseComponent implements On
 
   private onGroupSaved(event: ResourceSavedEvent) {
     this.canDeactivateGroupEdit = true;
+
     if (event.editMode) {
       return;
     } else {

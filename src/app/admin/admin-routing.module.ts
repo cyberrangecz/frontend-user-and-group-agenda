@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AdminOverviewComponent} from './admin-overview.component';
 import {Kypo2MicroserviceEditOverviewComponent} from '../../../projects/user-and-group-management/src/lib/components/microservice/kypo2-microservice-edit-overview.component';
 import {
-  Kypo2GroupOverviewComponent,
+  Kypo2GroupOverviewComponent, Kypo2MicroserviceEditCanDeactivate,
   Kypo2UserOverviewComponent
 } from '../../../projects/user-and-group-management/src/public_api';
 
@@ -38,6 +38,7 @@ export const ADMIN_ROUTES: Routes = [
       {
         path: 'microservices',
         component: Kypo2MicroserviceEditOverviewComponent,
+        canDeactivate: [Kypo2MicroserviceEditCanDeactivate],
         outlet: 'tab'
       },
       {

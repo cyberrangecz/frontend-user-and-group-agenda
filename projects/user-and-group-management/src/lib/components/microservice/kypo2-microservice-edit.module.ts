@@ -3,12 +3,14 @@ import {CommonModule} from '@angular/common';
 import {UserAndGroupConfig} from '../../config/user-and-group-config';
 import {MicroserviceFacadeModule} from '../../services/facade/microservice/microservice-facade.module';
 import {Kypo2MicroserviceEditComponentsModule} from './kypo2-microservice-edit-components.module';
+import {InternalSharedModule} from '../shared/internal-shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     Kypo2MicroserviceEditComponentsModule,
     MicroserviceFacadeModule,
+    InternalSharedModule
   ],
   exports: [
     Kypo2MicroserviceEditComponentsModule

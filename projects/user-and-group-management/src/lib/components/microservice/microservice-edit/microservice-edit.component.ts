@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnIn
 import {MicroserviceEditFormGroup} from './microservice-edit-form-group';
 import {Microservice} from '../../../model/microservice/microservice.model';
 import {FormArray, FormControl} from '@angular/forms';
-import {takeWhile} from 'rxjs/operators';
+import {takeWhile, tap} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
 import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
 
@@ -61,7 +61,7 @@ export class MicroserviceEditComponent extends BaseComponent implements OnInit, 
   private setupOnFormChangedEvent() {
     this.microserviceFormGroup.formGroup.valueChanges
       .pipe(
-        takeWhile(_ => this.isAlive),
+        takeWhile(_ => this.isAlive)
       ).subscribe(_ => this.onChanged());
   }
 

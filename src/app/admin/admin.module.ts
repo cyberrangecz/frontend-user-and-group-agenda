@@ -7,7 +7,7 @@ import {NotificationComponent} from './notification/notification.component';
 import {CustomConfig} from '../custom-config';
 import {ClientNotificationService} from './client-notification.service';
 import {
-  Kypo2GroupOverviewModule,
+  Kypo2GroupOverviewModule, Kypo2MicroserviceEditCanDeactivate,
   Kypo2MicroserviceEditModule,
   Kypo2UserAndGroupEventModule,
   Kypo2UserModule
@@ -37,6 +37,7 @@ import {
   entryComponents: [NotificationComponent],
   providers: [
     ClientNotificationService,
+    Kypo2MicroserviceEditCanDeactivate
   ]
 })
 export class AdminModule {

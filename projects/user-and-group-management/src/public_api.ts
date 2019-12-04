@@ -29,7 +29,7 @@ export {Kypo2UserOverviewService} from './lib/services/user/kypo2-user-overview.
 export {Kypo2MicroserviceEditModule} from './lib/components/microservice/kypo2-microservice-edit.module';
 export {Kypo2MicroserviceEditComponentsModule} from './lib/components/microservice/kypo2-microservice-edit-components.module';
 export {Kypo2MicroserviceEditOverviewComponent} from './lib/components/microservice/kypo2-microservice-edit-overview.component';
-
+export {Kypo2MicroserviceEditCanDeactivate} from './lib/services/microservice/kypo2-microservice-edit-can-deactivate.service';
 
 // COMMONS
 export {Kypo2UserAndGroupEventModule} from './lib/components/shared/kypo2-user-and-group-event.module';

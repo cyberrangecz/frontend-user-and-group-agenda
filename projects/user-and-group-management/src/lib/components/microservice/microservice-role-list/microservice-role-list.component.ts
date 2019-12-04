@@ -20,7 +20,6 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    this.addRole();
   }
 
   ngOnChanges(changes: SimpleChanges) {

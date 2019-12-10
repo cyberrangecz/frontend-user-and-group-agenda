@@ -19,6 +19,9 @@ import {GroupMemberTableCreator} from '../../../../model/table-adapters/group-me
 })
 export class GroupUserAssignComponent extends BaseComponent implements OnInit, OnChanges {
 
+  readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
+  readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
+
   @Input() resource: Group;
   @Output() hasUnsavedChanges: EventEmitter<boolean> = new EventEmitter();
 
@@ -115,7 +118,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
   }
 
   onAssignedUsersTableAction(event: TableActionEvent<User>) {
-    if (event.action.label.toLowerCase() === 'delete') {
+    if (event.action.label === GroupMemberTableCreator.DELETE_ACTION) {
       this.deleteAssignedUser(event.element);
     }
   }
@@ -130,7 +133,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, '', ''));
+      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.MEMBERS_OF_GROUP_INIT_SORT_NAME, this.MEMBERS_OF_GROUP_INIT_SORT_DIR));
     this.assignedUsers$ = this.userAssignService.assignedUsers$
       .pipe(
         map(paginatedUsers => GroupMemberTableCreator.create(paginatedUsers))

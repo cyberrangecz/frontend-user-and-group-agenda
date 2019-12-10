@@ -5,19 +5,23 @@ import {of} from 'rxjs';
 import {Group} from '../group/group.model';
 
 export class GroupTableCreator {
+
+  static readonly EDIT_ACTION = 'Edit';
+  static readonly DELETE_ACTION = 'Delete';
+
   static create(resource: PaginatedResource<Group[]>): Kypo2Table<GroupTableRowAdapter> {
 
     const resources = this.mapGroupToTableAdapter(resource);
     const actions = [
       {
-        label: 'edit',
+        label: this.EDIT_ACTION,
         icon: 'edit',
         color: 'primary',
         tooltip: 'Edit Group',
         disabled$: of(false)
       },
       {
-        label: 'delete',
+        label: this.DELETE_ACTION,
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Group',

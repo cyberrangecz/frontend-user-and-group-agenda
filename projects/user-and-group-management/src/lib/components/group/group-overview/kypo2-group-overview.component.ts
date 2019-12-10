@@ -18,6 +18,9 @@ import {ConfigService} from '../../../config/config.service';
 })
 export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit {
 
+  readonly INIT_SORT_NAME = 'name';
+  readonly INIT_SORT_DIR = 'asc';
+
   groups$: Observable<Kypo2Table<GroupTableRowAdapter>>;
   groupsHasError$: Observable<boolean>;
   groupsTotalLength$: Observable<number>;
@@ -44,9 +47,9 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
   }
 
   onTableEvent(event: TableActionEvent<GroupTableRowAdapter>) {
-    if (event.action.label.toLocaleLowerCase() === 'delete') {
+    if (event.action.label === GroupTableCreator.DELETE_ACTION) {
       this.deleteGroup(event.element.groupId);
-    } else if (event.action.label.toLocaleLowerCase() === 'edit') {
+    } else if (event.action.label === GroupTableCreator.EDIT_ACTION) {
       const route: Kypo2UserAndGroupRouteEvent = {
         actionType: 'EDIT',
         resourceType: 'GROUP',
@@ -78,7 +81,7 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, '', ''));
+      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
     this.groups$ = this.groupService.groups$
       .pipe(
         map(groups => GroupTableCreator.create(groups))

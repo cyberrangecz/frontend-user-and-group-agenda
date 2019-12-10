@@ -33,7 +33,7 @@
     "zone.js": "~0.9.1",
     "kypo2-auth": "1.5.0",
     "angular-oauth2-oidc": "^8.0.4",
-    "kypo2-table": "1.1.7",
+    "kypo2-table": "1.1.9",
     "kypo2-user-assign": "1.0.0"
   },
   "devDependencies": {

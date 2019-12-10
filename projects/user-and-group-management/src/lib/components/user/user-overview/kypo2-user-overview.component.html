@@ -3,6 +3,8 @@
   (deleteSelected)="deleteSelectedUsers()">
 </kypo2-user-controls>
 <kypo2-table
+  [defaultSortName]="INIT_SORT_NAME"
+  [defaultSortDirection]="INIT_SORT_DIR"
   [data]="users$ | async"
   [hasError]="usersHasError$ | async"
   [totalElements]="usersTotalLength$ | async"

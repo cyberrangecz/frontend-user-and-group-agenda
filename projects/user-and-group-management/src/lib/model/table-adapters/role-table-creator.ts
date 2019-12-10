@@ -3,11 +3,14 @@ import {of} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
 
 export class RoleTableCreator {
+
+  static readonly DELETE_ACTION = 'Delete';
+
   static create(resources: UserRole[]): Kypo2Table<UserRole> {
 
     const actions = [
       {
-        label: 'delete',
+        label: this.DELETE_ACTION,
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Role',

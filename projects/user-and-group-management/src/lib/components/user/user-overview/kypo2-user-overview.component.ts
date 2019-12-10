@@ -20,6 +20,9 @@ import {UserTableCreator} from '../../../model/table-adapters/user-table-creator
 })
 export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit {
 
+  readonly INIT_SORT_NAME = 'familyName';
+  readonly INIT_SORT_DIR = 'asc';
+
   users$: Observable<Kypo2Table<User>>;
   usersHasError$: Observable<boolean>;
   usersTotalLength$: Observable<number>;
@@ -46,7 +49,7 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
   }
 
   onTableEvent(event: TableActionEvent<User>) {
-    if (event.action.label.toLocaleLowerCase() === 'delete') {
+    if (event.action.label === UserTableCreator.DELETE_ACTION) {
       this.deleteUser(event.element.id);
     }
   }
@@ -85,7 +88,7 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, '', ''));
+      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
     this.users$ = this.userService.users$
       .pipe(
         map(groups => UserTableCreator.create(groups))

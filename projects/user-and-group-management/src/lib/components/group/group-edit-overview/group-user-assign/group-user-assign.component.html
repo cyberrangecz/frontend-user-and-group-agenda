@@ -58,6 +58,8 @@
   </mat-card-header>
   <mat-card-content>
     <kypo2-table elevation="0"
+                 [defaultSortName]="MEMBERS_OF_GROUP_INIT_SORT_NAME"
+                 [defaultSortDirection]="MEMBERS_OF_GROUP_INIT_SORT_DIR"
                  [hasError]="assignedUsersHasError$ | async"
                  [data]="assignedUsers$ | async"
                  [isLoading]="isLoadingAssignedUsers$ | async"

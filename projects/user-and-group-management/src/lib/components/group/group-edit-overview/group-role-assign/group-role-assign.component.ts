@@ -72,7 +72,7 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
 
 
   onAssignedRolesTableAction(tableAction: TableActionEvent<UserRole>) {
-    if (tableAction.action.label.toLowerCase() === 'delete') {
+    if (tableAction.action.label === RoleTableCreator.DELETE_ACTION) {
       this.deleteAssignedRole(tableAction.element);
     }
   }

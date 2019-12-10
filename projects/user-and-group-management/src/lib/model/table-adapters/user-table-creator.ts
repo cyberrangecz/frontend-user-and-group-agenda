@@ -6,10 +6,13 @@ import {UserTableExpand} from './user-table-expand';
 import {UserDetailComponent} from '../../components/user/user-overview/user-detail/user-detail.component';
 
 export class UserTableCreator {
+
+  static readonly DELETE_ACTION = 'Delete';
+
   static create(resource: PaginatedResource<User[]>): Kypo2Table<User> {
     const actions = [
       {
-        label: 'delete',
+        label: this.DELETE_ACTION,
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete User',

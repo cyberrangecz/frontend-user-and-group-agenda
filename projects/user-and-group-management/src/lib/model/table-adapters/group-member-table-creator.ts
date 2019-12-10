@@ -4,10 +4,13 @@ import {of} from 'rxjs';
 import {User} from 'kypo2-auth';
 
 export class GroupMemberTableCreator {
+
+  static readonly DELETE_ACTION = 'Delete';
+
   static create(resource: PaginatedResource<User[]>): Kypo2Table<User> {
     const actions = [
       {
-        label: 'delete',
+        label: this.DELETE_ACTION,
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Member',

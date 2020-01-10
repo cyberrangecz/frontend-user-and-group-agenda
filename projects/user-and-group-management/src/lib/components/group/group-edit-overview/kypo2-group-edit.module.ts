@@ -10,6 +10,9 @@ import {UserAssignConcreteService} from '../../../services/user/user-assign-conc
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {Kypo2GroupEditOverviewComponent} from './kypo2-group-edit-overview.component';
 
+/**
+ * Main module containing necessary imports, exports and providers for group edit page
+ */
 @NgModule({
   imports: [
     CommonModule,

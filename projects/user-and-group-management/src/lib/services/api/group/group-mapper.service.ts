@@ -11,18 +11,29 @@ import {UpdateGroupDTO} from '../../../model/DTO/group/update-group-dto.model';
 import {AddUsersToGroupDTO} from '../../../model/DTO/user/add-user-to-group-dto.model';
 import {UserRole} from 'kypo2-auth';
 
+/**
+ * Service mapping internal model to group DTOs and other way
+ */
 @Injectable()
 export class GroupMapperService {
 
   constructor(private userMapper: UserMapperService) {
   }
 
-  mapGroupDTOsWithPaginationToTableGroups(restResource: RestResourceDTO<GroupDTO>): PaginatedResource<Group[]> {
+  /**
+   * Maps paginated group dto to internal model
+   * @param restResource paginated group dto
+   */
+  mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): PaginatedResource<Group[]> {
     return new PaginatedResource<Group[]>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
 
+  /**
+   * Maps group dto to internal model
+   * @param groupDTO group dto to be mapped
+   */
   mapGroupDTOToGroup(groupDTO: GroupDTO): Group {
     const result = new Group();
     result.id = groupDTO.id;
@@ -37,6 +48,11 @@ export class GroupMapperService {
     return result;
   }
 
+  /**
+   * Maps internal model to new group dto
+   * @param group group to be mapped
+   * @param groupsToImportFromId ids of groups for import of users
+   */
   mapGroupToNewGroupDTO(group: Group, groupsToImportFromId: number[]): NewGroupDTO {
     const result = new NewGroupDTO();
     result.name = group.name;
@@ -49,6 +65,10 @@ export class GroupMapperService {
     return result;
   }
 
+  /**
+   * Maps internal model to update group dto
+   * @param group group to be mapped
+   */
   mapGroupToUpdateGroupDTO(group: Group): UpdateGroupDTO {
     const result = new UpdateGroupDTO();
     result.id = group.id;
@@ -60,6 +80,11 @@ export class GroupMapperService {
     return result;
   }
 
+  /**
+   * Creates add users to group dto
+   * @param userIds ids of users to add
+   * @param groupIds ids of groups to import
+   */
   createAddUsersToGroupDTO( userIds: number[], groupIds: number[]): AddUsersToGroupDTO {
     const result = new AddUsersToGroupDTO();
     result.ids_of_users_to_be_add = userIds;

@@ -1,15 +1,18 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RoleFacadeService} from './role-facade.service';
+import {RoleApi} from './role-api.service';
 
+/**
+ * Module containing providers for roles api
+ */
 @NgModule({
   imports: [
     CommonModule
   ],
   providers: [
-    RoleFacadeService,
+    RoleApi,
   ]
 })
-export class RoleFacadeModule {
+export class RoleApiModule {
 
 }

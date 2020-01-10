@@ -6,6 +6,9 @@ import {Kypo2GroupEditModule} from '../../../projects/user-and-group-management/
 import {Kypo2GroupResolverHelperService} from '../../../projects/user-and-group-management/src/lib/services/group/kypo2-group-resolver-helper.service';
 import {Kypo2GroupEditCanDeactivate} from '../../../projects/user-and-group-management/src/lib/services/group/kypo2-group-edit-can-deactivate.service';
 
+/**
+ * Module containing necessary imports for group detail page
+ */
 @NgModule({
   imports: [
     CommonModule,

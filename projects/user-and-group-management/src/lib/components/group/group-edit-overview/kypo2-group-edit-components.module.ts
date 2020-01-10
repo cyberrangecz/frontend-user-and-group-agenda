@@ -10,6 +10,9 @@ import {Kypo2ResourceSelectorModule} from 'kypo2-user-assign';
 import {Kypo2TableModule} from 'kypo2-table';
 import {GroupUserAssignComponent} from './group-user-assign/group-user-assign.component';
 
+/**
+ * Module containing necessary imports and components for group edit page
+ */
 @NgModule({
   declarations: [
     Kypo2GroupEditOverviewComponent,

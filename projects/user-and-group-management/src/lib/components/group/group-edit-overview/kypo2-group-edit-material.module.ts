@@ -7,7 +7,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
+import {MatNativeDateModule} from '@angular/material/core';
 
+/**
+ * Material components imports for group edit module
+ */
 @NgModule({
   imports: [
     MatButtonModule,
@@ -17,6 +21,7 @@ import {MatCardModule} from '@angular/material/card';
     MatDividerModule,
     MatIconModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatCardModule
   ],
   exports: [
@@ -27,6 +32,7 @@ import {MatCardModule} from '@angular/material/card';
     MatDividerModule,
     MatIconModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatCardModule
   ],
 })

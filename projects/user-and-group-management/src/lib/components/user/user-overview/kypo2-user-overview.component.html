@@ -8,7 +8,7 @@
   [data]="users$ | async"
   [hasError]="usersHasError$ | async"
   [totalElements]="usersTotalLength$ | async"
-  (refresh)="fetchData($event)"
-  (rowAction)="onTableEvent($event)"
+  (refresh)="onLoadEvent($event)"
+  (rowAction)="onTableAction($event)"
   (rowSelection)="onUserSelected($event)">
 </kypo2-table>

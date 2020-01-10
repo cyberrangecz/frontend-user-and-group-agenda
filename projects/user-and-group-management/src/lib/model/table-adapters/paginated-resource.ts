@@ -1,5 +1,8 @@
 import {Pagination} from './pagination';
 
+/**
+ * Generic class wrapping resource and pagination
+ */
 export class PaginatedResource<T> {
   elements: T;
   pagination: Pagination;

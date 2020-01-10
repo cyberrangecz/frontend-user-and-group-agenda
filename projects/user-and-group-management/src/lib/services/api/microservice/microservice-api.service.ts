@@ -7,11 +7,13 @@ import {MicroserviceMapperService} from './microservice-mapper.service';
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {ConfigService} from '../../../config/config.service';
 
+/**
+ * Service abstracting http communication with microservice endpoints.
+ */
 @Injectable()
-export class MicroserviceFacadeService {
+export class MicroserviceApi {
 
   private readonly config: UserAndGroupConfig;
-
 
   constructor(private http: HttpClient,
               private configService: ConfigService,
@@ -19,7 +21,11 @@ export class MicroserviceFacadeService {
     this.config = this.configService.config;
   }
 
-  createMicroservice(microservice: Microservice): Observable<any> {
+  /**
+   * Creates new microservice
+   * @param microservice microservice to be created
+   */
+  create(microservice: Microservice): Observable<any> {
     return this.http.post<MicroserviceDTO>(`${this.config.userAndGroupRestBasePath}microservices`,
       JSON.stringify(this.microserviceMapperService.mapMicroserviceToMicroserviceDTO(microservice)),
       {headers: this.createDefaultHeaders()}
@@ -27,7 +33,6 @@ export class MicroserviceFacadeService {
   }
 
   private createDefaultHeaders() {
-
     return new HttpHeaders({
       'Content-Type': 'application/json'
     });

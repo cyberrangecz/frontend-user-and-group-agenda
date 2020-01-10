@@ -1,5 +1,8 @@
 import {Group} from '../group/group.model';
 
+/**
+ * Event emitted when edited group is changed
+ */
 export class GroupChangedEvent {
   group: Group;
   isValid: boolean;

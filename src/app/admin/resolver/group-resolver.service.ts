@@ -8,6 +8,9 @@ import {ClientNotificationService} from '../client-notification.service';
 import {Kypo2UserAndGroupNotification} from '../../../../projects/user-and-group-management/src/lib/model/events/kypo2-user-and-group-notification';
 import {Kypo2UserAndGroupNotificationType} from '../../../../projects/user-and-group-management/src/lib/model/enums/kypo2-user-and-group-notification-type.enum';
 
+/**
+ * Example resolver for user and group edit component
+ */
 @Injectable()
 export class GroupResolver implements Resolve<Group> {
 

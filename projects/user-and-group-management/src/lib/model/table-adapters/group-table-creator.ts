@@ -4,11 +4,18 @@ import {PaginatedResource} from './paginated-resource';
 import {of} from 'rxjs';
 import {Group} from '../group/group.model';
 
+/**
+ * Class creating data source for group table
+ */
 export class GroupTableCreator {
 
   static readonly EDIT_ACTION = 'Edit';
   static readonly DELETE_ACTION = 'Delete';
 
+  /**
+   * Create data source for groups table from paginated groups
+   * @param resource paginated groups to be transformed into table data source
+   */
   static create(resource: PaginatedResource<Group[]>): Kypo2Table<GroupTableRowAdapter> {
 
     const resources = this.mapGroupToTableAdapter(resource);

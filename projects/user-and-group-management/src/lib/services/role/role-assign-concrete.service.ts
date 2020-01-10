@@ -2,30 +2,42 @@ import {Kypo2RoleAssignService} from './kypo2-role-assign.service';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
-import {GroupFacadeService} from '../facade/group/group-facade.service';
+import {GroupApi} from '../api/group/group-api.service';
 import {catchError, switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {RoleFacadeService} from '../facade/role/role-facade.service';
+import {RoleApi} from '../api/role/role-api.service';
 import {RequestedPagination} from '../../model/other/requested-pagination';
 import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 import {RoleFilter} from '../../model/filters/role-filter';
 
+/**
+ * Basic implementation of a layer between a component and an API service.
+ * Can manually get roles assigned to a resource and roles available to assign and perform assignment modifications.
+ */
 @Injectable()
 export class RoleAssignConcreteService extends Kypo2RoleAssignService {
 
   private assignedRolesSubject$: BehaviorSubject<UserRole[]> = new BehaviorSubject([]);
+  /**
+   * Subscribe to receive assigned roles
+   */
   assignedRoles$: Observable<UserRole[]> = this.assignedRolesSubject$.asObservable();
 
-  constructor(private groupFacade: GroupFacadeService,
-              private roleFacade: RoleFacadeService,
+  constructor(private groupFacade: GroupApi,
+              private roleFacade: RoleApi,
               private errorHandler: Kypo2UserAndGroupErrorService) {
     super();
   }
 
+  /**
+   * Assigns (associates) roles with a resource, updates related observables or handles error
+   * @param resourceId id of a resource to be associated with selected roles
+   * @param roles roles to be assigned to a resource
+   */
   assign(resourceId: number, roles: UserRole[]): Observable<any> {
     return forkJoin(
-      roles.map(role => this.groupFacade.assignRoleToGroup(resourceId, role.id)),
+      roles.map(role => this.groupFacade.assignRole(resourceId, role.id)),
     ).pipe(
       catchError(error => of('failed')),
       tap( (results: any[]) => {
@@ -38,6 +50,10 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
     );
   }
 
+  /**
+   * Gets roles assigned to a resource, updates related observables or handles error
+   * @param resourceId id of a resource associated with requested roles
+   */
   getAssigned(resourceId: number): Observable<UserRole[]> {
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
@@ -56,19 +72,28 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
       );
   }
 
+  /**
+   * Gets roles available to assign
+   * @param filterValue filter to be applied on roles
+   */
   getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole[]>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new RequestedPagination(0, paginationSize, 'roleType', 'asc');
-    return this.roleFacade.getRoles(pagination, filter)
+    return this.roleFacade.getAll(pagination, filter)
       .pipe(
         tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching roles'))}),
       );
   }
 
+  /**
+   * Unassigns (cancels association) roles from a resource
+   * @param resourceId id of a resource which associations should be cancelled
+   * @param roles roles to be unassigned from a resource
+   */
   unassign(resourceId: number, roles: UserRole[]): Observable<any> {
     return forkJoin(
-      roles.map(role => this.groupFacade.removeRoleFromGroup(resourceId, role.id)),
+      roles.map(role => this.groupFacade.removeRole(resourceId, role.id)),
     ).pipe(
       catchError(error => of('failed')),
       tap( (results: any[]) => {

@@ -3,10 +3,17 @@ import {Column, Kypo2Table, Row} from 'kypo2-table';
 import {of} from 'rxjs';
 import {User} from 'kypo2-auth';
 
+/**
+ * Class creating data source for group members table
+ */
 export class GroupMemberTableCreator {
 
   static readonly DELETE_ACTION = 'Delete';
 
+  /**
+   * Create data source for group members table from paginated users
+   * @param resource paginated users to be transformed into table data source
+   */
   static create(resource: PaginatedResource<User[]>): Kypo2Table<User> {
     const actions = [
       {

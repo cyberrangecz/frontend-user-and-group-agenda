@@ -5,6 +5,9 @@ import {takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../../model/base-component';
 import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-role-item';
 
+/**
+ * Component of individual microservice role
+ */
 @Component({
   selector: 'kypo2-microservice-role',
   templateUrl: './microservice-role.component.html',
@@ -13,14 +16,25 @@ import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-
 })
 export class MicroserviceRoleComponent extends BaseComponent implements OnInit, OnChanges {
 
+  /**
+   * Edited role
+   */
   @Input() role: MicroserviceRole;
-  @Output() remove = new EventEmitter();
-  @Output() roleChange: EventEmitter<MicroserviceRoleItem> = new EventEmitter();
-  microserviceRoleFormGroup: MicroserviceRoleForm;
 
-  constructor() {
-    super();
-  }
+  /**
+   * Emits event to delete this role
+   */
+  @Output() delete = new EventEmitter();
+
+  /**
+   * Emits event on role change
+   */
+  @Output() roleChange: EventEmitter<MicroserviceRoleItem> = new EventEmitter();
+
+  /**
+   * Form control of edit group
+   */
+  microserviceRoleFormGroup: MicroserviceRoleForm;
 
   get description() {
     return this.microserviceRoleFormGroup.formGroup.get('description');
@@ -28,6 +42,10 @@ export class MicroserviceRoleComponent extends BaseComponent implements OnInit, 
 
   get type() {
     return this.microserviceRoleFormGroup.formGroup.get('type');
+  }
+
+  constructor() {
+    super();
   }
 
   ngOnInit() {
@@ -40,10 +58,16 @@ export class MicroserviceRoleComponent extends BaseComponent implements OnInit, 
     }
   }
 
+  /**
+   * Emits event to delete this role
+   */
   deleteRole() {
-    this.remove.emit();
+    this.delete.emit();
   }
 
+  /**
+   * Clears values of the form
+   */
   onClear() {
     this.microserviceRoleFormGroup.setValuesToRole(this.role);
     this.roleChange.emit({

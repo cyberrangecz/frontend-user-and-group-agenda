@@ -15,6 +15,9 @@ export const GROUP_DETAIL_ROUTES: Routes = [
   }
 ];
 
+/**
+ * Example routing of group edit page with components from user and group library
+ */
 @NgModule({
   imports: [RouterModule.forChild(GROUP_DETAIL_ROUTES)],
   exports: [RouterModule]

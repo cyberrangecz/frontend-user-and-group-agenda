@@ -12,6 +12,9 @@ import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 import {ConfigService} from '../../../config/config.service';
 import {UserTableCreator} from '../../../model/table-adapters/user-table-creator';
 
+/**
+ * Main smart component of user overview page
+ */
 @Component({
   selector: 'kypo2-user-overview',
   templateUrl: './kypo2-user-overview.component.html',
@@ -23,10 +26,22 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
   readonly INIT_SORT_NAME = 'familyName';
   readonly INIT_SORT_DIR = 'asc';
 
+  /**
+   * Data for users table
+   */
   users$: Observable<Kypo2Table<User>>;
+  /**
+   * True, if data requested for table has error, false otherwise
+   */
   usersHasError$: Observable<boolean>;
+  /**
+   * Total length of table elements
+   */
   usersTotalLength$: Observable<number>;
 
+  /**
+   * Ids of users selected in table
+   */
   selectedUserIds: number[] = [];
 
   constructor(public dialog: MatDialog,
@@ -39,7 +54,11 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
     this.initTable();
   }
 
-  fetchData(event?: LoadTableEvent) {
+  /**
+   * Clears selected users and calls service to get new data for table component
+   * @param event load table vent emitted by table component
+   */
+  onLoadEvent(event: LoadTableEvent) {
     this.selectedUserIds = [];
     this.userService.getAll(event.pagination, event.filter)
       .pipe(
@@ -48,12 +67,19 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
       .subscribe();
   }
 
-  onTableEvent(event: TableActionEvent<User>) {
+  /**
+   * Resolves type of action and call appropriate handler
+   * @param event action event emitted by table component
+   */
+  onTableAction(event: TableActionEvent<User>) {
     if (event.action.label === UserTableCreator.DELETE_ACTION) {
       this.deleteUser(event.element.id);
     }
   }
 
+  /***
+   * Displays confirmation dialog, if confirmed, calls service to delete selected users
+   */
   deleteSelectedUsers() {
     const dialogData = new ConfirmationDialogInput();
     dialogData.title = 'Remove selected users';
@@ -68,6 +94,10 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
       ).subscribe();
   }
 
+  /**
+   * Changes internal state of the component, stores ids of users selected in table component
+   * @param selected users selected in table component
+   */
   onUserSelected(selected: User[]) {
     this.selectedUserIds = selected.map(user => user.id);
   }
@@ -95,6 +125,6 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
       );
     this.usersHasError$ = this.userService.hasError$;
     this.usersTotalLength$ = this.userService.totalLength$;
-    this.fetchData(initialLoadEvent);
+    this.onLoadEvent(initialLoadEvent);
   }
 }

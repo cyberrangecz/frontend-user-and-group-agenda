@@ -1,6 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BaseComponent} from '../../../../model/base-component';
 
+/**
+ * User controls for user overview component
+ */
 @Component({
   selector: 'kypo2-user-controls',
   templateUrl: './user-controls.component.html',
@@ -15,6 +18,9 @@ export class UserControlsComponent extends  BaseComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Emits event to delete selected users
+   */
   deleteUsers() {
     this.deleteSelected.emit();
   }

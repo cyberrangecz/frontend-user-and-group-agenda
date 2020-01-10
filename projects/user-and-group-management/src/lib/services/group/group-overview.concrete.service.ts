@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
 import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {GroupFacadeService} from '../facade/group/group-facade.service';
+import {GroupApi} from '../api/group/group-api.service';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {Pagination, RequestedPagination} from 'kypo2-table';
@@ -14,6 +14,11 @@ import {GroupFilter} from '../../model/filters/group-filter';
 import {Group} from '../../model/group/group.model';
 import {ConfigService} from '../../config/config.service';
 
+/**
+ * Basic implementation of a layer between a component and an API service.
+ * Can manually get groups and perform operations on them.
+ */
+
 @Injectable()
 export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
 
@@ -21,21 +26,30 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
   private lastFilter: string;
 
   private groupsSubject$: BehaviorSubject<PaginatedResource<Group[]>> = new BehaviorSubject(this.initSubject());
+
+  /**
+   * List of groups with currently selected pagination options
+   */
   groups$: Observable<PaginatedResource<Group[]>> = this.groupsSubject$.asObservable();
 
-  constructor(private groupFacade: GroupFacadeService,
+  constructor(private groupFacade: GroupApi,
               private alertService: Kypo2UserAndGroupNotificationService,
               private configService: ConfigService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
     super();
   }
 
+  /**
+   * Gets all groups with requested pagination and filters, updates related observables or handles an error
+   * @param pagination requested pagination
+   * @param filter filter to be applied on groups
+   */
   getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Group[]>> {
     this.lastPagination = pagination;
     this.lastFilter = filter;
     const filters = filter ? [new GroupFilter(filter)] : [];
     this.hasErrorSubject$.next(false);
-    return this.groupFacade.getGroups(pagination, filters)
+    return this.groupFacade.getAll(pagination, filters)
       .pipe(
         tap(groups => {
           this.groupsSubject$.next(groups);
@@ -48,8 +62,12 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
     );
   }
 
+  /**
+   * Deletes selected groups, updates related observables or handles error
+   * @param ids ids of groups to delete
+   */
   delete(ids: number[]): Observable<any> {
-    return this.groupFacade.deleteGroups(ids)
+    return this.groupFacade.deleteMultiple(ids)
       .pipe(
         tap( resp => {
           this.alertService.notify(

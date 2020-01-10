@@ -20,6 +20,9 @@ export const APP_ROUTES: Routes = [
   }
 ];
 
+/**
+ * Example routing with auth for user and group library
+ */
 @NgModule({
   imports: [RouterModule.forRoot(APP_ROUTES)],
   exports: [RouterModule]

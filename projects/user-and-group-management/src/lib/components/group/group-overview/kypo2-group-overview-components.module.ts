@@ -7,6 +7,9 @@ import {Kypo2GroupOverviewMaterialModule} from './kypo2-group-overview-material.
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Kypo2TableModule} from 'kypo2-table';
 
+/**
+ * Module containing components and necessary imports for group overview page
+ */
 @NgModule({
   imports: [
     CommonModule,

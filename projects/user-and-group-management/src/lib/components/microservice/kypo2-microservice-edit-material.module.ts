@@ -10,6 +10,9 @@ import {
 } from '@angular/material';
 import {MatCardModule} from '@angular/material/card';
 
+/**
+ * Material component imports for microservice edit module
+ */
 @NgModule({
   imports: [
     MatCheckboxModule,

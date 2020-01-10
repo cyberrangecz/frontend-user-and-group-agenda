@@ -1,4 +1,5 @@
 <div class="controls">
   <button type="button" mat-button color="primary" (click)="addRole()">Add role</button>
 </div>
-<kypo2-microservice-role *ngFor="let role of roles, index as i" (roleChange)="onRoleChange($event, i)" (remove)="removeRole(i)" [role]="role"></kypo2-microservice-role>
+<kypo2-microservice-role *ngFor="let role of roles, index as i" (roleChange)="onRoleChange($event, i)"
+                         (delete)="deleteRole(i)" [role]="role"></kypo2-microservice-role>

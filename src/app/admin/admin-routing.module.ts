@@ -51,6 +51,9 @@ export const ADMIN_ROUTES: Routes = [
   }
 ];
 
+/**
+ * Example of main routing module for user and group library components
+ */
 @NgModule({
   imports: [RouterModule.forChild(ADMIN_ROUTES)],
   exports: [RouterModule]

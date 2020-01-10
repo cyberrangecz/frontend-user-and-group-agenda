@@ -1,6 +1,9 @@
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MicroserviceRole} from '../../../../model/microservice/microservice-role.model';
 
+/**
+ * Form control of microservice edit form
+ */
 export class MicroserviceRoleForm {
   formGroup: FormGroup;
 
@@ -12,6 +15,10 @@ export class MicroserviceRoleForm {
     });
   }
 
+  /**
+   * Sets values inserted to form to microservice role object
+   * @param role role to be filled from inserted form values
+   */
   setValuesToRole(role: MicroserviceRole) {
     role.description = this.formGroup.get('description').value;
     role.default = this.formGroup.get('default').value;

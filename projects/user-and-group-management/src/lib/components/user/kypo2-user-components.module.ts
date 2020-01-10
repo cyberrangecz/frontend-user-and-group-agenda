@@ -8,6 +8,9 @@ import {Kypo2TableModule} from 'kypo2-table';
 import {Kypo2UserMaterialModule} from './kypo2-user-material.module';
 import {InternalSharedModule} from '../shared/internal-shared.module';
 
+/**
+ * Module containing declarations and necessary imports for user related components
+ */
 @NgModule({
   declarations: [
     Kypo2UserOverviewComponent,

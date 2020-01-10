@@ -1,6 +1,9 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {User} from 'kypo2-auth';
 
+/**
+ * User detail component displayed in expanded row of a table component.
+ */
 @Component({
   selector: 'kypo2-user-detail',
   templateUrl: './user-detail.component.html',

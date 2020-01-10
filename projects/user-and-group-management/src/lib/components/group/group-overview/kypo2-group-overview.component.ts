@@ -10,6 +10,9 @@ import {Kypo2UserAndGroupRoutingEventService} from '../../../services/routing/ky
 import {Kypo2UserAndGroupRouteEvent} from '../../../model/events/kypo2-user-and-group-route-event';
 import {ConfigService} from '../../../config/config.service';
 
+/**
+ * Main smart component of group overview page
+ */
 @Component({
   selector: 'kypo2-group-management',
   templateUrl: './kypo2-group-overview.component.html',
@@ -21,10 +24,24 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
+  /**
+   * Data for groups table component
+   */
   groups$: Observable<Kypo2Table<GroupTableRowAdapter>>;
+
+  /**
+   * True if error was thrown while getting data for groups table, false otherwise
+   */
   groupsHasError$: Observable<boolean>;
+
+  /**
+   * Count of group total elements
+   */
   groupsTotalLength$: Observable<number>;
 
+  /**
+   * Ids od groups selected in table compoment
+   */
   selectedGroupIds: number[] = [];
 
   constructor(private groupService: Kypo2GroupOverviewService,
@@ -37,7 +54,11 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
     this.initTable();
   }
 
-  fetchData(event?: LoadTableEvent) {
+  /**
+   * Clears selected groups and calls service to get new data for groups table
+   * @param event event emitted from table component
+   */
+  onLoadTable(event: LoadTableEvent) {
     this.selectedGroupIds = [];
     this.groupService.getAll(event.pagination, event.filter)
       .pipe(
@@ -46,23 +67,29 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
       .subscribe();
   }
 
-  onTableEvent(event: TableActionEvent<GroupTableRowAdapter>) {
+  /**
+   * Resolves type of action call appropriate handler
+   * @param event action event emitted by table component
+   */
+  onTableAction(event: TableActionEvent<GroupTableRowAdapter>) {
     if (event.action.label === GroupTableCreator.DELETE_ACTION) {
       this.deleteGroup(event.element.groupId);
     } else if (event.action.label === GroupTableCreator.EDIT_ACTION) {
-      const route: Kypo2UserAndGroupRouteEvent = {
-        actionType: 'EDIT',
-        resourceType: 'GROUP',
-        resourceId: event.element.groupId
-      };
-      this.kypo2UserAndGroupRoutingEventService.navigate(route);
+      this.edit(event.element.groupId);
     }
   }
 
+  /**
+   * Changes internal state of the component when selection is changed in table component
+   * @param selected groups selected in table component
+   */
   onGroupSelected(selected: GroupTableRowAdapter[]) {
     this.selectedGroupIds = selected.map(groupRow => groupRow.groupId);
   }
 
+  /**
+   * Calls service to delete selected groups
+   */
   deleteSelectedGroups() {
     this.groupService.delete(this.selectedGroupIds)
       .pipe(
@@ -71,6 +98,9 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
       .subscribe();
   }
 
+  /**
+   * Sends request to navigate to create page
+   */
   createGroup() {
     const route: Kypo2UserAndGroupRouteEvent = {
       actionType: 'NEW',
@@ -88,7 +118,7 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
       );
     this.groupsHasError$ = this.groupService.hasError$;
     this.groupsTotalLength$ = this.groupService.totalLength$;
-    this.fetchData(initialLoadEvent);
+    this.onLoadTable(initialLoadEvent);
   }
 
   private deleteGroup(id: number) {
@@ -97,5 +127,14 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
         takeWhile(_ => this.isAlive),
       )
       .subscribe();
+  }
+
+  private edit(groupId: number) {
+    const route: Kypo2UserAndGroupRouteEvent = {
+      actionType: 'EDIT',
+      resourceType: 'GROUP',
+      resourceId: groupId
+    };
+    this.kypo2UserAndGroupRoutingEventService.navigate(route);
   }
 }

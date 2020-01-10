@@ -1,5 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
+/**
+ * Controls for group edit component
+ */
 @Component({
   selector: 'kypo2-group-edit-controls',
   templateUrl: './group-edit-controls.component.html',
@@ -8,8 +11,19 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
 })
 export class GroupEditControlsComponent implements OnInit {
 
+  /**
+   * True if existing group is being edited, false if new is being created
+   */
   @Input() editMode: boolean;
+
+  /**
+   * True if controls are disabled, false otherwise
+   */
   @Input() disabled: boolean;
+
+  /**
+   * Event emitter for save event
+   */
   @Output() save: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
@@ -17,6 +31,9 @@ export class GroupEditControlsComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Emits event to save the edited group
+   */
   onSave() {
     this.save.emit(false);
   }

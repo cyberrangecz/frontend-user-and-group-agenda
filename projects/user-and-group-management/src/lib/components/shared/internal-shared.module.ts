@@ -4,6 +4,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import {MatButtonModule, MatDialogModule, MatIconModule} from '@angular/material';
 import {ConfigService} from '../../config/config.service';
 
+/**
+ * Module containing internally shared (within library) components and providers
+ */
 @NgModule({
   declarations: [
     ConfirmationDialogComponent,

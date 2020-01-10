@@ -14,6 +14,9 @@ import {
 } from '../../../projects/user-and-group-management/src/public_api';
 
 
+/**
+ * Main module example of user and group library components
+ */
 @NgModule({
   declarations: [
     AdminOverviewComponent,

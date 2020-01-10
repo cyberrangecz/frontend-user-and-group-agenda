@@ -4,32 +4,39 @@ import {Queue} from 'typescript-collections';
 import {Kypo2UserAndGroupNotification} from '../../../projects/user-and-group-management/src/lib/model/events/kypo2-user-and-group-notification';
 import {NotificationComponent} from './notification/notification.component';
 
+/**
+ * Example service handling notifications emitted from user and group
+ */
 @Injectable()
 export class ClientNotificationService {
 
-  private _alertQueue: Queue<Kypo2UserAndGroupNotification> = new Queue<Kypo2UserAndGroupNotification>();
+  private _notificationQueue: Queue<Kypo2UserAndGroupNotification> = new Queue<Kypo2UserAndGroupNotification>();
 
   constructor(public snackBar: MatSnackBar) {
   }
 
-  addNotification(alert: Kypo2UserAndGroupNotification) {
-    this._alertQueue.enqueue(alert);
-    if (this._alertQueue.size() === 1) {
+  /**
+   * Adds new notification to queue when emitted from user and group library
+   * @param notification notification emitted from user and group library
+   */
+  addNotification(notification: Kypo2UserAndGroupNotification) {
+    this._notificationQueue.enqueue(notification);
+    if (this._notificationQueue.size() === 1) {
       this.displayNotification();
     }
   }
 
   private displayNotification() {
-    const alert = this._alertQueue.peek();
+    const notification = this._notificationQueue.peek();
     const snackBarRef = this.snackBar.openFromComponent(NotificationComponent, {
-      data: alert,
+      data: notification,
       duration: 2500
     });
 
     snackBarRef.afterDismissed()
       .subscribe(() => {
-        this._alertQueue.dequeue();
-        if (!this._alertQueue.isEmpty()) {
+        this._notificationQueue.dequeue();
+        if (!this._notificationQueue.isEmpty()) {
           this.displayNotification();
         }
       });

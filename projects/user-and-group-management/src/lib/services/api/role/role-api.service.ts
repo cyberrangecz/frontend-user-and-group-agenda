@@ -14,8 +14,11 @@ import {Filter} from '../../../model/filters/filter';
 import {ParamsMerger} from '../../../model/other/params-merger';
 import {FilterParams} from '../../../model/other/filter-params';
 
+/**
+ * Service abstracting http communication with roles endpoint
+ */
 @Injectable()
-export class RoleFacadeService {
+export class RoleApi {
   private readonly config: UserAndGroupConfig;
 
   private readonly rolesPathExtension = 'roles/';
@@ -25,18 +28,31 @@ export class RoleFacadeService {
     this.config = this.configService.config;
   }
 
-  getRoles(pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<UserRole[]>> {
+  /**
+   * Sends http request to get paginated roles
+   * @param pagination requested pagination
+   * @param filters filters to be applied on roles
+   */
+  getAll(pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<UserRole[]>> {
     const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
     return this.http.get<RestResourceDTO<RoleDTO>>(this.config.userAndGroupRestBasePath + this.rolesPathExtension,
       { params: params })
       .pipe(map(resp => this.mapRolesDTOtoRoles(resp)));
   }
 
-  getRoleById(id: number): Observable<UserRole> {
+  /**
+   * Sends http request to get role by id
+   * @param id id of requested role
+   */
+  get(id: number): Observable<UserRole> {
     return this.http.get<RoleDTO>(`${this.config.userAndGroupRestBasePath + this.rolesPathExtension}/${id}`)
       .pipe(map(resp => UserRole.fromDTO(resp)));
   }
 
+  /**
+   * Maps roles DTOs to internal model
+   * @param resource roles dto
+   */
   private mapRolesDTOtoRoles(resource: RestResourceDTO<RoleDTO>): PaginatedResource<UserRole[]> {
     const content = resource.content.map(dto => UserRole.fromDTO(dto));
 

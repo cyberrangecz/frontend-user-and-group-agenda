@@ -5,6 +5,9 @@ import {takeWhile} from 'rxjs/operators';
 import {GroupChangedEvent} from '../../../../model/events/group-changed-event';
 import {BaseComponent} from '../../../../model/base-component';
 
+/**
+ * Component for editing basic group attributes
+ */
 @Component({
   selector: 'kypo2-group-edit',
   templateUrl: './group-edit.component.html',
@@ -13,7 +16,14 @@ import {BaseComponent} from '../../../../model/base-component';
 })
 export class GroupEditComponent extends BaseComponent implements OnInit, OnChanges {
 
+  /**
+   * Edited group
+   */
   @Input() group: Group;
+
+  /**
+   * Event emitter for group change action
+   */
   @Output() edited: EventEmitter<GroupChangedEvent> = new EventEmitter();
 
   tomorrow: Date;

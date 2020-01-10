@@ -1,6 +1,9 @@
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Microservice} from '../../../model/microservice/microservice.model';
 
+/**
+ * Form control for microservice edit component
+ */
 export class MicroserviceEditFormGroup {
   formGroup: FormGroup;
 
@@ -12,6 +15,10 @@ export class MicroserviceEditFormGroup {
     });
   }
 
+  /**
+   * Sets values inserted to form to microservice object
+   * @param microservice microservice to be filled with values
+   */
   setValuesToMicroservice(microservice: Microservice) {
     microservice.name = this.formGroup.get('name').value;
     microservice.endpoint = this.formGroup.get('endpoint').value;

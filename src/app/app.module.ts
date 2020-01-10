@@ -7,6 +7,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {Kypo2AuthInterceptor, Kypo2AuthModule} from 'kypo2-auth';
 import {environment} from '../environments/environment';
 
+/**
+ * Main module of the user and group example app
+ */
 @NgModule({
   declarations: [
     AppComponent,

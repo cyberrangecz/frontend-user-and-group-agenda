@@ -1,11 +1,17 @@
 import {MicroserviceRole} from './microservice-role.model';
 
+/**
+ * Internal model of microservice
+ */
 export class Microservice {
   name: string;
   endpoint: string;
   roles: MicroserviceRole[];
   valid: boolean;
 
+  /**
+   * True if microservice has default role, false otherwise
+   */
   hasDefaultRole(): boolean {
     return this.roles.some(role => role.default);
   }

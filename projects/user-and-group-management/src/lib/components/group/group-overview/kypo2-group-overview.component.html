@@ -9,7 +9,7 @@
     [data]="groups$ | async"
     [hasError]="groupsHasError$ | async"
     [totalElements]="groupsTotalLength$ | async"
-    (refresh)="fetchData($event)"
-    (rowAction)="onTableEvent($event)"
+    (refresh)="onLoadTable($event)"
+    (rowAction)="onTableAction($event)"
     (rowSelection)="onGroupSelected($event)">
   </kypo2-table>

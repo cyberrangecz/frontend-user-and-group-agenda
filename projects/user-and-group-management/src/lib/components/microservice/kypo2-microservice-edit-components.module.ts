@@ -9,6 +9,9 @@ import {MicroserviceRoleListComponent} from './microservice-role-list/microservi
 import {MicroserviceRoleComponent} from './microservice-role-list/microservice-role/microservice-role.component';
 import {CommonModule} from '@angular/common';
 
+/**
+ * Module containing components and necessary imports for microservice edit page
+ */
 @NgModule({
   imports: [
     CommonModule,

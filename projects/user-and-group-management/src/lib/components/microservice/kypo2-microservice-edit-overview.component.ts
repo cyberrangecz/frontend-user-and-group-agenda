@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Microservice} from '../../model/microservice/microservice.model';
-import {MicroserviceFacadeService} from '../../services/facade/microservice/microservice-facade.service';
+import {MicroserviceApi} from '../../services/api/microservice/microservice-api.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupErrorService} from '../../services/notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupRoutingEventService} from '../../services/routing/kypo2-user-and-group-routing-event.service';
@@ -11,6 +11,9 @@ import {map, take} from 'rxjs/operators';
 import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
 import {MatDialog} from '@angular/material/dialog';
 
+/**
+ * Main smart component of microservice edit page
+ */
 @Component({
   selector: 'kypo2-microservice-edit-overview',
   templateUrl: './kypo2-microservice-edit-overview.component.html',
@@ -19,13 +22,28 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
 
+  /**
+   * Edited/created microservice
+   */
   microservice: Microservice;
+
+  /**
+   * True if microservice has default role, false otherwise
+   */
   hasDefaultRole: boolean;
+
+  /**
+   * True if microservice edit form is valid, false otherwise
+   */
   isFormValid: boolean;
+
+  /**
+   * True if form data are saved, false otherwise
+   */
   canDeactivateForm = true;
 
   constructor(public dialog: MatDialog,
-              private microserviceFacadeService: MicroserviceFacadeService,
+              private microserviceApi: MicroserviceApi,
               private routingService: Kypo2UserAndGroupRoutingEventService,
               private errorHandler: Kypo2UserAndGroupErrorService) { }
 
@@ -33,6 +51,9 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
     this.initMicroservice();
   }
 
+  /**
+   * True if data in the component are saved and user can navigate to different page, false otherwise
+   */
   canDeactivate(): Observable<boolean> {
     if (!this.canDeactivateForm) {
       const dialogData = new ConfirmationDialogInput();
@@ -50,6 +71,10 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
     }
   }
 
+  /**
+   * Changes internal state of the component when microservice is edited
+   * @param microservice edited microservice
+   */
   onChange(microservice: Microservice) {
     if (microservice.valid) {
       this.microservice.name = microservice.name;
@@ -61,8 +86,11 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
     this.canDeactivateForm = false;
   }
 
+  /**
+   * Calls service to create microservice and handles eventual error
+   */
   create() {
-    this.microserviceFacadeService.createMicroservice(this.microservice)
+    this.microserviceApi.create(this.microservice)
       .subscribe(
         _ => {
           this.routingService.navigate({ resourceType: 'GROUP' });

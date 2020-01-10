@@ -1,15 +1,22 @@
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {GroupFacadeService} from '../facade/group/group-facade.service';
+import {GroupApi} from '../api/group/group-api.service';
 import {Group} from '../../model/group/group.model';
 
+/**
+ * Helper service for a Resolver service implemented by client
+ */
 @Injectable()
 export class Kypo2GroupResolverHelperService {
 
-  constructor(private groupFacade: GroupFacadeService) {
+  constructor(private groupFacade: GroupApi) {
   }
 
+  /**
+   * Gets group with matching id
+   * @param id id of a group
+   */
   getById(id: number): Observable<Group> {
-   return  this.groupFacade.getById(id);
+   return  this.groupFacade.get(id);
   }
 }

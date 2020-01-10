@@ -3,6 +3,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ConfirmationDialogInput} from './confirmation-dialog.input';
 import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 
+/**
+ * Component displaying confirmation dialog in popup window
+ */
 @Component({
   selector: 'kypo2-confirmation-dialog',
   templateUrl: './confirmation-dialog.component.html',
@@ -17,11 +20,17 @@ export class ConfirmationDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Closes the dialog with SUCCESS result
+   */
   confirm() {
     this.dialogRef.close(DialogResultEnum.SUCCESS);
   }
 
+  /**
+   * Closes the dialog with CANCELLED result
+   */
   cancel() {
-    this.dialogRef.close(DialogResultEnum.CANCELED);
+    this.dialogRef.close(DialogResultEnum.CANCELLED);
   }
 }

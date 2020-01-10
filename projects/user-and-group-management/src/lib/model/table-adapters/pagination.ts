@@ -1,3 +1,6 @@
+/**
+ * Resource pagination
+ */
 export class Pagination {
   page: number;
   numberOfElements: number;

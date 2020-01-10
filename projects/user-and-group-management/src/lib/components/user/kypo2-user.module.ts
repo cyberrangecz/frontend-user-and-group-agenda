@@ -1,15 +1,18 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {UserFacadeModule} from '../../services/facade/user/user-facade.module';
+import {UserApiModule} from '../../services/api/user/user-api.module';
 import {UserAndGroupConfig} from '../../config/user-and-group-config';
 import {Kypo2UserOverviewService} from '../../services/user/kypo2-user-overview.service';
 import {UserOverviewConcreteService} from '../../services/user/user-overview-concrete.service';
 import {Kypo2UserComponentsModule} from './kypo2-user-components.module';
 import {CommonModule} from '@angular/common';
 
+/**
+ * Main module containing necessary imports, exports and providers for user related components
+ */
 @NgModule({
   imports: [
     CommonModule,
-    UserFacadeModule
+    UserApiModule
   ],
   providers: [
     { provide: Kypo2UserOverviewService, useClass: UserOverviewConcreteService }

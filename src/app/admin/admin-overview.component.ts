@@ -8,6 +8,9 @@ import {takeWhile} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Kypo2UserAndGroupRoutingEventService} from '../../../projects/user-and-group-management/src/lib/services/routing/kypo2-user-and-group-routing-event.service';
 
+/**
+ * Main smart component of user and group administration example. Serves as an example of usage of the library as well as for development
+ */
 @Component({
   selector: 'app-admin-overview',
   templateUrl: './admin-overview.component.html',

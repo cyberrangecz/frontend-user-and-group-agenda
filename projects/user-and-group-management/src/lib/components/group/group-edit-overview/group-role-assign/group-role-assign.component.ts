@@ -10,6 +10,9 @@ import {RoleTableCreator} from '../../../../model/table-adapters/role-table-crea
 import {Group} from '../../../../model/group/group.model';
 import {PaginatedResource} from '../../../../model/table-adapters/paginated-resource';
 
+/**
+ * Component for role assignment to edited group
+ */
 @Component({
   selector: 'kypo2-group-role-assign',
   templateUrl: './group-role-assign.component.html',
@@ -18,17 +21,49 @@ import {PaginatedResource} from '../../../../model/table-adapters/paginated-reso
 })
 export class GroupRoleAssignComponent extends BaseComponent implements OnInit, OnChanges {
 
+  /**
+   * Edited group to assign roles to
+   */
   @Input() resource: Group;
+
+  /**
+   * Event emitter of changes state
+   */
   @Output() hasUnsavedChanges: EventEmitter<boolean> = new EventEmitter();
 
+  /**
+   * Roles available to assign to edited group
+   */
   roles$: Observable<UserRole[]>;
+
+  /**
+   * Mapping of role model attributes to selector component
+   */
   roleMapping: Kypo2SelectorResourceMapping;
 
+  /**
+   * True if error was thrown while getting data for table of already assigned roles, false otherwise
+   */
   assignedRolesHasError$: Observable<boolean>;
+
+  /**
+   * Data for assigned roles table component
+   */
   assignedRoles$: Observable<Kypo2Table<UserRole>>;
+
+  /**
+   * True if getting data for table component is in progress, false otherwise
+   */
   isLoadingAssignedRoles$: Observable<boolean>;
 
+  /**
+   * Selected roles available to assign to edited group
+   */
   selectedRolesToAssign: UserRole[] = [];
+
+  /**
+   * Selected roles already assigned to edited group
+   */
   selectedAssignedRoles: UserRole[] = [];
 
   constructor(private roleAssignService: Kypo2RoleAssignService) {
@@ -49,11 +84,19 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
     }
   }
 
+  /**
+   * Changes internal state of the component when roles to assign are selected
+   * @param selected selected roles available to assign to edited group
+   */
   onRolesToAssignSelection(selected: UserRole[]) {
     this.hasUnsavedChanges.emit(true);
     this.selectedRolesToAssign = selected;
   }
 
+  /**
+   * Searches for roles available to assign
+   * @param filterValue search value
+   */
   search(filterValue: string) {
     this.roles$ = this.roleAssignService.getAvailableToAssign(filterValue)
       .pipe(
@@ -61,6 +104,9 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
       );
   }
 
+  /**
+   * Calls service to assign selected roles to edited group
+   */
   assignSelectedRoles() {
     this.roleAssignService.assign(this.resource.id, this.selectedRolesToAssign)
       .pipe(take(1))
@@ -71,16 +117,28 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
   }
 
 
+  /**
+   * Resolves type of action and calls appropriate handler
+   * @param tableAction action emitted from assigned roles table component
+   */
   onAssignedRolesTableAction(tableAction: TableActionEvent<UserRole>) {
     if (tableAction.action.label === RoleTableCreator.DELETE_ACTION) {
       this.deleteAssignedRole(tableAction.element);
     }
   }
 
+  /**
+   * Changes internal state of the component when assigned roles are selected
+   * @param selected selected assigned roles
+   */
   onAssignedRolesSelection(selected: UserRole[]) {
     this.selectedAssignedRoles = selected;
   }
 
+  /**
+   * Calls service to delete assigned role from edited group (removes the association)
+   * @param role assigned role to delete
+   */
   deleteAssignedRole(role: UserRole) {
     this.roleAssignService.unassign(this.resource.id, [role])
       .pipe(
@@ -88,6 +146,9 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
       ).subscribe(_ => this.onAssignedRolesDeleted());
   }
 
+  /**
+   * Calls service to delete assigned roles from edited group (removes the association)
+   */
   deleteSelectedRoles() {
     this.roleAssignService.unassign(this.resource.id, this.selectedAssignedRoles)
       .pipe(

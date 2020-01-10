@@ -1,3 +1,6 @@
+/**
+ * Internal model of requested pagination
+ */
 export class RequestedPagination {
   page: number;
   size: number;

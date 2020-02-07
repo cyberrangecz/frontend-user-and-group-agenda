@@ -7,7 +7,7 @@ import {UserRole} from 'kypo2-auth';
  */
 export class RoleTableCreator {
 
-  static readonly DELETE_ACTION = 'Delete';
+  static readonly DELETE_ACTION_ID = 'delete';
 
   /**
    * Create data source for roles table from roles
@@ -16,7 +16,8 @@ export class RoleTableCreator {
   static create(resources: UserRole[]): Kypo2Table<UserRole> {
     const actions = [
       {
-        label: this.DELETE_ACTION,
+        id: this.DELETE_ACTION_ID,
+        label: 'Delete',
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Role',

@@ -122,7 +122,7 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
    * @param tableAction action emitted from assigned roles table component
    */
   onAssignedRolesTableAction(tableAction: TableActionEvent<UserRole>) {
-    if (tableAction.action.label === RoleTableCreator.DELETE_ACTION) {
+    if (tableAction.action.id === RoleTableCreator.DELETE_ACTION_ID) {
       this.deleteAssignedRole(tableAction.element);
     }
   }

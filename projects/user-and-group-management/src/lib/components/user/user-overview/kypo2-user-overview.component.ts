@@ -72,7 +72,7 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
    * @param event action event emitted by table component
    */
   onTableAction(event: TableActionEvent<User>) {
-    if (event.action.label === UserTableCreator.DELETE_ACTION) {
+    if (event.action.id === UserTableCreator.DELETE_ACTION_ID) {
       this.deleteUser(event.element.id);
     }
   }

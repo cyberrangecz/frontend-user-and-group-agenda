@@ -72,9 +72,9 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
    * @param event action event emitted by table component
    */
   onTableAction(event: TableActionEvent<GroupTableRowAdapter>) {
-    if (event.action.label === GroupTableCreator.DELETE_ACTION) {
+    if (event.action.id === GroupTableCreator.DELETE_ACTION_ID) {
       this.deleteGroup(event.element.groupId);
-    } else if (event.action.label === GroupTableCreator.EDIT_ACTION) {
+    } else if (event.action.id === GroupTableCreator.EDIT_ACTION_ID) {
       this.edit(event.element.groupId);
     }
   }

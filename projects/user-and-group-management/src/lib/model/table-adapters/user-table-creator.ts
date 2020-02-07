@@ -5,12 +5,12 @@ import {User} from 'kypo2-auth';
 import {UserTableExpand} from './user-table-expand';
 import {UserDetailComponent} from '../../components/user/user-overview/user-detail/user-detail.component';
 
+
 /**
  * Class creating data source for user table
  */
 export class UserTableCreator {
-
-  static readonly DELETE_ACTION = 'Delete';
+  static readonly DELETE_ACTION_ID = 'delete';
 
   /**
    * Create data source for users table from paginated users
@@ -19,7 +19,8 @@ export class UserTableCreator {
   static create(resource: PaginatedResource<User[]>): Kypo2Table<User> {
     const actions = [
       {
-        label: this.DELETE_ACTION,
+        id: this.DELETE_ACTION_ID,
+        label: 'Delete',
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete User',

@@ -9,8 +9,8 @@ import {Group} from '../group/group.model';
  */
 export class GroupTableCreator {
 
-  static readonly EDIT_ACTION = 'Edit';
-  static readonly DELETE_ACTION = 'Delete';
+  static readonly EDIT_ACTION_ID = 'edit';
+  static readonly DELETE_ACTION_ID = 'delete';
 
   /**
    * Create data source for groups table from paginated groups
@@ -21,14 +21,16 @@ export class GroupTableCreator {
     const resources = this.mapGroupToTableAdapter(resource);
     const actions = [
       {
-        label: this.EDIT_ACTION,
+        id: this.EDIT_ACTION_ID,
+        label: 'Edit',
         icon: 'edit',
         color: 'primary',
         tooltip: 'Edit Group',
         disabled$: of(false)
       },
       {
-        label: this.DELETE_ACTION,
+        id: this.DELETE_ACTION_ID,
+        label: 'Delete',
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Group',

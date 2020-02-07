@@ -8,7 +8,7 @@ import {User} from 'kypo2-auth';
  */
 export class GroupMemberTableCreator {
 
-  static readonly DELETE_ACTION = 'Delete';
+  static readonly DELETE_ACTION_ID = 'delete';
 
   /**
    * Create data source for group members table from paginated users
@@ -17,7 +17,8 @@ export class GroupMemberTableCreator {
   static create(resource: PaginatedResource<User[]>): Kypo2Table<User> {
     const actions = [
       {
-        label: this.DELETE_ACTION,
+        id: this.DELETE_ACTION_ID,
+        label: 'Delete',
         icon: 'delete',
         color: 'warn',
         tooltip: 'Delete Member',

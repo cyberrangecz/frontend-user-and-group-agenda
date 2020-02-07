@@ -192,7 +192,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
    * @param event action event emitted from assigned users table component
    */
   onAssignedUsersTableAction(event: TableActionEvent<User>) {
-    if (event.action.label === GroupMemberTableCreator.DELETE_ACTION) {
+    if (event.action.id === GroupMemberTableCreator.DELETE_ACTION_ID) {
       this.deleteAssignedUser(event.element);
     }
   }

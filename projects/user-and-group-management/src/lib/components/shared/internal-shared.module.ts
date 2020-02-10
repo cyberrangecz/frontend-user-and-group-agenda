@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import {MatButtonModule, MatDialogModule, MatIconModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import {ConfigService} from '../../config/config.service';
 
 /**
@@ -23,8 +25,5 @@ import {ConfigService} from '../../config/config.service';
   providers: [
     ConfigService
   ],
-  entryComponents: [
-    ConfirmationDialogComponent
-  ]
 })
 export class InternalSharedModule { }

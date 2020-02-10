@@ -27,7 +27,7 @@ export class Kypo2MicroserviceEditModule {
     }
   }
 
-  static forRoot(config: UserAndGroupConfig): ModuleWithProviders {
+  static forRoot(config: UserAndGroupConfig): ModuleWithProviders<Kypo2MicroserviceEditModule> {
     return {
       ngModule: Kypo2MicroserviceEditModule,
       providers: [

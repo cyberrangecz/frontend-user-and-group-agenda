@@ -34,7 +34,7 @@ export class Kypo2GroupOverviewModule {
     }
   }
 
-  static forRoot(config: UserAndGroupConfig): ModuleWithProviders {
+  static forRoot(config: UserAndGroupConfig): ModuleWithProviders<Kypo2GroupOverviewModule> {
     return {
       ngModule: Kypo2GroupOverviewModule,
       providers: [

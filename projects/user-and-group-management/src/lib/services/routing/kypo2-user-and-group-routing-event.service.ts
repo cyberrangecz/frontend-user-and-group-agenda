@@ -1,9 +1,11 @@
 import {Observable, Subject} from 'rxjs';
 import {Kypo2UserAndGroupRouteEvent} from '../../model/events/kypo2-user-and-group-route-event';
+import { Injectable } from "@angular/core";
 
 /**
  * Service emitting requests for navigation between pages. Must be observed by client and mapped to its routing
  */
+@Injectable()
 export class Kypo2UserAndGroupRoutingEventService {
   private navigateSubject: Subject<Kypo2UserAndGroupRouteEvent> = new Subject();
   /**

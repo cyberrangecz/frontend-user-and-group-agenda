@@ -35,7 +35,7 @@ export class Kypo2GroupEditModule {
     }
   }
 
-  static forRoot(config: UserAndGroupConfig): ModuleWithProviders {
+  static forRoot(config: UserAndGroupConfig): ModuleWithProviders<Kypo2GroupEditModule> {
     return {
       ngModule: Kypo2GroupEditModule,
       providers: [

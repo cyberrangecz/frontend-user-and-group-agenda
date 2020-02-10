@@ -22,7 +22,7 @@ describe('GroupOverviewConcreteService', () => {
         {provide: Kypo2UserAndGroupNotificationService, useValue: Kypo2UserAndGroupNotificationServiceSpy}
       ],
     });
-    service = TestBed.get(GroupOverviewConcreteService);
+    service = TestBed.inject(GroupOverviewConcreteService);
   }));
 
   it('should be created', () => {

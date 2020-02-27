@@ -8,7 +8,6 @@
     [defaultSortDirection]="INIT_SORT_DIR"
     [data]="groups$ | async"
     [hasError]="groupsHasError$ | async"
-    [totalElements]="groupsTotalLength$ | async"
     (refresh)="onLoadTable($event)"
     (rowAction)="onTableAction($event)"
     (rowSelection)="onGroupSelected($event)">

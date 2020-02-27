@@ -31,7 +31,7 @@ export abstract class Kypo2RoleAssignService {
    * Search for roles available to assign to resource
    * @param filter filter to be applied on roles
    */
-  abstract getAvailableToAssign(filter: string): Observable<PaginatedResource<UserRole[]>>;
+  abstract getAvailableToAssign(filter: string): Observable<PaginatedResource<UserRole>>;
 
   /**
    * Get roles already assigned to the resource

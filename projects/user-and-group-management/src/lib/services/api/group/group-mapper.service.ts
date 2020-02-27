@@ -24,8 +24,8 @@ export class GroupMapperService {
    * Maps paginated group dto to internal model
    * @param restResource paginated group dto
    */
-  mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): PaginatedResource<Group[]> {
-    return new PaginatedResource<Group[]>(
+  mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): PaginatedResource<Group> {
+    return new PaginatedResource<Group>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }

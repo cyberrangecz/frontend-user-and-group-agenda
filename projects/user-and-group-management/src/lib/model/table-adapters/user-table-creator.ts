@@ -16,7 +16,7 @@ export class UserTableCreator {
    * Create data source for users table from paginated users
    * @param resource paginated users to be transformed into table data source
    */
-  static create(resource: PaginatedResource<User[]>): Kypo2Table<User> {
+  static create(resource: PaginatedResource<User>): Kypo2Table<User> {
     const actions = [
       {
         id: this.DELETE_ACTION_ID,

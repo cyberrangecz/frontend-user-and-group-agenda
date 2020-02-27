@@ -33,7 +33,7 @@ export class UserApi {
    * @param pagination requested pagination
    * @param filter filter to be applied on users
    */
-  getAll(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<User[]>> {
+  getAll(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<User>> {
     const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
     return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
       { params: params })
@@ -65,7 +65,7 @@ export class UserApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on users
    */
-  getUsersNotInGroup(groupId: number, pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<User[]>> {
+  getUsersNotInGroup(groupId: number, pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<User>> {
     const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,

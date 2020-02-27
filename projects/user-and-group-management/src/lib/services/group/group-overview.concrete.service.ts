@@ -25,13 +25,6 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
   private lastPagination: RequestedPagination;
   private lastFilter: string;
 
-  private groupsSubject$: BehaviorSubject<PaginatedResource<Group[]>> = new BehaviorSubject(this.initSubject());
-
-  /**
-   * List of groups with currently selected pagination options
-   */
-  groups$: Observable<PaginatedResource<Group[]>> = this.groupsSubject$.asObservable();
-
   constructor(private groupFacade: GroupApi,
               private alertService: Kypo2UserAndGroupNotificationService,
               private configService: ConfigService,
@@ -44,7 +37,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Group[]>> {
+  getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Group>> {
     this.lastPagination = pagination;
     this.lastFilter = filter;
     const filters = filter ? [new GroupFilter(filter)] : [];
@@ -52,8 +45,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
     return this.groupFacade.getAll(pagination, filters)
       .pipe(
         tap(groups => {
-          this.groupsSubject$.next(groups);
-          this.totalLengthSubject.next(groups.pagination.totalElements);
+          this.resourceSubject$.next(groups);
         },
             err => {
           this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching groups'));
@@ -81,9 +73,5 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
         }),
         switchMap(_ => this.getAll(this.lastPagination, this.lastFilter))
       );
-  }
-
-  private initSubject(): PaginatedResource<Group[]> {
-    return new PaginatedResource([], new Pagination(0, 0, this.configService.config.defaultPaginationSize, 0, 0));
   }
 }

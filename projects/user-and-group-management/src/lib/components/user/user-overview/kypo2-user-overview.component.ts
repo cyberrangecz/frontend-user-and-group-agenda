@@ -34,10 +34,6 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
    * True, if data requested for table has error, false otherwise
    */
   usersHasError$: Observable<boolean>;
-  /**
-   * Total length of table elements
-   */
-  usersTotalLength$: Observable<number>;
 
   /**
    * Ids of users selected in table
@@ -119,12 +115,11 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
-    this.users$ = this.userService.users$
+    this.users$ = this.userService.resource$
       .pipe(
         map(groups => UserTableCreator.create(groups))
       );
     this.usersHasError$ = this.userService.hasError$;
-    this.usersTotalLength$ = this.userService.totalLength$;
     this.onLoadEvent(initialLoadEvent);
   }
 }

@@ -100,7 +100,7 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
   search(filterValue: string) {
     this.roles$ = this.roleAssignService.getAvailableToAssign(filterValue)
       .pipe(
-        map((resource: PaginatedResource<UserRole[]>) => resource.elements)
+        map((resource: PaginatedResource<UserRole>) => resource.elements)
       );
   }
 

@@ -33,7 +33,7 @@ export class RoleApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on roles
    */
-  getAll(pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<UserRole[]>> {
+  getAll(pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<UserRole>> {
     const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
     return this.http.get<RestResourceDTO<RoleDTO>>(this.config.userAndGroupRestBasePath + this.rolesPathExtension,
       { params: params })
@@ -53,7 +53,7 @@ export class RoleApi {
    * Maps roles DTOs to internal model
    * @param resource roles dto
    */
-  private mapRolesDTOtoRoles(resource: RestResourceDTO<RoleDTO>): PaginatedResource<UserRole[]> {
+  private mapRolesDTOtoRoles(resource: RestResourceDTO<RoleDTO>): PaginatedResource<UserRole> {
     const content = resource.content.map(dto => UserRole.fromDTO(dto));
 
     // TODO: Replace once pagination is fixed

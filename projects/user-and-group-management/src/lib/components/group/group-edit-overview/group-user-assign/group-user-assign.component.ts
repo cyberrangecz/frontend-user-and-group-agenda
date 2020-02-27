@@ -228,7 +228,6 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
         map(paginatedUsers => GroupMemberTableCreator.create(paginatedUsers))
       );
     this.assignedUsersHasError$ = this.userAssignService.hasError$;
-    this.assignedUsersTotalLength$ = this.userAssignService.totalLength$;
     this.isLoadingAssignedUsers$ = this.userAssignService.isLoadingAssigned$;
     this.onAssignedLoadEvent(initialLoadEvent);
   }

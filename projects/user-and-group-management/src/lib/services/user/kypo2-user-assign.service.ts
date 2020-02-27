@@ -23,29 +23,23 @@ export abstract class Kypo2UserAssignService {
      */
   isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
 
-  protected totalLengthSubject = new BehaviorSubject<number>(0);
-    /**
-     * Total length of assigned users
-     */
-  totalLength$ = this.totalLengthSubject.asObservable();
-
   /**
    * List of users already assigned to the resource
    */
-  abstract assignedUsers$: Observable<PaginatedResource<User[]>>;
+  abstract assignedUsers$: Observable<PaginatedResource<User>>;
 
   /**
    * Get users available to assign to resource
    * @param resourceId id of a resource associated with users
    * @param filter filter to be applied on users
    */
-  abstract getUsersToAssign(resourceId: number, filter: string): Observable<PaginatedResource<User[]>>;
+  abstract getUsersToAssign(resourceId: number, filter: string): Observable<PaginatedResource<User>>;
 
   /**
    * Get groups available to assign to resource
    * @param filterValue filter to be applied on users
    */
-  abstract getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group[]>>;
+  abstract getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>>;
 
   /**
    * Get users already assigned to the resource
@@ -54,7 +48,7 @@ export abstract class Kypo2UserAssignService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on users
    */
-  abstract getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string): Observable<PaginatedResource<User[]>>;
+  abstract getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string): Observable<PaginatedResource<User>>;
 
 
   /**

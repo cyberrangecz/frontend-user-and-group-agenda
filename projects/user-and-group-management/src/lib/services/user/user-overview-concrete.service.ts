@@ -1,10 +1,9 @@
 import {Kypo2UserOverviewService} from './kypo2-user-overview.service';
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
 import {User} from 'kypo2-auth';
 import {RequestedPagination} from '../../model/other/requested-pagination';
-import {Pagination} from 'kypo2-table';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {ConfigService} from '../../config/config.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
@@ -25,13 +24,6 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
   private lastPagination: RequestedPagination;
   private lastFilter: string;
 
-  private usersSubject$: BehaviorSubject<PaginatedResource<User[]>> = new BehaviorSubject(this.initSubject());
-  /**
-   * List of users with currently selected pagination options
-   */
-
-  users$: Observable<PaginatedResource<User[]>> = this.usersSubject$.asObservable();
-
   constructor(private userFacade: UserApi,
               private alertService: Kypo2UserAndGroupNotificationService,
               private configService: ConfigService,
@@ -44,7 +36,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on resources
    */
-  getAll(pagination?: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User[]>> {
+  getAll(pagination?: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
     const filters = filterValue ? [new UserFilter(filterValue)] : [];
@@ -52,8 +44,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
     return this.userFacade.getAll(pagination, filters)
       .pipe(
         tap(users => {
-            this.usersSubject$.next(users);
-            this.totalLengthSubject.next(users.pagination.totalElements);
+            this.resourceSubject$.next(users);
           },
           err => {
             this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching users'));
@@ -83,6 +74,4 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
       );
   }
 
-  private initSubject(): PaginatedResource<User[]> {
-    return new PaginatedResource([], new Pagination(0, 0, this.configService.config.defaultPaginationSize, 0, 0));  }
 }

@@ -32,11 +32,11 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
   private lastAssignedPagination: RequestedPagination;
   private lastAssignedFilter: string;
 
-  private assignedUsersSubject$: BehaviorSubject<PaginatedResource<User[]>> = new BehaviorSubject(this.initSubject());
+  private assignedUsersSubject$: BehaviorSubject<PaginatedResource<User>> = new BehaviorSubject(this.initSubject());
   /**
    * Subscribe to receive assigned users
    */
-  assignedUsers$: Observable<PaginatedResource<User[]>> = this.assignedUsersSubject$.asObservable();
+  assignedUsers$: Observable<PaginatedResource<User>> = this.assignedUsersSubject$.asObservable();
 
   /**
    * Assigns (associates) users or groups to a resource
@@ -73,7 +73,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on users
    */
-  getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User[]>> {
+  getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User>> {
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
     this.lastAssignedPagination = pagination;
     this.lastAssignedFilter = filterValue;
@@ -85,7 +85,6 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
           paginatedUsers => {
             this.assignedUsersSubject$.next(paginatedUsers);
             this.isLoadingAssignedSubject$.next(false);
-            this.totalLengthSubject.next( paginatedUsers.pagination.totalElements);
           },
           err => {
             this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching users'));
@@ -101,7 +100,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
    * @param resourceId id of a resource which has no association with users
    * @param filterValue filter to be applied on users
    */
-  getUsersToAssign(resourceId: number, filterValue: string): Observable<PaginatedResource<User[]>> {
+  getUsersToAssign(resourceId: number, filterValue: string): Observable<PaginatedResource<User>> {
     const pageSize = 50;
     return this.userFacade.getUsersNotInGroup(resourceId,
       new RequestedPagination(0, pageSize, 'familyName', 'asc'),
@@ -115,7 +114,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
    * Get groups available to import (assign its users to a resource)
    * @param filterValue filter to be applied on groups
    */
-  getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group[]>> {
+  getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>> {
     const pageSize = 50;
     return this.groupFacade.getAll(
       new RequestedPagination(0, pageSize, 'name', 'asc'),

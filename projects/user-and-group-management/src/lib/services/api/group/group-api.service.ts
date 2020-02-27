@@ -41,7 +41,7 @@ export class GroupApi {
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  getAll(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<Group[]>> {
+  getAll(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<Group>> {
     const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
     return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
       { params: params })

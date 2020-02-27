@@ -16,8 +16,8 @@ export class UserMapperService {
    * Maps user dtos to internal model
    * @param restResource user dtos
    */
-  mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): PaginatedResource<User[]> {
-    return new PaginatedResource<User[]>(
+  mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): PaginatedResource<User> {
+    return new PaginatedResource<User>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }

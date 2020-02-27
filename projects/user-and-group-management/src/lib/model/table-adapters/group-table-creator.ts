@@ -16,7 +16,7 @@ export class GroupTableCreator {
    * Create data source for groups table from paginated groups
    * @param resource paginated groups to be transformed into table data source
    */
-  static create(resource: PaginatedResource<Group[]>): Kypo2Table<GroupTableRowAdapter> {
+  static create(resource: PaginatedResource<Group>): Kypo2Table<GroupTableRowAdapter> {
 
     const resources = this.mapGroupToTableAdapter(resource);
     const actions = [
@@ -56,8 +56,8 @@ export class GroupTableCreator {
     return table;
   }
 
-  private static mapGroupToTableAdapter(resource: PaginatedResource<Group[]>): PaginatedResource<GroupTableRowAdapter[]> {
+  private static mapGroupToTableAdapter(resource: PaginatedResource<Group>): PaginatedResource<GroupTableRowAdapter> {
     const elements = resource.elements.map(group => new GroupTableRowAdapter(group));
-    return new PaginatedResource<GroupTableRowAdapter[]>(elements, resource.pagination);
+    return new PaginatedResource<GroupTableRowAdapter>(elements, resource.pagination);
   }
 }

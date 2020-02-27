@@ -76,7 +76,7 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
    * Gets roles available to assign
    * @param filterValue filter to be applied on roles
    */
-  getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole[]>> {
+  getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new RequestedPagination(0, paginationSize, 'roleType', 'asc');

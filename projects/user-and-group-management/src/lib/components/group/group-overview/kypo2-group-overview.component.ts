@@ -35,11 +35,6 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
   groupsHasError$: Observable<boolean>;
 
   /**
-   * Count of group total elements
-   */
-  groupsTotalLength$: Observable<number>;
-
-  /**
    * Ids od groups selected in table compoment
    */
   selectedGroupIds: number[] = [];
@@ -112,12 +107,11 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
-    this.groups$ = this.groupService.groups$
+    this.groups$ = this.groupService.resource$
       .pipe(
         map(groups => GroupTableCreator.create(groups))
       );
     this.groupsHasError$ = this.groupService.hasError$;
-    this.groupsTotalLength$ = this.groupService.totalLength$;
     this.onLoadTable(initialLoadEvent);
   }
 

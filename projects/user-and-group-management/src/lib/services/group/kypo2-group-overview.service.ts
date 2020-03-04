@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {PaginatedResourceService} from '../shared/paginated-resources.service';
-import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../model/table/paginated-resource';
 import {RequestedPagination} from 'kypo2-table';
 import {Group} from '../../model/group/group.model';
+import {SelectablePaginatedService} from '../shared/selectable-paginated.service';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -12,7 +13,7 @@ import {Group} from '../../model/group/group.model';
  */
 
 @Injectable()
-export abstract class Kypo2GroupOverviewService extends PaginatedResourceService<Group> {
+export abstract class Kypo2GroupOverviewService extends SelectablePaginatedService<Group> {
 
   /**
    *
@@ -22,8 +23,14 @@ export abstract class Kypo2GroupOverviewService extends PaginatedResourceService
   abstract getAll(pagination?: RequestedPagination, filter?: string): Observable<PaginatedResource<Group>>;
 
   /**
-   * Deletes selected groups
-   * @param ids ids of a groups to be deleted
+   * Deletes group
+   * @param group a group to be deleted
    */
-  abstract delete(ids: number[]): Observable<any>;
+  abstract delete(group: Group): Observable<any>;
+
+  abstract deleteSelected(): Observable<any>;
+
+  abstract edit(group: Group): Observable<any>;
+
+  abstract create(): Observable<any>;
 }

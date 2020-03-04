@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from 'kypo2-auth';
-import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../model/table/paginated-resource';
 import {RequestedPagination} from '../../model/other/requested-pagination';
 import {Group} from '../../model/group/group.model';
 
@@ -23,10 +23,46 @@ export abstract class Kypo2UserAssignService {
      */
   isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
 
-  /**
+  protected selectedUsersToAssignSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
+
+  selectedUsersToAssign$: Observable<User[]> = this.selectedUsersToAssignSubject$.asObservable();
+
+  protected selectedAssignedUsersSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
+
+  selectedAssignedUsers$: Observable<User[]> = this.selectedAssignedUsersSubject$.asObservable();
+
+  protected selectedGroupsToImportSubject$: BehaviorSubject<Group[]> = new BehaviorSubject([]);
+
+  selectedGroupsToImport$: Observable<Group[]> = this.selectedGroupsToImportSubject$.asObservable();
+
+    /**
    * List of users already assigned to the resource
    */
   abstract assignedUsers$: Observable<PaginatedResource<User>>;
+
+  setSelectedUsersToAssign(users: User[]) {
+    this.selectedUsersToAssignSubject$.next(users);
+  }
+
+  clearSelectedUsersToAssign() {
+    this.selectedUsersToAssignSubject$.next([]);
+  }
+
+  setSelectedAssignedUsers(users: User[]) {
+    this.selectedAssignedUsersSubject$.next(users);
+  }
+
+  clearSelectedAssignedUsers() {
+    this.selectedAssignedUsersSubject$.next([]);
+  }
+
+  setSelectedGroupsToImport(groups: Group[]) {
+    this.selectedGroupsToImportSubject$.next(groups);
+  }
+
+  clearSelectedGroupsToImport() {
+    this.selectedGroupsToImportSubject$.next([]);
+  }
 
   /**
    * Get users available to assign to resource
@@ -54,15 +90,27 @@ export abstract class Kypo2UserAssignService {
   /**
    * Assigns selected users to a resource
    * @param resourceId id of a resource to associate with users
-   * @param users users to assign to a resource
-   * @param groups groups to import to a resource (assign groups' users to a resource)
    */
-  abstract assign(resourceId: number, users: User[], groups: Group[]): Observable<any>;
+  abstract assignSelected(resourceId: number): Observable<any>;
+
+    /**
+     * Assigns selected users to a resource
+     * @param resourceId id of a resource to associate with users
+     * @param users users to assign
+     * @param groups groups to import users from
+     */
+  abstract assign(resourceId: number, users: User[], groups?: Group[]): Observable<any>;
 
   /**
-   * Unassigns selected users from resource
+   * Unassigns users from resource
    * @param resourceId id of resource which association should be cancelled
-   * @param users users to be unassigned from a resource
+   * @param users users to unassign
    */
   abstract unassign(resourceId: number, users: User[]): Observable<any>;
+
+    /**
+     * Unassigns selected users from resource
+     * @param resourceId id of resource which association should be cancelled
+     */
+  abstract unassignSelected(resourceId: number): Observable<any>;
 }

@@ -8,7 +8,7 @@ import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-grou
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {RoleApi} from '../api/role/role-api.service';
 import {RequestedPagination} from '../../model/other/requested-pagination';
-import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../model/table/paginated-resource';
 import {RoleFilter} from '../../model/filters/role-filter';
 
 /**
@@ -24,7 +24,7 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
    */
   assignedRoles$: Observable<UserRole[]> = this.assignedRolesSubject$.asObservable();
 
-  constructor(private groupFacade: GroupApi,
+  constructor(private api: GroupApi,
               private roleFacade: RoleApi,
               private errorHandler: Kypo2UserAndGroupErrorService) {
     super();
@@ -36,18 +36,13 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
    * @param roles roles to be assigned to a resource
    */
   assign(resourceId: number, roles: UserRole[]): Observable<any> {
-    return forkJoin(
-      roles.map(role => this.groupFacade.assignRole(resourceId, role.id)),
-    ).pipe(
-      catchError(error => of('failed')),
-      tap( (results: any[]) => {
-        const failedRequests = results.filter(result => result === 'failed');
-        if (failedRequests.length > 1) {
-          this.errorHandler.emit(new Kypo2UserAndGroupError(undefined, 'Assigning some roles failed'));
-        }
-      }),
-      switchMap(_ => this.getAssigned(resourceId))
-    );
+    const roleIds = roles.map(role => role.id);
+    return this.callApiToAssign(resourceId, roleIds);
+  }
+
+  assignSelected(resourceId: number): Observable<any> {
+    const roleIds = this.selectedRolesToAssignSubject$.getValue().map(role => role.id);
+    return this.callApiToAssign(resourceId, roleIds);
   }
 
   /**
@@ -55,9 +50,10 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
    * @param resourceId id of a resource associated with requested roles
    */
   getAssigned(resourceId: number): Observable<UserRole[]> {
+    this.clearSelectedAssignedRoles();
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
-    return this.groupFacade.getRolesOfGroup(resourceId)
+    return this.api.getRolesOfGroup(resourceId)
       .pipe(
         tap(
           roles => {
@@ -92,8 +88,35 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
    * @param roles roles to be unassigned from a resource
    */
   unassign(resourceId: number, roles: UserRole[]): Observable<any> {
+    const roleIds = roles.map(role => role.id);
+    return this.callApiToUnassign(resourceId, roleIds);
+  }
+
+  unassignSelected(resourceId): Observable<any> {
+    const roleIds = this.selectedAssignedRolesSubject$.getValue().map(role => role.id);
+    return this.callApiToUnassign(resourceId, roleIds);
+  }
+
+  private callApiToAssign(resourceId: number, roleIds: number[]) {
+    this.clearSelectedRolesToAssign();
     return forkJoin(
-      roles.map(role => this.groupFacade.removeRole(resourceId, role.id)),
+      roleIds.map(id => this.api.assignRole(resourceId, id)),
+    ).pipe(
+      catchError(error => of('failed')),
+      tap( (results: any[]) => {
+        const failedRequests = results.filter(result => result === 'failed');
+        if (failedRequests.length > 1) {
+          this.errorHandler.emit(new Kypo2UserAndGroupError(undefined, 'Assigning some roles failed'));
+        }
+      }),
+      switchMap(_ => this.getAssigned(resourceId))
+    );
+  }
+
+  private callApiToUnassign(resourceId: number, roleIds: number[]) {
+    this.clearSelectedAssignedRoles();
+    return forkJoin(
+      roleIds.map(id => this.api.removeRole(resourceId, id)),
     ).pipe(
       catchError(error => of('failed')),
       tap( (results: any[]) => {

@@ -1,16 +1,14 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {defer, Observable, of} from 'rxjs';
 import {Kypo2Table, LoadTableEvent, RequestedPagination, TableActionEvent} from 'kypo2-table';
 import {User} from 'kypo2-auth';
-import {map, switchMap, takeWhile} from 'rxjs/operators';
+import {map, take, takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
 import {Kypo2UserOverviewService} from '../../../services/user/kypo2-user-overview.service';
-import {ConfirmationDialogInput} from '../../shared/confirmation-dialog/confirmation-dialog.input';
-import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
-import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
 import {ConfigService} from '../../../config/config.service';
-import {UserTableCreator} from '../../../model/table-adapters/user-table-creator';
+import {UserTable} from '../../../model/table/user/user-table';
+import {KypoControlItem} from 'kypo-controls';
+import {DeleteControlItem} from '../../../model/controls/delete-control-item';
 
 /**
  * Main smart component of user overview page
@@ -35,19 +33,26 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
    */
   usersHasError$: Observable<boolean>;
 
-  /**
-   * Ids of users selected in table
-   */
-  selectedUserIds: number[] = [];
+  controls: KypoControlItem[];
 
-  constructor(public dialog: MatDialog,
-              private configService: ConfigService,
+  constructor(private configService: ConfigService,
               private userService: Kypo2UserOverviewService) {
     super();
   }
 
   ngOnInit() {
-    this.initTable();
+    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
+      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
+    this.users$ = this.userService.resource$
+      .pipe(
+        map(groups => new UserTable(groups, this.userService))
+      );
+    this.usersHasError$ = this.userService.hasError$;
+    this.onLoadEvent(initialLoadEvent);
+    this.userService.selected$
+      .pipe(
+        takeWhile(_ => this.isAlive)
+      ).subscribe(ids => this.initControls(ids.length));
   }
 
   /**
@@ -55,7 +60,6 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
    * @param event load table vent emitted by table component
    */
   onLoadEvent(event: LoadTableEvent) {
-    this.selectedUserIds = [];
     this.userService.getAll(event.pagination, event.filter)
       .pipe(
         takeWhile(_ => this.isAlive),
@@ -68,25 +72,16 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
    * @param event action event emitted by table component
    */
   onTableAction(event: TableActionEvent<User>) {
-    if (event.action.id === UserTableCreator.DELETE_ACTION_ID) {
-      this.deleteUser(event.element.id);
-    }
+    event.action.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
-  /***
-   * Displays confirmation dialog, if confirmed, calls service to delete selected users
-   */
-  deleteSelectedUsers() {
-    const dialogData = new ConfirmationDialogInput();
-    dialogData.title = 'Remove selected users';
-    dialogData.content = `Do you want to remove ${this.selectedUserIds.length} selected users from database?`;
-
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: dialogData });
-    dialogRef.afterClosed()
+  onControlsAction(controlItem: KypoControlItem) {
+    controlItem.result$
       .pipe(
-        takeWhile(_ => this.isAlive),
-        map(result => result === DialogResultEnum.SUCCESS),
-        switchMap(confirmed => confirmed ? this.userService.delete(this.selectedUserIds) : of(null))
+        take(1)
       ).subscribe();
   }
 
@@ -95,31 +90,13 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
    * @param selected users selected in table component
    */
   onUserSelected(selected: User[]) {
-    this.selectedUserIds = selected.map(user => user.id);
+    this.userService.setSelection(selected);
   }
 
-  private deleteUser(id: number) {
-    const dialogData = new ConfirmationDialogInput();
-    dialogData.title = 'Remove user';
-    dialogData.content = `Do you want to remove selected user from database?`;
-
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: dialogData });
-    dialogRef.afterClosed()
-      .pipe(
-        takeWhile(_ => this.isAlive),
-        map(result => result === DialogResultEnum.SUCCESS),
-        switchMap(confirmed => confirmed ? this.userService.delete([id]) : of(null))
-      ).subscribe();
-  }
-
-  private initTable() {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
-    this.users$ = this.userService.resource$
-      .pipe(
-        map(groups => UserTableCreator.create(groups))
-      );
-    this.usersHasError$ = this.userService.hasError$;
-    this.onLoadEvent(initialLoadEvent);
+  private initControls(selectedUsersLength: number) {
+    this.controls = [
+      new DeleteControlItem(selectedUsersLength,
+        defer(() => this.userService.deleteSelected()))
+    ];
   }
 }

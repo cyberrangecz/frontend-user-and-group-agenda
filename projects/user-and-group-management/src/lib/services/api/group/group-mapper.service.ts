@@ -1,8 +1,8 @@
 import { Injectable} from '@angular/core';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../../model/table/paginated-resource';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {Pagination} from '../../../model/table-adapters/pagination';
+import {Pagination} from '../../../model/table/pagination';
 import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {Group} from '../../../model/group/group.model';
 import {UserMapperService} from '../user/user-mapper.service';

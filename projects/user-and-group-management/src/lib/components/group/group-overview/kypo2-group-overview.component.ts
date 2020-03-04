@@ -1,14 +1,15 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {defer, Observable, of} from 'rxjs';
 import {Kypo2Table, LoadTableEvent, RequestedPagination, TableActionEvent} from 'kypo2-table';
-import {GroupTableRowAdapter} from '../../../model/table-adapters/group-table-row-adapter';
+import {GroupTableRowAdapter} from '../../../model/table/group/group-table-row-adapter';
 import {Kypo2GroupOverviewService} from '../../../services/group/kypo2-group-overview.service';
-import {map, takeWhile} from 'rxjs/operators';
+import {map, take, takeWhile} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
-import {GroupTableCreator} from '../../../model/table-adapters/group-table-creator';
-import {Kypo2UserAndGroupRoutingEventService} from '../../../services/routing/kypo2-user-and-group-routing-event.service';
-import {Kypo2UserAndGroupRouteEvent} from '../../../model/events/kypo2-user-and-group-route-event';
+import {GroupTable} from '../../../model/table/group/group-table';
 import {ConfigService} from '../../../config/config.service';
+import {KypoControlItem} from 'kypo-controls';
+import {DeleteControlItem} from '../../../model/controls/delete-control-item';
+import {SaveControlItem} from '../../../model/controls/save-control-item';
 
 /**
  * Main smart component of group overview page
@@ -34,19 +35,33 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
    */
   groupsHasError$: Observable<boolean>;
 
-  /**
-   * Ids od groups selected in table compoment
-   */
-  selectedGroupIds: number[] = [];
+  controls: KypoControlItem[];
 
   constructor(private groupService: Kypo2GroupOverviewService,
-              private configService: ConfigService,
-              private kypo2UserAndGroupRoutingEventService: Kypo2UserAndGroupRoutingEventService,) {
+              private configService: ConfigService) {
     super();
   }
 
   ngOnInit() {
-    this.initTable();
+    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
+      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
+    this.groups$ = this.groupService.resource$
+      .pipe(
+        map(groups => new GroupTable(groups, this.groupService))
+      );
+    this.groupsHasError$ = this.groupService.hasError$;
+    this.groupService.selected$
+      .pipe(
+        takeWhile(_ => this.isAlive)
+      ).subscribe(ids => this.initControls(ids.length));
+    this.onLoadTable(initialLoadEvent);
+  }
+
+  onControlsAction(controlItem: KypoControlItem) {
+    controlItem.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
   /**
@@ -54,7 +69,6 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
    * @param event event emitted from table component
    */
   onLoadTable(event: LoadTableEvent) {
-    this.selectedGroupIds = [];
     this.groupService.getAll(event.pagination, event.filter)
       .pipe(
         takeWhile(_ => this.isAlive),
@@ -67,11 +81,10 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
    * @param event action event emitted by table component
    */
   onTableAction(event: TableActionEvent<GroupTableRowAdapter>) {
-    if (event.action.id === GroupTableCreator.DELETE_ACTION_ID) {
-      this.deleteGroup(event.element.groupId);
-    } else if (event.action.id === GroupTableCreator.EDIT_ACTION_ID) {
-      this.edit(event.element.groupId);
-    }
+    event.action.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
   /**
@@ -79,56 +92,18 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
    * @param selected groups selected in table component
    */
   onGroupSelected(selected: GroupTableRowAdapter[]) {
-    this.selectedGroupIds = selected.map(groupRow => groupRow.groupId);
+    this.groupService.setSelection(selected.map(adapter => adapter.group));
   }
 
-  /**
-   * Calls service to delete selected groups
-   */
-  deleteSelectedGroups() {
-    this.groupService.delete(this.selectedGroupIds)
-      .pipe(
-        takeWhile(_ => this.isAlive),
+  private initControls(selectedLength: number) {
+    this.controls = [
+      new DeleteControlItem(selectedLength,
+        defer(() => this.groupService.deleteSelected())),
+      new SaveControlItem(
+        'Create',
+        of(false),
+        defer(() => this.groupService.create())
       )
-      .subscribe();
-  }
-
-  /**
-   * Sends request to navigate to create page
-   */
-  createGroup() {
-    const route: Kypo2UserAndGroupRouteEvent = {
-      actionType: 'NEW',
-      resourceType: 'GROUP'
-    };
-    this.kypo2UserAndGroupRoutingEventService.navigate(route);
-  }
-
-  private initTable() {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
-    this.groups$ = this.groupService.resource$
-      .pipe(
-        map(groups => GroupTableCreator.create(groups))
-      );
-    this.groupsHasError$ = this.groupService.hasError$;
-    this.onLoadTable(initialLoadEvent);
-  }
-
-  private deleteGroup(id: number) {
-    this.groupService.delete([id])
-      .pipe(
-        takeWhile(_ => this.isAlive),
-      )
-      .subscribe();
-  }
-
-  private edit(groupId: number) {
-    const route: Kypo2UserAndGroupRouteEvent = {
-      actionType: 'EDIT',
-      resourceType: 'GROUP',
-      resourceId: groupId
-    };
-    this.kypo2UserAndGroupRoutingEventService.navigate(route);
+    ];
   }
 }

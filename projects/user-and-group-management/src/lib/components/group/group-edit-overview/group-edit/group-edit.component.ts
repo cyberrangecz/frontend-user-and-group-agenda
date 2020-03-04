@@ -60,7 +60,6 @@ export class GroupEditComponent extends BaseComponent implements OnInit, OnChang
       ).subscribe(_ => this.onChanged());
   }
 
-
   private onChanged() {
     this.groupEditFormGroup.setValuesToGroup(this.group);
     this.edited.emit(new GroupChangedEvent(

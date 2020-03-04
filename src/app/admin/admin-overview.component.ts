@@ -48,7 +48,7 @@ export class AdminOverviewComponent implements OnInit, OnDestroy {
         if (navigateEvent.actionType) {
           return this.router.navigate(['admin', navigateEvent.resourceType.toLowerCase(), navigateEvent.actionType.toLowerCase()]);
         }
-        return this.router.navigate(['admin', navigateEvent.resourceType.toLowerCase()]);
+        return this.router.navigate(['admin', { outlets: { tab: [navigateEvent.resourceType.toLowerCase]}}]);
       });
   }
 

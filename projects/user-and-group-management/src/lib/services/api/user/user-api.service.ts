@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
-import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../../model/table/paginated-resource';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';

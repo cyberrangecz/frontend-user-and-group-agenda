@@ -1,6 +1,6 @@
 import {Kypo2UserAssignService} from './kypo2-user-assign.service';
 import {User} from 'kypo2-auth';
-import {PaginatedResource} from '../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../model/table/paginated-resource';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {GroupApi} from '../api/group/group-api.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
@@ -10,7 +10,7 @@ import {switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {UserApi} from '../api/user/user-api.service';
 import {GroupFilter} from '../../model/filters/group-filter';
-import {Pagination} from '../../model/table-adapters/pagination';
+import {Pagination} from '../../model/table/pagination';
 import {ConfigService} from '../../config/config.service';
 import {UserFilter} from '../../model/filters/user-filter';
 import {Injectable} from '@angular/core';
@@ -22,7 +22,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class UserAssignConcreteService extends Kypo2UserAssignService {
 
-  constructor(private groupFacade: GroupApi,
+  constructor(private api: GroupApi,
               private userFacade: UserApi,
               private configService: ConfigService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
@@ -39,32 +39,34 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
   assignedUsers$: Observable<PaginatedResource<User>> = this.assignedUsersSubject$.asObservable();
 
   /**
-   * Assigns (associates) users or groups to a resource
+   * Assigns (associates) selected users or groups to a resource
    * @param resourceId id of a resource with which users and groups should be associated
-   * @param users users to be associated with a resource
-   * @param groups groups to be associated with a resource
    */
-  assign(resourceId: number, users: User[], groups: Group[] = []): Observable<any> {
-   return this.groupFacade.addUsersToGroup(resourceId,
-      users.map(user => user.id),
-      groups.map(group => group.id))
-      .pipe(
-        tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Adding users'))}),
-        switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
-      );
+  assignSelected(resourceId: number): Observable<any> {
+    const userIds = this.selectedUsersToAssignSubject$.getValue().map(user => user.id);
+    const groupIds = this.selectedGroupsToImportSubject$.getValue().map(group => group.id);
+    return this.callApiToAssign(resourceId, userIds, groupIds);
+  }
+
+  assign(resourceId: number, users: User[], groups?: Group[]): Observable<any> {
+    const userIds = users.map(user => user.id);
+    const groupIds = groups.map(group => group.id);
+    return this.callApiToAssign(resourceId, userIds, groupIds);
   }
 
   /**
    * Unassigns (cancels association) users from a resource
    * @param resourceId id of a resource which association should be canceled
-   * @param users users to be unassigned from a resource
+   * @param users users to unassign
    */
   unassign(resourceId: number, users: User[]): Observable<any> {
-    return this.groupFacade.removeUsersFromGroup(resourceId, users.map(user => user.id))
-      .pipe(
-        tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Removing users'))}),
-        switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
-      );
+   const userIds = users.map(user => user.id);
+   return this.callApiToUnassign(resourceId, userIds);
+  }
+
+  unassignSelected(resourceId: number): Observable<any> {
+    const userIds = this.selectedAssignedUsersSubject$.getValue().map((user => user.id));
+    return this.callApiToUnassign(resourceId, userIds);
   }
 
   /**
@@ -74,6 +76,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
    * @param filterValue filter to be applied on users
    */
   getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User>> {
+    this.clearSelectedAssignedUsers();
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
     this.lastAssignedPagination = pagination;
     this.lastAssignedFilter = filterValue;
@@ -116,7 +119,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
    */
   getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>> {
     const pageSize = 50;
-    return this.groupFacade.getAll(
+    return this.api.getAll(
       new RequestedPagination(0, pageSize, 'name', 'asc'),
       [new GroupFilter(filterValue)])
       .pipe(
@@ -131,5 +134,26 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
         this.configService.config.defaultPaginationSize,
         0,
         0));
+  }
+
+  private callApiToAssign(resourceId: number, userIds: number[], groupIds: number[]) {
+    return this.api.addUsersToGroup(resourceId, userIds, groupIds)
+      .pipe(
+        tap(_ => {
+            this.clearSelectedUsersToAssign();
+            this.clearSelectedGroupsToImport();
+          },
+          err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Adding users'))),
+        switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+      );
+  }
+
+  private callApiToUnassign(resourceId: number, userIds: number[]) {
+    return this.api.removeUsersFromGroup(resourceId, userIds)
+      .pipe(
+        tap(_ => this.clearSelectedAssignedUsers(),
+          err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Removing users'))),
+        switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+      );
   }
 }

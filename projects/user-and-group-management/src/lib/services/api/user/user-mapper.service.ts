@@ -1,8 +1,8 @@
-import {PaginatedResource} from '../../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../../model/table/paginated-resource';
 import {User, UserDTO} from 'kypo2-auth';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {Pagination} from '../../../model/table-adapters/pagination';
+import {Pagination} from '../../../model/table/pagination';
 import {Injectable} from '@angular/core';
 import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.model';
 

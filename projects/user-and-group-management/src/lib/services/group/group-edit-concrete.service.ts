@@ -11,6 +11,7 @@ import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-g
 import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Injectable} from '@angular/core';
+import {Kypo2UserAndGroupRoutingEventService} from '../routing/kypo2-user-and-group-routing-event.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -44,6 +45,7 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
 
   constructor(private groupFacade: GroupApi,
               private notificationService: Kypo2UserAndGroupNotificationService,
+              private routingService: Kypo2UserAndGroupRoutingEventService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
     super();
   }
@@ -73,15 +75,21 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
   /**
    * Saves edited group, updated related observables or handles error
    */
-  save(): Observable<ResourceSavedEvent> {
-    if (this.editModeSubject$.getValue()) {
-      const id = this.editedGroup.id;
-      return this.update()
-        .pipe(map(_ => new ResourceSavedEvent(id, true)));
-    } else {
-      return this.create()
-        .pipe(map(id => new ResourceSavedEvent(id, false)));
-    }  }
+  save(): Observable<any> {
+    return this.editModeSubject$.getValue()
+      ? this.update()
+      : this.create()
+      .pipe(
+        tap(_ => this.routingService.navigate({resourceType: 'GROUP'}))
+      );
+  }
+
+  createAndEdit(): Observable<any> {
+    return this.create()
+      .pipe(
+        tap(id => this.routingService.navigate({resourceType: 'GROUP', resourceId: id, actionType: 'EDIT'}))
+      );
+  }
 
   private setEditMode(group: Group) {
     this.editModeSubject$.next(group !== null && group !== undefined);
@@ -94,7 +102,7 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
           id => {
             this.notificationService.notify(new Kypo2UserAndGroupNotification(
               Kypo2UserAndGroupNotificationType.SUCCESS,
-              'Changes were successfully saved.'));
+              'Changes were saved.'));
             this.onSaved();
           },
           err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Editing group'))
@@ -109,7 +117,7 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
           id => {
             this.notificationService.notify(new Kypo2UserAndGroupNotification(
               Kypo2UserAndGroupNotificationType.SUCCESS,
-              'Group was successfully saved.'));
+              'Group was created.'));
             this.onSaved();
           },
           err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Creating group'))

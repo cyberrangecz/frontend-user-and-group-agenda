@@ -1,6 +1,4 @@
-<div class="controls">
-  <button mat-flat-button color="primary" [disabled]="!selectedRolesToAssign || selectedRolesToAssign.length === 0" (click)="assignSelectedRoles()">Add</button>
-</div>
+<kypo-controls [controls]="rolesToAssignControls" (itemClicked)="onControlAction($event)"></kypo-controls>
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar>
@@ -13,20 +11,15 @@
     <kypo2-resource-selector
       searchPlaceholder="Search roles by name"
       [resources]="roles$ | async"
-      [selected]="selectedRolesToAssign"
+      [selected]="selectedRolesToAssign$ | async"
       [resourceMapping]="roleMapping"
       (selectionChange)="onRolesToAssignSelection($event)"
       (fetch)="search($event)">
     </kypo2-resource-selector>
   </mat-card-content>
 </mat-card>
-<div class="controls">
-  <button *ngIf="this.selectedAssignedRoles.length <= 0 else selectedRolesButton" mat-flat-button color="warn" disabled (click)="deleteSelectedRoles()">Delete</button>
-  <ng-template #selectedRolesButton>
-    <button mat-flat-button color="warn" (click)="deleteSelectedRoles()">Delete ({{ this.selectedAssignedRoles.length }})</button>
-  </ng-template>
-</div>
 
+<kypo-controls [controls]="assignedRolesControls" (itemClicked)="onControlAction($event)"></kypo-controls>
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar>

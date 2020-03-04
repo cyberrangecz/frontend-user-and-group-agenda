@@ -1,14 +1,17 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {BaseComponent} from '../../../../model/base-component';
-import {Observable} from 'rxjs';
+import {defer, Observable} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import {Kypo2Table, TableActionEvent} from 'kypo2-table';
 import {Kypo2RoleAssignService} from '../../../../services/role/kypo2-role-assign.service';
 import {map, take, takeWhile} from 'rxjs/operators';
-import {RoleTableCreator} from '../../../../model/table-adapters/role-table-creator';
+import {GroupRolesTable} from '../../../../model/table/role/group-roles-table';
 import {Group} from '../../../../model/group/group.model';
-import {PaginatedResource} from '../../../../model/table-adapters/paginated-resource';
+import {PaginatedResource} from '../../../../model/table/paginated-resource';
+import {KypoControlItem} from 'kypo-controls';
+import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
+import {SaveControlItem} from '../../../../model/controls/save-control-item';
 
 /**
  * Component for role assignment to edited group
@@ -59,12 +62,10 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
   /**
    * Selected roles available to assign to edited group
    */
-  selectedRolesToAssign: UserRole[] = [];
+  selectedRolesToAssign$: Observable<UserRole[]>;
 
-  /**
-   * Selected roles already assigned to edited group
-   */
-  selectedAssignedRoles: UserRole[] = [];
+  rolesToAssignControls: KypoControlItem[];
+  assignedRolesControls: KypoControlItem[];
 
   constructor(private roleAssignService: Kypo2RoleAssignService) {
     super();
@@ -80,17 +81,15 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('resource' in changes && this.resource && this.resource.id !== undefined) {
-      this.initTable();
+      this.init();
     }
   }
 
-  /**
-   * Changes internal state of the component when roles to assign are selected
-   * @param selected selected roles available to assign to edited group
-   */
-  onRolesToAssignSelection(selected: UserRole[]) {
-    this.hasUnsavedChanges.emit(true);
-    this.selectedRolesToAssign = selected;
+  onControlAction(controlItem: KypoControlItem) {
+    controlItem.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
   /**
@@ -105,26 +104,14 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
   }
 
   /**
-   * Calls service to assign selected roles to edited group
-   */
-  assignSelectedRoles() {
-    this.roleAssignService.assign(this.resource.id, this.selectedRolesToAssign)
-      .pipe(take(1))
-      .subscribe(_ => {
-        this.selectedRolesToAssign = [];
-        this.hasUnsavedChanges.emit(this.calculateHasUnsavedChanges());
-      });
-  }
-
-
-  /**
    * Resolves type of action and calls appropriate handler
-   * @param tableAction action emitted from assigned roles table component
+   * @param event action emitted from assigned roles table component
    */
-  onAssignedRolesTableAction(tableAction: TableActionEvent<UserRole>) {
-    if (tableAction.action.id === RoleTableCreator.DELETE_ACTION_ID) {
-      this.deleteAssignedRole(tableAction.element);
-    }
+  onAssignedRolesTableAction(event: TableActionEvent<UserRole>) {
+    event.action.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
   /**
@@ -132,34 +119,29 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
    * @param selected selected assigned roles
    */
   onAssignedRolesSelection(selected: UserRole[]) {
-    this.selectedAssignedRoles = selected;
+    this.roleAssignService.setSelectedAssignedRoles(selected);
   }
 
   /**
-   * Calls service to delete assigned role from edited group (removes the association)
-   * @param role assigned role to delete
+   * Changes internal state of the component when roles to assign are selected
+   * @param selected selected roles available to assign to edited group
    */
-  deleteAssignedRole(role: UserRole) {
-    this.roleAssignService.unassign(this.resource.id, [role])
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(_ => this.onAssignedRolesDeleted());
+  onRolesToAssignSelection(selected: UserRole[]) {
+    this.roleAssignService.setSelectedRolesToAssign(selected);
   }
 
-  /**
-   * Calls service to delete assigned roles from edited group (removes the association)
-   */
-  deleteSelectedRoles() {
-    this.roleAssignService.unassign(this.resource.id, this.selectedAssignedRoles)
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(_ => this.onAssignedRolesDeleted());
+  private init() {
+    this.selectedRolesToAssign$ = this.roleAssignService.selectedRolesToAssign$;
+    this.initTable();
+    this.initAssignedRolesControls();
+    this.initRolesToAssignControls();
+    this.initUnsavedChangesEmitter();
   }
 
   private initTable() {
     this.assignedRoles$ = this.roleAssignService.assignedRoles$
       .pipe(
-        map(roles => RoleTableCreator.create(roles))
+        map(roles => new GroupRolesTable(roles, this.resource.id, this.roleAssignService))
       );
     this.assignedRolesHasError$ = this.roleAssignService.hasError$;
     this.isLoadingAssignedRoles$ = this.roleAssignService.isLoadingAssigned$;
@@ -168,12 +150,34 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
       .subscribe();
   }
 
-  private onAssignedRolesDeleted() {
-    this.selectedAssignedRoles = [];
-    this.hasUnsavedChanges.emit(this.calculateHasUnsavedChanges());
+  private initAssignedRolesControls() {
+    this.roleAssignService.selectedAssignedRoles$
+      .pipe(
+        takeWhile(_ => this.isAlive)
+      ).subscribe(selection => {
+      this.assignedRolesControls = [
+        new DeleteControlItem(selection.length,
+          defer(() => this.roleAssignService.unassignSelected(this.resource.id))
+        )];
+    });
+
+  }
+  private initRolesToAssignControls() {
+    const disabled$ = this.roleAssignService.selectedRolesToAssign$
+      .pipe(
+        map(selection => selection.length <= 0)
+      );
+    this.rolesToAssignControls = [
+      new SaveControlItem('Add',
+        disabled$,
+        defer(() => this.roleAssignService.assignSelected(this.resource.id))
+      )];
   }
 
-  private calculateHasUnsavedChanges() {
-    return this.selectedRolesToAssign.length > 0 || this.selectedAssignedRoles.length > 0;
+  private initUnsavedChangesEmitter() {
+    this.roleAssignService.selectedRolesToAssign$
+      .pipe(
+        takeWhile(_ => this.isAlive)
+      ).subscribe(selection => this.hasUnsavedChanges.emit(selection.length > 0));
   }
 }

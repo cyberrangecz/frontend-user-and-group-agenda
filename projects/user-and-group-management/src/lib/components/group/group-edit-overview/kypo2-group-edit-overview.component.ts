@@ -1,17 +1,13 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Group} from '../../../model/group/group.model';
-import {Observable, of} from 'rxjs';
+import {defer, Observable, of} from 'rxjs';
 import {Kypo2GroupEditService} from '../../../services/group/kypo2-group-edit.service';
 import {GroupChangedEvent} from '../../../model/events/group-changed-event';
-import {map, take, takeWhile} from 'rxjs/operators';
+import {take, takeWhile, tap} from 'rxjs/operators';
 import {BaseComponent} from '../../../model/base-component';
 import {ActivatedRoute} from '@angular/router';
-import {ResourceSavedEvent} from '../../../model/events/resource-saved-event';
-import {Kypo2UserAndGroupRoutingEventService} from '../../../services/routing/kypo2-user-and-group-routing-event.service';
-import {ConfirmationDialogInput} from '../../shared/confirmation-dialog/confirmation-dialog.input';
-import {ConfirmationDialogComponent} from '../../shared/confirmation-dialog/confirmation-dialog.component';
-import {DialogResultEnum} from '../../../model/enums/dialog-result.enum';
-import {MatDialog} from '@angular/material/dialog';
+import {KypoControlItem} from 'kypo-controls';
+import {SaveControlItem} from '../../../model/controls/save-control-item';
 
 @Component({
   selector: 'kypo2-group-edit-overview',
@@ -25,20 +21,20 @@ export class Kypo2GroupEditOverviewComponent extends BaseComponent implements On
 
   group$: Observable<Group>;
   editMode$: Observable<boolean>;
-  saveDisabled$: Observable<boolean>;
   canDeactivateGroupEdit = true;
   canDeactivateMembers = true;
   canDeactivateRoles = true;
+  controls: KypoControlItem[];
 
   constructor(
-    public dialog: MatDialog,
-    private routingService: Kypo2UserAndGroupRoutingEventService,
     private activeRoute: ActivatedRoute,
     private editService: Kypo2GroupEditService) {
     super();
     this.group$ = this.editService.group$;
-    this.editMode$ = this.editService.editMode$;
-    this.saveDisabled$ = this.editService.saveDisabled$;
+    this.editMode$ = this.editService.editMode$
+      .pipe(
+        tap(editMode => this.initControls(editMode))
+      );
     this.activeRoute.data
       .pipe(
         takeWhile(_ => this.isAlive),
@@ -51,27 +47,15 @@ export class Kypo2GroupEditOverviewComponent extends BaseComponent implements On
   /**
    * Determines if all changes in sub components are saved and user can navigate to different component
    */
-  canDeactivate(): Observable<boolean> {
-    if (!this.canDeactivateGroupEdit || !this.canDeactivateMembers || !this.canDeactivateRoles) {
-      const dialogData = new ConfirmationDialogInput();
-      dialogData.title = 'Unsaved changes';
-      dialogData.content = `Do you want to leave without saving?`;
-
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data: dialogData});
-      return dialogRef.afterClosed()
-        .pipe(
-          take(1),
-          map(result => result === DialogResultEnum.SUCCESS)
-        );
-    } else {
-      return of(true);
-    }
+  canDeactivate(): boolean {
+    return this.canDeactivateGroupEdit && this.canDeactivateMembers && this.canDeactivateRoles;
   }
 
-  save() {
-      this.editService.save()
-        .pipe(takeWhile(_ => this.isAlive))
-        .subscribe(event => this.onGroupSaved(event));
+  onControlAction(controlItem: KypoControlItem) {
+    controlItem.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
   onGroupChanged(groupEvent: GroupChangedEvent) {
@@ -87,13 +71,31 @@ export class Kypo2GroupEditOverviewComponent extends BaseComponent implements On
     this.canDeactivateRoles = !hasUnsavedChanges;
   }
 
-  private onGroupSaved(event: ResourceSavedEvent) {
-    this.canDeactivateGroupEdit = true;
-
-    if (event.editMode) {
-      return;
+  private initControls(isEditMode: boolean) {
+    const saveItem = new SaveControlItem(
+      'Save',
+      this.editService.saveDisabled$,
+      defer(() => this.editService.save()
+        .pipe(
+          tap(_ => this.canDeactivateGroupEdit = true)
+        )
+      ));
+    if (isEditMode) {
+      this.controls = [saveItem];
     } else {
-      this.routingService.navigate({ resourceType: 'GROUP', resourceId: event.id, actionType: 'EDIT'});
+      saveItem.label = 'Create';
+      const saveAndStayItem = new SaveControlItem('Create and continue editing',
+        this.editService.saveDisabled$,
+        defer(() => this.editService.createAndEdit()
+          .pipe(
+            tap(_ => this.canDeactivateGroupEdit = true)
+          )
+        ));
+      saveAndStayItem.id = 'save_and_stay';
+      this.controls = [
+        saveItem,
+        saveAndStayItem
+      ];
     }
   }
 }

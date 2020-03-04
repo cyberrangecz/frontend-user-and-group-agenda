@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Group} from '../../../../model/group/group.model';
-import {Observable} from 'rxjs';
+import {combineLatest, defer, Observable} from 'rxjs';
 import {User} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
@@ -8,8 +8,12 @@ import {BaseComponent} from '../../../../model/base-component';
 import {Kypo2UserAssignService} from '../../../../services/user/kypo2-user-assign.service';
 import {RequestedPagination} from '../../../../model/other/requested-pagination';
 import {ConfigService} from '../../../../config/config.service';
-import {map, takeWhile} from 'rxjs/operators';
-import {GroupMemberTableCreator} from '../../../../model/table-adapters/group-member-table-creator';
+import { map, take, takeWhile} from 'rxjs/operators';
+import {GroupMemberTable} from '../../../../model/table/user/group-member-table';
+import {KypoControlItem} from 'kypo-controls';
+import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
+
+import {SaveControlItem} from '../../../../model/controls/save-control-item';
 
 /**
  * Component for user assignment to groups
@@ -51,7 +55,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
   groups$: Observable<Group[]>;
 
   /**
-   * Mapping of group model attribute to selector componnet
+   * Mapping of group model attribute to selector component
    */
   groupMapping: Kypo2SelectorResourceMapping;
 
@@ -70,25 +74,11 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
    */
   isLoadingAssignedUsers$:  Observable<boolean>;
 
-  /**
-   * Number of total assigned users
-   */
-  assignedUsersTotalLength$: Observable<number>;
+  selectedUsersToAssign$: Observable<User[]>;
+  selectedGroupsToImport$: Observable<Group[]>;
 
-  /**
-   * Users selected to assign to edited group
-   */
-  selectedUsersToAssign: User[] = [];
-
-  /**
-   * Groups selected to be imported to edited group
-   */
-  selectedGroupsToImport: Group[] = [];
-
-  /**
-   * Selected users already assigned to edited group
-   */
-  selectedAssignedUsers: User[] = [];
+  assignUsersControls: KypoControlItem[];
+  assignedUsersControls: KypoControlItem[];
 
   constructor(private userAssignService: Kypo2UserAssignService,
               private configService: ConfigService) {
@@ -110,22 +100,15 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('resource' in changes && this.resource && this.resource.id !== undefined) {
-      this.initTable();
+      this.init();
     }
   }
 
-  /**
-   * Calls service to assign selected users and users of groups selected to import to edited group
-   */
-  assign() {
-    this.userAssignService.assign(this.resource.id, this.selectedUsersToAssign, this.selectedGroupsToImport)
+  onAssignControl(controlItem: KypoControlItem) {
+    controlItem.result$
       .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(_ => {
-      this.selectedUsersToAssign = [];
-      this.selectedGroupsToImport = [];
-      this.hasUnsavedChanges.emit(this.calculateHasUnsavedChanges());
-    });
+        take(1)
+      ).subscribe();
   }
 
   /**
@@ -133,8 +116,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
    * @param users selected users to assign
    */
   onUserToAssignSelection(users: User[]) {
-    this.hasUnsavedChanges.emit(true);
-    this.selectedUsersToAssign = users;
+    this.userAssignService.setSelectedUsersToAssign(users);
   }
 
   /**
@@ -142,8 +124,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
    * @param users selected assigned users
    */
   onAssignedUsersSelection(users: User[]) {
-    this.hasUnsavedChanges.emit(true);
-    this.selectedAssignedUsers = users;
+    this.userAssignService.setSelectedAssignedUsers(users);
   }
 
   /**
@@ -151,8 +132,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
    * @param groups selected groups to import
    */
   onGroupToImportSelection(groups: Group[]) {
-    this.hasUnsavedChanges.emit(true);
-    this.selectedGroupsToImport = groups;
+    this.userAssignService.setSelectedGroupsToImport(groups);
   }
 
   /**
@@ -178,23 +158,14 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
   }
 
   /**
-   * Calls service to delete selected assigned users from group (cancel their association)
-   */
-  deleteSelectedAssignedUsers() {
-    this.userAssignService.unassign(this.resource.id, this.selectedAssignedUsers)
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(_ => this.onAssignedUsersDeleted());
-  }
-
-  /**
    * Resolves type of action and calls appropriate handler
    * @param event action event emitted from assigned users table component
    */
   onAssignedUsersTableAction(event: TableActionEvent<User>) {
-    if (event.action.id === GroupMemberTableCreator.DELETE_ACTION_ID) {
-      this.deleteAssignedUser(event.element);
-    }
+    event.action.result$
+      .pipe(
+        take(1)
+      ).subscribe();
   }
 
   /**
@@ -209,15 +180,49 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
       .subscribe();
   }
 
-  /**
-   * Calls service to delete assigned user from group (cancel the association)
-   * @param user user to delete from group
-   */
-  private deleteAssignedUser(user: User) {
-    this.userAssignService.unassign(this.resource.id, [user])
+  private init() {
+    this.selectedUsersToAssign$ = this.userAssignService.selectedUsersToAssign$;
+    this.selectedGroupsToImport$ = this.userAssignService.selectedGroupsToImport$;
+    this.initTable();
+    this.initAssignUsersControls();
+    this.initAssignedUsersControls();
+    this.initUnsavedChangesEmitter();
+  }
+
+  private initUnsavedChangesEmitter() {
+    combineLatest([
+      this.userAssignService.selectedGroupsToImport$,
+      this.userAssignService.selectedUsersToAssign$
+    ]).pipe(
+      takeWhile(_ => this.isAlive)
+    ).subscribe(selections => this.hasUnsavedChanges.emit(selections.some(selection => selection.length > 0)));
+  }
+
+  private initAssignedUsersControls() {
+    this.userAssignService.selectedAssignedUsers$
       .pipe(
         takeWhile(_ => this.isAlive)
-      ).subscribe(_ => this.onAssignedUsersDeleted());
+      ).subscribe(selection => {
+      this.assignedUsersControls = [
+        new DeleteControlItem(selection.length,
+          defer(() => this.userAssignService.unassignSelected(this.resource.id))
+        )
+      ];
+    });
+  }
+
+  private initAssignUsersControls() {
+    const disabled$ = combineLatest([this.userAssignService.selectedUsersToAssign$, this.userAssignService.selectedGroupsToImport$])
+      .pipe(
+        map(selections => selections[0].length <= 0 && selections[1].length <= 0)
+      );
+
+    this.assignUsersControls = [
+      new SaveControlItem(
+        'Add',
+        disabled$,
+        defer(() => this.userAssignService.assignSelected(this.resource.id)))
+    ];
   }
 
   private initTable() {
@@ -225,21 +230,10 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
       new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.MEMBERS_OF_GROUP_INIT_SORT_NAME, this.MEMBERS_OF_GROUP_INIT_SORT_DIR));
     this.assignedUsers$ = this.userAssignService.assignedUsers$
       .pipe(
-        map(paginatedUsers => GroupMemberTableCreator.create(paginatedUsers))
+        map(paginatedUsers => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService))
       );
     this.assignedUsersHasError$ = this.userAssignService.hasError$;
     this.isLoadingAssignedUsers$ = this.userAssignService.isLoadingAssigned$;
     this.onAssignedLoadEvent(initialLoadEvent);
-  }
-
-  private calculateHasUnsavedChanges(): boolean {
-    return this.selectedAssignedUsers.length > 0
-      || this.selectedUsersToAssign.length > 0
-      || this.selectedGroupsToImport.length > 0;
-  }
-
-  private onAssignedUsersDeleted() {
-    this.selectedAssignedUsers = [];
-    this.hasUnsavedChanges.emit(this.calculateHasUnsavedChanges());
   }
 }

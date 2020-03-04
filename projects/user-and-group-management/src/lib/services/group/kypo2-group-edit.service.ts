@@ -34,9 +34,14 @@ export abstract class Kypo2GroupEditService {
   abstract set(group: Group);
 
   /**
-   * Saves edited group
+   * Saves/creates edited group
    */
-  abstract save(): Observable<ResourceSavedEvent>;
+  abstract save(): Observable<any>;
+
+  /**
+   * Creates group and continues to edit it
+   */
+  abstract createAndEdit(): Observable<any>;
 
   /**
    * Handles change in edited group

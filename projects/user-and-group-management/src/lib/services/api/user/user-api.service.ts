@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
-import {PaginatedResource} from '../../../model/table/paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {UserMapperService} from './user-mapper.service';
@@ -9,9 +9,9 @@ import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {ConfigService} from '../../../config/config.service';
 import {User, UserDTO} from 'kypo2-auth';
-import {RequestedPagination} from '../../../model/other/requested-pagination';
-import {Filter} from '../../../model/filters/filter';
-import {ParamsMerger} from '../../../model/other/params-merger';
+import {KypoRequestedPagination} from 'kypo-common';
+import {KypoFilter} from 'kypo-common';
+import {KypoParamsMerger} from 'kypo-common';
 import {FilterParams} from '../../../model/other/filter-params';
 
 /**
@@ -33,8 +33,8 @@ export class UserApi {
    * @param pagination requested pagination
    * @param filter filter to be applied on users
    */
-  getAll(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<User>> {
-    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
+  getAll(pagination: KypoRequestedPagination, filter: KypoFilter[] = []): Observable<KypoPaginatedResource<User>> {
+    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
     return this.http.get<RestResourceDTO<UserDTO>>(this.config.userAndGroupRestBasePath + this.usersPathExtension,
       { params: params })
       .pipe(map(resp => this.userMapper.mapUserDTOsToUsers(resp)));
@@ -65,8 +65,8 @@ export class UserApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on users
    */
-  getUsersNotInGroup(groupId: number, pagination: RequestedPagination, filters: Filter[] = []): Observable<PaginatedResource<User>> {
-    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
+  getUsersNotInGroup(groupId: number, pagination: KypoRequestedPagination, filters: KypoFilter[] = []): Observable<KypoPaginatedResource<User>> {
+    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}not-in-groups/${groupId}`,
       {params: params})
@@ -79,9 +79,9 @@ export class UserApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on users
    */
-  getUsersInGroups(groupIds: number[], pagination: RequestedPagination, filters: Filter[] = []) {
+  getUsersInGroups(groupIds: number[], pagination: KypoRequestedPagination, filters: KypoFilter[] = []) {
     const idParams = new HttpParams().set('ids', groupIds.toString());
-    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters), idParams]);
+    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters), idParams]);
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath + this.usersPathExtension}groups`,
       {params: params})

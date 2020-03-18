@@ -3,7 +3,7 @@ import {GroupEditFormGroup} from './group-edit-form-group';
 import {Group} from '../../../../model/group/group.model';
 import {takeWhile} from 'rxjs/operators';
 import {GroupChangedEvent} from '../../../../model/events/group-changed-event';
-import {BaseComponent} from '../../../../model/base-component';
+import {KypoBaseComponent} from 'kypo-common';
 
 /**
  * Component for editing basic group attributes
@@ -14,7 +14,7 @@ import {BaseComponent} from '../../../../model/base-component';
   styleUrls: ['./group-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupEditComponent extends BaseComponent implements OnInit, OnChanges {
+export class GroupEditComponent extends KypoBaseComponent implements OnInit, OnChanges {
 
   /**
    * Edited group

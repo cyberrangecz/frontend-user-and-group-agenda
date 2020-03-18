@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {defer, Observable, of} from 'rxjs';
-import {Kypo2Table, LoadTableEvent, RequestedPagination, TableActionEvent} from 'kypo2-table';
+import {defer, Observable} from 'rxjs';
+import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
 import {User} from 'kypo2-auth';
 import {map, take, takeWhile} from 'rxjs/operators';
-import {BaseComponent} from '../../../model/base-component';
+import {KypoBaseComponent, KypoRequestedPagination} from 'kypo-common';
 import {Kypo2UserOverviewService} from '../../../services/user/kypo2-user-overview.service';
 import {ConfigService} from '../../../config/config.service';
 import {UserTable} from '../../../model/table/user/user-table';
@@ -19,7 +19,7 @@ import {DeleteControlItem} from '../../../model/controls/delete-control-item';
   styleUrls: ['./kypo2-user-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit {
+export class Kypo2UserOverviewComponent extends KypoBaseComponent implements OnInit {
 
   readonly INIT_SORT_NAME = 'familyName';
   readonly INIT_SORT_DIR = 'asc';
@@ -42,7 +42,7 @@ export class Kypo2UserOverviewComponent extends BaseComponent implements OnInit 
 
   ngOnInit() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
+      new KypoRequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
     this.users$ = this.userService.resource$
       .pipe(
         map(groups => new UserTable(groups, this.userService))

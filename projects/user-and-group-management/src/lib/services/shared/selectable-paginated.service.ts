@@ -1,7 +1,11 @@
-import {PaginatedResourceService} from './paginated-resources.service';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {KypoPaginatedResourceService} from 'kypo-common';
 
-export abstract class SelectablePaginatedService<T> extends PaginatedResourceService<T> {
+export abstract class SelectablePaginatedService<T> extends KypoPaginatedResourceService<T> {
+
+  protected constructor(pageSize: number) {
+    super(pageSize);
+  }
 
   protected selectedSubject$: BehaviorSubject<T[]> = new BehaviorSubject([]);
   selected$: Observable<T[]> = this.selectedSubject$.asObservable();

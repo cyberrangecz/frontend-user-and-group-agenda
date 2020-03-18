@@ -1,7 +1,7 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from 'kypo2-auth';
-import {PaginatedResource} from '../../model/table/paginated-resource';
-import {RequestedPagination} from '../../model/other/requested-pagination';
+import {KypoPaginatedResource} from 'kypo-common';
+import {KypoRequestedPagination} from 'kypo-common';
 import {Group} from '../../model/group/group.model';
 
   /**
@@ -38,7 +38,7 @@ export abstract class Kypo2UserAssignService {
     /**
    * List of users already assigned to the resource
    */
-  abstract assignedUsers$: Observable<PaginatedResource<User>>;
+  abstract assignedUsers$: Observable<KypoPaginatedResource<User>>;
 
   setSelectedUsersToAssign(users: User[]) {
     this.selectedUsersToAssignSubject$.next(users);
@@ -69,13 +69,13 @@ export abstract class Kypo2UserAssignService {
    * @param resourceId id of a resource associated with users
    * @param filter filter to be applied on users
    */
-  abstract getUsersToAssign(resourceId: number, filter: string): Observable<PaginatedResource<User>>;
+  abstract getUsersToAssign(resourceId: number, filter: string): Observable<KypoPaginatedResource<User>>;
 
   /**
    * Get groups available to assign to resource
    * @param filterValue filter to be applied on users
    */
-  abstract getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>>;
+  abstract getGroupsToImport(filterValue: string): Observable<KypoPaginatedResource<Group>>;
 
   /**
    * Get users already assigned to the resource
@@ -84,7 +84,7 @@ export abstract class Kypo2UserAssignService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on users
    */
-  abstract getAssigned(resourceId: number, pagination: RequestedPagination, filterValue: string): Observable<PaginatedResource<User>>;
+  abstract getAssigned(resourceId: number, pagination: KypoRequestedPagination, filterValue: string): Observable<KypoPaginatedResource<User>>;
 
 
   /**

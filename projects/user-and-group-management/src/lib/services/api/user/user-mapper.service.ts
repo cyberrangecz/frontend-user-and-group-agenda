@@ -1,8 +1,8 @@
-import {PaginatedResource} from '../../../model/table/paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {User, UserDTO} from 'kypo2-auth';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {Pagination} from '../../../model/table/pagination';
+import {KypoPagination} from 'kypo-common';
 import {Injectable} from '@angular/core';
 import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.model';
 
@@ -16,8 +16,8 @@ export class UserMapperService {
    * Maps user dtos to internal model
    * @param restResource user dtos
    */
-  mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): PaginatedResource<User> {
-    return new PaginatedResource<User>(
+  mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): KypoPaginatedResource<User> {
+    return new KypoPaginatedResource<User>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
@@ -83,8 +83,8 @@ export class UserMapperService {
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): Pagination {
-    return new Pagination(
+  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
+    return new KypoPagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,
       paginationDTO.size,

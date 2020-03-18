@@ -1,6 +1,6 @@
 import {Column, Kypo2Table, Row} from 'kypo2-table';
 import {GroupTableRowAdapter} from './group-table-row-adapter';
-import {PaginatedResource} from '../paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {defer, of} from 'rxjs';
 import {Group} from '../../group/group.model';
 import {GroupEditAction} from './group-edit-action';
@@ -12,7 +12,7 @@ import {Kypo2GroupOverviewService} from '../../../services/group/kypo2-group-ove
  */
 export class GroupTable extends Kypo2Table<GroupTableRowAdapter> {
 
-  constructor(resource: PaginatedResource<Group>, service: Kypo2GroupOverviewService) {
+  constructor(resource: KypoPaginatedResource<Group>, service: Kypo2GroupOverviewService) {
     const rowAdapters = GroupTable.mapGroupToTableAdapter(resource);
     const rows = rowAdapters.elements
       .map(adapter => new Row(adapter, [
@@ -41,8 +41,8 @@ export class GroupTable extends Kypo2Table<GroupTableRowAdapter> {
     this.selectable = true;
   }
 
-  private static mapGroupToTableAdapter(resource: PaginatedResource<Group>): PaginatedResource<GroupTableRowAdapter> {
+  private static mapGroupToTableAdapter(resource: KypoPaginatedResource<Group>): KypoPaginatedResource<GroupTableRowAdapter> {
     const elements = resource.elements.map(group => new GroupTableRowAdapter(group));
-    return new PaginatedResource<GroupTableRowAdapter>(elements, resource.pagination);
+    return new KypoPaginatedResource<GroupTableRowAdapter>(elements, resource.pagination);
   }
 }

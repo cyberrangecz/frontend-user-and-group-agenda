@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnIn
 import {MicroserviceRole} from '../../../../model/microservice/microservice-role.model';
 import {MicroserviceRoleForm} from './microservice-role-form';
 import {takeWhile} from 'rxjs/operators';
-import {BaseComponent} from '../../../../model/base-component';
+import {KypoBaseComponent} from 'kypo-common';
 import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-role-item';
 
 /**
@@ -14,7 +14,7 @@ import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-
   styleUrls: ['./microservice-role.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MicroserviceRoleComponent extends BaseComponent implements OnInit, OnChanges {
+export class MicroserviceRoleComponent extends KypoBaseComponent implements OnInit, OnChanges {
 
   /**
    * Edited role

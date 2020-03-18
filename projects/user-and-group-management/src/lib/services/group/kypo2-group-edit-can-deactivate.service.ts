@@ -3,10 +3,8 @@ import {Kypo2GroupEditOverviewComponent} from '../../components/group/group-edit
 import {Observable} from 'rxjs';
 import { Injectable } from "@angular/core";
 import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogInput} from '../../components/shared/confirmation-dialog/confirmation-dialog.input';
-import {ConfirmationDialogComponent} from '../../components/shared/confirmation-dialog/confirmation-dialog.component';
 import {map, take} from 'rxjs/operators';
-import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
+import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
 
 /**
  * CanDeactivate service for group edit component.
@@ -22,15 +20,18 @@ export class Kypo2GroupEditCanDeactivate implements CanDeactivate<Kypo2GroupEdit
     if (component.canDeactivate()) {
       return true;
     } else {
-      const dialogData = new ConfirmationDialogInput();
-      dialogData.title = 'Unsaved changes';
-      dialogData.content = `Do you want to leave without saving?`;
+      const dialogData = new CsirtMuConfirmationDialogConfig(
+        'Unsaved changes',
+        'There are some unsaved changes. Do you want to leave without saving?',
+        'Cancel',
+        'Leave'
+      );
 
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data: dialogData});
+      const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {data: dialogData});
       return dialogRef.afterClosed()
         .pipe(
           take(1),
-          map(result => result === DialogResultEnum.SUCCESS)
+          map(result => result === CsirtMuDialogResultEnum.CONFIRMED)
         );
     }
   }

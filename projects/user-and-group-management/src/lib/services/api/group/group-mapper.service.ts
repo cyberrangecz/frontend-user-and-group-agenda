@@ -1,8 +1,8 @@
 import { Injectable} from '@angular/core';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {PaginatedResource} from '../../../model/table/paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {Pagination} from '../../../model/table/pagination';
+import {KypoPagination} from 'kypo-common';
 import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {Group} from '../../../model/group/group.model';
 import {UserMapperService} from '../user/user-mapper.service';
@@ -24,8 +24,8 @@ export class GroupMapperService {
    * Maps paginated group dto to internal model
    * @param restResource paginated group dto
    */
-  mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): PaginatedResource<Group> {
-    return new PaginatedResource<Group>(
+  mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): KypoPaginatedResource<Group> {
+    return new KypoPaginatedResource<Group>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
   }
@@ -92,8 +92,8 @@ export class GroupMapperService {
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): Pagination {
-    return new Pagination(
+  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
+    return new KypoPagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,
       paginationDTO.size,

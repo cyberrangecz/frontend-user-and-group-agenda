@@ -3,7 +3,7 @@ import {MicroserviceEditFormGroup} from './microservice-edit-form-group';
 import {Microservice} from '../../../model/microservice/microservice.model';
 import {FormArray, FormControl} from '@angular/forms';
 import {takeWhile} from 'rxjs/operators';
-import {BaseComponent} from '../../../model/base-component';
+import {KypoBaseComponent} from 'kypo-common';
 import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
 
 /**
@@ -15,7 +15,7 @@ import {MicroserviceRolesState} from '../../../model/microservice/microservice-r
   styleUrls: ['./microservice-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MicroserviceEditComponent extends BaseComponent implements OnInit, OnChanges {
+export class MicroserviceEditComponent extends KypoBaseComponent implements OnInit, OnChanges {
 
   /**
    * Edited microservice

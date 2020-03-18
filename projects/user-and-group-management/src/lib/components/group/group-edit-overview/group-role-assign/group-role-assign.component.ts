@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {BaseComponent} from '../../../../model/base-component';
+import {KypoBaseComponent} from 'kypo-common';
 import {defer, Observable} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
@@ -8,7 +8,7 @@ import {Kypo2RoleAssignService} from '../../../../services/role/kypo2-role-assig
 import {map, take, takeWhile} from 'rxjs/operators';
 import {GroupRolesTable} from '../../../../model/table/role/group-roles-table';
 import {Group} from '../../../../model/group/group.model';
-import {PaginatedResource} from '../../../../model/table/paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {KypoControlItem} from 'kypo-controls';
 import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
 import {SaveControlItem} from '../../../../model/controls/save-control-item';
@@ -22,7 +22,7 @@ import {SaveControlItem} from '../../../../model/controls/save-control-item';
   styleUrls: ['./group-role-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupRoleAssignComponent extends BaseComponent implements OnInit, OnChanges {
+export class GroupRoleAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
 
   /**
    * Edited group to assign roles to
@@ -99,7 +99,7 @@ export class GroupRoleAssignComponent extends BaseComponent implements OnInit, O
   search(filterValue: string) {
     this.roles$ = this.roleAssignService.getAvailableToAssign(filterValue)
       .pipe(
-        map((resource: PaginatedResource<UserRole>) => resource.elements)
+        map((resource: KypoPaginatedResource<UserRole>) => resource.elements)
       );
   }
 

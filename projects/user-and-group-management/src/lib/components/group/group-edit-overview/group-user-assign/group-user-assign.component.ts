@@ -4,15 +4,14 @@ import {combineLatest, defer, Observable} from 'rxjs';
 import {User} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
-import {BaseComponent} from '../../../../model/base-component';
+import {KypoBaseComponent} from 'kypo-common';
 import {Kypo2UserAssignService} from '../../../../services/user/kypo2-user-assign.service';
-import {RequestedPagination} from '../../../../model/other/requested-pagination';
+import {KypoRequestedPagination} from 'kypo-common';
 import {ConfigService} from '../../../../config/config.service';
 import { map, take, takeWhile} from 'rxjs/operators';
 import {GroupMemberTable} from '../../../../model/table/user/group-member-table';
 import {KypoControlItem} from 'kypo-controls';
 import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
-
 import {SaveControlItem} from '../../../../model/controls/save-control-item';
 
 /**
@@ -24,7 +23,7 @@ import {SaveControlItem} from '../../../../model/controls/save-control-item';
   styleUrls: ['./group-user-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GroupUserAssignComponent extends BaseComponent implements OnInit, OnChanges {
+export class GroupUserAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
 
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
   readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
@@ -227,7 +226,7 @@ export class GroupUserAssignComponent extends BaseComponent implements OnInit, O
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.MEMBERS_OF_GROUP_INIT_SORT_NAME, this.MEMBERS_OF_GROUP_INIT_SORT_DIR));
+      new KypoRequestedPagination(0, this.configService.config.defaultPaginationSize, this.MEMBERS_OF_GROUP_INIT_SORT_NAME, this.MEMBERS_OF_GROUP_INIT_SORT_DIR));
     this.assignedUsers$ = this.userAssignService.assignedUsers$
       .pipe(
         map(paginatedUsers => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService))

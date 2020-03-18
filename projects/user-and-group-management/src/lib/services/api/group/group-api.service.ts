@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Group} from '../../../model/group/group.model';
-import {PaginatedResource} from '../../../model/table/paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {Observable} from 'rxjs';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
@@ -12,10 +12,10 @@ import {UserMapperService} from '../user/user-mapper.service';
 import {ConfigService} from '../../../config/config.service';
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {FilterParams} from '../../../model/other/filter-params';
-import {Filter} from '../../../model/filters/filter';
-import {ParamsMerger} from '../../../model/other/params-merger';
+import {KypoFilter} from 'kypo-common';
+import {KypoParamsMerger} from 'kypo-common';
 import {RoleDTO, UserRole} from 'kypo2-auth';
-import {RequestedPagination} from '../../../model/other/requested-pagination';
+import {KypoRequestedPagination} from 'kypo-common';
 
 /**
  * Service abstracting http communication with group endpoints.
@@ -41,8 +41,8 @@ export class GroupApi {
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  getAll(pagination: RequestedPagination, filter: Filter[] = []): Observable<PaginatedResource<Group>> {
-    const params = ParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
+  getAll(pagination: KypoRequestedPagination, filter: KypoFilter[] = []): Observable<KypoPaginatedResource<Group>> {
+    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
     return this.http.get<RestResourceDTO<GroupDTO>>(this.config.userAndGroupRestBasePath + this.groupsPathExtension,
       { params: params })
       .pipe(map(resp => this.groupMapper.mapPaginatedGroupDTOsToGroups(resp)));

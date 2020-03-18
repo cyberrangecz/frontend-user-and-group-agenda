@@ -4,12 +4,6 @@ import {MicroserviceApi} from '../../services/api/microservice/microservice-api.
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupErrorService} from '../../services/notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupRoutingEventService} from '../../services/routing/kypo2-user-and-group-routing-event.service';
-import {Observable, of} from 'rxjs';
-import {ConfirmationDialogInput} from '../shared/confirmation-dialog/confirmation-dialog.input';
-import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
-import {map, take} from 'rxjs/operators';
-import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
-import {MatDialog} from '@angular/material/dialog';
 
 /**
  * Main smart component of microservice edit page
@@ -42,8 +36,7 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
    */
   canDeactivateForm = true;
 
-  constructor(public dialog: MatDialog,
-              private microserviceApi: MicroserviceApi,
+  constructor(private microserviceApi: MicroserviceApi,
               private routingService: Kypo2UserAndGroupRoutingEventService,
               private errorHandler: Kypo2UserAndGroupErrorService) { }
 
@@ -54,21 +47,8 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
   /**
    * True if data in the component are saved and user can navigate to different page, false otherwise
    */
-  canDeactivate(): Observable<boolean> {
-    if (!this.canDeactivateForm) {
-      const dialogData = new ConfirmationDialogInput();
-      dialogData.title = 'Unsaved changes';
-      dialogData.content = `Do you want to leave without saving?`;
-
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {data: dialogData});
-      return dialogRef.afterClosed()
-        .pipe(
-          take(1),
-          map(result => result === DialogResultEnum.SUCCESS)
-        );
-    } else {
-      return of(true);
-    }
+  canDeactivate(): boolean {
+    return this.canDeactivateForm;
   }
 
   /**

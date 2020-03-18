@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from 'rxjs';
-import {User, UserRole} from 'kypo2-auth';
-import {PaginatedResource} from '../../model/table/paginated-resource';
+import {UserRole} from 'kypo2-auth';
+import {KypoPaginatedResource} from 'kypo-common';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -53,7 +53,7 @@ export abstract class Kypo2RoleAssignService {
    * Search for roles available to assign to resource
    * @param filter filter to be applied on roles
    */
-  abstract getAvailableToAssign(filter: string): Observable<PaginatedResource<UserRole>>;
+  abstract getAvailableToAssign(filter: string): Observable<KypoPaginatedResource<UserRole>>;
 
   /**
    * Get roles already assigned to the resource

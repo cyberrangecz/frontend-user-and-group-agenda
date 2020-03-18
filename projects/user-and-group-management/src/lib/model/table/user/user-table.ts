@@ -1,4 +1,4 @@
-import {PaginatedResource} from '../paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {Column, Kypo2Table, Row} from 'kypo2-table';
 import {defer, of} from 'rxjs';
 import {User} from 'kypo2-auth';
@@ -13,7 +13,7 @@ import {Kypo2UserOverviewService} from '../../../services/user/kypo2-user-overvi
  */
 export class UserTable extends Kypo2Table<User> {
 
-  constructor(resource: PaginatedResource<User>, service: Kypo2UserOverviewService) {
+  constructor(resource: KypoPaginatedResource<User>, service: Kypo2UserOverviewService) {
     const rows = resource.elements.map(
       user => new Row(user, [
         new UserDeleteAction(of(false), defer(() => service.delete(user)))

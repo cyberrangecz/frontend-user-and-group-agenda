@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {defer, Observable, of} from 'rxjs';
-import {Kypo2Table, LoadTableEvent, RequestedPagination, TableActionEvent} from 'kypo2-table';
+import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
 import {GroupTableRowAdapter} from '../../../model/table/group/group-table-row-adapter';
 import {Kypo2GroupOverviewService} from '../../../services/group/kypo2-group-overview.service';
 import {map, take, takeWhile} from 'rxjs/operators';
-import {BaseComponent} from '../../../model/base-component';
+import {KypoBaseComponent, KypoRequestedPagination} from 'kypo-common';
 import {GroupTable} from '../../../model/table/group/group-table';
 import {ConfigService} from '../../../config/config.service';
 import {KypoControlItem} from 'kypo-controls';
@@ -20,7 +20,7 @@ import {SaveControlItem} from '../../../model/controls/save-control-item';
   styleUrls: ['./kypo2-group-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit {
+export class Kypo2GroupOverviewComponent extends KypoBaseComponent implements OnInit {
 
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
@@ -44,7 +44,7 @@ export class Kypo2GroupOverviewComponent extends BaseComponent implements OnInit
 
   ngOnInit() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
+      new KypoRequestedPagination(0, this.configService.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR));
     this.groups$ = this.groupService.resource$
       .pipe(
         map(groups => new GroupTable(groups, this.groupService))

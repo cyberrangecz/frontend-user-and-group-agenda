@@ -1,6 +1,5 @@
 import {Observable} from 'rxjs';
-import {PaginatedResource} from '../../model/table/paginated-resource';
-import {RequestedPagination} from 'kypo2-table';
+import {KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
 import {User} from 'kypo2-auth';
 import {SelectablePaginatedService} from '../shared/selectable-paginated.service';
 /**
@@ -9,11 +8,16 @@ import {SelectablePaginatedService} from '../shared/selectable-paginated.service
  * You can use get methods to get paginated requests and other operations to modify data.
  */
 export abstract class Kypo2UserOverviewService extends SelectablePaginatedService<User> {
+
+  protected constructor(pageSize: number) {
+    super(pageSize);
+  }
+
   /**
    * @param pagination requested pagination
    * @param filter filer to be applied on resource
    */
-  abstract getAll(pagination?: RequestedPagination, filter?: string): Observable<PaginatedResource<User>>;
+  abstract getAll(pagination?: KypoRequestedPagination, filter?: string): Observable<KypoPaginatedResource<User>>;
 
   /**
    * Deletes user

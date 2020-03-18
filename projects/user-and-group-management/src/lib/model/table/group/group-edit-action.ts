@@ -1,11 +1,9 @@
-import {RowAction} from 'kypo2-table';
+import {EditAction} from 'kypo2-table';
 import {Observable} from 'rxjs';
 
-export class GroupEditAction extends RowAction {
-
-  static readonly ID = 'edit';
+export class GroupEditAction extends EditAction {
 
   constructor(disabled$: Observable<boolean>, result$: Observable<any>) {
-    super(GroupEditAction.ID, 'Edit', 'edit', 'primary', 'Edit group', disabled$, result$);
+    super('Edit group', disabled$, result$);
   }
 }

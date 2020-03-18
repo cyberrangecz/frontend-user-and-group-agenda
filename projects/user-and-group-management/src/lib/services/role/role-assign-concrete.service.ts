@@ -7,8 +7,8 @@ import {catchError, switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {RoleApi} from '../api/role/role-api.service';
-import {RequestedPagination} from '../../model/other/requested-pagination';
-import {PaginatedResource} from '../../model/table/paginated-resource';
+import {KypoRequestedPagination} from 'kypo-common';
+import {KypoPaginatedResource} from 'kypo-common';
 import {RoleFilter} from '../../model/filters/role-filter';
 
 /**
@@ -72,10 +72,10 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
    * Gets roles available to assign
    * @param filterValue filter to be applied on roles
    */
-  getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole>> {
+  getAvailableToAssign(filterValue: string = null): Observable<KypoPaginatedResource<UserRole>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
-    const pagination = new RequestedPagination(0, paginationSize, 'roleType', 'asc');
+    const pagination = new KypoRequestedPagination(0, paginationSize, 'roleType', 'asc');
     return this.roleFacade.getAll(pagination, filter)
       .pipe(
         tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching roles'))}),

@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Group} from '../../../model/group/group.model';
-import {defer, Observable, of} from 'rxjs';
+import {defer, Observable} from 'rxjs';
 import {Kypo2GroupEditService} from '../../../services/group/kypo2-group-edit.service';
 import {GroupChangedEvent} from '../../../model/events/group-changed-event';
 import {take, takeWhile, tap} from 'rxjs/operators';
-import {BaseComponent} from '../../../model/base-component';
+import {KypoBaseComponent} from 'kypo-common';
 import {ActivatedRoute} from '@angular/router';
 import {KypoControlItem} from 'kypo-controls';
 import {SaveControlItem} from '../../../model/controls/save-control-item';
@@ -15,7 +15,7 @@ import {SaveControlItem} from '../../../model/controls/save-control-item';
   styleUrls: ['./kypo2-group-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Kypo2GroupEditOverviewComponent extends BaseComponent implements OnInit {
+export class Kypo2GroupEditOverviewComponent extends KypoBaseComponent implements OnInit {
 
   @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();
 

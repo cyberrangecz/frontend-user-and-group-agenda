@@ -1,9 +1,9 @@
 import {Kypo2UserOverviewService} from './kypo2-user-overview.service';
 import {Injectable} from '@angular/core';
 import {EMPTY, Observable} from 'rxjs';
-import {PaginatedResource} from '../../model/table/paginated-resource';
+import {KypoPaginatedResource} from 'kypo-common';
 import {User} from 'kypo2-auth';
-import {RequestedPagination} from '../../model/other/requested-pagination';
+import {KypoRequestedPagination} from 'kypo-common';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {ConfigService} from '../../config/config.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
@@ -14,9 +14,7 @@ import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-g
 import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {UserFilter} from '../../model/filters/user-filter';
 import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogInput} from '../../components/shared/confirmation-dialog/confirmation-dialog.input';
-import {ConfirmationDialogComponent} from '../../components/shared/confirmation-dialog/confirmation-dialog.component';
-import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
+import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -25,7 +23,7 @@ import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
 
 @Injectable()
 export class UserOverviewConcreteService extends Kypo2UserOverviewService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
   constructor(private userFacade: UserApi,
@@ -33,7 +31,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
               private alertService: Kypo2UserAndGroupNotificationService,
               private configService: ConfigService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
-    super();
+    super(configService.config.defaultPaginationSize);
   }
 
   /**
@@ -41,7 +39,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on resources
    */
-  getAll(pagination?: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User>> {
+  getAll(pagination?: KypoRequestedPagination, filterValue: string = null): Observable<KypoPaginatedResource<User>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
     const filters = filterValue ? [new UserFilter(filterValue)] : [];
@@ -81,16 +79,21 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
 
   private displayConfirmationDialog(users: User[]): Observable<boolean> {
     const multipleUsers = users.length > 1;
-    const dialogData = new ConfirmationDialogInput();
-    dialogData.title = multipleUsers ? 'Remove Users' : 'Remove User';
-    dialogData.content = multipleUsers
-      ? `Do you want to remove ${users.length} selected users?`
-      : `Do you want to remove selected user?`;
+    const title = multipleUsers ? 'Delete Users' : 'Delete User';
+    const content = multipleUsers
+      ? `Do you want to delete ${users.length} selected users?`
+      : `Do you want to delete selected user?`;
+    const dialogData = new CsirtMuConfirmationDialogConfig(
+      title,
+      content,
+      'Cancel',
+      'Delete'
+    );
 
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: dialogData });
+    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
     return dialogRef.afterClosed()
       .pipe(
-        map(result => result === DialogResultEnum.SUCCESS),
+        map(result => result === CsirtMuDialogResultEnum.CONFIRMED),
       );
   }
 

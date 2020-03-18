@@ -1,4 +1,4 @@
-import {DeleteAction} from '../actions/delete-action';
+import {DeleteAction} from 'kypo2-table';
 import {Observable} from 'rxjs';
 
 export class RoleDeleteAction extends DeleteAction {

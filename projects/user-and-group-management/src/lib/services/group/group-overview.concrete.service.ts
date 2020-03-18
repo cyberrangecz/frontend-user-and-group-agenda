@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Kypo2GroupOverviewService} from './kypo2-group-overview.service';
-import {PaginatedResource} from '../../model/table/paginated-resource';
-import {BehaviorSubject, EMPTY, Observable, of} from 'rxjs';
+import {KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
+import {EMPTY, Observable, of} from 'rxjs';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
 import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {GroupApi} from '../api/group/group-api.service';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
-import {Pagination, RequestedPagination} from 'kypo2-table';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {GroupFilter} from '../../model/filters/group-filter';
 import {Group} from '../../model/group/group.model';
@@ -16,9 +15,7 @@ import {ConfigService} from '../../config/config.service';
 import {Kypo2UserAndGroupRouteEvent} from '../../model/events/kypo2-user-and-group-route-event';
 import {Kypo2UserAndGroupRoutingEventService} from '../routing/kypo2-user-and-group-routing-event.service';
 import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogInput} from '../../components/shared/confirmation-dialog/confirmation-dialog.input';
-import {ConfirmationDialogComponent} from '../../components/shared/confirmation-dialog/confirmation-dialog.component';
-import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
+import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -28,7 +25,7 @@ import {DialogResultEnum} from '../../model/enums/dialog-result.enum';
 @Injectable()
 export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
 
-  private lastPagination: RequestedPagination;
+  private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
   constructor(private groupFacade: GroupApi,
@@ -37,7 +34,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
               private configService: ConfigService,
               private routingEventService: Kypo2UserAndGroupRoutingEventService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
-    super();
+    super(configService.config.defaultPaginationSize);
   }
 
   /**
@@ -45,7 +42,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Group>> {
+  getAll(pagination: KypoRequestedPagination, filter: string = null): Observable<KypoPaginatedResource<Group>> {
     this.lastPagination = pagination;
     this.lastFilter = filter;
     this.clearSelection();
@@ -103,16 +100,15 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
 
   private displayConfirmationDialog(groups: Group[]): Observable<boolean> {
     const multipleGroups = groups.length > 1;
-    const dialogData = new ConfirmationDialogInput();
-    dialogData.title = multipleGroups ? 'Remove Groups' : 'Remove Group';
-    dialogData.content = multipleGroups
+    const title = multipleGroups ? 'Remove Groups' : 'Remove Group';
+    const message = multipleGroups
       ? `Do you want to remove ${groups.length} selected groups?`
       : `Do you want to remove selected group?`;
-
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: dialogData });
+    const dialogData = new CsirtMuConfirmationDialogConfig(title, message, 'Cancel', 'Delete');
+    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
     return dialogRef.afterClosed()
       .pipe(
-        map(result => result === DialogResultEnum.SUCCESS),
+        map(result => result === CsirtMuDialogResultEnum.CONFIRMED),
       );
   }
 

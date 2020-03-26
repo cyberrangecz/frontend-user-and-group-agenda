@@ -20,9 +20,10 @@ export class GroupMapper {
    * @param restResource paginated group dto
    */
   static mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): KypoPaginatedResource<Group> {
-    return new KypoPaginatedResource<Group>(
+    const result = new KypoPaginatedResource<Group>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
+    return result;
   }
 
   /**

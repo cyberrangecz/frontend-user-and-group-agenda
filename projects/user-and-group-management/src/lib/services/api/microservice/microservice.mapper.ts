@@ -21,12 +21,13 @@ export class MicroserviceMapper {
   }
 
   private static mapMicroserviceRolesToMicroserviceRolesDTO(roles: MicroserviceRole[]): MicroserviceRoleDTO[] {
-    return roles.map(role => {
+    const result = roles.map(role => {
       const dto = new MicroserviceRoleDTO();
       dto.default = role.default;
       dto.description = role.description;
       dto.role_type = role.type;
       return dto;
     });
+    return result;
   }
 }

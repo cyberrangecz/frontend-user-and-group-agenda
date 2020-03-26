@@ -15,9 +15,10 @@ export class UserMapper {
    * @param restResource user dtos
    */
   static mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): KypoPaginatedResource<User> {
-    return new KypoPaginatedResource<User>(
+    const result = new KypoPaginatedResource<User>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
+    return result;
   }
 
   /**

@@ -5,11 +5,12 @@
 export {UserAndGroupConfig} from './lib/config/user-and-group-config';
 
 // GROUPS
+export {GroupApi} from './lib/services/api/group/group-api.service';
 export {Kypo2GroupOverviewModule} from './lib/components/group/group-overview/kypo2-group-overview.module';
 export {Kypo2GroupOverviewComponentsModule} from './lib/components/group/group-overview/kypo2-group-overview-components.module';
 export {Kypo2GroupEditModule} from './lib/components/group/group-edit-overview/kypo2-group-edit.module';
 export {Kypo2GroupEditComponentsModule} from './lib/components/group/group-edit-overview/kypo2-group-edit-components.module';
-export {Kypo2GroupEditOverviewComponent} from './lib/components/group/group-edit-overview/kypo2-group-edit-overview.component'
+export {Kypo2GroupEditOverviewComponent} from './lib/components/group/group-edit-overview/kypo2-group-edit-overview.component';
 export {Kypo2GroupOverviewComponent} from './lib/components/group/group-overview/kypo2-group-overview.component';
 export {Kypo2RoleAssignService} from './lib/services/role/kypo2-role-assign.service';
 export {Kypo2GroupOverviewService} from './lib/services/group/kypo2-group-overview.service';
@@ -20,6 +21,7 @@ export {Kypo2GroupEditCanDeactivate} from './lib/services/group/kypo2-group-edit
 
 // USERS
 export {Kypo2UserModule} from './lib/components/user/kypo2-user.module';
+export {UserApi} from './lib/services/api/user/user-api.service';
 export {Kypo2UserComponentsModule} from './lib/components/user/kypo2-user-components.module';
 export {Kypo2UserOverviewComponent} from './lib/components/user/user-overview/kypo2-user-overview.component';
 export {Kypo2UserAssignService} from './lib/services/user/kypo2-user-assign.service';
@@ -27,9 +29,13 @@ export {Kypo2UserOverviewService} from './lib/services/user/kypo2-user-overview.
 
 // MICROSERVICES
 export {Kypo2MicroserviceEditModule} from './lib/components/microservice/kypo2-microservice-edit.module';
+export {MicroserviceApi} from './lib/services/api/microservice/microservice-api.service';
 export {Kypo2MicroserviceEditComponentsModule} from './lib/components/microservice/kypo2-microservice-edit-components.module';
 export {Kypo2MicroserviceEditOverviewComponent} from './lib/components/microservice/kypo2-microservice-edit-overview.component';
 export {Kypo2MicroserviceEditCanDeactivate} from './lib/services/microservice/kypo2-microservice-edit-can-deactivate.service';
+
+// ROLES
+export {RoleApi} from './lib/services/api/role/role-api.service';
 
 // COMMONS
 export {Kypo2UserAndGroupEventModule} from './lib/components/shared/kypo2-user-and-group-event.module';

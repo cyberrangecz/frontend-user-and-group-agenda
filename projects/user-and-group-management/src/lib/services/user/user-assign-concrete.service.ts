@@ -2,18 +2,18 @@ import {Kypo2UserAssignService} from './kypo2-user-assign.service';
 import {User} from 'kypo2-auth';
 import {KypoPaginatedResource} from 'kypo-common';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {GroupApi} from '../api/group/group-api.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {KypoRequestedPagination} from 'kypo-common';
 import {Group} from '../../model/group/group.model';
 import {switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {UserApi} from '../api/user/user-api.service';
 import {GroupFilter} from '../../model/filters/group-filter';
 import {KypoPagination} from 'kypo-common';
 import {ConfigService} from '../../config/config.service';
 import {UserFilter} from '../../model/filters/user-filter';
 import {Injectable} from '@angular/core';
+import {UserApi} from '../api/user/user-api.service';
+import {GroupApi} from '../api/group/group-api.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -23,7 +23,7 @@ import {Injectable} from '@angular/core';
 export class UserAssignConcreteService extends Kypo2UserAssignService {
 
   constructor(private api: GroupApi,
-              private userFacade: UserApi,
+              private userApi: UserApi,
               private configService: ConfigService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
     super();
@@ -82,7 +82,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
     this.lastAssignedFilter = filterValue;
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
-    return this.userFacade.getUsersInGroups([resourceId], pagination, filter)
+    return this.userApi.getUsersInGroups([resourceId], pagination, filter)
       .pipe(
         tap(
           paginatedUsers => {
@@ -105,7 +105,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
    */
   getUsersToAssign(resourceId: number, filterValue: string): Observable<KypoPaginatedResource<User>> {
     const pageSize = 50;
-    return this.userFacade.getUsersNotInGroup(resourceId,
+    return this.userApi.getUsersNotInGroup(resourceId,
       new KypoRequestedPagination(0, pageSize, 'familyName', 'asc'),
       [new UserFilter(filterValue)])
       .pipe(

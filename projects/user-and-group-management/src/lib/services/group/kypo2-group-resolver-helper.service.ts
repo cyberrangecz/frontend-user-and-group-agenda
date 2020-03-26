@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {GroupApi} from '../api/group/group-api.service';
 import {Group} from '../../model/group/group.model';
+import {GroupApi} from '../api/group/group-api.service';
 
 /**
  * Helper service for a Resolver service implemented by client
@@ -9,7 +9,7 @@ import {Group} from '../../model/group/group.model';
 @Injectable()
 export class Kypo2GroupResolverHelperService {
 
-  constructor(private groupFacade: GroupApi) {
+  constructor(private api: GroupApi) {
   }
 
   /**
@@ -17,6 +17,6 @@ export class Kypo2GroupResolverHelperService {
    * @param id id of a group
    */
   getById(id: number): Observable<Group> {
-   return  this.groupFacade.get(id);
+   return  this.api.get(id);
   }
 }

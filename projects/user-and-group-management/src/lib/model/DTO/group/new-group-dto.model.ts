@@ -1,6 +1,6 @@
 import {UserForGroupsDTO} from '../user/user-for-groups-dto.model';
 
-export class NewGroupDTO {
+export class CreateGroupDTO {
   description: string;
   group_ids_of_imported_users: number[];
   name: string;

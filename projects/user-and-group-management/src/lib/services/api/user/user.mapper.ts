@@ -3,20 +3,18 @@ import {User, UserDTO} from 'kypo2-auth';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
 import {KypoPagination} from 'kypo-common';
-import {Injectable} from '@angular/core';
 import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.model';
 
 /**
  * Service to map internal model to dtos and other way
  */
-@Injectable()
-export class UserMapperService {
+export class UserMapper {
 
   /**
    * Maps user dtos to internal model
    * @param restResource user dtos
    */
-  mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): KypoPaginatedResource<User> {
+  static mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): KypoPaginatedResource<User> {
     return new KypoPaginatedResource<User>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
@@ -26,7 +24,7 @@ export class UserMapperService {
    * Maps user dtos fro groups to internal model
    * @param userForGroupsDTOs user dtos
    */
-  mapUserForGroupsDTOsToUsers(userForGroupsDTOs: UserForGroupsDTO[]): User[] {
+  static mapUserForGroupsDTOsToUsers(userForGroupsDTOs: UserForGroupsDTO[]): User[] {
     if (userForGroupsDTOs) {
       return userForGroupsDTOs.map(userDTO => this.mapUserForGroupsDTOToUser(userDTO));
     } else {
@@ -38,7 +36,7 @@ export class UserMapperService {
    * Maps user fro group dto to iternal model
    * @param userForGroupDTO user dto
    */
-  mapUserForGroupsDTOToUser(userForGroupDTO: UserForGroupsDTO): User {
+  static mapUserForGroupsDTOToUser(userForGroupDTO: UserForGroupsDTO): User {
     const result = new User([]);
     result.id = userForGroupDTO.id;
     result.name = `${userForGroupDTO.given_name} ${userForGroupDTO.family_name}`;
@@ -53,7 +51,7 @@ export class UserMapperService {
    * Maps user dto to user
    * @param userDTO user dto
    */
-  mapUserDTOToUser(userDTO: UserDTO): User {
+  static mapUserDTOToUser(userDTO: UserDTO): User {
     return User.fromDTO(userDTO);
   }
 
@@ -61,7 +59,7 @@ export class UserMapperService {
    * Maps users to user for groups dtos
    * @param users internal model users
    */
-  mapUsersToUserForGroupDTOs(users: User[]): UserForGroupsDTO[] {
+  static mapUsersToUserForGroupDTOs(users: User[]): UserForGroupsDTO[] {
     if (users) {
       return users.map(user => this.mapUserToUserForGroupDTO(user));
     } else {
@@ -73,7 +71,7 @@ export class UserMapperService {
    * Maps user to  user for group dto
    * @param user internal model users
    */
-  mapUserToUserForGroupDTO(user: User): UserForGroupsDTO {
+  static mapUserToUserForGroupDTO(user: User): UserForGroupsDTO {
     const result = new UserForGroupsDTO();
     result.full_name = user.nameWithAcademicTitles;
     result.id = user.id;
@@ -83,7 +81,7 @@ export class UserMapperService {
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
+  private static mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
     return new KypoPagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,

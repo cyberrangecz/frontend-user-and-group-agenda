@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Microservice} from '../../model/microservice/microservice.model';
-import {MicroserviceApi} from '../../services/api/microservice/microservice-api.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupErrorService} from '../../services/notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupRoutingEventService} from '../../services/routing/kypo2-user-and-group-routing-event.service';
+import {MicroserviceApi} from '../../services/api/microservice/microservice-api.service';
 
 /**
  * Main smart component of microservice edit page
@@ -36,7 +36,7 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
    */
   canDeactivateForm = true;
 
-  constructor(private microserviceApi: MicroserviceApi,
+  constructor(private api: MicroserviceApi,
               private routingService: Kypo2UserAndGroupRoutingEventService,
               private errorHandler: Kypo2UserAndGroupErrorService) { }
 
@@ -70,7 +70,7 @@ export class Kypo2MicroserviceEditOverviewComponent implements OnInit {
    * Calls service to create microservice and handles eventual error
    */
   create() {
-    this.microserviceApi.create(this.microservice)
+    this.api.create(this.microservice)
       .subscribe(
         _ => {
           this.routingService.navigate({ resourceType: 'GROUP' });

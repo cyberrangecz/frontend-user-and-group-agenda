@@ -2,7 +2,6 @@ import {Kypo2GroupEditService} from './kypo2-group-edit.service';
 import {GroupChangedEvent} from '../../model/events/group-changed-event';
 import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {Group} from '../../model/group/group.model';
-import {GroupApi} from '../api/group/group-api.service';
 import {tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
@@ -11,6 +10,7 @@ import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-an
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Injectable} from '@angular/core';
 import {Kypo2UserAndGroupRoutingEventService} from '../routing/kypo2-user-and-group-routing-event.service';
+import {GroupApi} from '../api/group/group-api.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -42,7 +42,7 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
 
   private editedGroup: Group;
 
-  constructor(private groupFacade: GroupApi,
+  constructor(private api: GroupApi,
               private notificationService: Kypo2UserAndGroupNotificationService,
               private routingService: Kypo2UserAndGroupRoutingEventService,
               private errorHandler: Kypo2UserAndGroupErrorService) {
@@ -95,7 +95,7 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
   }
 
   private update() {
-    return this.groupFacade.update(this.editedGroup)
+    return this.api.update(this.editedGroup)
       .pipe(
         tap(
           id => {
@@ -110,7 +110,7 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
   }
 
   private create(): Observable<number> {
-    return this.groupFacade.create(this.editedGroup)
+    return this.api.create(this.editedGroup)
       .pipe(
         tap(
           id => {

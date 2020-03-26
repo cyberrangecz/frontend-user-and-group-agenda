@@ -1,30 +1,25 @@
-import { Injectable} from '@angular/core';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {KypoPaginatedResource} from 'kypo-common';
 import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
 import {KypoPagination} from 'kypo-common';
 import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {Group} from '../../../model/group/group.model';
-import {UserMapperService} from '../user/user-mapper.service';
-import {NewGroupDTO} from '../../../model/DTO/group/new-group-dto.model';
+import {CreateGroupDTO} from '../../../model/DTO/group/new-group-dto.model';
 import {UpdateGroupDTO} from '../../../model/DTO/group/update-group-dto.model';
 import {AddUsersToGroupDTO} from '../../../model/DTO/user/add-user-to-group-dto.model';
 import {UserRole} from 'kypo2-auth';
+import {UserMapper} from '../user/user.mapper';
 
 /**
- * Service mapping internal model to group DTOs and other way
+ * Maps internal model to group DTOs and other way
  */
-@Injectable()
-export class GroupMapperService {
-
-  constructor(private userMapper: UserMapperService) {
-  }
+export class GroupMapper {
 
   /**
    * Maps paginated group dto to internal model
    * @param restResource paginated group dto
    */
-  mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): KypoPaginatedResource<Group> {
+  static mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): KypoPaginatedResource<Group> {
     return new KypoPaginatedResource<Group>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
       this.mapPaginationDTOToPaginationModel(restResource.pagination));
@@ -34,13 +29,13 @@ export class GroupMapperService {
    * Maps group dto to internal model
    * @param groupDTO group dto to be mapped
    */
-  mapGroupDTOToGroup(groupDTO: GroupDTO): Group {
+  static mapGroupDTOToGroup(groupDTO: GroupDTO): Group {
     const result = new Group();
     result.id = groupDTO.id;
     result.name = groupDTO.name;
     result.description = groupDTO.description;
     result.canBeDeleted = groupDTO.can_be_deleted;
-    result.members = this.userMapper.mapUserForGroupsDTOsToUsers(groupDTO.users);
+    result.members = UserMapper.mapUserForGroupsDTOsToUsers(groupDTO.users);
     result.roles = groupDTO.roles.map(roleDTO => UserRole.fromDTO(roleDTO));
     if (groupDTO.expiration_date) {
       result.expirationDate = new Date(groupDTO.expiration_date);
@@ -53,12 +48,12 @@ export class GroupMapperService {
    * @param group group to be mapped
    * @param groupsToImportFromId ids of groups for import of users
    */
-  mapGroupToNewGroupDTO(group: Group, groupsToImportFromId: number[]): NewGroupDTO {
-    const result = new NewGroupDTO();
+  static mapGroupToCreateGroupDTO(group: Group, groupsToImportFromId: number[]): CreateGroupDTO {
+    const result = new CreateGroupDTO();
     result.name = group.name;
     result.description = group.description;
     result.group_ids_of_imported_users = groupsToImportFromId;
-    result.users = this.userMapper.mapUsersToUserForGroupDTOs(group.members);
+    result.users = UserMapper.mapUsersToUserForGroupDTOs(group.members);
     if (group.expirationDate) {
       result.expiration_date = group.getExpirationDateUTC().toISOString();
     }
@@ -69,7 +64,7 @@ export class GroupMapperService {
    * Maps internal model to update group dto
    * @param group group to be mapped
    */
-  mapGroupToUpdateGroupDTO(group: Group): UpdateGroupDTO {
+  static mapGroupToUpdateGroupDTO(group: Group): UpdateGroupDTO {
     const result = new UpdateGroupDTO();
     result.id = group.id;
     result.name = group.name;
@@ -85,14 +80,14 @@ export class GroupMapperService {
    * @param userIds ids of users to add
    * @param groupIds ids of groups to import
    */
-  createAddUsersToGroupDTO( userIds: number[], groupIds: number[]): AddUsersToGroupDTO {
+  static createAddUsersToGroupDTO( userIds: number[], groupIds: number[]): AddUsersToGroupDTO {
     const result = new AddUsersToGroupDTO();
     result.ids_of_users_to_be_add = userIds;
     result.ids_of_groups_of_imported_users = groupIds;
     return result;
   }
 
-  private mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
+  private static mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
     return new KypoPagination(
       paginationDTO.number,
       paginationDTO.number_of_elements,
@@ -101,5 +96,4 @@ export class GroupMapperService {
       paginationDTO.total_pages
     );
   }
-
 }

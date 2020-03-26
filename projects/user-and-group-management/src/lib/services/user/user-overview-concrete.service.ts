@@ -7,7 +7,6 @@ import {KypoRequestedPagination} from 'kypo-common';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {ConfigService} from '../../config/config.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
-import {UserApi} from '../api/user/user-api.service';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
@@ -15,6 +14,7 @@ import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-an
 import {UserFilter} from '../../model/filters/user-filter';
 import {MatDialog} from '@angular/material/dialog';
 import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
+import {UserApi} from '../api/user/user-api.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -26,7 +26,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
-  constructor(private userFacade: UserApi,
+  constructor(private api: UserApi,
               private dialog: MatDialog,
               private alertService: Kypo2UserAndGroupNotificationService,
               private configService: ConfigService,
@@ -45,7 +45,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
     const filters = filterValue ? [new UserFilter(filterValue)] : [];
     this.hasErrorSubject$.next(false);
     this.clearSelection();
-    return this.userFacade.getAll(pagination, filters)
+    return this.api.getAll(pagination, filters)
       .pipe(
         tap(users => {
             this.resourceSubject$.next(users);
@@ -99,7 +99,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
 
   private callApiToDelete(users: User[]): Observable<any> {
     const ids = users.map(user => user.id);
-    return this.userFacade.deleteMultiple(ids)
+    return this.api.deleteMultiple(ids)
       .pipe(
         tap(_ => {
           this.clearSelection();

@@ -5,7 +5,6 @@ import {EMPTY, Observable, of} from 'rxjs';
 import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
 import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {GroupApi} from '../api/group/group-api.service';
 import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {map, switchMap, tap} from 'rxjs/operators';
@@ -16,6 +15,7 @@ import {Kypo2UserAndGroupRouteEvent} from '../../model/events/kypo2-user-and-gro
 import {Kypo2UserAndGroupRoutingEventService} from '../routing/kypo2-user-and-group-routing-event.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
+import {GroupApi} from '../api/group/group-api.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -28,7 +28,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
-  constructor(private groupFacade: GroupApi,
+  constructor(private api: GroupApi,
               private alertService: Kypo2UserAndGroupNotificationService,
               private dialog: MatDialog,
               private configService: ConfigService,
@@ -48,7 +48,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
     this.clearSelection();
     const filters = filter ? [new GroupFilter(filter)] : [];
     this.hasErrorSubject$.next(false);
-    return this.groupFacade.getAll(pagination, filters)
+    return this.api.getAll(pagination, filters)
       .pipe(
         tap(groups => {
           this.resourceSubject$.next(groups);
@@ -114,7 +114,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
 
   private callApiToDelete(groups: Group[]): Observable<any> {
     const ids = groups.map(group => group.id);
-    return this.groupFacade.deleteMultiple(ids)
+    return this.api.deleteMultiple(ids)
       .pipe(
         tap( resp => {
             this.clearSelection();

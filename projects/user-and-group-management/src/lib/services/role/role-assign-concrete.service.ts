@@ -2,14 +2,14 @@ import {Kypo2RoleAssignService} from './kypo2-role-assign.service';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
-import {GroupApi} from '../api/group/group-api.service';
 import {catchError, switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {RoleApi} from '../api/role/role-api.service';
 import {KypoRequestedPagination} from 'kypo-common';
 import {KypoPaginatedResource} from 'kypo-common';
 import {RoleFilter} from '../../model/filters/role-filter';
+import {RoleApi} from '../api/role/role-api.service';
+import {GroupApi} from '../api/group/group-api.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -25,7 +25,7 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
   assignedRoles$: Observable<UserRole[]> = this.assignedRolesSubject$.asObservable();
 
   constructor(private api: GroupApi,
-              private roleFacade: RoleApi,
+              private roleApi: RoleApi,
               private errorHandler: Kypo2UserAndGroupErrorService) {
     super();
   }
@@ -76,7 +76,7 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new KypoRequestedPagination(0, paginationSize, 'roleType', 'asc');
-    return this.roleFacade.getAll(pagination, filter)
+    return this.roleApi.getAll(pagination, filter)
       .pipe(
         tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching roles'))}),
       );

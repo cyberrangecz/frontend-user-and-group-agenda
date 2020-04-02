@@ -12,7 +12,7 @@ import {KypoRequestedPagination} from 'kypo-common';
 import {KypoFilter} from 'kypo-common';
 import {KypoParamsMerger} from 'kypo-common';
 import {FilterParams} from '../../../model/other/filter-params';
-import {RoleMapper} from './role-mapper';
+import {RoleMapper} from '../../../model/mappers/role-mapper';
 import {RoleApi} from './role-api.service';
 
 /**

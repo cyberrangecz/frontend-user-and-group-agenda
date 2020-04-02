@@ -1,17 +1,18 @@
-import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {KypoPaginatedResource} from 'kypo-common';
-import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {KypoPagination} from 'kypo-common';
-import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
-import {Group} from '../../../model/group/group.model';
-import {CreateGroupDTO} from '../../../model/DTO/group/new-group-dto.model';
-import {UpdateGroupDTO} from '../../../model/DTO/group/update-group-dto.model';
-import {AddUsersToGroupDTO} from '../../../model/DTO/user/add-user-to-group-dto.model';
+import {RestResourceDTO} from '../DTO/rest-resource-dto.model';
+import {KypoPaginatedResource, KypoPagination} from 'kypo-common';
+import {PaginationDTO} from '../DTO/pagination-dto.model';
+import {GroupDTO} from '../DTO/group/group-dto.model';
+import {Group} from '../group/group.model';
+import {CreateGroupDTO} from '../DTO/group/new-group-dto.model';
+import {UpdateGroupDTO} from '../DTO/group/update-group-dto.model';
+import {AddUsersToGroupDTO} from '../DTO/user/add-user-to-group-dto.model';
 import {UserRole} from 'kypo2-auth';
-import {UserMapper} from '../user/user.mapper';
+import {UserMapper} from './user.mapper';
+import {PaginationMapper} from './pagination-mapper';
 
 /**
  * Maps internal model to group DTOs and other way
+ * @dynamic
  */
 export class GroupMapper {
 
@@ -20,10 +21,9 @@ export class GroupMapper {
    * @param restResource paginated group dto
    */
   static mapPaginatedGroupDTOsToGroups(restResource: RestResourceDTO<GroupDTO>): KypoPaginatedResource<Group> {
-    const result = new KypoPaginatedResource<Group>(
+    return new KypoPaginatedResource<Group>(
       restResource.content.map(groupDTO => this.mapGroupDTOToGroup(groupDTO)),
-      this.mapPaginationDTOToPaginationModel(restResource.pagination));
-    return result;
+      PaginationMapper.mapDTOToPagination(restResource.pagination));
   }
 
   /**
@@ -86,15 +86,5 @@ export class GroupMapper {
     result.ids_of_users_to_be_add = userIds;
     result.ids_of_groups_of_imported_users = groupIds;
     return result;
-  }
-
-  private static mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
-    return new KypoPagination(
-      paginationDTO.number,
-      paginationDTO.number_of_elements,
-      paginationDTO.size,
-      paginationDTO.total_elements,
-      paginationDTO.total_pages
-    );
   }
 }

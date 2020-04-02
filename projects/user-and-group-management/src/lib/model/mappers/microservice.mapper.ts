@@ -1,10 +1,11 @@
-import {Microservice} from '../../../model/microservice/microservice.model';
-import {MicroserviceCreateDTO} from '../../../model/DTO/microservice/microservice-dto.model';
-import {MicroserviceRole} from '../../../model/microservice/microservice-role.model';
-import {MicroserviceRoleDTO} from '../../../model/DTO/microservice/microservice-role-dto';
+import {Microservice} from '../microservice/microservice.model';
+import {MicroserviceCreateDTO} from '../DTO/microservice/microservice-dto.model';
+import {MicroserviceRole} from '../microservice/microservice-role.model';
+import {MicroserviceRoleDTO} from '../DTO/microservice/microservice-role-dto';
 
 /**
  * Class mapping internal model to DTOs and other way
+ * @dynamic
  */
 export class MicroserviceMapper {
 
@@ -21,13 +22,12 @@ export class MicroserviceMapper {
   }
 
   private static mapMicroserviceRolesToMicroserviceRolesDTO(roles: MicroserviceRole[]): MicroserviceRoleDTO[] {
-    const result = roles.map(role => {
+    return roles.map(role => {
       const dto = new MicroserviceRoleDTO();
       dto.default = role.default;
       dto.description = role.description;
       dto.role_type = role.type;
       return dto;
     });
-    return result;
   }
 }

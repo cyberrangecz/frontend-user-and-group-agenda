@@ -1,6 +1,6 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
-import {KypoPaginatedResource} from 'kypo-common';
+import {KypoPaginatedResource, KypoPagination, KypoRequestedPagination} from 'kypo-common';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -31,7 +31,7 @@ export abstract class Kypo2RoleAssignService {
   /**
    * List of roles already assigned to the resource
    */
-  abstract assignedRoles$: Observable<UserRole[]>;
+  abstract assignedRoles$: Observable<KypoPaginatedResource<UserRole>>;
 
   setSelectedRolesToAssign(roles: UserRole[]) {
     this.selectedRolesToAssignSubject$.next(roles);
@@ -59,8 +59,10 @@ export abstract class Kypo2RoleAssignService {
    * Get roles already assigned to the resource
    * @contract MUST update assignedRoles observable.
    * @param resourceId id of a resource associated with roles
+   * @param pagination requested pagination
+   * @param filterValue filter to be applied on result
    */
-  abstract getAssigned(resourceId: number): Observable<UserRole[]>;
+  abstract getAssigned(resourceId: number, pagination: KypoRequestedPagination, filterValue?: string): Observable<KypoPaginatedResource<UserRole>>;
 
   /**
    * Assigns roles to a resource

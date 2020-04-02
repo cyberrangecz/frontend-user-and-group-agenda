@@ -7,7 +7,7 @@ import {PaginationHttpParams} from '../../../model/other/pagination-http-params'
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {map} from 'rxjs/operators';
-import {GroupMapper} from './group.mapper';
+import {GroupMapper} from '../../../model/mappers/group.mapper';
 import {ConfigService} from '../../../config/config.service';
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {FilterParams} from '../../../model/other/filter-params';
@@ -16,6 +16,7 @@ import {KypoParamsMerger} from 'kypo-common';
 import {RoleDTO, UserRole} from 'kypo2-auth';
 import {KypoRequestedPagination} from 'kypo-common';
 import {GroupApi} from './group-api.service';
+import {RoleMapper} from '../../../model/mappers/role-mapper';
 
 /**
  * Default implementation of service abstracting http communication with group endpoints.
@@ -122,11 +123,16 @@ export class GroupDefaultApi extends GroupApi {
   /**
    * Sends http request to get all roles of a group
    * @param groupId id of a group associated with roles
+   * @param pagination requested pagination
+   * @param filter filter to be applied on result
    */
-  getRolesOfGroup(groupId: number): Observable<UserRole[]> {
-    return this.http.get<RoleDTO[]>(`${this.config.userAndGroupRestBasePath}${this.groupsPathExtension}/${groupId}/${this.rolesPathExtension}`)
+  getRolesOfGroup(groupId: number, pagination: KypoRequestedPagination, filter: KypoFilter[] = []): Observable<KypoPaginatedResource<UserRole>> {
+    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filter)]);
+    return this.http.get<RestResourceDTO<RoleDTO>>(
+      `${this.config.userAndGroupRestBasePath}${this.groupsPathExtension}/${groupId}/${this.rolesPathExtension}`,
+      {params: params})
       .pipe(
-        map(roleDTOs => roleDTOs.map(roleDTO => UserRole.fromDTO(roleDTO)))
+        map(roleDTOs => RoleMapper.mapRolesDTOtoRoles(roleDTOs))
       );
   }
 

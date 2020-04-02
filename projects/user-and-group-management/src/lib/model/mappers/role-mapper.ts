@@ -1,6 +1,7 @@
-import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
+import {RestResourceDTO} from '../DTO/rest-resource-dto.model';
 import {RoleDTO, UserRole} from 'kypo2-auth';
 import {KypoPaginatedResource, KypoPagination} from 'kypo-common';
+import {PaginationMapper} from './pagination-mapper';
 
 export class RoleMapper {
 
@@ -10,16 +11,7 @@ export class RoleMapper {
    */
   static  mapRolesDTOtoRoles(resource: RestResourceDTO<RoleDTO>): KypoPaginatedResource<UserRole> {
     const content = resource.content.map(dto => UserRole.fromDTO(dto));
-
-    // TODO: Replace once pagination is fixed
-    /*    const pagination = new Pagination(
-      resource.pagination.number,
-      resource.pagination.number_of_elements,
-      resource.pagination.size,
-      resource.pagination.total_elements,
-      resource.pagination.total_pages
-    );*/
-    const pagination = new KypoPagination(0, 0, 0, 0, 0);
+    const pagination = PaginationMapper.mapDTOToPagination(resource.pagination);
     return new KypoPaginatedResource(content, pagination);
   }
 }

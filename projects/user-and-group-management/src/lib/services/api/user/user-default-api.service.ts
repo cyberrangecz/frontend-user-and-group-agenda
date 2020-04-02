@@ -4,7 +4,7 @@ import {PaginationHttpParams} from '../../../model/other/pagination-http-params'
 import {KypoPaginatedResource} from 'kypo-common';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {UserMapper} from './user.mapper';
+import {UserMapper} from '../../../model/mappers/user.mapper';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {UserAndGroupConfig} from '../../../config/user-and-group-config';
 import {ConfigService} from '../../../config/config.service';

@@ -29,9 +29,12 @@
   </mat-card-header>
   <mat-card-content>
     <kypo2-table elevation="0"
+                 [defaultSortName]="ROLES_OF_GROUP_INIT_SORT_NAME"
+                 [defaultSortDirection]="ROLES_OF_GROUP_INIT_SORT_DIR"
                  [hasError]="assignedRolesHasError$ | async"
                  [data]="assignedRoles$ | async"
                  [isLoading]="isLoadingAssignedRoles$ | async"
+                 (refresh)="onAssignedRolesLoad($event)"
                  (rowAction)="onAssignedRolesTableAction($event)"
                  (rowSelection)="onAssignedRolesSelection($event)">
     </kypo2-table>

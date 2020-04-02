@@ -1,9 +1,8 @@
 import {KypoPaginatedResource} from 'kypo-common';
 import {User, UserDTO} from 'kypo2-auth';
-import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {PaginationDTO} from '../../../model/DTO/pagination-dto.model';
-import {KypoPagination} from 'kypo-common';
-import {UserForGroupsDTO} from '../../../model/DTO/user/user-for-groups-dto.model';
+import {RestResourceDTO} from '../DTO/rest-resource-dto.model';
+import {UserForGroupsDTO} from '../DTO/user/user-for-groups-dto.model';
+import {PaginationMapper} from './pagination-mapper';
 
 /**
  * Service to map internal model to dtos and other way
@@ -17,7 +16,7 @@ export class UserMapper {
   static mapUserDTOsToUsers(restResource: RestResourceDTO<UserDTO>): KypoPaginatedResource<User> {
     const result = new KypoPaginatedResource<User>(
       restResource.content.map(userDTO => this.mapUserDTOToUser(userDTO)),
-      this.mapPaginationDTOToPaginationModel(restResource.pagination));
+      PaginationMapper.mapDTOToPagination(restResource.pagination));
     return result;
   }
 
@@ -80,15 +79,5 @@ export class UserMapper {
     result.iss = user.issuer;
     result.mail = user.mail;
     return result;
-  }
-
-  private static mapPaginationDTOToPaginationModel(paginationDTO: PaginationDTO): KypoPagination {
-    return new KypoPagination(
-      paginationDTO.number,
-      paginationDTO.number_of_elements,
-      paginationDTO.size,
-      paginationDTO.total_elements,
-      paginationDTO.total_pages
-    );
   }
 }

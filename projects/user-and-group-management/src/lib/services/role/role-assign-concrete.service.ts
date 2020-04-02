@@ -1,11 +1,11 @@
 import {Kypo2RoleAssignService} from './kypo2-role-assign.service';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, forkJoin, Observable, of} from 'rxjs';
-import {UserRole} from 'kypo2-auth';
+import {User, UserRole} from 'kypo2-auth';
 import {catchError, switchMap, tap} from 'rxjs/operators';
 import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {KypoRequestedPagination} from 'kypo-common';
+import {KypoFilter, KypoPagination, KypoRequestedPagination} from 'kypo-common';
 import {KypoPaginatedResource} from 'kypo-common';
 import {RoleFilter} from '../../model/filters/role-filter';
 import {RoleApi} from '../api/role/role-api.service';
@@ -18,11 +18,14 @@ import {GroupApi} from '../api/group/group-api.service';
 @Injectable()
 export class RoleAssignConcreteService extends Kypo2RoleAssignService {
 
-  private assignedRolesSubject$: BehaviorSubject<UserRole[]> = new BehaviorSubject([]);
+  private assignedRolesSubject$: BehaviorSubject<KypoPaginatedResource<UserRole>> = new BehaviorSubject(this.initSubject());
   /**
    * Subscribe to receive assigned roles
    */
-  assignedRoles$: Observable<UserRole[]> = this.assignedRolesSubject$.asObservable();
+  assignedRoles$: Observable<KypoPaginatedResource<UserRole>> = this.assignedRolesSubject$.asObservable();
+
+  private lastPagination: KypoRequestedPagination;
+  private lastFilter: string;
 
   constructor(private api: GroupApi,
               private roleApi: RoleApi,
@@ -48,12 +51,17 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
   /**
    * Gets roles assigned to a resource, updates related observables or handles error
    * @param resourceId id of a resource associated with requested roles
+   * @param pagination requested pagination
+   * @param filterValue filter to be applied on result
    */
-  getAssigned(resourceId: number): Observable<UserRole[]> {
+  getAssigned(resourceId: number, pagination: KypoRequestedPagination, filterValue: string = null): Observable<KypoPaginatedResource<UserRole>> {
+    this.lastPagination = pagination;
+    this.lastFilter = filterValue;
+    const filter = new KypoFilter('name', filterValue);
     this.clearSelectedAssignedRoles();
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
-    return this.api.getRolesOfGroup(resourceId)
+    return this.api.getRolesOfGroup(resourceId, pagination, [filter])
       .pipe(
         tap(
           roles => {
@@ -109,7 +117,7 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
           this.errorHandler.emit(new Kypo2UserAndGroupError(undefined, 'Assigning some roles failed'));
         }
       }),
-      switchMap(_ => this.getAssigned(resourceId))
+      switchMap(_ => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
     );
   }
 
@@ -125,7 +133,14 @@ export class RoleAssignConcreteService extends Kypo2RoleAssignService {
           this.errorHandler.emit(new Kypo2UserAndGroupError(undefined, 'Assigning some roles failed'));
         }
       }),
-      switchMap(_ => this.getAssigned(resourceId))
+      switchMap(_ => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+    );
+  }
+
+  private initSubject(): KypoPaginatedResource<UserRole> {
+    return new KypoPaginatedResource(
+      [],
+      new KypoPagination(0, 0, 10, 0, 0)
     );
   }
 }

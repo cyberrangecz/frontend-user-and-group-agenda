@@ -54,8 +54,10 @@ export abstract class GroupApi {
   /**
    * Sends http request to get all roles of a group
    * @param groupId id of a group associated with roles
+   * @param pagination requested pagination
+   * @param filter filter to be applied on result
    */
-  abstract getRolesOfGroup(groupId: number): Observable<UserRole[]>;
+  abstract getRolesOfGroup(groupId: number, pagination: KypoRequestedPagination, filter?: KypoFilter[]): Observable<KypoPaginatedResource<UserRole>>;
 
   /**
    * Sends http request to remove users from a group

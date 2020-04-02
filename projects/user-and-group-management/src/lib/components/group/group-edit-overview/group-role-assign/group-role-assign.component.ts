@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {KypoBaseComponent} from 'kypo-common';
+import {KypoBaseComponent, KypoRequestedPagination} from 'kypo-common';
 import {defer, Observable} from 'rxjs';
 import {UserRole} from 'kypo2-auth';
 import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
-import {Kypo2Table, TableActionEvent} from 'kypo2-table';
+import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
 import {Kypo2RoleAssignService} from '../../../../services/role/kypo2-role-assign.service';
 import {map, take, takeWhile} from 'rxjs/operators';
 import {GroupRolesTable} from '../../../../model/table/role/group-roles-table';
@@ -12,6 +12,7 @@ import {KypoPaginatedResource} from 'kypo-common';
 import {KypoControlItem} from 'kypo-controls';
 import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
 import {SaveControlItem} from '../../../../model/controls/save-control-item';
+import {ConfigService} from '../../../../config/config.service';
 
 /**
  * Component for role assignment to edited group
@@ -23,6 +24,9 @@ import {SaveControlItem} from '../../../../model/controls/save-control-item';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GroupRoleAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
+
+  readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';
+  readonly ROLES_OF_GROUP_INIT_SORT_DIR = 'asc';
 
   /**
    * Edited group to assign roles to
@@ -67,7 +71,8 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   rolesToAssignControls: KypoControlItem[];
   assignedRolesControls: KypoControlItem[];
 
-  constructor(private roleAssignService: Kypo2RoleAssignService) {
+  constructor(private roleAssignService: Kypo2RoleAssignService,
+              private config: ConfigService) {
     super();
     this.roleMapping = {
       id: 'id',
@@ -104,6 +109,21 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   }
 
   /**
+   * Changes internal state of the component when roles to assign are selected
+   * @param selected selected roles available to assign to edited group
+   */
+  onRolesToAssignSelection(selected: UserRole[]) {
+    this.roleAssignService.setSelectedRolesToAssign(selected);
+  }
+
+  onAssignedRolesLoad(event: LoadTableEvent) {
+    this.roleAssignService.getAssigned(this.resource.id, event.pagination, event.filter)
+      .pipe(
+        takeWhile(_ => this.isAlive)
+      ).subscribe();
+  }
+
+  /**
    * Resolves type of action and calls appropriate handler
    * @param event action emitted from assigned roles table component
    */
@@ -122,14 +142,6 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
     this.roleAssignService.setSelectedAssignedRoles(selected);
   }
 
-  /**
-   * Changes internal state of the component when roles to assign are selected
-   * @param selected selected roles available to assign to edited group
-   */
-  onRolesToAssignSelection(selected: UserRole[]) {
-    this.roleAssignService.setSelectedRolesToAssign(selected);
-  }
-
   private init() {
     this.selectedRolesToAssign$ = this.roleAssignService.selectedRolesToAssign$;
     this.initTable();
@@ -141,13 +153,14 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   private initTable() {
     this.assignedRoles$ = this.roleAssignService.assignedRoles$
       .pipe(
-        map(roles => new GroupRolesTable(roles, this.resource.id, this.roleAssignService))
+        map(resource => new GroupRolesTable(resource, this.resource.id, this.roleAssignService))
       );
     this.assignedRolesHasError$ = this.roleAssignService.hasError$;
     this.isLoadingAssignedRoles$ = this.roleAssignService.isLoadingAssigned$;
-    this.roleAssignService.getAssigned(this.resource.id)
-      .pipe(take(1))
-      .subscribe();
+    const initialLoadEvent = new LoadTableEvent(
+      new KypoRequestedPagination(0, this.config.config.defaultPaginationSize, this.ROLES_OF_GROUP_INIT_SORT_NAME, this.ROLES_OF_GROUP_INIT_SORT_DIR)
+    )
+    this.onAssignedRolesLoad(initialLoadEvent);
   }
 
   private initAssignedRolesControls() {

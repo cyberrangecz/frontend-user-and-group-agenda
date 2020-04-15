@@ -2,51 +2,48 @@
  * Public API Surface of user-and-group-management
  */
 
-export {UserAndGroupConfig} from './lib/config/user-and-group-config';
-
 // GROUPS
 export {GroupApi} from './lib/services/api/group/group-api.service';
-export {Kypo2GroupOverviewModule} from './lib/components/group/group-overview/kypo2-group-overview.module';
-export {Kypo2GroupOverviewComponentsModule} from './lib/components/group/group-overview/kypo2-group-overview-components.module';
-export {Kypo2GroupEditModule} from './lib/components/group/group-edit-overview/kypo2-group-edit.module';
-export {Kypo2GroupEditComponentsModule} from './lib/components/group/group-edit-overview/kypo2-group-edit-components.module';
-export {Kypo2GroupEditOverviewComponent} from './lib/components/group/group-edit-overview/kypo2-group-edit-overview.component';
-export {Kypo2GroupOverviewComponent} from './lib/components/group/group-overview/kypo2-group-overview.component';
-export {Kypo2RoleAssignService} from './lib/services/role/kypo2-role-assign.service';
-export {Kypo2GroupOverviewService} from './lib/services/group/kypo2-group-overview.service';
-export {Kypo2GroupEditService} from './lib/services/group/kypo2-group-edit.service';
-export {Kypo2GroupResolverHelperService} from './lib/services/group/kypo2-group-resolver-helper.service';
-export {Kypo2GroupEditCanDeactivate} from './lib/services/group/kypo2-group-edit-can-deactivate.service';
+export {GroupOverviewComponentsModule} from './lib/components/group/overview/group-overview-components.module';
+export {GroupEditComponentsModule} from './lib/components/group/edit/group-edit-components.module';
+export {GroupEditOverviewComponent} from './lib/components/group/edit/group-edit-overview.component';
+export {GroupOverviewComponent} from './lib/components/group/overview/group-overview.component';
+export {RoleAssignService} from './lib/services/role/role-assign.service';
+export {GroupOverviewService} from './lib/services/group/group-overview.service';
+export {GroupEditService} from './lib/services/group/group-edit.service';
+export {GroupEditCanDeactivate} from './lib/services/can-deactivate/group-edit-can-deactivate.service';
 
 
 // USERS
-export {Kypo2UserModule} from './lib/components/user/kypo2-user.module';
 export {UserApi} from './lib/services/api/user/user-api.service';
-export {Kypo2UserComponentsModule} from './lib/components/user/kypo2-user-components.module';
-export {Kypo2UserOverviewComponent} from './lib/components/user/user-overview/kypo2-user-overview.component';
-export {Kypo2UserAssignService} from './lib/services/user/kypo2-user-assign.service';
-export {Kypo2UserOverviewService} from './lib/services/user/kypo2-user-overview.service';
+export {UserComponentsModule} from './lib/components/user/user-components.module';
+export {UserOverviewComponent} from './lib/components/user/overview/user-overview.component';
+export {UserAssignService} from './lib/services/user/user-assign.service';
+export {UserOverviewService} from './lib/services/user/user-overview.service';
 
 // MICROSERVICES
-export {Kypo2MicroserviceEditModule} from './lib/components/microservice/kypo2-microservice-edit.module';
+export {MicroserviceEditComponentsModule} from './lib/components/microservice/microservice-edit-components.module';
 export {MicroserviceApi} from './lib/services/api/microservice/microservice-api.service';
-export {Kypo2MicroserviceEditComponentsModule} from './lib/components/microservice/kypo2-microservice-edit-components.module';
-export {Kypo2MicroserviceEditOverviewComponent} from './lib/components/microservice/kypo2-microservice-edit-overview.component';
-export {Kypo2MicroserviceEditCanDeactivate} from './lib/services/microservice/kypo2-microservice-edit-can-deactivate.service';
+export {MicroserviceEditOverviewComponent} from './lib/components/microservice/microservice-edit-overview.component';
+export {MicroserviceEditCanDeactivate} from './lib/services/can-deactivate/microservice-edit-can-deactivate.service';
 
 // ROLES
 export {RoleApi} from './lib/services/api/role/role-api.service';
 
-// COMMONS
-export {Kypo2UserAndGroupEventModule} from './lib/components/shared/kypo2-user-and-group-event.module';
-export {Kypo2UserAndGroupNotificationService} from './lib/services/notification/kypo2-user-and-group-notification.service';
-export {Kypo2UserAndGroupRoutingEventService} from './lib/services/routing/kypo2-user-and-group-routing-event.service';
-export {Kypo2UserAndGroupErrorService} from './lib/services/notification/kypo2-user-and-group-error.service';
-export {Kypo2UserAndGroupError} from './lib/model/events/kypo2-user-and-group-error';
-export {Kypo2UserAndGroupNotification} from './lib/model/events/kypo2-user-and-group-notification';
-export {Kypo2UserAndGroupNotificationType} from './lib/model/enums/kypo2-user-and-group-notification-type.enum';
-export {Kypo2UserAndGroupRouteEvent} from './lib/model/events/kypo2-user-and-group-route-event';
 
+// RESOLVERS
+export * from './lib/services/resolvers/group-resolver.service';
+export * from './lib/services/resolvers/group-title-resolver.service';
+export * from './lib/services/resolvers/group-breadcrumb-resolver.service';
+
+// CLIENT
+export {UserAndGroupNotificationService} from './lib/services/client/user-and-group-notification.service';
+export {UserAndGroupNavigator} from './lib/services/client/user-and-group-navigator.service';
+export {UserAndGroupDefaultNavigator} from './lib/services/client/user-and-group-default-navigator.service';
+export {UserAndGroupErrorHandler} from './lib/services/client/user-and-group-error-handler.service';
+export {UserAndGroupConfig} from './lib/model/client/user-and-group-config';
+export * from './lib/model/client/default-paths';
+export * from './lib/model/client/activated-route-data-attributes';
 
 
 

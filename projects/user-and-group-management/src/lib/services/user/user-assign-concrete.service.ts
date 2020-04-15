@@ -1,31 +1,30 @@
-import {Kypo2UserAssignService} from './kypo2-user-assign.service';
+import {UserAssignService} from './user-assign.service';
 import {User} from 'kypo2-auth';
 import {KypoPaginatedResource} from 'kypo-common';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {KypoRequestedPagination} from 'kypo-common';
 import {Group} from '../../model/group/group.model';
 import {switchMap, tap} from 'rxjs/operators';
-import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {GroupFilter} from '../../model/filters/group-filter';
 import {KypoPagination} from 'kypo-common';
-import {ConfigService} from '../../config/config.service';
+import {UserAndGroupContext} from '../shared/user-and-group-context.service';
 import {UserFilter} from '../../model/filters/user-filter';
 import {Injectable} from '@angular/core';
 import {UserApi} from '../api/user/user-api.service';
 import {GroupApi} from '../api/group/group-api.service';
+import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Can manually get users assigned to resource and users/groups available to assign and perform assignment modifications.
  */
 @Injectable()
-export class UserAssignConcreteService extends Kypo2UserAssignService {
+export class UserAssignConcreteService extends UserAssignService {
 
   constructor(private api: GroupApi,
               private userApi: UserApi,
-              private configService: ConfigService,
-              private errorHandler: Kypo2UserAndGroupErrorService) {
+              private context: UserAndGroupContext,
+              private errorHandler: UserAndGroupErrorHandler) {
     super();
   }
 
@@ -90,7 +89,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
             this.isLoadingAssignedSubject$.next(false);
           },
           err => {
-            this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching users'));
+            this.errorHandler.emit(err, 'Fetching users');
             this.isLoadingAssignedSubject$.next(false);
             this.hasErrorSubject$.next(true);
           }
@@ -109,7 +108,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
       new KypoRequestedPagination(0, pageSize, 'familyName', 'asc'),
       [new UserFilter(filterValue)])
       .pipe(
-        tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching users'))})
+        tap({error: err => this.errorHandler.emit(err, 'Fetching users')})
       );
   }
 
@@ -123,7 +122,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
       new KypoRequestedPagination(0, pageSize, 'name', 'asc'),
       [new GroupFilter(filterValue)])
       .pipe(
-        tap({error: err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching groups'))})
+        tap({error: err => this.errorHandler.emit(err, 'Fetching groups')})
       );
   }
 
@@ -131,7 +130,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
     return new KypoPaginatedResource([],
       new KypoPagination(0,
         0,
-        this.configService.config.defaultPaginationSize,
+        this.context.config.defaultPaginationSize,
         0,
         0));
   }
@@ -143,7 +142,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
             this.clearSelectedUsersToAssign();
             this.clearSelectedGroupsToImport();
           },
-          err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Adding users'))),
+          err => this.errorHandler.emit(err, 'Adding users')),
         switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
       );
   }
@@ -152,7 +151,7 @@ export class UserAssignConcreteService extends Kypo2UserAssignService {
     return this.api.removeUsersFromGroup(resourceId, userIds)
       .pipe(
         tap(_ => this.clearSelectedAssignedUsers(),
-          err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Removing users'))),
+          err => this.errorHandler.emit(err, 'Removing users')),
         switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
       );
   }

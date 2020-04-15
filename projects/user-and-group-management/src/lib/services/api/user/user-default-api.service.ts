@@ -6,8 +6,8 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {UserMapper} from '../../../model/mappers/user.mapper';
 import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {UserAndGroupConfig} from '../../../config/user-and-group-config';
-import {ConfigService} from '../../../config/config.service';
+import {UserAndGroupConfig} from '../../../model/client/user-and-group-config';
+import {UserAndGroupContext} from '../../shared/user-and-group-context.service';
 import {User, UserDTO} from 'kypo2-auth';
 import {KypoRequestedPagination} from 'kypo-common';
 import {KypoFilter} from 'kypo-common';
@@ -24,7 +24,7 @@ export class UserDefaultApi extends UserApi {
   private readonly usersPathExtension = 'users';
 
   constructor(private http: HttpClient,
-              private configService: ConfigService) {
+              private configService: UserAndGroupContext) {
     super();
     this.config = this.configService.config;
   }

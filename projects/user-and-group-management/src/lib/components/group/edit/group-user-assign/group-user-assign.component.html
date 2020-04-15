@@ -1,0 +1,65 @@
+<kypo-controls [controls]="assignUsersControls" (itemClicked)="onAssignControl($event)"></kypo-controls>
+<div class="add-content">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">person_add</mat-icon>
+      </div>
+      <mat-card-title>Add users</mat-card-title>
+      <mat-card-subtitle>Add users individually</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <kypo2-resource-selector
+        searchPlaceholder="Search users by surname"
+        [resources]="users$ | async"
+        [selected]="selectedUsersToAssign$ | async"
+        [resourceMapping]="userMapping"
+        (selectionChange)="onUserToAssignSelection($event)"
+        (fetch)="searchUsers($event)">
+      </kypo2-resource-selector>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon color="primary">group_add</mat-icon>
+      </div>
+      <mat-card-title>Import users</mat-card-title>
+      <mat-card-subtitle>Import users from already existing groups</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <kypo2-resource-selector
+        searchPlaceholder="Search groups by name"
+        [resources]="groups$ | async"
+        [selected]="selectedGroupsToImport$ | async"
+        [resourceMapping]="groupMapping"
+        (selectionChange)="onGroupToImportSelection($event)"
+        (fetch)="searchGroups($event)">
+      </kypo2-resource-selector>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<kypo-controls [controls]="assignedUsersControls" (itemClicked)="onAssignControl($event)"></kypo-controls>
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon color="primary">person</mat-icon>
+    </div>
+    <mat-card-title> Members of group {{ resource.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <kypo2-table elevation="0"
+                 [defaultSortName]="MEMBERS_OF_GROUP_INIT_SORT_NAME"
+                 [defaultSortDirection]="MEMBERS_OF_GROUP_INIT_SORT_DIR"
+                 [hasError]="assignedUsersHasError$ | async"
+                 [data]="assignedUsers$ | async"
+                 [isLoading]="isLoadingAssignedUsers$ | async"
+                 (rowAction)="onAssignedUsersTableAction($event)"
+                 (rowSelection)="onAssignedUsersSelection($event)"
+                 (refresh)="onAssignedLoadEvent($event)">
+    </kypo2-table>
+  </mat-card-content>
+</mat-card>
+

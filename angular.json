@@ -24,7 +24,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "src/theme.scss",
+              "src/variables.scss"
             ],
             "scripts": []
           },
@@ -139,7 +141,7 @@
       "root": "projects/user-and-group-management",
       "sourceRoot": "projects/user-and-group-management/src",
       "projectType": "library",
-      "prefix": "kypo2",
+      "prefix": "kypo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

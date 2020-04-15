@@ -8,8 +8,8 @@ import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {GroupDTO} from '../../../model/DTO/group/group-dto.model';
 import {map} from 'rxjs/operators';
 import {GroupMapper} from '../../../model/mappers/group.mapper';
-import {ConfigService} from '../../../config/config.service';
-import {UserAndGroupConfig} from '../../../config/user-and-group-config';
+import {UserAndGroupContext} from '../../shared/user-and-group-context.service';
+import {UserAndGroupConfig} from '../../../model/client/user-and-group-config';
 import {FilterParams} from '../../../model/other/filter-params';
 import {KypoFilter} from 'kypo-common';
 import {KypoParamsMerger} from 'kypo-common';
@@ -31,7 +31,7 @@ export class GroupDefaultApi extends GroupApi {
 
 
   constructor(private http: HttpClient,
-              private configService: ConfigService) {
+              private configService: UserAndGroupContext) {
     super();
     this.config = this.configService.config;
   }

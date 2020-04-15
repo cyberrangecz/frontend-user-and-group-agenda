@@ -39,7 +39,7 @@ To use the user and group management in your Angular application follow these st
     + defaultPaginationSize
 1. Import **Kypo2GroupOverviewModule**, **Kypo2MicroserviceEditModule** and **Kypo2UserModule** with `forRoot(userAndGroupConfig)` method in desired modules (routing and lazy-loaded modules are recommended). 
 1. Provide necessary resolvers (as of now, only Group resolver is required)
-1. Subscribe to observables of `Kypo2UserAndGroupErrorService`, `Kypo2UserAndGroupNotificationService` and `Kypo2UserAndGroupRoutingEventService` to handle events emitted by libary in your app
+1. Subscribe to observables of `UserAndGroupErrorService`, `UserAndGroupNotificationService` and `Kypo2UserAndGroupRoutingEventService` to handle events emitted by libary in your app
 
 **NOTE:** The library is implemented with Angular best practices in mind and detail components (GroupEdit) are expecting to get data from ActivatedRoute service. You need to implement and provide your own GroupResolver service. You can use `Kypo2GroupResolverHelperService` to get the data by id. You are expected to store the data in `.activeRoute.data.group`
 

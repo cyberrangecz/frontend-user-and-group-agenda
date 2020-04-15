@@ -1,23 +1,21 @@
-import {Kypo2GroupEditService} from './kypo2-group-edit.service';
+import {GroupEditService} from './group-edit.service';
 import {GroupChangedEvent} from '../../model/events/group-changed-event';
 import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {Group} from '../../model/group/group.model';
 import {tap} from 'rxjs/operators';
-import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
-import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
-import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
-import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
 import {Injectable} from '@angular/core';
-import {Kypo2UserAndGroupRoutingEventService} from '../routing/kypo2-user-and-group-routing-event.service';
 import {GroupApi} from '../api/group/group-api.service';
+import {UserAndGroupNotificationService} from '../client/user-and-group-notification.service';
+import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
+import {UserAndGroupNavigator} from '../client/user-and-group-navigator.service';
+import {Router} from '@angular/router';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Handles group editing.
  */
 @Injectable()
-export class GroupEditConcreteService extends Kypo2GroupEditService {
+export class GroupEditConcreteService extends GroupEditService {
 
   private editModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -43,9 +41,10 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
   private editedGroup: Group;
 
   constructor(private api: GroupApi,
-              private notificationService: Kypo2UserAndGroupNotificationService,
-              private routingService: Kypo2UserAndGroupRoutingEventService,
-              private errorHandler: Kypo2UserAndGroupErrorService) {
+              private notificationService: UserAndGroupNotificationService,
+              private router: Router,
+              private navigator: UserAndGroupNavigator,
+              private errorHandler: UserAndGroupErrorHandler) {
     super();
   }
 
@@ -79,14 +78,14 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
       ? this.update()
       : this.create()
       .pipe(
-        tap(_ => this.routingService.navigate({resourceType: 'GROUP'}))
+        tap(_ => this.router.navigate([this.navigator.toGroupOverview()]))
       );
   }
 
   createAndEdit(): Observable<any> {
     return this.create()
       .pipe(
-        tap(id => this.routingService.navigate({resourceType: 'GROUP', resourceId: id, actionType: 'EDIT'}))
+        tap(id => this.router.navigate([this.navigator.toGroupEdit(id)]))
       );
   }
 
@@ -99,12 +98,10 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
       .pipe(
         tap(
           id => {
-            this.notificationService.notify(new Kypo2UserAndGroupNotification(
-              Kypo2UserAndGroupNotificationType.SUCCESS,
-              'Changes were saved.'));
+            this.notificationService.emit('success', 'Group was saved');
             this.onSaved();
           },
-          err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Editing group'))
+          err => this.errorHandler.emit(err, 'Editing group')
         )
       );
   }
@@ -114,12 +111,10 @@ export class GroupEditConcreteService extends Kypo2GroupEditService {
       .pipe(
         tap(
           id => {
-            this.notificationService.notify(new Kypo2UserAndGroupNotification(
-              Kypo2UserAndGroupNotificationType.SUCCESS,
-              'Group was created.'));
+            this.notificationService.emit('success', 'Group was created');
             this.onSaved();
           },
-          err => this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Creating group'))
+          err => this.errorHandler.emit(err, 'Creating group')
         )
       );
   }

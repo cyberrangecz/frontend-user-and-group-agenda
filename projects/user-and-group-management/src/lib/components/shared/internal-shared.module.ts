@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ConfigService} from '../../config/config.service';
+import {UserAndGroupContext} from '../../services/shared/user-and-group-context.service';
 import {CsirtMuConfirmationDialogModule} from 'csirt-mu-common';
 
 /**
@@ -12,7 +12,7 @@ import {CsirtMuConfirmationDialogModule} from 'csirt-mu-common';
     CsirtMuConfirmationDialogModule,
   ],
   providers: [
-    ConfigService
+    UserAndGroupContext
   ],
 })
 export class InternalSharedModule { }

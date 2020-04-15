@@ -5,8 +5,8 @@ import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
 import {map} from 'rxjs/operators';
 import {RoleDTO, UserRole} from 'kypo2-auth';
 import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
-import {ConfigService} from '../../../config/config.service';
-import {UserAndGroupConfig} from '../../../config/user-and-group-config';
+import {UserAndGroupContext} from '../../shared/user-and-group-context.service';
+import {UserAndGroupConfig} from '../../../model/client/user-and-group-config';
 import {KypoPaginatedResource} from 'kypo-common';
 import {KypoRequestedPagination} from 'kypo-common';
 import {KypoFilter} from 'kypo-common';
@@ -25,7 +25,7 @@ export class RoleDefaultApi extends RoleApi {
   private readonly rolesPathExtension = 'roles';
 
   constructor(private http: HttpClient,
-              private configService: ConfigService) {
+              private configService: UserAndGroupContext) {
     super();
     this.config = this.configService.config;
   }

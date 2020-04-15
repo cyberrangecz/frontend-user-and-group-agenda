@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Kypo2GroupOverviewService} from './kypo2-group-overview.service';
+import {GroupOverviewService} from './group-overview.service';
 import {KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
 import {EMPTY, Observable, of} from 'rxjs';
-import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
-import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
-import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {GroupFilter} from '../../model/filters/group-filter';
 import {Group} from '../../model/group/group.model';
-import {ConfigService} from '../../config/config.service';
-import {Kypo2UserAndGroupRouteEvent} from '../../model/events/kypo2-user-and-group-route-event';
-import {Kypo2UserAndGroupRoutingEventService} from '../routing/kypo2-user-and-group-routing-event.service';
+import {UserAndGroupContext} from '../shared/user-and-group-context.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
 import {GroupApi} from '../api/group/group-api.service';
+import {UserAndGroupNotificationService} from '../client/user-and-group-notification.service';
+import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
+import {UserAndGroupNavigator} from '../client/user-and-group-navigator.service';
+import {Router} from '@angular/router';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -23,17 +20,18 @@ import {GroupApi} from '../api/group/group-api.service';
  */
 
 @Injectable()
-export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
+export class GroupOverviewConcreteService extends GroupOverviewService {
 
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
   constructor(private api: GroupApi,
-              private alertService: Kypo2UserAndGroupNotificationService,
+              private alertService: UserAndGroupNotificationService,
               private dialog: MatDialog,
-              private configService: ConfigService,
-              private routingEventService: Kypo2UserAndGroupRoutingEventService,
-              private errorHandler: Kypo2UserAndGroupErrorService) {
+              private router: Router,
+              private configService: UserAndGroupContext,
+              private navigator: UserAndGroupNavigator,
+              private errorHandler: UserAndGroupErrorHandler) {
     super(configService.config.defaultPaginationSize);
   }
 
@@ -54,7 +52,7 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
           this.resourceSubject$.next(groups);
         },
             err => {
-          this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching groups'));
+          this.errorHandler.emit(err, 'Fetching groups');
           this.hasErrorSubject$.next(true);
         })
     );
@@ -80,21 +78,12 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
   }
 
   edit(group: Group): Observable<any> {
-    const route: Kypo2UserAndGroupRouteEvent = {
-      actionType: 'EDIT',
-      resourceType: 'GROUP',
-      resourceId: group.id
-    };
-    this.routingEventService.navigate(route);
+    this.router.navigate([this.navigator.toGroupEdit(group.id)]);
     return of(true);
   }
 
   create(): Observable<any> {
-    const route: Kypo2UserAndGroupRouteEvent = {
-      actionType: 'NEW',
-      resourceType: 'GROUP'
-    };
-    this.routingEventService.navigate(route);
+    this.router.navigate([this.navigator.toNewGroup()]);
     return of(true);
   }
 
@@ -118,13 +107,10 @@ export class GroupOverviewConcreteService extends Kypo2GroupOverviewService {
       .pipe(
         tap( resp => {
             this.clearSelection();
-            this.alertService.notify(
-              new Kypo2UserAndGroupNotification(
-                Kypo2UserAndGroupNotificationType.SUCCESS,
-                'Groups were deleted'));
+            this.alertService.emit('success', 'Groups were deleted');
           },
           err => {
-            this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting groups'));
+            this.errorHandler.emit(err, 'Deleting groups');
             this.hasErrorSubject$.next(true);
           }),
         switchMap(_ => this.getAll(this.lastPagination, this.lastFilter))

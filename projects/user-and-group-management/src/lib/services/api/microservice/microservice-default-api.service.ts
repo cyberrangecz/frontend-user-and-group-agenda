@@ -4,8 +4,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MicroserviceCreateDTO} from '../../../model/DTO/microservice/microservice-dto.model';
 import {Observable} from 'rxjs';
 import {MicroserviceMapper} from '../../../model/mappers/microservice.mapper';
-import {UserAndGroupConfig} from '../../../config/user-and-group-config';
-import {ConfigService} from '../../../config/config.service';
+import {UserAndGroupConfig} from '../../../model/client/user-and-group-config';
+import {UserAndGroupContext} from '../../shared/user-and-group-context.service';
 import {MicroserviceApi} from './microservice-api.service';
 
 /**
@@ -17,7 +17,7 @@ export class MicroserviceDefaultApi extends MicroserviceApi {
   private readonly config: UserAndGroupConfig;
 
   constructor(private http: HttpClient,
-              private configService: ConfigService) {
+              private configService: UserAndGroupContext) {
     super();
     this.config = this.configService.config;
   }

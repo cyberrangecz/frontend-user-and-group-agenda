@@ -1,20 +1,17 @@
-import {Kypo2UserOverviewService} from './kypo2-user-overview.service';
+import {UserOverviewService} from './user-overview.service';
 import {Injectable} from '@angular/core';
 import {EMPTY, Observable} from 'rxjs';
 import {KypoPaginatedResource} from 'kypo-common';
 import {User} from 'kypo2-auth';
 import {KypoRequestedPagination} from 'kypo-common';
-import {Kypo2UserAndGroupNotificationService} from '../notification/kypo2-user-and-group-notification.service';
-import {ConfigService} from '../../config/config.service';
-import {Kypo2UserAndGroupErrorService} from '../notification/kypo2-user-and-group-error.service';
+import {UserAndGroupContext} from '../shared/user-and-group-context.service';
 import {map, switchMap, tap} from 'rxjs/operators';
-import {Kypo2UserAndGroupError} from '../../model/events/kypo2-user-and-group-error';
-import {Kypo2UserAndGroupNotification} from '../../model/events/kypo2-user-and-group-notification';
-import {Kypo2UserAndGroupNotificationType} from '../../model/enums/kypo2-user-and-group-notification-type.enum';
 import {UserFilter} from '../../model/filters/user-filter';
 import {MatDialog} from '@angular/material/dialog';
 import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
 import {UserApi} from '../api/user/user-api.service';
+import {UserAndGroupNotificationService} from '../client/user-and-group-notification.service';
+import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -22,15 +19,15 @@ import {UserApi} from '../api/user/user-api.service';
  */
 
 @Injectable()
-export class UserOverviewConcreteService extends Kypo2UserOverviewService {
+export class UserOverviewConcreteService extends UserOverviewService {
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
   constructor(private api: UserApi,
               private dialog: MatDialog,
-              private alertService: Kypo2UserAndGroupNotificationService,
-              private configService: ConfigService,
-              private errorHandler: Kypo2UserAndGroupErrorService) {
+              private alertService: UserAndGroupNotificationService,
+              private configService: UserAndGroupContext,
+              private errorHandler: UserAndGroupErrorHandler) {
     super(configService.config.defaultPaginationSize);
   }
 
@@ -51,7 +48,7 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
             this.resourceSubject$.next(users);
           },
           err => {
-            this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Fetching users'));
+            this.errorHandler.emit(err, 'Fetching users');
             this.hasErrorSubject$.next(true);
           })
       );
@@ -103,13 +100,10 @@ export class UserOverviewConcreteService extends Kypo2UserOverviewService {
       .pipe(
         tap(_ => {
           this.clearSelection();
-          this.alertService.notify(
-            new Kypo2UserAndGroupNotification(
-              Kypo2UserAndGroupNotificationType.SUCCESS,
-              'Selected users were deleted'));
+          this.alertService.emit('success', 'Selected users were deleted');
           },
           err => {
-            this.errorHandler.emit(new Kypo2UserAndGroupError(err, 'Deleting user'));
+            this.errorHandler.emit(err, 'Deleting user');
             this.hasErrorSubject$.next(true);
           }),
         switchMap(_ => this.getAll(this.lastPagination, this.lastFilter))

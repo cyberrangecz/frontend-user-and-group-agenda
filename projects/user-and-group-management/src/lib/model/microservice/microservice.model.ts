@@ -1,9 +1,10 @@
-import {MicroserviceRole} from './microservice-role.model';
+import { MicroserviceRole } from './microservice-role.model';
 
 /**
  * Internal model of microservice
  */
 export class Microservice {
+  id: number;
   name: string;
   endpoint: string;
   roles: MicroserviceRole[];
@@ -21,4 +22,5 @@ export class Microservice {
     this.endpoint = endpoint;
     this.roles = roles;
   }
+
 }

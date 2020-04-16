@@ -1,7 +1,7 @@
-import {KypoFilter, KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
-import {Observable} from 'rxjs';
-import {Group} from '../../../model/group/group.model';
-import {UserRole} from 'kypo2-auth';
+import { KypoFilter, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { Observable } from 'rxjs';
+import { Group } from '../../../model/group/group.model';
+import { UserRole } from 'kypo2-auth';
 
 export abstract class GroupApi {
 
@@ -36,6 +36,12 @@ export abstract class GroupApi {
    * @param groupIds ids of groups to delete
    */
   abstract deleteMultiple(groupIds: number[]): Observable<any>;
+
+  /**
+   * Sends http request to delete group
+   * @param groupId id of a group to delete
+   */
+  abstract delete(groupId: number): Observable<any>;
 
   /**
    * Sends http request to assign role to group

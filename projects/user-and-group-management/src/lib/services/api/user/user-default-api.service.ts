@@ -1,19 +1,20 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {PaginationHttpParams} from '../../../model/other/pagination-http-params';
-import {KypoPaginatedResource} from 'kypo-common';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {UserMapper} from '../../../model/mappers/user.mapper';
-import {RestResourceDTO} from '../../../model/DTO/rest-resource-dto.model';
-import {UserAndGroupConfig} from '../../../model/client/user-and-group-config';
-import {UserAndGroupContext} from '../../shared/user-and-group-context.service';
-import {User, UserDTO} from 'kypo2-auth';
-import {KypoRequestedPagination} from 'kypo-common';
-import {KypoFilter} from 'kypo-common';
-import {KypoParamsMerger} from 'kypo-common';
-import {FilterParams} from '../../../model/other/filter-params';
-import {UserApi} from './user-api.service';
+import { RoleMapper } from './../../../model/mappers/role-mapper';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { PaginationHttpParams } from '../../../model/other/pagination-http-params';
+import { KypoPaginatedResource } from 'kypo-common';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserMapper } from '../../../model/mappers/user.mapper';
+import { RestResourceDTO } from '../../../model/DTO/rest-resource-dto.model';
+import { UserAndGroupConfig } from '../../../model/client/user-and-group-config';
+import { UserAndGroupContext } from '../../shared/user-and-group-context.service';
+import { User, UserDTO, RoleDTO, UserRole } from 'kypo2-auth';
+import { KypoRequestedPagination } from 'kypo-common';
+import { KypoFilter } from 'kypo-common';
+import { KypoParamsMerger } from 'kypo-common';
+import { FilterParams } from '../../../model/other/filter-params';
+import { UserApi } from './user-api.service';
 
 /**
  * Default implementation of abstracting http communication with user endpoints
@@ -24,7 +25,7 @@ export class UserDefaultApi extends UserApi {
   private readonly usersPathExtension = 'users';
 
   constructor(private http: HttpClient,
-              private configService: UserAndGroupContext) {
+    private configService: UserAndGroupContext) {
     super();
     this.config = this.configService.config;
   }
@@ -73,7 +74,7 @@ export class UserDefaultApi extends UserApi {
     const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath}${this.usersPathExtension}/not-in-groups/${groupId}`,
-      {params: params})
+      { params: params })
       .pipe(
         map(resp => UserMapper.mapUserDTOsToUsers(resp))
       );
@@ -90,9 +91,44 @@ export class UserDefaultApi extends UserApi {
     const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters), idParams]);
     return this.http.get<RestResourceDTO<UserDTO>>(
       `${this.config.userAndGroupRestBasePath}${this.usersPathExtension}/groups`,
-      {params: params})
+      { params: params })
       .pipe(
         map(resp => UserMapper.mapUserDTOsToUsers(resp))
       );
+  }
+
+  /**
+   * Sends http request to delete user
+   * @param userId id of user to delete
+   */
+  delete(userId: number): Observable<any> {
+    return this.http.delete(`${this.config.userAndGroupRestBasePath}${this.usersPathExtension}/${userId}`);
+  }
+
+  /**
+   * Sends http request to get roles for given user id
+   * @param userId id of user to delete
+   */
+  getUserRoles(userId: number): Observable<KypoPaginatedResource<UserRole>> {
+    return this.http.get<RestResourceDTO<RoleDTO>>(`${this.config.userAndGroupRestBasePath}${this.usersPathExtension}/${userId}`)
+      .pipe(map(resp => RoleMapper.mapRolesDTOtoRoles(resp)));
+  }
+
+  /**
+   * Sends http request to get multiplle users by their ids
+   * @param userIds id of users to get
+   */
+  getUsersByIds(userIds: number): Observable<KypoPaginatedResource<User>> {
+    const idParams = new HttpParams().set('ids', userIds.toString());
+    return this.http.get<RestResourceDTO<UserDTO>>(`${this.config.userAndGroupRestBasePath}${this.usersPathExtension}/ids`,
+      { params: idParams }).pipe(map(resp => UserMapper.mapUserDTOsToUsers(resp)));
+  }
+
+  /**
+   * Sends http request to get details of user who is logged in
+   */
+  getUsersInfo(): Observable<User> {
+    return this.http.get<UserDTO>(`${this.config.userAndGroupRestBasePath}${this.usersPathExtension}/info`)
+      .pipe(map(resp => UserMapper.mapUserDTOToUser(resp)));
   }
 }

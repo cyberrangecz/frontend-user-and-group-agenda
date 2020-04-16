@@ -1,10 +1,14 @@
-import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {MicroserviceEditOverviewComponent} from '../../components/microservice/microservice-edit-overview.component';
-import {Observable, of} from 'rxjs';
 import { Injectable } from '@angular/core';
-import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
-import {map, take} from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  CsirtMuConfirmationDialogComponent,
+  CsirtMuConfirmationDialogConfig,
+  CsirtMuDialogResultEnum,
+} from 'csirt-mu-common';
+import { Observable, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { MicroserviceEditOverviewComponent } from '../../components/microservice/microservice-edit-overview.component';
 
 /**
  * CanDeactivate service for microservice edit component.
@@ -12,11 +16,14 @@ import {MatDialog} from '@angular/material/dialog';
  */
 @Injectable()
 export class MicroserviceEditCanDeactivate implements CanDeactivate<MicroserviceEditOverviewComponent> {
+  constructor(private dialog: MatDialog) {}
 
-  constructor(private dialog: MatDialog) {
-  }
-
-  canDeactivate(component: MicroserviceEditOverviewComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canDeactivate(
+    component: MicroserviceEditOverviewComponent,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.canDeactivate()) {
       return of(true);
     }
@@ -26,11 +33,10 @@ export class MicroserviceEditCanDeactivate implements CanDeactivate<Microservice
       'Cancel',
       'Leave'
     );
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {data: dialogData});
-    return dialogRef.afterClosed()
-      .pipe(
-        take(1),
-        map(result => result === CsirtMuDialogResultEnum.CONFIRMED)
-      );
+    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
+    return dialogRef.afterClosed().pipe(
+      take(1),
+      map((result) => result === CsirtMuDialogResultEnum.CONFIRMED)
+    );
   }
 }

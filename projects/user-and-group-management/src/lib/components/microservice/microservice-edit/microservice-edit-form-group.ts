@@ -1,5 +1,5 @@
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Microservice} from '../../../model/microservice/microservice.model';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Microservice } from '../../../model/microservice/microservice.model';
 
 /**
  * Form control for microservice edit component
@@ -11,7 +11,10 @@ export class MicroserviceEditFormGroup {
     this.formGroup = new FormGroup({
       name: new FormControl(microservice.name, Validators.required),
       endpoint: new FormControl(microservice.endpoint, Validators.required),
-      roles: new FormArray(microservice.roles.map(roles => new FormControl(roles)), Validators.required)
+      roles: new FormArray(
+        microservice.roles.map((roles) => new FormControl(roles)),
+        Validators.required
+      ),
     });
   }
 

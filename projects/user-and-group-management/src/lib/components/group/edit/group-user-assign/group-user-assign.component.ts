@@ -1,18 +1,27 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {Group} from '../../../../model/group/group.model';
-import {combineLatest, defer, Observable} from 'rxjs';
-import {User} from 'kypo2-auth';
-import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
-import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
-import {KypoBaseComponent} from 'kypo-common';
-import {UserAssignService} from '../../../../services/user/user-assign.service';
-import {KypoRequestedPagination} from 'kypo-common';
-import {UserAndGroupContext} from '../../../../services/shared/user-and-group-context.service';
-import { map, take, takeWhile} from 'rxjs/operators';
-import {KypoControlItem} from 'kypo-controls';
-import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
-import {SaveControlItem} from '../../../../model/controls/save-control-item';
-import {GroupMemberTable} from '../../../../model/adapters/table/user/group-member-table';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { KypoBaseComponent } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { KypoControlItem } from 'kypo-controls';
+import { User } from 'kypo2-auth';
+import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { Kypo2SelectorResourceMapping } from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
+import { combineLatest, defer, Observable } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
+import { GroupMemberTable } from '../../../../model/adapters/table/user/group-member-table';
+import { DeleteControlItem } from '../../../../model/controls/delete-control-item';
+import { SaveControlItem } from '../../../../model/controls/save-control-item';
+import { Group } from '../../../../model/group/group.model';
+import { UserAndGroupContext } from '../../../../services/shared/user-and-group-context.service';
+import { UserAssignService } from '../../../../services/user/user-assign.service';
 
 /**
  * Component for user assignment to groups
@@ -21,10 +30,9 @@ import {GroupMemberTable} from '../../../../model/adapters/table/user/group-memb
   selector: 'kypo2-group-user-assign',
   templateUrl: './group-user-assign.component.html',
   styleUrls: ['./group-user-assign.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupUserAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
   readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -71,7 +79,7 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
   /**
    * True if data loading for table component is in progress, false otherwise
    */
-  isLoadingAssignedUsers$:  Observable<boolean>;
+  isLoadingAssignedUsers$: Observable<boolean>;
 
   selectedUsersToAssign$: Observable<User[]>;
   selectedGroupsToImport$: Observable<Group[]>;
@@ -79,23 +87,21 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
   assignUsersControls: KypoControlItem[];
   assignedUsersControls: KypoControlItem[];
 
-  constructor(private userAssignService: UserAssignService,
-              private configService: UserAndGroupContext) {
+  constructor(private userAssignService: UserAssignService, private configService: UserAndGroupContext) {
     super();
     this.userMapping = {
       id: 'id',
       title: 'name',
       subtitle: 'login',
-      icon: 'picture'
+      icon: 'picture',
     };
     this.groupMapping = {
       id: 'id',
-      title: 'name'
+      title: 'name',
     };
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('resource' in changes && this.resource && this.resource.id !== undefined) {
@@ -104,10 +110,7 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
   }
 
   onAssignControl(controlItem: KypoControlItem) {
-    controlItem.result$
-      .pipe(
-        take(1)
-      ).subscribe();
+    controlItem.result$.pipe(take(1)).subscribe();
   }
 
   /**
@@ -139,10 +142,9 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
    * @param filterValue search value
    */
   searchUsers(filterValue: string) {
-    this.users$ = this.userAssignService.getUsersToAssign(this.resource.id, filterValue)
-      .pipe(
-        map(resource => resource.elements),
-      );
+    this.users$ = this.userAssignService
+      .getUsersToAssign(this.resource.id, filterValue)
+      .pipe(map((resource) => resource.elements));
   }
 
   /**
@@ -150,10 +152,7 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
    * @param filterValue search value
    */
   searchGroups(filterValue: string) {
-    this.groups$ = this.userAssignService.getGroupsToImport(filterValue)
-      .pipe(
-        map(resource => resource.elements),
-      );
+    this.groups$ = this.userAssignService.getGroupsToImport(filterValue).pipe(map((resource) => resource.elements));
   }
 
   /**
@@ -161,10 +160,7 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
    * @param event action event emitted from assigned users table component
    */
   onAssignedUsersTableAction(event: TableActionEvent<User>) {
-    event.action.result$
-      .pipe(
-        take(1)
-      ).subscribe();
+    event.action.result$.pipe(take(1)).subscribe();
   }
 
   /**
@@ -172,10 +168,9 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
    * @param loadEvent event to load new data emitted by assigned users table component
    */
   onAssignedLoadEvent(loadEvent: LoadTableEvent) {
-    this.userAssignService.getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
-      .pipe(
-        takeWhile(_ => this.isAlive),
-      )
+    this.userAssignService
+      .getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
+      .pipe(takeWhile((_) => this.isAlive))
       .subscribe();
   }
 
@@ -189,48 +184,49 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
   }
 
   private initUnsavedChangesEmitter() {
-    combineLatest([
-      this.userAssignService.selectedGroupsToImport$,
-      this.userAssignService.selectedUsersToAssign$
-    ]).pipe(
-      takeWhile(_ => this.isAlive)
-    ).subscribe(selections => this.hasUnsavedChanges.emit(selections.some(selection => selection.length > 0)));
+    combineLatest([this.userAssignService.selectedGroupsToImport$, this.userAssignService.selectedUsersToAssign$])
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe((selections) => this.hasUnsavedChanges.emit(selections.some((selection) => selection.length > 0)));
   }
 
   private initAssignedUsersControls() {
-    this.userAssignService.selectedAssignedUsers$
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(selection => {
+    this.userAssignService.selectedAssignedUsers$.pipe(takeWhile((_) => this.isAlive)).subscribe((selection) => {
       this.assignedUsersControls = [
-        new DeleteControlItem(selection.length,
+        new DeleteControlItem(
+          selection.length,
           defer(() => this.userAssignService.unassignSelected(this.resource.id))
-        )
+        ),
       ];
     });
   }
 
   private initAssignUsersControls() {
-    const disabled$ = combineLatest([this.userAssignService.selectedUsersToAssign$, this.userAssignService.selectedGroupsToImport$])
-      .pipe(
-        map(selections => selections[0].length <= 0 && selections[1].length <= 0)
-      );
+    const disabled$ = combineLatest([
+      this.userAssignService.selectedUsersToAssign$,
+      this.userAssignService.selectedGroupsToImport$,
+    ]).pipe(map((selections) => selections[0].length <= 0 && selections[1].length <= 0));
 
     this.assignUsersControls = [
       new SaveControlItem(
         'Add',
         disabled$,
-        defer(() => this.userAssignService.assignSelected(this.resource.id)))
+        defer(() => this.userAssignService.assignSelected(this.resource.id))
+      ),
     ];
   }
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new KypoRequestedPagination(0, this.configService.config.defaultPaginationSize, this.MEMBERS_OF_GROUP_INIT_SORT_NAME, this.MEMBERS_OF_GROUP_INIT_SORT_DIR));
-    this.assignedUsers$ = this.userAssignService.assignedUsers$
-      .pipe(
-        map(paginatedUsers => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService))
-      );
+      new KypoRequestedPagination(
+        0,
+        this.configService.config.defaultPaginationSize,
+        this.MEMBERS_OF_GROUP_INIT_SORT_NAME,
+        this.MEMBERS_OF_GROUP_INIT_SORT_DIR
+      )
+    );
+    this.assignedUsers$ = this.userAssignService.assignedUsers$.pipe(
+      map((paginatedUsers) => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService))
+    );
     this.assignedUsersHasError$ = this.userAssignService.hasError$;
     this.isLoadingAssignedUsers$ = this.userAssignService.isLoadingAssigned$;
     this.onAssignedLoadEvent(initialLoadEvent);

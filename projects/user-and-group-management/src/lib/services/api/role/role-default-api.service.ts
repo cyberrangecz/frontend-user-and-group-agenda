@@ -1,19 +1,19 @@
-import { UserMapper } from './../../../model/mappers/user.mapper';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { RestResourceDTO } from '../../../model/DTO/rest-resource-dto.model';
-import { map } from 'rxjs/operators';
-import { RoleDTO, UserRole, UserDTO, User } from 'kypo2-auth';
-import { PaginationHttpParams } from '../../../model/other/pagination-http-params';
-import { UserAndGroupContext } from '../../shared/user-and-group-context.service';
-import { UserAndGroupConfig } from '../../../model/client/user-and-group-config';
-import { KypoPaginatedResource } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
 import { KypoFilter } from 'kypo-common';
 import { KypoParamsMerger } from 'kypo-common';
-import { FilterParams } from '../../../model/other/filter-params';
+import { RoleDTO, User, UserDTO, UserRole } from 'kypo2-auth';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { UserAndGroupConfig } from '../../../model/client/user-and-group-config';
+import { RestResourceDTO } from '../../../model/DTO/rest-resource-dto.model';
 import { RoleMapper } from '../../../model/mappers/role-mapper';
+import { FilterParams } from '../../../model/other/filter-params';
+import { PaginationHttpParams } from '../../../model/other/pagination-http-params';
+import { UserAndGroupContext } from '../../shared/user-and-group-context.service';
+import { UserMapper } from './../../../model/mappers/user.mapper';
 import { RoleApi } from './role-api.service';
 
 /**
@@ -21,12 +21,10 @@ import { RoleApi } from './role-api.service';
  */
 @Injectable()
 export class RoleDefaultApi extends RoleApi {
-
   private readonly config: UserAndGroupConfig;
   private readonly rolesPathExtension = 'roles';
 
-  constructor(private http: HttpClient,
-    private configService: UserAndGroupContext) {
+  constructor(private http: HttpClient, private configService: UserAndGroupContext) {
     super();
     this.config = this.configService.config;
   }
@@ -37,10 +35,13 @@ export class RoleDefaultApi extends RoleApi {
    * @param filters filters to be applied on roles
    */
   getAll(pagination: KypoRequestedPagination, filters: KypoFilter[] = []): Observable<KypoPaginatedResource<UserRole>> {
-    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
-    return this.http.get<RestResourceDTO<RoleDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}`,
-      { params: params })
-      .pipe(map(resp => RoleMapper.mapRolesDTOtoRoles(resp)));
+    const params = KypoParamsMerger.merge([
+      PaginationHttpParams.createPaginationParams(pagination),
+      FilterParams.create(filters),
+    ]);
+    return this.http
+      .get<RestResourceDTO<RoleDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}`, { params })
+      .pipe(map((resp) => RoleMapper.mapRolesDTOtoRoles(resp)));
   }
 
   /**
@@ -48,8 +49,9 @@ export class RoleDefaultApi extends RoleApi {
    * @param id id of requested role
    */
   get(id: number): Observable<UserRole> {
-    return this.http.get<RoleDTO>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/${id}`)
-      .pipe(map(resp => UserRole.fromDTO(resp)));
+    return this.http
+      .get<RoleDTO>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/${id}`)
+      .pipe(map((resp) => UserRole.fromDTO(resp)));
   }
 
   /**
@@ -58,11 +60,20 @@ export class RoleDefaultApi extends RoleApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on roles
    */
-  getUsersForRole(id: number, pagination: KypoRequestedPagination, filters?: KypoFilter[]): Observable<KypoPaginatedResource<User>> {
-    const params = KypoParamsMerger.merge([PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters)]);
-    return this.http.get<RestResourceDTO<UserDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/${id}/users`,
-      { params: params })
-      .pipe(map(resp => UserMapper.mapUserDTOsToUsers(resp)));
+  getUsersForRole(
+    id: number,
+    pagination: KypoRequestedPagination,
+    filters?: KypoFilter[]
+  ): Observable<KypoPaginatedResource<User>> {
+    const params = KypoParamsMerger.merge([
+      PaginationHttpParams.createPaginationParams(pagination),
+      FilterParams.create(filters),
+    ]);
+    return this.http
+      .get<RestResourceDTO<UserDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/${id}/users`, {
+        params,
+      })
+      .pipe(map((resp) => UserMapper.mapUserDTOsToUsers(resp)));
   }
 
   /**
@@ -71,13 +82,22 @@ export class RoleDefaultApi extends RoleApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on roles
    */
-  getUsersForRoleType(type: string, pagination: KypoRequestedPagination, filters?: KypoFilter[]): Observable<KypoPaginatedResource<User>> {
+  getUsersForRoleType(
+    type: string,
+    pagination: KypoRequestedPagination,
+    filters?: KypoFilter[]
+  ): Observable<KypoPaginatedResource<User>> {
     const typeParam = new HttpParams().set('roleType', type);
-    const params = KypoParamsMerger.merge(
-      [PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters), typeParam]);
-    return this.http.get<RestResourceDTO<UserDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/users`,
-      { params: params })
-      .pipe(map(resp => UserMapper.mapUserDTOsToUsers(resp)));
+    const params = KypoParamsMerger.merge([
+      PaginationHttpParams.createPaginationParams(pagination),
+      FilterParams.create(filters),
+      typeParam,
+    ]);
+    return this.http
+      .get<RestResourceDTO<UserDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/users`, {
+        params,
+      })
+      .pipe(map((resp) => UserMapper.mapUserDTOsToUsers(resp)));
   }
 
   /**
@@ -87,14 +107,25 @@ export class RoleDefaultApi extends RoleApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on roles
    */
-  getUsersNotWithIds(type: string, ids: number[], pagination: KypoRequestedPagination, filters?: KypoFilter[]): Observable<KypoPaginatedResource<User>> {
+  getUsersNotWithIds(
+    type: string,
+    ids: number[],
+    pagination: KypoRequestedPagination,
+    filters?: KypoFilter[]
+  ): Observable<KypoPaginatedResource<User>> {
     const idParams = new HttpParams().set('ids', ids.toString());
     const typeParam = new HttpParams().set('roleType', type);
-    const params = KypoParamsMerger.merge(
-      [PaginationHttpParams.createPaginationParams(pagination), FilterParams.create(filters), idParams, typeParam]);
-    return this.http.get<RestResourceDTO<UserDTO>>(`${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/users-not-with-ids`,
-      { params: params })
-      .pipe(map(resp => UserMapper.mapUserDTOsToUsers(resp)));
+    const params = KypoParamsMerger.merge([
+      PaginationHttpParams.createPaginationParams(pagination),
+      FilterParams.create(filters),
+      idParams,
+      typeParam,
+    ]);
+    return this.http
+      .get<RestResourceDTO<UserDTO>>(
+        `${this.config.userAndGroupRestBasePath}${this.rolesPathExtension}/users-not-with-ids`,
+        { params }
+      )
+      .pipe(map((resp) => UserMapper.mapUserDTOsToUsers(resp)));
   }
-
 }

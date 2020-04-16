@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 /**
  * Microservice edit controls for microservice edit component
@@ -7,10 +7,9 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
   selector: 'kypo2-microservice-edit-controls',
   templateUrl: './microservice-edit-controls.component.html',
   styleUrls: ['./microservice-edit-controls.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroserviceEditControlsComponent implements OnInit {
-
   /**
    * True if form is valid, false otherwise
    */
@@ -26,10 +25,9 @@ export class MicroserviceEditControlsComponent implements OnInit {
    */
   @Output() create = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /**
    * Emits event to create new role

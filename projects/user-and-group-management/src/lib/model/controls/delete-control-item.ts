@@ -1,5 +1,5 @@
-import {KypoControlItem} from 'kypo-controls';
-import {Observable, of} from 'rxjs';
+import { KypoControlItem } from 'kypo-controls';
+import { Observable, of } from 'rxjs';
 
 export class DeleteControlItem extends KypoControlItem {
   static readonly ID = 'delete';

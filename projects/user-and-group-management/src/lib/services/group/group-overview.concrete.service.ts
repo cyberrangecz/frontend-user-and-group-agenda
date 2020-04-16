@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import {GroupOverviewService} from './group-overview.service';
-import {KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
-import {EMPTY, Observable, of} from 'rxjs';
-import {map, switchMap, tap} from 'rxjs/operators';
-import {GroupFilter} from '../../model/filters/group-filter';
-import {Group} from '../../model/group/group.model';
-import {UserAndGroupContext} from '../shared/user-and-group-context.service';
-import {MatDialog} from '@angular/material/dialog';
-import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
-import {GroupApi} from '../api/group/group-api.service';
-import {UserAndGroupNotificationService} from '../client/user-and-group-notification.service';
-import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
-import {UserAndGroupNavigator} from '../client/user-and-group-navigator.service';
-import {Router} from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import {
+  CsirtMuConfirmationDialogComponent,
+  CsirtMuConfirmationDialogConfig,
+  CsirtMuDialogResultEnum,
+} from 'csirt-mu-common';
+import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { EMPTY, Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { GroupFilter } from '../../model/filters/group-filter';
+import { Group } from '../../model/group/group.model';
+import { GroupApi } from '../api/group/group-api.service';
+import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
+import { UserAndGroupNavigator } from '../client/user-and-group-navigator.service';
+import { UserAndGroupNotificationService } from '../client/user-and-group-notification.service';
+import { UserAndGroupContext } from '../shared/user-and-group-context.service';
+import { GroupOverviewService } from './group-overview.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -21,17 +25,18 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class GroupOverviewConcreteService extends GroupOverviewService {
-
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
-  constructor(private api: GroupApi,
-              private alertService: UserAndGroupNotificationService,
-              private dialog: MatDialog,
-              private router: Router,
-              private configService: UserAndGroupContext,
-              private navigator: UserAndGroupNavigator,
-              private errorHandler: UserAndGroupErrorHandler) {
+  constructor(
+    private api: GroupApi,
+    private alertService: UserAndGroupNotificationService,
+    private dialog: MatDialog,
+    private router: Router,
+    private configService: UserAndGroupContext,
+    private navigator: UserAndGroupNavigator,
+    private errorHandler: UserAndGroupErrorHandler
+  ) {
     super(configService.config.defaultPaginationSize);
   }
 
@@ -46,15 +51,16 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
     this.clearSelection();
     const filters = filter ? [new GroupFilter(filter)] : [];
     this.hasErrorSubject$.next(false);
-    return this.api.getAll(pagination, filters)
-      .pipe(
-        tap(groups => {
+    return this.api.getAll(pagination, filters).pipe(
+      tap(
+        (groups) => {
           this.resourceSubject$.next(groups);
         },
-            err => {
+        (err) => {
           this.errorHandler.emit(err, 'Fetching groups');
           this.hasErrorSubject$.next(true);
-        })
+        }
+      )
     );
   }
 
@@ -63,18 +69,16 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
    * @param group a group to delete
    */
   delete(group: Group): Observable<any> {
-    return this.displayConfirmationDialog([group])
-      .pipe(
-        switchMap(result => result ? this.callApiToDelete([group]) : EMPTY)
-      );
+    return this.displayConfirmationDialog([group]).pipe(
+      switchMap((result) => (result ? this.callApiToDelete([group]) : EMPTY))
+    );
   }
 
   deleteSelected(): Observable<any> {
     const groups = this.selectedSubject$.getValue();
-    return this.displayConfirmationDialog(groups)
-      .pipe(
-        switchMap(result => result ? this.callApiToDelete(groups) : EMPTY)
-      );
+    return this.displayConfirmationDialog(groups).pipe(
+      switchMap((result) => (result ? this.callApiToDelete(groups) : EMPTY))
+    );
   }
 
   edit(group: Group): Observable<any> {
@@ -95,25 +99,23 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
       : `Do you want to remove selected group?`;
     const dialogData = new CsirtMuConfirmationDialogConfig(title, message, 'Cancel', 'Delete');
     const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
-    return dialogRef.afterClosed()
-      .pipe(
-        map(result => result === CsirtMuDialogResultEnum.CONFIRMED),
-      );
+    return dialogRef.afterClosed().pipe(map((result) => result === CsirtMuDialogResultEnum.CONFIRMED));
   }
 
   private callApiToDelete(groups: Group[]): Observable<any> {
-    const ids = groups.map(group => group.id);
-    return this.api.deleteMultiple(ids)
-      .pipe(
-        tap( resp => {
-            this.clearSelection();
-            this.alertService.emit('success', 'Groups were deleted');
-          },
-          err => {
-            this.errorHandler.emit(err, 'Deleting groups');
-            this.hasErrorSubject$.next(true);
-          }),
-        switchMap(_ => this.getAll(this.lastPagination, this.lastFilter))
-      );
+    const ids = groups.map((group) => group.id);
+    return this.api.deleteMultiple(ids).pipe(
+      tap(
+        (resp) => {
+          this.clearSelection();
+          this.alertService.emit('success', 'Groups were deleted');
+        },
+        (err) => {
+          this.errorHandler.emit(err, 'Deleting groups');
+          this.hasErrorSubject$.next(true);
+        }
+      ),
+      switchMap((_) => this.getAll(this.lastPagination, this.lastFilter))
+    );
   }
 }

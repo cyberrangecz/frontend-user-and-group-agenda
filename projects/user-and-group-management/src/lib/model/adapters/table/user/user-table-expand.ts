@@ -1,4 +1,4 @@
-import {Type} from '@angular/core';
+import { Type } from '@angular/core';
 
 /**
  * Expand class for user table
@@ -6,7 +6,6 @@ import {Type} from '@angular/core';
 export class UserTableExpand {
   component: Type<any>;
   config: any;
-
 
   constructor(component: Type<any>, config?: any) {
     this.component = component;

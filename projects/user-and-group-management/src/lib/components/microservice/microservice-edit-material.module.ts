@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatCardModule} from '@angular/material/card';
 
 /**
  * Material component imports for microservice edit module
@@ -20,7 +20,7 @@ import {MatCardModule} from '@angular/material/card';
     MatIconModule,
     MatInputModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -30,8 +30,7 @@ import {MatCardModule} from '@angular/material/card';
     MatButtonModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatCardModule
-  ]
+    MatCardModule,
+  ],
 })
-export class MicroserviceEditMaterialModule {
-}
+export class MicroserviceEditMaterialModule {}

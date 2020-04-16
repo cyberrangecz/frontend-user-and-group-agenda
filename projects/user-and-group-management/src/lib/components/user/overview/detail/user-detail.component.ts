@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {User} from 'kypo2-auth';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { User } from 'kypo2-auth';
 
 /**
  * User detail component displayed in expanded row of a table component.
@@ -9,14 +9,10 @@ import {User} from 'kypo2-auth';
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[style.width]': "'100%'"
-  }
 })
 export class UserDetailComponent implements OnInit {
-
+  @HostBinding('style.width') width: '100%';
   @Input() data: User;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

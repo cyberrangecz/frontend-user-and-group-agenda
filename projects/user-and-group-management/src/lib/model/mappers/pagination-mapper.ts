@@ -1,11 +1,10 @@
-import {PaginationDTO} from '../DTO/pagination-dto.model';
-import {KypoPagination} from 'kypo-common';
+import { KypoPagination } from 'kypo-common';
+import { PaginationDTO } from '../DTO/pagination-dto.model';
 
 /**
  * @dynamic
  */
 export class PaginationMapper {
-
   static mapDTOToPagination(paginationDTO: PaginationDTO): KypoPagination {
     return new KypoPagination(
       paginationDTO.number,

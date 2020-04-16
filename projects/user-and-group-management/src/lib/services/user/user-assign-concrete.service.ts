@@ -1,18 +1,18 @@
-import {UserAssignService} from './user-assign.service';
-import {User} from 'kypo2-auth';
-import {KypoPaginatedResource} from 'kypo-common';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {KypoRequestedPagination} from 'kypo-common';
-import {Group} from '../../model/group/group.model';
-import {switchMap, tap} from 'rxjs/operators';
-import {GroupFilter} from '../../model/filters/group-filter';
-import {KypoPagination} from 'kypo-common';
-import {UserAndGroupContext} from '../shared/user-and-group-context.service';
-import {UserFilter} from '../../model/filters/user-filter';
-import {Injectable} from '@angular/core';
-import {UserApi} from '../api/user/user-api.service';
-import {GroupApi} from '../api/group/group-api.service';
-import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
+import { Injectable } from '@angular/core';
+import { KypoRequestedPagination } from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoPagination } from 'kypo-common';
+import { User } from 'kypo2-auth';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { GroupFilter } from '../../model/filters/group-filter';
+import { UserFilter } from '../../model/filters/user-filter';
+import { Group } from '../../model/group/group.model';
+import { GroupApi } from '../api/group/group-api.service';
+import { UserApi } from '../api/user/user-api.service';
+import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
+import { UserAndGroupContext } from '../shared/user-and-group-context.service';
+import { UserAssignService } from './user-assign.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -20,11 +20,12 @@ import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.s
  */
 @Injectable()
 export class UserAssignConcreteService extends UserAssignService {
-
-  constructor(private api: GroupApi,
-              private userApi: UserApi,
-              private context: UserAndGroupContext,
-              private errorHandler: UserAndGroupErrorHandler) {
+  constructor(
+    private api: GroupApi,
+    private userApi: UserApi,
+    private context: UserAndGroupContext,
+    private errorHandler: UserAndGroupErrorHandler
+  ) {
     super();
   }
 
@@ -42,14 +43,14 @@ export class UserAssignConcreteService extends UserAssignService {
    * @param resourceId id of a resource with which users and groups should be associated
    */
   assignSelected(resourceId: number): Observable<any> {
-    const userIds = this.selectedUsersToAssignSubject$.getValue().map(user => user.id);
-    const groupIds = this.selectedGroupsToImportSubject$.getValue().map(group => group.id);
+    const userIds = this.selectedUsersToAssignSubject$.getValue().map((user) => user.id);
+    const groupIds = this.selectedGroupsToImportSubject$.getValue().map((group) => group.id);
     return this.callApiToAssign(resourceId, userIds, groupIds);
   }
 
   assign(resourceId: number, users: User[], groups?: Group[]): Observable<any> {
-    const userIds = users.map(user => user.id);
-    const groupIds = groups.map(group => group.id);
+    const userIds = users.map((user) => user.id);
+    const groupIds = groups.map((group) => group.id);
     return this.callApiToAssign(resourceId, userIds, groupIds);
   }
 
@@ -59,12 +60,12 @@ export class UserAssignConcreteService extends UserAssignService {
    * @param users users to unassign
    */
   unassign(resourceId: number, users: User[]): Observable<any> {
-   const userIds = users.map(user => user.id);
-   return this.callApiToUnassign(resourceId, userIds);
+    const userIds = users.map((user) => user.id);
+    return this.callApiToUnassign(resourceId, userIds);
   }
 
   unassignSelected(resourceId: number): Observable<any> {
-    const userIds = this.selectedAssignedUsersSubject$.getValue().map((user => user.id));
+    const userIds = this.selectedAssignedUsersSubject$.getValue().map((user) => user.id);
     return this.callApiToUnassign(resourceId, userIds);
   }
 
@@ -74,27 +75,30 @@ export class UserAssignConcreteService extends UserAssignService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on users
    */
-  getAssigned(resourceId: number, pagination: KypoRequestedPagination, filterValue: string = null): Observable<KypoPaginatedResource<User>> {
+  getAssigned(
+    resourceId: number,
+    pagination: KypoRequestedPagination,
+    filterValue: string = null
+  ): Observable<KypoPaginatedResource<User>> {
     this.clearSelectedAssignedUsers();
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
     this.lastAssignedPagination = pagination;
     this.lastAssignedFilter = filterValue;
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
-    return this.userApi.getUsersInGroups([resourceId], pagination, filter)
-      .pipe(
-        tap(
-          paginatedUsers => {
-            this.assignedUsersSubject$.next(paginatedUsers);
-            this.isLoadingAssignedSubject$.next(false);
-          },
-          err => {
-            this.errorHandler.emit(err, 'Fetching users');
-            this.isLoadingAssignedSubject$.next(false);
-            this.hasErrorSubject$.next(true);
-          }
-        )
-      );
+    return this.userApi.getUsersInGroups([resourceId], pagination, filter).pipe(
+      tap(
+        (paginatedUsers) => {
+          this.assignedUsersSubject$.next(paginatedUsers);
+          this.isLoadingAssignedSubject$.next(false);
+        },
+        (err) => {
+          this.errorHandler.emit(err, 'Fetching users');
+          this.isLoadingAssignedSubject$.next(false);
+          this.hasErrorSubject$.next(true);
+        }
+      )
+    );
   }
 
   /**
@@ -104,12 +108,11 @@ export class UserAssignConcreteService extends UserAssignService {
    */
   getUsersToAssign(resourceId: number, filterValue: string): Observable<KypoPaginatedResource<User>> {
     const pageSize = 50;
-    return this.userApi.getUsersNotInGroup(resourceId,
-      new KypoRequestedPagination(0, pageSize, 'familyName', 'asc'),
-      [new UserFilter(filterValue)])
-      .pipe(
-        tap({error: err => this.errorHandler.emit(err, 'Fetching users')})
-      );
+    return this.userApi
+      .getUsersNotInGroup(resourceId, new KypoRequestedPagination(0, pageSize, 'familyName', 'asc'), [
+        new UserFilter(filterValue),
+      ])
+      .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching users') }));
   }
 
   /**
@@ -118,41 +121,35 @@ export class UserAssignConcreteService extends UserAssignService {
    */
   getGroupsToImport(filterValue: string): Observable<KypoPaginatedResource<Group>> {
     const pageSize = 50;
-    return this.api.getAll(
-      new KypoRequestedPagination(0, pageSize, 'name', 'asc'),
-      [new GroupFilter(filterValue)])
-      .pipe(
-        tap({error: err => this.errorHandler.emit(err, 'Fetching groups')})
-      );
+    return this.api
+      .getAll(new KypoRequestedPagination(0, pageSize, 'name', 'asc'), [new GroupFilter(filterValue)])
+      .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching groups') }));
   }
 
   private initSubject() {
-    return new KypoPaginatedResource([],
-      new KypoPagination(0,
-        0,
-        this.context.config.defaultPaginationSize,
-        0,
-        0));
+    return new KypoPaginatedResource([], new KypoPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
   }
 
   private callApiToAssign(resourceId: number, userIds: number[], groupIds: number[]) {
-    return this.api.addUsersToGroup(resourceId, userIds, groupIds)
-      .pipe(
-        tap(_ => {
-            this.clearSelectedUsersToAssign();
-            this.clearSelectedGroupsToImport();
-          },
-          err => this.errorHandler.emit(err, 'Adding users')),
-        switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
-      );
+    return this.api.addUsersToGroup(resourceId, userIds, groupIds).pipe(
+      tap(
+        (_) => {
+          this.clearSelectedUsersToAssign();
+          this.clearSelectedGroupsToImport();
+        },
+        (err) => this.errorHandler.emit(err, 'Adding users')
+      ),
+      switchMap((_) => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+    );
   }
 
   private callApiToUnassign(resourceId: number, userIds: number[]) {
-    return this.api.removeUsersFromGroup(resourceId, userIds)
-      .pipe(
-        tap(_ => this.clearSelectedAssignedUsers(),
-          err => this.errorHandler.emit(err, 'Removing users')),
-        switchMap(_ => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
-      );
+    return this.api.removeUsersFromGroup(resourceId, userIds).pipe(
+      tap(
+        (_) => this.clearSelectedAssignedUsers(),
+        (err) => this.errorHandler.emit(err, 'Removing users')
+      ),
+      switchMap((_) => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+    );
   }
 }

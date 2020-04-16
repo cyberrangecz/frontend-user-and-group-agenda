@@ -1,26 +1,26 @@
-import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from 'kypo2-auth';
-import {KypoPaginatedResource} from 'kypo-common';
-import {KypoRequestedPagination} from 'kypo-common';
-import {Group} from '../../model/group/group.model';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { User } from 'kypo2-auth';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Group } from '../../model/group/group.model';
 
-  /**
-  * A layer between a component and an API service. Implement a concrete service by extending this class.
-  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
-  * You can use get methods to get paginated requests and other operations to modify data.
-  * Subscribe to assignedUsers$ to receive latest data updates.
-  */
+/**
+ * A layer between a component and an API service. Implement a concrete service by extending this class.
+ * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
+ * You can use get methods to get paginated requests and other operations to modify data.
+ * Subscribe to assignedUsers$ to receive latest data updates.
+ */
 export abstract class UserAssignService {
   protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    /**
-     * True if error was returned from API, false otherwise
-     */
+  /**
+   * True if error was returned from API, false otherwise
+   */
   hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();
 
   protected isLoadingAssignedSubject$ = new BehaviorSubject<boolean>(false);
-    /**
-     * True if service is waiting on response from API for request to get assigned users
-     */
+  /**
+   * True if service is waiting on response from API for request to get assigned users
+   */
   isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
 
   protected selectedUsersToAssignSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
@@ -35,7 +35,7 @@ export abstract class UserAssignService {
 
   selectedGroupsToImport$: Observable<Group[]> = this.selectedGroupsToImportSubject$.asObservable();
 
-    /**
+  /**
    * List of users already assigned to the resource
    */
   abstract assignedUsers$: Observable<KypoPaginatedResource<User>>;
@@ -84,8 +84,11 @@ export abstract class UserAssignService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on users
    */
-  abstract getAssigned(resourceId: number, pagination: KypoRequestedPagination, filterValue: string): Observable<KypoPaginatedResource<User>>;
-
+  abstract getAssigned(
+    resourceId: number,
+    pagination: KypoRequestedPagination,
+    filterValue: string
+  ): Observable<KypoPaginatedResource<User>>;
 
   /**
    * Assigns selected users to a resource
@@ -93,12 +96,12 @@ export abstract class UserAssignService {
    */
   abstract assignSelected(resourceId: number): Observable<any>;
 
-    /**
-     * Assigns selected users to a resource
-     * @param resourceId id of a resource to associate with users
-     * @param users users to assign
-     * @param groups groups to import users from
-     */
+  /**
+   * Assigns selected users to a resource
+   * @param resourceId id of a resource to associate with users
+   * @param users users to assign
+   * @param groups groups to import users from
+   */
   abstract assign(resourceId: number, users: User[], groups?: Group[]): Observable<any>;
 
   /**
@@ -108,9 +111,9 @@ export abstract class UserAssignService {
    */
   abstract unassign(resourceId: number, users: User[]): Observable<any>;
 
-    /**
-     * Unassigns selected users from resource
-     * @param resourceId id of resource which association should be cancelled
-     */
+  /**
+   * Unassigns selected users from resource
+   * @param resourceId id of resource which association should be cancelled
+   */
   abstract unassignSelected(resourceId: number): Observable<any>;
 }

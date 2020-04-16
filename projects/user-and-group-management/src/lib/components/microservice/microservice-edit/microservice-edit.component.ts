@@ -1,10 +1,19 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {MicroserviceEditFormGroup} from './microservice-edit-form-group';
-import {Microservice} from '../../../model/microservice/microservice.model';
-import {FormArray, FormControl} from '@angular/forms';
-import {takeWhile} from 'rxjs/operators';
-import {KypoBaseComponent} from 'kypo-common';
-import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { FormArray, FormControl } from '@angular/forms';
+import { KypoBaseComponent } from 'kypo-common';
+import { takeWhile } from 'rxjs/operators';
+import { MicroserviceRolesState } from '../../../model/microservice/microservice-roles-state';
+import { Microservice } from '../../../model/microservice/microservice.model';
+import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
 
 /**
  * Component for editing main info about microservice and its roles
@@ -13,10 +22,9 @@ import {MicroserviceRolesState} from '../../../model/microservice/microservice-r
   selector: 'kypo2-microservice-edit',
   templateUrl: './microservice-edit.component.html',
   styleUrls: ['./microservice-edit.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroserviceEditComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   /**
    * Edited microservice
    */
@@ -39,15 +47,14 @@ export class MicroserviceEditComponent extends KypoBaseComponent implements OnIn
   }
 
   get roles() {
-    return <FormArray>this.microserviceFormGroup.formGroup.get('roles');
+    return this.microserviceFormGroup.formGroup.get('roles') as FormArray;
   }
 
   constructor() {
     super();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if ('microservice' in changes) {
@@ -74,9 +81,8 @@ export class MicroserviceEditComponent extends KypoBaseComponent implements OnIn
 
   private setupOnFormChangedEvent() {
     this.microserviceFormGroup.formGroup.valueChanges
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(_ => this.onChanged());
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe((_) => this.onChanged());
   }
 
   private onChanged() {
@@ -84,5 +90,4 @@ export class MicroserviceEditComponent extends KypoBaseComponent implements OnIn
     this.microservice.valid = this.microserviceFormGroup.formGroup.valid && this.rolesValidity;
     this.microserviceChange.emit(this.microservice);
   }
-
 }

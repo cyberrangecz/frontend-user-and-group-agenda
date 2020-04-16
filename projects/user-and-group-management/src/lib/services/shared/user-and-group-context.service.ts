@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {UserAndGroupConfig} from '../../model/client/user-and-group-config';
+import { Injectable } from '@angular/core';
+import { UserAndGroupConfig } from '../../model/client/user-and-group-config';
 
 /**
  * Config service holding and providing user and group config

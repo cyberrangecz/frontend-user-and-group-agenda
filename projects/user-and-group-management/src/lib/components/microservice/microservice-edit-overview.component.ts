@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {MicroserviceApi} from '../../services/api/microservice/microservice-api.service';
-import {Microservice} from '../../model/microservice/microservice.model';
-import {UserAndGroupErrorHandler} from '../../services/client/user-and-group-error-handler.service';
-import {UserAndGroupNotificationService} from '../../services/client/user-and-group-notification.service';
-import {UserAndGroupNavigator} from '../../services/client/user-and-group-navigator.service';
-import {Router} from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Microservice } from '../../model/microservice/microservice.model';
+import { MicroserviceApi } from '../../services/api/microservice/microservice-api.service';
+import { UserAndGroupErrorHandler } from '../../services/client/user-and-group-error-handler.service';
+import { UserAndGroupNavigator } from '../../services/client/user-and-group-navigator.service';
+import { UserAndGroupNotificationService } from '../../services/client/user-and-group-notification.service';
 
 /**
  * Main smart component of microservice edit page
@@ -13,10 +13,9 @@ import {Router} from '@angular/router';
   selector: 'kypo2-microservice-edit-overview',
   templateUrl: './microservice-edit-overview.component.html',
   styleUrls: ['./microservice-edit-overview.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroserviceEditOverviewComponent implements OnInit {
-
   /**
    * Edited/created microservice
    */
@@ -37,11 +36,13 @@ export class MicroserviceEditOverviewComponent implements OnInit {
    */
   canDeactivateForm = true;
 
-  constructor(private api: MicroserviceApi,
-              private navigator: UserAndGroupNavigator,
-              private router: Router,
-              private notificationService: UserAndGroupNotificationService,
-              private errorHandler: UserAndGroupErrorHandler) { }
+  constructor(
+    private api: MicroserviceApi,
+    private navigator: UserAndGroupNavigator,
+    private router: Router,
+    private notificationService: UserAndGroupNotificationService,
+    private errorHandler: UserAndGroupErrorHandler
+  ) {}
 
   ngOnInit() {
     this.initMicroservice();
@@ -73,19 +74,17 @@ export class MicroserviceEditOverviewComponent implements OnInit {
    * Calls service to create microservice and handles eventual error
    */
   create() {
-    this.api.create(this.microservice)
-      .subscribe(
-        _ => {
-          this.router.navigate([this.navigator.toGroupOverview()]);
-          this.notificationService.emit('success', 'Microservice was created');
-          this.canDeactivateForm = true;
-        },
-        err => this.errorHandler.emit(err, 'Creating microservice')
-      );
+    this.api.create(this.microservice).subscribe(
+      (_) => {
+        this.router.navigate([this.navigator.toGroupOverview()]);
+        this.notificationService.emit('success', 'Microservice was created');
+        this.canDeactivateForm = true;
+      },
+      (err) => this.errorHandler.emit(err, 'Creating microservice')
+    );
   }
 
   private initMicroservice() {
     this.microservice = new Microservice('', '', []);
   }
-
 }

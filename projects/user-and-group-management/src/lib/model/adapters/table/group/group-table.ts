@@ -1,30 +1,31 @@
-import {Column, Kypo2Table, Row} from 'kypo2-table';
-import {GroupTableRowAdapter} from './group-table-row-adapter';
-import {KypoPaginatedResource} from 'kypo-common';
-import {defer, of} from 'rxjs';
-import {Group} from '../../../group/group.model';
-import {GroupEditAction} from './group-edit-action';
-import {GroupDeleteAction} from './group-delete-action';
-import {GroupOverviewService} from '../../../../services/group/group-overview.service';
+import { KypoPaginatedResource } from 'kypo-common';
+import { Column, Kypo2Table, Row } from 'kypo2-table';
+import { defer, of } from 'rxjs';
+import { GroupOverviewService } from '../../../../services/group/group-overview.service';
+import { Group } from '../../../group/group.model';
+import { GroupDeleteAction } from './group-delete-action';
+import { GroupEditAction } from './group-edit-action';
+import { GroupTableRowAdapter } from './group-table-row-adapter';
 
 /**
  * Class creating data source for group table
  */
 export class GroupTable extends Kypo2Table<GroupTableRowAdapter> {
-
   constructor(resource: KypoPaginatedResource<Group>, service: GroupOverviewService) {
     const rowAdapters = GroupTable.mapGroupToTableAdapter(resource);
-    const rows = rowAdapters.elements
-      .map(adapter => new Row(adapter, [
-        new GroupEditAction(
-          of(false),
-          defer(() => service.edit(adapter.group))
-        ),
-        new GroupDeleteAction(
-          of(false),
-          defer(() => service.delete(adapter.group))
-        )
-      ]));
+    const rows = rowAdapters.elements.map(
+      (adapter) =>
+        new Row(adapter, [
+          new GroupEditAction(
+            of(false),
+            defer(() => service.edit(adapter.group))
+          ),
+          new GroupDeleteAction(
+            of(false),
+            defer(() => service.delete(adapter.group))
+          ),
+        ])
+    );
 
     const columns = [
       new Column('groupId', 'id', false),
@@ -41,8 +42,10 @@ export class GroupTable extends Kypo2Table<GroupTableRowAdapter> {
     this.selectable = true;
   }
 
-  private static mapGroupToTableAdapter(resource: KypoPaginatedResource<Group>): KypoPaginatedResource<GroupTableRowAdapter> {
-    const elements = resource.elements.map(group => new GroupTableRowAdapter(group));
+  private static mapGroupToTableAdapter(
+    resource: KypoPaginatedResource<Group>
+  ): KypoPaginatedResource<GroupTableRowAdapter> {
+    const elements = resource.elements.map((group) => new GroupTableRowAdapter(group));
     return new KypoPaginatedResource<GroupTableRowAdapter>(elements, resource.pagination);
   }
 }

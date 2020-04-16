@@ -1,14 +1,14 @@
-import {RoleAssignService} from './role-assign.service';
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, forkJoin, Observable, of} from 'rxjs';
-import {UserRole} from 'kypo2-auth';
-import {catchError, switchMap, tap} from 'rxjs/operators';
-import {KypoFilter, KypoPagination, KypoRequestedPagination} from 'kypo-common';
-import {KypoPaginatedResource} from 'kypo-common';
-import {RoleFilter} from '../../model/filters/role-filter';
-import {RoleApi} from '../api/role/role-api.service';
-import {GroupApi} from '../api/group/group-api.service';
-import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
+import { Injectable } from '@angular/core';
+import { KypoFilter, KypoPagination, KypoRequestedPagination } from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { UserRole } from 'kypo2-auth';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { RoleFilter } from '../../model/filters/role-filter';
+import { GroupApi } from '../api/group/group-api.service';
+import { RoleApi } from '../api/role/role-api.service';
+import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
+import { RoleAssignService } from './role-assign.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -16,8 +16,9 @@ import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.s
  */
 @Injectable()
 export class RoleAssignConcreteService extends RoleAssignService {
-
-  private assignedRolesSubject$: BehaviorSubject<KypoPaginatedResource<UserRole>> = new BehaviorSubject(this.initSubject());
+  private assignedRolesSubject$: BehaviorSubject<KypoPaginatedResource<UserRole>> = new BehaviorSubject(
+    this.initSubject()
+  );
   /**
    * Subscribe to receive assigned roles
    */
@@ -26,9 +27,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
-  constructor(private api: GroupApi,
-              private roleApi: RoleApi,
-              private errorHandler: UserAndGroupErrorHandler) {
+  constructor(private api: GroupApi, private roleApi: RoleApi, private errorHandler: UserAndGroupErrorHandler) {
     super();
   }
 
@@ -38,12 +37,12 @@ export class RoleAssignConcreteService extends RoleAssignService {
    * @param roles roles to be assigned to a resource
    */
   assign(resourceId: number, roles: UserRole[]): Observable<any> {
-    const roleIds = roles.map(role => role.id);
+    const roleIds = roles.map((role) => role.id);
     return this.callApiToAssign(resourceId, roleIds);
   }
 
   assignSelected(resourceId: number): Observable<any> {
-    const roleIds = this.selectedRolesToAssignSubject$.getValue().map(role => role.id);
+    const roleIds = this.selectedRolesToAssignSubject$.getValue().map((role) => role.id);
     return this.callApiToAssign(resourceId, roleIds);
   }
 
@@ -53,26 +52,30 @@ export class RoleAssignConcreteService extends RoleAssignService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on result
    */
-  getAssigned(resourceId: number, pagination: KypoRequestedPagination, filterValue: string = null): Observable<KypoPaginatedResource<UserRole>> {
+  getAssigned(
+    resourceId: number,
+    pagination: KypoRequestedPagination,
+    filterValue: string = null
+  ): Observable<KypoPaginatedResource<UserRole>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
     const filter = new KypoFilter('name', filterValue);
     this.clearSelectedAssignedRoles();
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
-    return this.api.getRolesOfGroup(resourceId, pagination, [filter])
-      .pipe(
-        tap(
-          roles => {
+    return this.api.getRolesOfGroup(resourceId, pagination, [filter]).pipe(
+      tap(
+        (roles) => {
           this.assignedRolesSubject$.next(roles);
           this.isLoadingAssignedSubject$.next(false);
         },
-          err => {
-            this.errorHandler.emit(err, 'Fetching roles of group');
-            this.isLoadingAssignedSubject$.next(false);
-            this.hasErrorSubject$.next(true);
-          })
-      );
+        (err) => {
+          this.errorHandler.emit(err, 'Fetching roles of group');
+          this.isLoadingAssignedSubject$.next(false);
+          this.hasErrorSubject$.next(true);
+        }
+      )
+    );
   }
 
   /**
@@ -83,10 +86,9 @@ export class RoleAssignConcreteService extends RoleAssignService {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new KypoRequestedPagination(0, paginationSize, 'roleType', 'asc');
-    return this.roleApi.getAll(pagination, filter)
-      .pipe(
-        tap({error: err => this.errorHandler.emit(err, 'Fetching roles')}),
-      );
+    return this.roleApi
+      .getAll(pagination, filter)
+      .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching roles') }));
   }
 
   /**
@@ -95,51 +97,44 @@ export class RoleAssignConcreteService extends RoleAssignService {
    * @param roles roles to be unassigned from a resource
    */
   unassign(resourceId: number, roles: UserRole[]): Observable<any> {
-    const roleIds = roles.map(role => role.id);
+    const roleIds = roles.map((role) => role.id);
     return this.callApiToUnassign(resourceId, roleIds);
   }
 
   unassignSelected(resourceId): Observable<any> {
-    const roleIds = this.selectedAssignedRolesSubject$.getValue().map(role => role.id);
+    const roleIds = this.selectedAssignedRolesSubject$.getValue().map((role) => role.id);
     return this.callApiToUnassign(resourceId, roleIds);
   }
 
   private callApiToAssign(resourceId: number, roleIds: number[]) {
     this.clearSelectedRolesToAssign();
-    return forkJoin(
-      roleIds.map(id => this.api.assignRole(resourceId, id)),
-    ).pipe(
-      catchError(error => of('failed')),
-      tap( (results: any[]) => {
-        const failedRequests = results.filter(result => result === 'failed');
+    return forkJoin(roleIds.map((id) => this.api.assignRole(resourceId, id))).pipe(
+      catchError((error) => of('failed')),
+      tap((results: any[]) => {
+        const failedRequests = results.filter((result) => result === 'failed');
         if (failedRequests.length > 1) {
           this.errorHandler.emit(undefined, 'Assigning some roles failed');
         }
       }),
-      switchMap(_ => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+      switchMap((_) => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
     );
   }
 
   private callApiToUnassign(resourceId: number, roleIds: number[]) {
     this.clearSelectedAssignedRoles();
-    return forkJoin(
-      roleIds.map(id => this.api.removeRole(resourceId, id)),
-    ).pipe(
-      catchError(error => of('failed')),
-      tap( (results: any[]) => {
-        const failedRequests = results.filter(result => result === 'failed');
+    return forkJoin(roleIds.map((id) => this.api.removeRole(resourceId, id))).pipe(
+      catchError((error) => of('failed')),
+      tap((results: any[]) => {
+        const failedRequests = results.filter((result) => result === 'failed');
         if (failedRequests.length > 1) {
           this.errorHandler.emit(undefined, 'Assigning some roles failed');
         }
       }),
-      switchMap(_ => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+      switchMap((_) => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
     );
   }
 
   private initSubject(): KypoPaginatedResource<UserRole> {
-    return new KypoPaginatedResource(
-      [],
-      new KypoPagination(0, 0, 10, 0, 0)
-    );
+    return new KypoPaginatedResource([], new KypoPagination(0, 0, 10, 0, 0));
   }
 }

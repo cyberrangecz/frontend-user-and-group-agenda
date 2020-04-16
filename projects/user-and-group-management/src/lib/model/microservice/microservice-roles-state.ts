@@ -1,4 +1,4 @@
-import {MicroserviceRole} from './microservice-role.model';
+import { MicroserviceRole } from './microservice-role.model';
 
 /**
  * State of edited microservice roles

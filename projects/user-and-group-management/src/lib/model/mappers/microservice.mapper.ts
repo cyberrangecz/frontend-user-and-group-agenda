@@ -1,10 +1,10 @@
-import { MicroserviceDTO } from './../DTO/microservice/microservice-dto.model';
-import { Microservice } from '../microservice/microservice.model';
-import { MicroserviceCreateDTO } from '../DTO/microservice/microservice-dto.model';
-import { MicroserviceRole } from '../microservice/microservice-role.model';
-import { MicroserviceRoleDTO } from '../DTO/microservice/microservice-role-dto';
 import { KypoPaginatedResource } from 'kypo-common';
+import { MicroserviceCreateDTO } from '../DTO/microservice/microservice-create-dto.model';
+import { MicroserviceDTO } from '../DTO/microservice/microservice-dto';
+import { MicroserviceRoleDTO } from '../DTO/microservice/microservice-role-dto';
 import { RestResourceDTO } from '../DTO/rest-resource-dto.model';
+import { MicroserviceRole } from '../microservice/microservice-role.model';
+import { Microservice } from '../microservice/microservice.model';
 import { PaginationMapper } from './pagination-mapper';
 
 /**
@@ -12,7 +12,6 @@ import { PaginationMapper } from './pagination-mapper';
  * @dynamic
  */
 export class MicroserviceMapper {
-
   /**
    * Maps microservice internal model to microservice dto
    * @param microservice internal model to be mapped to dto
@@ -26,7 +25,7 @@ export class MicroserviceMapper {
   }
 
   private static mapMicroserviceRolesToMicroserviceRolesDTO(roles: MicroserviceRole[]): MicroserviceRoleDTO[] {
-    return roles.map(role => {
+    return roles.map((role) => {
       const dto = new MicroserviceRoleDTO();
       dto.default = role.default;
       dto.description = role.description;
@@ -39,10 +38,13 @@ export class MicroserviceMapper {
    * Maps microservice dto to internal model
    * @param microservice internal model to be mapped to dto
    */
-  static mapMicroserviceDTOsToMicroservices(restResource: RestResourceDTO<MicroserviceDTO>): KypoPaginatedResource<Microservice> {
+  static mapMicroserviceDTOsToMicroservices(
+    restResource: RestResourceDTO<MicroserviceDTO>
+  ): KypoPaginatedResource<Microservice> {
     const result = new KypoPaginatedResource<Microservice>(
-      restResource.content.map(microserviceDTO => this.mapMicroserviceDTOToMicroservice(microserviceDTO)),
-      PaginationMapper.mapDTOToPagination(restResource.pagination));
+      restResource.content.map((microserviceDTO) => this.mapMicroserviceDTOToMicroservice(microserviceDTO)),
+      PaginationMapper.mapDTOToPagination(restResource.pagination)
+    );
     return result;
   }
 

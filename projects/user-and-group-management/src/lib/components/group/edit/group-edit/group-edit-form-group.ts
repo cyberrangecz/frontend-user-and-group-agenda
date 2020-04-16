@@ -1,18 +1,17 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {Group} from '../../../../model/group/group.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Group } from '../../../../model/group/group.model';
 
 /**
  * Form control class for edit group componnet
  */
 export class GroupEditFormGroup {
-
   formGroup: FormGroup;
 
   constructor(group: Group) {
     this.formGroup = new FormGroup({
       name: new FormControl(group.name, Validators.required),
       description: new FormControl(group.description, Validators.required),
-      expirationDate: new FormControl(group.expirationDate, Validators.min(this.calculateTomorrowTimestamp()))
+      expirationDate: new FormControl(group.expirationDate, Validators.min(this.calculateTomorrowTimestamp())),
     });
   }
 

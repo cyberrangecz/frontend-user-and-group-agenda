@@ -1,7 +1,16 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {MicroserviceRole} from '../../../model/microservice/microservice-role.model';
-import {MicroserviceRoleItem} from '../../../model/microservice/microservice-role-item';
-import {MicroserviceRolesState} from '../../../model/microservice/microservice-roles-state';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { MicroserviceRoleItem } from '../../../model/microservice/microservice-role-item';
+import { MicroserviceRole } from '../../../model/microservice/microservice-role.model';
+import { MicroserviceRolesState } from '../../../model/microservice/microservice-roles-state';
 
 /**
  * Class containing list of microservice roles
@@ -10,10 +19,9 @@ import {MicroserviceRolesState} from '../../../model/microservice/microservice-r
   selector: 'kypo2-microservice-role-list',
   templateUrl: './microservice-role-list.component.html',
   styleUrls: ['./microservice-role-list.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroserviceRoleListComponent implements OnInit, OnChanges {
-
   /**
    * Roles of microservice
    */
@@ -34,13 +42,11 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
    */
   @Output() microserviceRoles: EventEmitter<MicroserviceRolesState> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-  }
+  ngOnChanges(changes: SimpleChanges) {}
 
   /**
    * Adds new microservice role
@@ -64,7 +70,7 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
       roles: this.roles,
       validity: this.rolesFormValidity,
       isRemoved: true,
-      roleIndex: index
+      roleIndex: index,
     });
   }
 
@@ -79,17 +85,17 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
     this.microserviceRoles.emit({
       roles: this.roles,
       validity: this.rolesFormValidity,
-      roleIndex: index
+      roleIndex: index,
     });
   }
 
   private updateValidity(isUpdatedValid: boolean, index: number): boolean {
     this.rolesValidity[index] = isUpdatedValid;
-    return this.rolesValidity.every(roleValidity => roleValidity);
+    return this.rolesValidity.every((roleValidity) => roleValidity);
   }
 
   private createRole(): MicroserviceRole {
-    const role =  new MicroserviceRole();
+    const role = new MicroserviceRole();
     role.default = false;
     role.description = '';
     role.type = '';

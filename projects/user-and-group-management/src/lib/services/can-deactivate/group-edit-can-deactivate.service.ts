@@ -1,10 +1,14 @@
-import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
 import { Injectable } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {map, take} from 'rxjs/operators';
-import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
-import {GroupEditOverviewComponent} from '../../components/group/edit/group-edit-overview.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  CsirtMuConfirmationDialogComponent,
+  CsirtMuConfirmationDialogConfig,
+  CsirtMuDialogResultEnum,
+} from 'csirt-mu-common';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { GroupEditOverviewComponent } from '../../components/group/edit/group-edit-overview.component';
 
 /**
  * CanDeactivate service for group edit component.
@@ -12,11 +16,14 @@ import {GroupEditOverviewComponent} from '../../components/group/edit/group-edit
  */
 @Injectable()
 export class GroupEditCanDeactivate implements CanDeactivate<GroupEditOverviewComponent> {
+  constructor(private dialog: MatDialog) {}
 
-  constructor(private dialog: MatDialog) {
-  }
-
-  canDeactivate(component: GroupEditOverviewComponent, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canDeactivate(
+    component: GroupEditOverviewComponent,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.canDeactivate()) {
       return true;
     } else {
@@ -27,12 +34,11 @@ export class GroupEditCanDeactivate implements CanDeactivate<GroupEditOverviewCo
         'Leave'
       );
 
-      const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {data: dialogData});
-      return dialogRef.afterClosed()
-        .pipe(
-          take(1),
-          map(result => result === CsirtMuDialogResultEnum.CONFIRMED)
-        );
+      const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
+      return dialogRef.afterClosed().pipe(
+        take(1),
+        map((result) => result === CsirtMuDialogResultEnum.CONFIRMED)
+      );
     }
   }
 }

@@ -14,7 +14,7 @@ export class Microservice {
    * True if microservice has default role, false otherwise
    */
   hasDefaultRole(): boolean {
-    return this.roles.some(role => role.default);
+    return this.roles.some((role) => role.default);
   }
 
   constructor(name: string, endpoint: string, roles: MicroserviceRole[]) {
@@ -22,5 +22,4 @@ export class Microservice {
     this.endpoint = endpoint;
     this.roles = roles;
   }
-
 }

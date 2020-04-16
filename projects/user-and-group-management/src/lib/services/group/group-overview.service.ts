@@ -1,7 +1,7 @@
-import {Observable} from 'rxjs';
-import {KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
-import {Group} from '../../model/group/group.model';
-import {SelectablePaginatedService} from '../shared/selectable-paginated.service';
+import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { Observable } from 'rxjs';
+import { Group } from '../../model/group/group.model';
+import { SelectablePaginatedService } from '../shared/selectable-paginated.service';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -9,7 +9,6 @@ import {SelectablePaginatedService} from '../shared/selectable-paginated.service
  * You can use get methods to get paginated requests and other operations to modify data.
  */
 export abstract class GroupOverviewService extends SelectablePaginatedService<Group> {
-
   protected constructor(pageSize: number) {
     super(pageSize);
   }

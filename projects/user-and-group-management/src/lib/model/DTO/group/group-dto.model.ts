@@ -1,5 +1,5 @@
-import {UserForGroupsDTO} from '../user/user-for-groups-dto.model';
-import {RoleDTO} from 'kypo2-auth';
+import { RoleDTO } from 'kypo2-auth';
+import { UserForGroupsDTO } from '../user/user-for-groups-dto.model';
 
 export class GroupDTO {
   can_be_deleted: boolean;

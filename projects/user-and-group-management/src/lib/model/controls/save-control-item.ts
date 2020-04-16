@@ -1,5 +1,5 @@
-import {KypoControlItem} from 'kypo-controls';
-import {Observable} from 'rxjs';
+import { KypoControlItem } from 'kypo-controls';
+import { Observable } from 'rxjs';
 
 export class SaveControlItem extends KypoControlItem {
   static readonly ID = 'save';

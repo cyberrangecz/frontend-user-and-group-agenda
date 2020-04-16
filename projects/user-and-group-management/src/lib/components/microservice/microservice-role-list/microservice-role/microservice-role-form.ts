@@ -1,5 +1,5 @@
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MicroserviceRole} from '../../../../model/microservice/microservice-role.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MicroserviceRole } from '../../../../model/microservice/microservice-role.model';
 
 /**
  * Form control of microservice edit form

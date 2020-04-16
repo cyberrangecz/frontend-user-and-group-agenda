@@ -1,10 +1,9 @@
 import { KypoFilter, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { UserRole } from 'kypo2-auth';
 import { Observable } from 'rxjs';
 import { Group } from '../../../model/group/group.model';
-import { UserRole } from 'kypo2-auth';
 
 export abstract class GroupApi {
-
   /**
    * Sends http request to get paginated groups
    * @param pagination requested pagination
@@ -63,7 +62,11 @@ export abstract class GroupApi {
    * @param pagination requested pagination
    * @param filter filter to be applied on result
    */
-  abstract getRolesOfGroup(groupId: number, pagination: KypoRequestedPagination, filter?: KypoFilter[]): Observable<KypoPaginatedResource<UserRole>>;
+  abstract getRolesOfGroup(
+    groupId: number,
+    pagination: KypoRequestedPagination,
+    filter?: KypoFilter[]
+  ): Observable<KypoPaginatedResource<UserRole>>;
 
   /**
    * Sends http request to remove users from a group

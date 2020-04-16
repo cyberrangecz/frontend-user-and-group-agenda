@@ -1,4 +1,4 @@
-import {MicroserviceRole} from './microservice-role.model';
+import { MicroserviceRole } from './microservice-role.model';
 
 /**
  * Input form of microservice role

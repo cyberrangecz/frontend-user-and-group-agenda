@@ -1,18 +1,27 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {KypoBaseComponent, KypoRequestedPagination} from 'kypo-common';
-import {defer, Observable} from 'rxjs';
-import {UserRole} from 'kypo2-auth';
-import {Kypo2SelectorResourceMapping} from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
-import {Kypo2Table, LoadTableEvent, TableActionEvent} from 'kypo2-table';
-import {RoleAssignService} from '../../../../services/role/role-assign.service';
-import {map, take, takeWhile} from 'rxjs/operators';
-import {Group} from '../../../../model/group/group.model';
-import {KypoPaginatedResource} from 'kypo-common';
-import {KypoControlItem} from 'kypo-controls';
-import {DeleteControlItem} from '../../../../model/controls/delete-control-item';
-import {SaveControlItem} from '../../../../model/controls/save-control-item';
-import {UserAndGroupContext} from '../../../../services/shared/user-and-group-context.service';
-import {GroupRolesTable} from '../../../../model/adapters/table/role/group-roles-table';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoControlItem } from 'kypo-controls';
+import { UserRole } from 'kypo2-auth';
+import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { Kypo2SelectorResourceMapping } from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
+import { defer, Observable } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
+import { GroupRolesTable } from '../../../../model/adapters/table/role/group-roles-table';
+import { DeleteControlItem } from '../../../../model/controls/delete-control-item';
+import { SaveControlItem } from '../../../../model/controls/save-control-item';
+import { Group } from '../../../../model/group/group.model';
+import { RoleAssignService } from '../../../../services/role/role-assign.service';
+import { UserAndGroupContext } from '../../../../services/shared/user-and-group-context.service';
 
 /**
  * Component for role assignment to edited group
@@ -21,10 +30,9 @@ import {GroupRolesTable} from '../../../../model/adapters/table/role/group-roles
   selector: 'kypo2-group-role-assign',
   templateUrl: './group-role-assign.component.html',
   styleUrls: ['./group-role-assign.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupRoleAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';
   readonly ROLES_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -71,18 +79,16 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   rolesToAssignControls: KypoControlItem[];
   assignedRolesControls: KypoControlItem[];
 
-  constructor(private roleAssignService: RoleAssignService,
-              private config: UserAndGroupContext) {
+  constructor(private roleAssignService: RoleAssignService, private config: UserAndGroupContext) {
     super();
     this.roleMapping = {
       id: 'id',
       title: 'roleType',
-      subtitle: 'microserviceName'
+      subtitle: 'microserviceName',
     };
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('resource' in changes && this.resource && this.resource.id !== undefined) {
@@ -91,10 +97,7 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   }
 
   onControlAction(controlItem: KypoControlItem) {
-    controlItem.result$
-      .pipe(
-        take(1)
-      ).subscribe();
+    controlItem.result$.pipe(take(1)).subscribe();
   }
 
   /**
@@ -102,10 +105,9 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
    * @param filterValue search value
    */
   search(filterValue: string) {
-    this.roles$ = this.roleAssignService.getAvailableToAssign(filterValue)
-      .pipe(
-        map((resource: KypoPaginatedResource<UserRole>) => resource.elements)
-      );
+    this.roles$ = this.roleAssignService
+      .getAvailableToAssign(filterValue)
+      .pipe(map((resource: KypoPaginatedResource<UserRole>) => resource.elements));
   }
 
   /**
@@ -117,10 +119,10 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   }
 
   onAssignedRolesLoad(event: LoadTableEvent) {
-    this.roleAssignService.getAssigned(this.resource.id, event.pagination, event.filter)
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe();
+    this.roleAssignService
+      .getAssigned(this.resource.id, event.pagination, event.filter)
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe();
   }
 
   /**
@@ -128,10 +130,7 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
    * @param event action emitted from assigned roles table component
    */
   onAssignedRolesTableAction(event: TableActionEvent<UserRole>) {
-    event.action.result$
-      .pipe(
-        take(1)
-      ).subscribe();
+    event.action.result$.pipe(take(1)).subscribe();
   }
 
   /**
@@ -151,46 +150,46 @@ export class GroupRoleAssignComponent extends KypoBaseComponent implements OnIni
   }
 
   private initTable() {
-    this.assignedRoles$ = this.roleAssignService.assignedRoles$
-      .pipe(
-        map(resource => new GroupRolesTable(resource, this.resource.id, this.roleAssignService))
-      );
+    this.assignedRoles$ = this.roleAssignService.assignedRoles$.pipe(
+      map((resource) => new GroupRolesTable(resource, this.resource.id, this.roleAssignService))
+    );
     this.assignedRolesHasError$ = this.roleAssignService.hasError$;
     this.isLoadingAssignedRoles$ = this.roleAssignService.isLoadingAssigned$;
     const initialLoadEvent = new LoadTableEvent(
-      new KypoRequestedPagination(0, this.config.config.defaultPaginationSize, this.ROLES_OF_GROUP_INIT_SORT_NAME, this.ROLES_OF_GROUP_INIT_SORT_DIR)
+      new KypoRequestedPagination(
+        0,
+        this.config.config.defaultPaginationSize,
+        this.ROLES_OF_GROUP_INIT_SORT_NAME,
+        this.ROLES_OF_GROUP_INIT_SORT_DIR
+      )
     );
     this.onAssignedRolesLoad(initialLoadEvent);
   }
 
   private initAssignedRolesControls() {
-    this.roleAssignService.selectedAssignedRoles$
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(selection => {
+    this.roleAssignService.selectedAssignedRoles$.pipe(takeWhile((_) => this.isAlive)).subscribe((selection) => {
       this.assignedRolesControls = [
-        new DeleteControlItem(selection.length,
+        new DeleteControlItem(
+          selection.length,
           defer(() => this.roleAssignService.unassignSelected(this.resource.id))
-        )];
+        ),
+      ];
     });
-
   }
   private initRolesToAssignControls() {
-    const disabled$ = this.roleAssignService.selectedRolesToAssign$
-      .pipe(
-        map(selection => selection.length <= 0)
-      );
+    const disabled$ = this.roleAssignService.selectedRolesToAssign$.pipe(map((selection) => selection.length <= 0));
     this.rolesToAssignControls = [
-      new SaveControlItem('Add',
+      new SaveControlItem(
+        'Add',
         disabled$,
         defer(() => this.roleAssignService.assignSelected(this.resource.id))
-      )];
+      ),
+    ];
   }
 
   private initUnsavedChangesEmitter() {
     this.roleAssignService.selectedRolesToAssign$
-      .pipe(
-        takeWhile(_ => this.isAlive)
-      ).subscribe(selection => this.hasUnsavedChanges.emit(selection.length > 0));
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe((selection) => this.hasUnsavedChanges.emit(selection.length > 0));
   }
 }

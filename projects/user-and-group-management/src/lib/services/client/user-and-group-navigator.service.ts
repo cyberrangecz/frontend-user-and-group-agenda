@@ -3,7 +3,6 @@
  * but can be overridden by client if custom routes are desired
  */
 export abstract class UserAndGroupNavigator {
-
   /**
    * Returns route to user overview page
    */
@@ -25,10 +24,8 @@ export abstract class UserAndGroupNavigator {
    */
   abstract toNewGroup(): string;
 
-
   /**
    * Returns route to new microservice page
    */
   abstract toNewMicroservice(): string;
-
 }

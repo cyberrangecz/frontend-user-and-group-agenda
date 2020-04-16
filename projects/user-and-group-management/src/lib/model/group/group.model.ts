@@ -1,4 +1,4 @@
-import {User, UserRole} from 'kypo2-auth';
+import { User, UserRole } from 'kypo2-auth';
 
 /**
  * Internal model a group
@@ -16,7 +16,8 @@ export class Group {
    * Gets expiration date in UTC format
    */
   getExpirationDateUTC(): Date {
-    return new Date(Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate()));
+    return new Date(
+      Date.UTC(this.expirationDate.getFullYear(), this.expirationDate.getMonth(), this.expirationDate.getDate())
+    );
   }
 }
-

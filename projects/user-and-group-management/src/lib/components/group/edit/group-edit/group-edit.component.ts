@@ -1,9 +1,18 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {GroupEditFormGroup} from './group-edit-form-group';
-import {Group} from '../../../../model/group/group.model';
-import {takeWhile} from 'rxjs/operators';
-import {GroupChangedEvent} from '../../../../model/events/group-changed-event';
-import {KypoBaseComponent} from 'kypo-common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { KypoBaseComponent } from 'kypo-common';
+import { takeWhile } from 'rxjs/operators';
+import { GroupChangedEvent } from '../../../../model/events/group-changed-event';
+import { Group } from '../../../../model/group/group.model';
+import { GroupEditFormGroup } from './group-edit-form-group';
 
 /**
  * Component for editing basic group attributes
@@ -12,10 +21,9 @@ import {KypoBaseComponent} from 'kypo-common';
   selector: 'kypo2-group-edit',
   templateUrl: './group-edit.component.html',
   styleUrls: ['./group-edit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupEditComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   /**
    * Edited group
    */
@@ -55,16 +63,12 @@ export class GroupEditComponent extends KypoBaseComponent implements OnInit, OnC
 
   private setupOnFormChangedEvent() {
     this.groupEditFormGroup.formGroup.valueChanges
-      .pipe(
-        takeWhile(_ => this.isAlive),
-      ).subscribe(_ => this.onChanged());
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe((_) => this.onChanged());
   }
 
   private onChanged() {
     this.groupEditFormGroup.setValuesToGroup(this.group);
-    this.edited.emit(new GroupChangedEvent(
-      this.group,
-      this.groupEditFormGroup.formGroup.valid)
-    );
+    this.edited.emit(new GroupChangedEvent(this.group, this.groupEditFormGroup.formGroup.valid));
   }
 }

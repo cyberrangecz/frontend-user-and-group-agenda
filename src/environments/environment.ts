@@ -10,9 +10,7 @@ export const environment = {
     maxRetryAttempts: 3,
     guardMainPageRedirect: 'home',
     guardLoginPageRedirect: 'login',
-    tokenInterceptorAllowedUrls: [
-      'https://kypo-devel.ics.muni.cz'
-    ],
+    tokenInterceptorAllowedUrls: ['https://kypo-devel.ics.muni.cz'],
     userInfoRestUri: 'https://kypo-devel.ics.muni.cz:8084/kypo2-rest-user-and-group/api/v1/',
     providers: [
       {
@@ -27,10 +25,9 @@ export const environment = {
           scope: 'openid email profile',
           logoutUrl: 'https://oidc.muni.cz/oidc/endsession',
           postLogoutRedirectUri: window.location.origin,
-          clearHashAfterLogin: true
+          clearHashAfterLogin: true,
         },
       },
-    ]
+    ],
   },
 };
-

@@ -1,9 +1,18 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {MicroserviceRole} from '../../../../model/microservice/microservice-role.model';
-import {MicroserviceRoleForm} from './microservice-role-form';
-import {takeWhile} from 'rxjs/operators';
-import {KypoBaseComponent} from 'kypo-common';
-import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-role-item';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { KypoBaseComponent } from 'kypo-common';
+import { takeWhile } from 'rxjs/operators';
+import { MicroserviceRoleItem } from '../../../../model/microservice/microservice-role-item';
+import { MicroserviceRole } from '../../../../model/microservice/microservice-role.model';
+import { MicroserviceRoleForm } from './microservice-role-form';
 
 /**
  * Component of individual microservice role
@@ -12,10 +21,9 @@ import {MicroserviceRoleItem} from '../../../../model/microservice/microservice-
   selector: 'kypo2-microservice-role',
   templateUrl: './microservice-role.component.html',
   styleUrls: ['./microservice-role.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroserviceRoleComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   /**
    * Edited role
    */
@@ -48,8 +56,7 @@ export class MicroserviceRoleComponent extends KypoBaseComponent implements OnIn
     super();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if ('role' in changes) {
@@ -72,23 +79,21 @@ export class MicroserviceRoleComponent extends KypoBaseComponent implements OnIn
     this.microserviceRoleFormGroup.setValuesToRole(this.role);
     this.roleChange.emit({
       role: this.role,
-      valid: false
+      valid: false,
     });
   }
 
   private setupOnFormChangedEvent() {
     this.microserviceRoleFormGroup.formGroup.valueChanges
-      .pipe(
-        takeWhile(_ => this.isAlive),
-      ).subscribe(_ => this.onChanged());
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe((_) => this.onChanged());
   }
 
   private onChanged() {
     this.microserviceRoleFormGroup.setValuesToRole(this.role);
     this.roleChange.emit({
       role: this.role,
-      valid: this.microserviceRoleFormGroup.formGroup.valid
+      valid: this.microserviceRoleFormGroup.formGroup.valid,
     });
   }
-
 }

@@ -1,4 +1,4 @@
-import {Group} from '../group/group.model';
+import { Group } from '../group/group.model';
 
 /**
  * Event emitted when edited group is changed

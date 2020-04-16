@@ -5,9 +5,3 @@ export class MicroserviceCreateDTO {
   endpoint: string;
   roles: MicroserviceRoleDTO[];
 }
-
-export class MicroserviceDTO {
-  id: number;
-  name: string;
-  endpoint: string;
-}

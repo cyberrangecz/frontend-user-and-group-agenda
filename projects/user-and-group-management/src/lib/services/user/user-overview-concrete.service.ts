@@ -1,17 +1,21 @@
-import {UserOverviewService} from './user-overview.service';
-import {Injectable} from '@angular/core';
-import {EMPTY, Observable} from 'rxjs';
-import {KypoPaginatedResource} from 'kypo-common';
-import {User} from 'kypo2-auth';
-import {KypoRequestedPagination} from 'kypo-common';
-import {UserAndGroupContext} from '../shared/user-and-group-context.service';
-import {map, switchMap, tap} from 'rxjs/operators';
-import {UserFilter} from '../../model/filters/user-filter';
-import {MatDialog} from '@angular/material/dialog';
-import {CsirtMuConfirmationDialogComponent, CsirtMuConfirmationDialogConfig, CsirtMuDialogResultEnum} from 'csirt-mu-common';
-import {UserApi} from '../api/user/user-api.service';
-import {UserAndGroupNotificationService} from '../client/user-and-group-notification.service';
-import {UserAndGroupErrorHandler} from '../client/user-and-group-error-handler.service';
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  CsirtMuConfirmationDialogComponent,
+  CsirtMuConfirmationDialogConfig,
+  CsirtMuDialogResultEnum,
+} from 'csirt-mu-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { User } from 'kypo2-auth';
+import { EMPTY, Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { UserFilter } from '../../model/filters/user-filter';
+import { UserApi } from '../api/user/user-api.service';
+import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
+import { UserAndGroupNotificationService } from '../client/user-and-group-notification.service';
+import { UserAndGroupContext } from '../shared/user-and-group-context.service';
+import { UserOverviewService } from './user-overview.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -23,11 +27,13 @@ export class UserOverviewConcreteService extends UserOverviewService {
   private lastPagination: KypoRequestedPagination;
   private lastFilter: string;
 
-  constructor(private api: UserApi,
-              private dialog: MatDialog,
-              private alertService: UserAndGroupNotificationService,
-              private configService: UserAndGroupContext,
-              private errorHandler: UserAndGroupErrorHandler) {
+  constructor(
+    private api: UserApi,
+    private dialog: MatDialog,
+    private alertService: UserAndGroupNotificationService,
+    private configService: UserAndGroupContext,
+    private errorHandler: UserAndGroupErrorHandler
+  ) {
     super(configService.config.defaultPaginationSize);
   }
 
@@ -42,16 +48,17 @@ export class UserOverviewConcreteService extends UserOverviewService {
     const filters = filterValue ? [new UserFilter(filterValue)] : [];
     this.hasErrorSubject$.next(false);
     this.clearSelection();
-    return this.api.getAll(pagination, filters)
-      .pipe(
-        tap(users => {
-            this.resourceSubject$.next(users);
-          },
-          err => {
-            this.errorHandler.emit(err, 'Fetching users');
-            this.hasErrorSubject$.next(true);
-          })
-      );
+    return this.api.getAll(pagination, filters).pipe(
+      tap(
+        (users) => {
+          this.resourceSubject$.next(users);
+        },
+        (err) => {
+          this.errorHandler.emit(err, 'Fetching users');
+          this.hasErrorSubject$.next(true);
+        }
+      )
+    );
   }
 
   /**
@@ -59,20 +66,17 @@ export class UserOverviewConcreteService extends UserOverviewService {
    * @param user user to be deleted
    */
   delete(user: User): Observable<any> {
-    return this.displayConfirmationDialog([user])
-      .pipe(
-        switchMap(result => result ? this.callApiToDelete([user]) : EMPTY)
-      );
+    return this.displayConfirmationDialog([user]).pipe(
+      switchMap((result) => (result ? this.callApiToDelete([user]) : EMPTY))
+    );
   }
 
   deleteSelected(): Observable<any> {
     const users = this.selectedSubject$.getValue();
-    return this.displayConfirmationDialog(users)
-      .pipe(
-        switchMap(result => result ? this.callApiToDelete(users) : EMPTY)
-      );  }
-
-
+    return this.displayConfirmationDialog(users).pipe(
+      switchMap((result) => (result ? this.callApiToDelete(users) : EMPTY))
+    );
+  }
 
   private displayConfirmationDialog(users: User[]): Observable<boolean> {
     const multipleUsers = users.length > 1;
@@ -80,33 +84,26 @@ export class UserOverviewConcreteService extends UserOverviewService {
     const content = multipleUsers
       ? `Do you want to delete ${users.length} selected users?`
       : `Do you want to delete selected user?`;
-    const dialogData = new CsirtMuConfirmationDialogConfig(
-      title,
-      content,
-      'Cancel',
-      'Delete'
-    );
+    const dialogData = new CsirtMuConfirmationDialogConfig(title, content, 'Cancel', 'Delete');
 
     const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
-    return dialogRef.afterClosed()
-      .pipe(
-        map(result => result === CsirtMuDialogResultEnum.CONFIRMED),
-      );
+    return dialogRef.afterClosed().pipe(map((result) => result === CsirtMuDialogResultEnum.CONFIRMED));
   }
 
   private callApiToDelete(users: User[]): Observable<any> {
-    const ids = users.map(user => user.id);
-    return this.api.deleteMultiple(ids)
-      .pipe(
-        tap(_ => {
+    const ids = users.map((user) => user.id);
+    return this.api.deleteMultiple(ids).pipe(
+      tap(
+        (_) => {
           this.clearSelection();
           this.alertService.emit('success', 'Selected users were deleted');
-          },
-          err => {
-            this.errorHandler.emit(err, 'Deleting user');
-            this.hasErrorSubject$.next(true);
-          }),
-        switchMap(_ => this.getAll(this.lastPagination, this.lastFilter))
-      );
+        },
+        (err) => {
+          this.errorHandler.emit(err, 'Deleting user');
+          this.hasErrorSubject$.next(true);
+        }
+      ),
+      switchMap((_) => this.getAll(this.lastPagination, this.lastFilter))
+    );
   }
 }

@@ -1,24 +1,25 @@
-import {KypoPaginatedResource} from 'kypo-common';
-import {Column, Kypo2Table, Row} from 'kypo2-table';
-import {defer, of} from 'rxjs';
-import {User} from 'kypo2-auth';
-import {UserDeleteAction} from './user-delete-action';
-import {UserAssignService} from '../../../../services/user/user-assign.service';
+import { KypoPaginatedResource } from 'kypo-common';
+import { User } from 'kypo2-auth';
+import { Column, Kypo2Table, Row } from 'kypo2-table';
+import { defer, of } from 'rxjs';
+import { UserAssignService } from '../../../../services/user/user-assign.service';
+import { UserDeleteAction } from './user-delete-action';
 
 /**
  * Class creating data source for group members table
  */
 export class GroupMemberTable extends Kypo2Table<User> {
-
   constructor(resource: KypoPaginatedResource<User>, resourceId: number, service: UserAssignService) {
-    const rows = resource.elements
-        .map(user => new Row(user, [
+    const rows = resource.elements.map(
+      (user) =>
+        new Row(user, [
           new UserDeleteAction(
             of(false),
             defer(() => service.unassign(resourceId, [user]))
-          )
-        ]));
-      const columns = [
+          ),
+        ])
+    );
+    const columns = [
       new Column('id', 'id', false),
       new Column('name', 'name', true, 'familyName'),
       new Column('login', 'login', true),

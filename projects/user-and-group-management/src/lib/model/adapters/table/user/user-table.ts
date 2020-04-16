@@ -1,23 +1,25 @@
-import {KypoPaginatedResource} from 'kypo-common';
-import {Column, Kypo2Table, Row} from 'kypo2-table';
-import {defer, of} from 'rxjs';
-import {User} from 'kypo2-auth';
-import {UserTableExpand} from './user-table-expand';
-import {UserDeleteAction} from './user-delete-action';
-import {UserOverviewService} from '../../../../services/user/user-overview.service';
-import {UserDetailComponent} from '../../../../components/user/overview/detail/user-detail.component';
-
+import { KypoPaginatedResource } from 'kypo-common';
+import { User } from 'kypo2-auth';
+import { Column, Kypo2Table, Row } from 'kypo2-table';
+import { defer, of } from 'rxjs';
+import { UserDetailComponent } from '../../../../components/user/overview/detail/user-detail.component';
+import { UserOverviewService } from '../../../../services/user/user-overview.service';
+import { UserDeleteAction } from './user-delete-action';
+import { UserTableExpand } from './user-table-expand';
 
 /**
  * Class creating data source for user table
  */
 export class UserTable extends Kypo2Table<User> {
-
   constructor(resource: KypoPaginatedResource<User>, service: UserOverviewService) {
     const rows = resource.elements.map(
-      user => new Row(user, [
-        new UserDeleteAction(of(false), defer(() => service.delete(user)))
-      ])
+      (user) =>
+        new Row(user, [
+          new UserDeleteAction(
+            of(false),
+            defer(() => service.delete(user))
+          ),
+        ])
     );
     const columns = [
       new Column('id', 'id', false),

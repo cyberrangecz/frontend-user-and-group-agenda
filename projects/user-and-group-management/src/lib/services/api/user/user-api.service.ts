@@ -1,12 +1,11 @@
 import { KypoFilter, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
-import { Observable } from 'rxjs';
 import { User, UserRole } from 'kypo2-auth';
+import { Observable } from 'rxjs';
 
 /**
  * Service abstracting http communication with user endpoints
  */
 export abstract class UserApi {
-
   /**
    * Sends http request to get paginated users
    * @param pagination requested pagination
@@ -32,7 +31,11 @@ export abstract class UserApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on users
    */
-  abstract getUsersNotInGroup(groupId: number, pagination: KypoRequestedPagination, filters?: KypoFilter[]): Observable<KypoPaginatedResource<User>>;
+  abstract getUsersNotInGroup(
+    groupId: number,
+    pagination: KypoRequestedPagination,
+    filters?: KypoFilter[]
+  ): Observable<KypoPaginatedResource<User>>;
 
   /**
    * Sends http request to get users that are members of provided groups
@@ -40,7 +43,11 @@ export abstract class UserApi {
    * @param pagination requested pagination
    * @param filters filters to be applied on users
    */
-  abstract getUsersInGroups(groupIds: number[], pagination: KypoRequestedPagination, filters?: KypoFilter[]): Observable<KypoPaginatedResource<User>>;
+  abstract getUsersInGroups(
+    groupIds: number[],
+    pagination: KypoRequestedPagination,
+    filters?: KypoFilter[]
+  ): Observable<KypoPaginatedResource<User>>;
 
   /**
    * Sends http request to delete user
@@ -65,5 +72,3 @@ export abstract class UserApi {
    */
   abstract getUsersInfo(): Observable<User>;
 }
-
-

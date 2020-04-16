@@ -1,6 +1,6 @@
-import {KypoFilter, KypoPaginatedResource, KypoRequestedPagination} from 'kypo-common';
-import {Observable} from 'rxjs';
-import {User} from 'kypo2-auth';
+import { KypoFilter, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { Observable } from 'rxjs';
+import { User, UserRole } from 'kypo2-auth';
 
 /**
  * Service abstracting http communication with user endpoints
@@ -42,6 +42,28 @@ export abstract class UserApi {
    */
   abstract getUsersInGroups(groupIds: number[], pagination: KypoRequestedPagination, filters?: KypoFilter[]): Observable<KypoPaginatedResource<User>>;
 
+  /**
+   * Sends http request to delete user
+   * @param userId id of user to delete
+   */
+  abstract delete(userId: number): Observable<any>;
+
+  /**
+   * Sends http request to get roles for given user id
+   * @param userId id of user to get roles for
+   */
+  abstract getUserRoles(userId: number): Observable<KypoPaginatedResource<UserRole>>;
+
+  /**
+   * Sends http request to get multiplle users by their ids
+   * @param userIds id of users to get
+   */
+  abstract getUsersByIds(userIds: number): Observable<KypoPaginatedResource<User>>;
+
+  /**
+   * Sends http request to get details of user who is logged in
+   */
+  abstract getUsersInfo(): Observable<User>;
 }
 
 

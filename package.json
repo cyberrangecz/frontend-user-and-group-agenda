@@ -9,10 +9,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "build-lib": "ng build kypo2-user-and-group-management --prod",
-    "create-package": "cd dist/user-and-group-management && npm pack",
+    "build-lib": "ng build kypo-user-and-group-agenda --prod",
+    "create-package": "cd dist/kypo-user-and-group-agenda && npm pack",
     "build-and-pack": "npm install && npm run build-lib && npm run create-package",
-    "publish": "npm run build-and-pack && cd dist/user-and-group-management && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted"
+    "publish": "npm run build-and-pack && cd dist/kypo-user-and-group-agenda && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted"
   },
   "husky": {
     "hooks": {

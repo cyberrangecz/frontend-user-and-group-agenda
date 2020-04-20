@@ -74,7 +74,7 @@ editVersion:
     script:
         - export GIT_SSH_COMMAND='ssh -i ~/.ssh/kyposervicekey'
         - ssh -o "StrictHostKeyChecking no" git@gitlab.ics.muni.cz && sleep 1
-        - git clone git@gitlab.ics.muni.cz:kypo2/frontend-new/kypo2-user-and-group-management.git
+        - git clone git@gitlab.ics.muni.cz:kypo-crp/frontend-angular/agendas/kypo-user-and-group-agenda.git
         - cd $CI_PROJECT_NAME
         - git config --global user.name "KYPO CI" && git config --global user.email "kyposervice@ics.muni.cz"
         # sed -i -e 's/  "version":.*/  "version": "'$VERSION'",/' projects/user-and-group-management/package.json'

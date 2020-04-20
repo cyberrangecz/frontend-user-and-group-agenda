@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserOverviewComponent } from '../../../../projects/user-and-group-management/src/public_api';
+import { UserOverviewComponent } from '../../../../projects/kypo-user-and-group-agenda/src/public_api';
 
 const routes: Routes = [
   {

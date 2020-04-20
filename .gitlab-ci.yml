@@ -79,7 +79,7 @@ editVersion:
         - git config --global user.name "KYPO CI" && git config --global user.email "kyposervice@ics.muni.cz"
         # sed -i -e 's/  "version":.*/  "version": "'$VERSION'",/' projects/user-and-group-management/package.json'
         # The command above is not a friend with YAML. Run it in a script as a workaround.
-        - bash /usr/local/changeVersion.sh $VERSION user-and-group-management
+        - bash /usr/local/changeVersion.sh $VERSION kypo-user-and-group-agenda
         - git commit -am "Update project package.json version based on GitLab tag. Done by CI" && sleep 1
         - git push
     only:

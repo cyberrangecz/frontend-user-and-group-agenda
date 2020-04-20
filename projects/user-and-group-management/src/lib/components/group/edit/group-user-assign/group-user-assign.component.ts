@@ -8,10 +8,11 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseComponent } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
+import { KypoBaseComponent } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
-import { User } from 'kypo2-auth';
+import { User } from 'kypo-user-and-group-model';
+import { Group } from 'kypo-user-and-group-model';
 import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
 import { Kypo2SelectorResourceMapping } from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import { combineLatest, defer, Observable } from 'rxjs';
@@ -19,7 +20,6 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupMemberTable } from '../../../../model/adapters/table/user/group-member-table';
 import { DeleteControlItem } from '../../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../../model/controls/save-control-item';
-import { Group } from '../../../../model/group/group.model';
 import { UserAndGroupContext } from '../../../../services/shared/user-and-group-context.service';
 import { UserAssignService } from '../../../../services/user/user-assign.service';
 

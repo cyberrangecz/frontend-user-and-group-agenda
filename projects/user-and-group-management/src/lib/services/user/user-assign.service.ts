@@ -1,8 +1,7 @@
 import { KypoPaginatedResource } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
-import { User } from 'kypo2-auth';
+import { Group, User } from 'kypo-user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Group } from '../../model/group/group.model';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.

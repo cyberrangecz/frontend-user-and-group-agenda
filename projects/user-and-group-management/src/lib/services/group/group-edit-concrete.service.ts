@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { GroupApi } from 'kypo-user-and-group-api';
+import { Group } from 'kypo-user-and-group-model';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/events/group-changed-event';
-import { Group } from '../../model/group/group.model';
-import { GroupApi } from '../api/group/group-api.service';
 import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
 import { UserAndGroupNavigator } from '../client/user-and-group-navigator.service';
 import { UserAndGroupNotificationService } from '../client/user-and-group-notification.service';

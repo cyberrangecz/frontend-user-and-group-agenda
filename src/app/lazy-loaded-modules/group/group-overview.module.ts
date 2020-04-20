@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { KypoUserAndGroupApiModule } from 'kypo-user-and-group-api';
 import { GroupOverviewComponentsModule } from '../../../../projects/user-and-group-management/src/public_api';
-import { CustomConfig } from '../../custom-config';
+import { agendaConfig, apiConfig } from '../../config';
 import { SharedProvidersModule } from '../shared-providers.module';
 import { GroupOverviewRoutingModule } from './group-overview-routing.module';
 
@@ -10,7 +11,8 @@ import { GroupOverviewRoutingModule } from './group-overview-routing.module';
     CommonModule,
     SharedProvidersModule,
     GroupOverviewRoutingModule,
-    GroupOverviewComponentsModule.forRoot(CustomConfig),
+    GroupOverviewComponentsModule.forRoot(agendaConfig),
+    KypoUserAndGroupApiModule.forRoot(apiConfig),
   ],
 })
 export class GroupOverviewModule {}

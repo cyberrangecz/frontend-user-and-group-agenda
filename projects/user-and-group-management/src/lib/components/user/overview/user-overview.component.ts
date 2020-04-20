@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
-import { User } from 'kypo2-auth';
+import { User } from 'kypo-user-and-group-model';
 import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';

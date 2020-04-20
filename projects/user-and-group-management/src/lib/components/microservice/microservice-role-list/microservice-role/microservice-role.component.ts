@@ -9,9 +9,9 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { KypoBaseComponent } from 'kypo-common';
+import { MicroserviceRole } from 'kypo-user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRoleItem } from '../../../../model/microservice/microservice-role-item';
-import { MicroserviceRole } from '../../../../model/microservice/microservice-role.model';
 import { MicroserviceRoleForm } from './microservice-role-form';
 
 /**

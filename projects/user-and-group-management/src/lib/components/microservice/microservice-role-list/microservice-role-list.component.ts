@@ -2,14 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { MicroserviceRole } from 'kypo-user-and-group-model';
 import { MicroserviceRoleItem } from '../../../model/microservice/microservice-role-item';
-import { MicroserviceRole } from '../../../model/microservice/microservice-role.model';
 import { MicroserviceRolesState } from '../../../model/microservice/microservice-roles-state';
 
 /**

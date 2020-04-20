@@ -9,9 +9,9 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { KypoBaseComponent } from 'kypo-common';
+import { Group } from 'kypo-user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../../../model/events/group-changed-event';
-import { Group } from '../../../../model/group/group.model';
 import { GroupEditFormGroup } from './group-edit-form-group';
 
 /**

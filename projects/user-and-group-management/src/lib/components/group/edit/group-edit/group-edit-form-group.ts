@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Group } from '../../../../model/group/group.model';
+import { Group } from 'kypo-user-and-group-model';
 
 /**
  * Form control class for edit group componnet

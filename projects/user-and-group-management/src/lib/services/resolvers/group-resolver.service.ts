@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { GroupApi } from 'kypo-user-and-group-api';
+import { Group } from 'kypo-user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '../../model/client/default-paths';
-import { Group } from '../../model/group/group.model';
-import { GroupApi } from '../api/group/group-api.service';
 import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
 
 /**

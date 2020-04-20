@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { KypoFilter, KypoPagination, KypoRequestedPagination } from 'kypo-common';
 import { KypoPaginatedResource } from 'kypo-common';
+import { KypoFilter, KypoPagination, KypoRequestedPagination } from 'kypo-common';
+import { RoleApi } from 'kypo-user-and-group-api';
+import { GroupApi } from 'kypo-user-and-group-api';
 import { UserRole } from 'kypo2-auth';
 import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { RoleFilter } from '../../model/filters/role-filter';
-import { GroupApi } from '../api/group/group-api.service';
-import { RoleApi } from '../api/role/role-api.service';
 import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
 import { RoleAssignService } from './role-assign.service';
 

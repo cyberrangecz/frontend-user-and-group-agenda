@@ -10,7 +10,8 @@
     "csirt-mu-common": "9.0.0",
     "kypo-controls": "9.0.0",
     "kypo-common": "9.0.0",
-    "kypo2-auth": "9.0.0",
+    "kypo-user-and-group-api": "9.0.0",
+    "kypo-user-and-group-model": "9.0.0",
     "kypo2-table": "9.3.0",
     "kypo2-user-assign": "9.3.0",
     "rxjs": ">=6.0.0"

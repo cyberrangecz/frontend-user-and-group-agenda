@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from
 import { ActivatedRoute } from '@angular/router';
 import { KypoBaseComponent } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
+import { Group } from 'kypo-user-and-group-model';
 import { defer, Observable } from 'rxjs';
 import { take, takeWhile, tap } from 'rxjs/operators';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '../../../model/client/activated-route-data-attributes';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
 import { GroupChangedEvent } from '../../../model/events/group-changed-event';
-import { Group } from '../../../model/group/group.model';
 import { GroupEditService } from '../../../services/group/group-edit.service';
 
 @Component({

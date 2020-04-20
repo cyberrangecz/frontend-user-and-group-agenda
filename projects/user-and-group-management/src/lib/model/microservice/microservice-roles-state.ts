@@ -1,4 +1,4 @@
-import { MicroserviceRole } from './microservice-role.model';
+import { MicroserviceRole } from 'kypo-user-and-group-model';
 
 /**
  * State of edited microservice roles

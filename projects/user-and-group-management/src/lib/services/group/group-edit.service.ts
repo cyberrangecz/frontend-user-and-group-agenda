@@ -1,6 +1,6 @@
+import { Group } from 'kypo-user-and-group-model';
 import { Observable } from 'rxjs';
 import { GroupChangedEvent } from '../../model/events/group-changed-event';
-import { Group } from '../../model/group/group.model';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.

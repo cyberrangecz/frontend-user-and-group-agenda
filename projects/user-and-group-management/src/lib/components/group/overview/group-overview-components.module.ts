@@ -4,12 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KypoControlsModule } from 'kypo-controls';
 import { Kypo2TableModule } from 'kypo2-table';
 import { UserAndGroupConfig } from '../../../model/client/user-and-group-config';
-import { GroupApi } from '../../../services/api/group/group-api.service';
-import { GroupDefaultApi } from '../../../services/api/group/group-default-api.service';
-import { RoleApi } from '../../../services/api/role/role-api.service';
-import { RoleDefaultApi } from '../../../services/api/role/role-default-api.service';
-import { UserApi } from '../../../services/api/user/user-api.service';
-import { UserDefaultApi } from '../../../services/api/user/user-default-api.service';
 import { UserAndGroupDefaultNavigator } from '../../../services/client/user-and-group-default-navigator.service';
 import { UserAndGroupNavigator } from '../../../services/client/user-and-group-navigator.service';
 import { GroupOverviewConcreteService } from '../../../services/group/group-overview.concrete.service';
@@ -39,9 +33,6 @@ import { GroupOverviewComponent } from './group-overview.component';
     GroupResolver,
     GroupTitleResolver,
     GroupBreadcrumbResolver,
-    { provide: UserApi, useClass: UserDefaultApi },
-    { provide: RoleApi, useClass: RoleDefaultApi },
-    { provide: GroupApi, useClass: GroupDefaultApi },
     { provide: GroupOverviewService, useClass: GroupOverviewConcreteService },
     { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
   ],

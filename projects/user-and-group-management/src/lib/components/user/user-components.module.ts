@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { KypoControlsModule } from 'kypo-controls';
 import { Kypo2TableModule } from 'kypo2-table';
 import { UserAndGroupConfig } from '../../model/client/user-and-group-config';
-import { UserApi } from '../../services/api/user/user-api.service';
-import { UserDefaultApi } from '../../services/api/user/user-default-api.service';
 import { UserAndGroupDefaultNavigator } from '../../services/client/user-and-group-default-navigator.service';
 import { UserAndGroupNavigator } from '../../services/client/user-and-group-navigator.service';
 import { UserOverviewConcreteService } from '../../services/user/user-overview-concrete.service';
@@ -24,7 +22,6 @@ import { UserMaterialModule } from './user-material.module';
   imports: [CommonModule, FormsModule, Kypo2TableModule, UserMaterialModule, InternalSharedModule, KypoControlsModule],
   exports: [UserMaterialModule, UserOverviewComponent, UserDetailComponent],
   providers: [
-    { provide: UserApi, useClass: UserDefaultApi },
     { provide: UserOverviewService, useClass: UserOverviewConcreteService },
     { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
   ],

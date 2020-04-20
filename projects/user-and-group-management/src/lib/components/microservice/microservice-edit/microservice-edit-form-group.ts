@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Microservice } from '../../../model/microservice/microservice.model';
+import { Microservice } from 'kypo-user-and-group-model';
 
 /**
  * Form control for microservice edit component

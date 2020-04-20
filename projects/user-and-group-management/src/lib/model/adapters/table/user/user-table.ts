@@ -1,5 +1,5 @@
 import { KypoPaginatedResource } from 'kypo-common';
-import { User } from 'kypo2-auth';
+import { User } from 'kypo-user-and-group-model';
 import { Column, Kypo2Table, Row } from 'kypo2-table';
 import { defer, of } from 'rxjs';
 import { UserDetailComponent } from '../../../../components/user/overview/detail/user-detail.component';

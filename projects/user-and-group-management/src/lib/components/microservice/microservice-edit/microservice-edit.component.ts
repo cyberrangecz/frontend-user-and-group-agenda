@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { KypoBaseComponent } from 'kypo-common';
+import { Microservice } from 'kypo-user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRolesState } from '../../../model/microservice/microservice-roles-state';
-import { Microservice } from '../../../model/microservice/microservice.model';
 import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
 
 /**

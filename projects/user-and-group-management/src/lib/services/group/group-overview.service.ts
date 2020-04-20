@@ -1,6 +1,6 @@
 import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { Group } from 'kypo-user-and-group-model';
 import { Observable } from 'rxjs';
-import { Group } from '../../model/group/group.model';
 import { SelectablePaginatedService } from '../shared/selectable-paginated.service';
 
 /**

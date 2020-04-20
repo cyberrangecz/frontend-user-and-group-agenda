@@ -3,10 +3,10 @@
  */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Group } from 'kypo-user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GROUP_EDIT_PATH, GROUP_NEW_PATH, GROUP_SELECTOR } from '../../model/client/default-paths';
-import { Group } from '../../model/group/group.model';
 import { GroupResolver } from './group-resolver.service';
 
 @Injectable()

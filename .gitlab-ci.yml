@@ -117,6 +117,6 @@ deployAngular:
     script:
         - git checkout master && git pull
         - cp /usr/local/npmrc ~/.npmrc
-        - 'npm run build-and-pack && cd dist/user-and-group-management && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted'
+        - 'npm run build-and-pack && cd dist/kypo-user-and-group-agenda && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted'
     only:
         - tags

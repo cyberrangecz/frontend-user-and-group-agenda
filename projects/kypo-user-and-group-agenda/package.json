@@ -1,6 +1,6 @@
 {
   "name": "kypo-user-and-group-agenda",
-  "version": "9.7.0",
+  "version": "9.8.0",
   "peerDependencies": {
     "@angular/common": ">=9.0.0",
     "@angular/core": "^>=9.0.0",

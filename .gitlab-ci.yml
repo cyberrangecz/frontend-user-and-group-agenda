@@ -10,7 +10,7 @@ variables:
     LC_ALL: C.UTF-8
 
 stages:
-#    - unitTests #TODO, Not implemented yet
+    - unitTests
 #    - integrationTests #TODO, Not implemented yet
     - buildAngular
     - editVersion
@@ -33,15 +33,16 @@ before_script:
     - echo "$APT_SOURCE_LIST" > /etc/apt/sources.list.d/kypo.list
     # Install Angular dependencies
 
-#TODO, not implemented yet
-#unitTests:
-#    stage: unitTests
-#    script:
-#        - ng test --browsers ChromeHeadless
-#    only:
-#        - triggers
-#        - branches
-#        - tags
+unitTests:
+    stage: unitTests
+    script:
+        - cp /usr/local/npmrc ~/.npmrc
+        - npm install
+        - ng test --browsers ChromeHeadless
+    only:
+        - triggers
+        - branches
+        - tags
 
 #TODO, not implemented yet
 #integrationTests:
@@ -56,9 +57,9 @@ before_script:
 buildAngular:
     stage: buildAngular
     script:
-        - pwd 
+        - pwd
         - cp /usr/local/npmrc ~/.npmrc
-        - npm install 
+        - npm install
         - ng build --configuration=production
     only:
         - triggers

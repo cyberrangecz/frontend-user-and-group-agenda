@@ -2,7 +2,7 @@ import { KypoPaginatedResource } from 'kypo-common';
 import { Group } from 'kypo-user-and-group-model';
 import { Column, Kypo2Table, Row } from 'kypo2-table';
 import { defer, of } from 'rxjs';
-import { GroupOverviewService } from '../../../../services/group/group-overview.service';
+import { GroupOverviewService } from '../../../../services/group/overview/group-overview.service';
 import { GroupDeleteAction } from './group-delete-action';
 import { GroupEditAction } from './group-edit-action';
 import { GroupTableRowAdapter } from './group-table-row-adapter';

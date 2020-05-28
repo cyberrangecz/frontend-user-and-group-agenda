@@ -8,7 +8,7 @@ import { take, takeWhile, tap } from 'rxjs/operators';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '../../../model/client/activated-route-data-attributes';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
 import { GroupChangedEvent } from '../../../model/events/group-changed-event';
-import { GroupEditService } from '../../../services/group/group-edit.service';
+import { GroupEditService } from '../../../services/group/edit/group-edit.service';
 
 @Component({
   selector: 'kypo-group-edit-overview',

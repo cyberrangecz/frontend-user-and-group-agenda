@@ -4,10 +4,10 @@ import { GroupApi } from 'kypo-user-and-group-api';
 import { Group } from 'kypo-user-and-group-model';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { GroupChangedEvent } from '../../model/events/group-changed-event';
-import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
-import { UserAndGroupNavigator } from '../client/user-and-group-navigator.service';
-import { UserAndGroupNotificationService } from '../client/user-and-group-notification.service';
+import { GroupChangedEvent } from '../../../model/events/group-changed-event';
+import { UserAndGroupErrorHandler } from '../../client/user-and-group-error-handler.service';
+import { UserAndGroupNavigator } from '../../client/user-and-group-navigator.service';
+import { UserAndGroupNotificationService } from '../../client/user-and-group-notification.service';
 import { GroupEditService } from './group-edit.service';
 
 /**

@@ -8,10 +8,10 @@ import { User } from 'kypo-user-and-group-model';
 import { Group } from 'kypo-user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { GroupFilter } from '../../model/filters/group-filter';
-import { UserFilter } from '../../model/filters/user-filter';
-import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
-import { UserAndGroupContext } from '../shared/user-and-group-context.service';
+import { GroupFilter } from '../../../model/filters/group-filter';
+import { UserFilter } from '../../../model/filters/user-filter';
+import { UserAndGroupErrorHandler } from '../../client/user-and-group-error-handler.service';
+import { UserAndGroupContext } from '../../shared/user-and-group-context.service';
 import { UserAssignService } from './user-assign.service';
 
 /**

@@ -2,7 +2,7 @@ import { KypoPaginatedResource } from 'kypo-common';
 import { User } from 'kypo-user-and-group-model';
 import { Column, Kypo2Table, Row } from 'kypo2-table';
 import { defer, of } from 'rxjs';
-import { UserAssignService } from '../../../../services/user/user-assign.service';
+import { UserAssignService } from '../../../../services/user/user-assign/user-assign.service';
 import { UserDeleteAction } from './user-delete-action';
 
 /**

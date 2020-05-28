@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Group } from 'kypo-user-and-group-model';
 import { Observable, of } from 'rxjs';
-import { catchError, mergeMap, take } from 'rxjs/operators';
-import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '../../model/client/default-paths';
-import { GroupResolver } from './group-resolver.service';
+import { catchError, map, mergeMap, take } from 'rxjs/operators';
+import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '../../../../model/client/default-paths';
+import { GroupResolver } from '../group-resolver.service';
 
 @Injectable()
 export class GroupTitleResolver implements Resolve<string> {
+  readonly CREATE_GROUP_TITLE = 'Create Group';
+
   constructor(private groupResolver: GroupResolver) {}
 
   /**
@@ -17,13 +19,13 @@ export class GroupTitleResolver implements Resolve<string> {
    */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> | Promise<string> | string {
     if (state.url.endsWith(`${GROUP_PATH}/${GROUP_NEW_PATH}`)) {
-      return 'Create Group';
+      return this.CREATE_GROUP_TITLE;
     } else if (route.paramMap.has(GROUP_SELECTOR)) {
       const resolved = this.groupResolver.resolve(route, state) as Observable<Group>;
       return resolved.pipe(
         take(1),
-        mergeMap((group) => (group ? of(`Edit ${group.name}`) : '')),
-        catchError((err) => '')
+        map((group) => (group ? `Edit ${group.name}` : '')),
+        catchError((err) => of(''))
       );
     }
     return '';

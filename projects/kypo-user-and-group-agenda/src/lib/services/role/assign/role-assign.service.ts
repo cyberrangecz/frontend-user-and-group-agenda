@@ -1,5 +1,5 @@
-import { KypoPaginatedResource, KypoPagination, KypoRequestedPagination } from 'kypo-common';
-import { UserRole } from 'kypo2-auth';
+import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { UserRole } from 'kypo-user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**

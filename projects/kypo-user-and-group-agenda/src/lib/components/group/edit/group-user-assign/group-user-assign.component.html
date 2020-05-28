@@ -1,4 +1,4 @@
-<kypo-controls [controls]="assignUsersControls" (itemClicked)="onAssignControl($event)"></kypo-controls>
+<kypo-controls class="to-assign-controls" [controls]="assignUsersControls" (itemClicked)="onControlAction($event)"></kypo-controls>
 <div class="add-content">
   <mat-card>
     <mat-card-header>
@@ -9,7 +9,7 @@
       <mat-card-subtitle>Add users individually</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <kypo2-resource-selector
+      <kypo2-resource-selector class="user-selector"
         searchPlaceholder="Search users by surname"
         [resources]="users$ | async"
         [selected]="selectedUsersToAssign$ | async"
@@ -29,7 +29,7 @@
       <mat-card-subtitle>Import users from already existing groups</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <kypo2-resource-selector
+      <kypo2-resource-selector class="group-selector"
         searchPlaceholder="Search groups by name"
         [resources]="groups$ | async"
         [selected]="selectedGroupsToImport$ | async"
@@ -41,7 +41,7 @@
   </mat-card>
 </div>
 
-<kypo-controls [controls]="assignedUsersControls" (itemClicked)="onAssignControl($event)"></kypo-controls>
+<kypo-controls class="assigned-controls" [controls]="assignedUsersControls" (itemClicked)="onControlAction($event)"></kypo-controls>
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar>

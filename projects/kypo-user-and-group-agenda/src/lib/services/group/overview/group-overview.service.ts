@@ -1,7 +1,7 @@
 import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
 import { Group } from 'kypo-user-and-group-model';
 import { Observable } from 'rxjs';
-import { SelectablePaginatedService } from '../shared/selectable-paginated.service';
+import { SelectablePaginatedService } from '../../shared/selectable-paginated.service';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.

@@ -11,10 +11,10 @@ import { UserApi } from 'kypo-user-and-group-api';
 import { User } from 'kypo-user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { UserFilter } from '../../model/filters/user-filter';
-import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
-import { UserAndGroupNotificationService } from '../client/user-and-group-notification.service';
-import { UserAndGroupContext } from '../shared/user-and-group-context.service';
+import { UserFilter } from '../../../model/filters/user-filter';
+import { UserAndGroupErrorHandler } from '../../client/user-and-group-error-handler.service';
+import { UserAndGroupNotificationService } from '../../client/user-and-group-notification.service';
+import { UserAndGroupContext } from '../../shared/user-and-group-context.service';
 import { UserOverviewService } from './user-overview.service';
 
 /**

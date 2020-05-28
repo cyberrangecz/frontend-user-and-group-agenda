@@ -3,7 +3,7 @@ import { User } from 'kypo-user-and-group-model';
 import { Column, Kypo2Table, Row } from 'kypo2-table';
 import { defer, of } from 'rxjs';
 import { UserDetailComponent } from '../../../../components/user/overview/detail/user-detail.component';
-import { UserOverviewService } from '../../../../services/user/user-overview.service';
+import { UserOverviewService } from '../../../../services/user/overview/user-overview.service';
 import { UserDeleteAction } from './user-delete-action';
 import { UserTableExpand } from './user-table-expand';
 

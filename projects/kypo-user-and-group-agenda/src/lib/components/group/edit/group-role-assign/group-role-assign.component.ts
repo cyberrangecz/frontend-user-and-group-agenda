@@ -12,7 +12,7 @@ import { KypoPaginatedResource } from 'kypo-common';
 import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { Group } from 'kypo-user-and-group-model';
-import { UserRole } from 'kypo2-auth';
+import { UserRole } from 'kypo-user-and-group-model';
 import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
 import { Kypo2SelectorResourceMapping } from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
 import { defer, Observable } from 'rxjs';
@@ -20,7 +20,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupRolesTable } from '../../../../model/adapters/table/role/group-roles-table';
 import { DeleteControlItem } from '../../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../../model/controls/save-control-item';
-import { RoleAssignService } from '../../../../services/role/role-assign.service';
+import { RoleAssignService } from '../../../../services/role/assign/role-assign.service';
 import { UserAndGroupContext } from '../../../../services/shared/user-and-group-context.service';
 
 /**

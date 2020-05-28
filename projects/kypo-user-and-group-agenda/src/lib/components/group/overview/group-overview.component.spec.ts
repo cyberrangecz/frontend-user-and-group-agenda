@@ -1,0 +1,235 @@
+import { ChangeDetectorRef } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { KypoPaginatedResource, KypoPagination, KypoRequestedPagination } from 'kypo-common';
+import { KypoControlsComponent } from 'kypo-controls';
+import { Group } from 'kypo-user-and-group-model';
+import { Kypo2TableComponent, LoadTableEvent, RowAction, TableActionEvent } from 'kypo2-table';
+import { EMPTY, of } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { GroupTableRowAdapter } from '../../../model/adapters/table/group/group-table-row-adapter';
+import { DeleteControlItem } from '../../../model/controls/delete-control-item';
+import { SaveControlItem } from '../../../model/controls/save-control-item';
+import { GroupOverviewService } from '../../../services/group/overview/group-overview.service';
+import { UserAndGroupContext } from '../../../services/shared/user-and-group-context.service';
+import {
+  createContextSpy,
+  createKypoControlsOverride,
+  createKypoTableOverride,
+  createPagination,
+  KYPO_CONTROLS_COMPONENT_SELECTOR,
+  KYPO_TABLE_COMPONENT_SELECTOR,
+} from '../../../testing/testing-commons';
+import { GroupOverviewMaterialModule } from './group-overview-material.module';
+import { GroupOverviewComponent } from './group-overview.component';
+
+describe('GroupOverviewComponent', () => {
+  let component: GroupOverviewComponent;
+  let fixture: ComponentFixture<GroupOverviewComponent>;
+  let cd: ChangeDetectorRef;
+
+  let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
+  let overviewSpy: jasmine.SpyObj<GroupOverviewService>;
+
+  beforeEach(async(() => {
+    contextSpy = createContextSpy();
+    overviewSpy = jasmine.createSpyObj('UserOverviewComponent', [
+      'getAll',
+      'delete',
+      'deleteSelected',
+      'edit',
+      'create',
+      'setSelection',
+    ]);
+    overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
+    overviewSpy.resource$ = of(createDefaultResource());
+    overviewSpy.hasError$ = of(false);
+    overviewSpy.isLoading$ = of(false);
+    overviewSpy.selected$ = of([]);
+    TestBed.configureTestingModule({
+      imports: [GroupOverviewMaterialModule],
+      declarations: [GroupOverviewComponent],
+      providers: [
+        { provide: UserAndGroupContext, useValue: contextSpy },
+        { provide: GroupOverviewService, useValue: overviewSpy },
+      ],
+    })
+      .overrideComponent(Kypo2TableComponent, createKypoTableOverride())
+      .overrideComponent(KypoControlsComponent, createKypoControlsOverride())
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(GroupOverviewComponent);
+    component = fixture.componentInstance;
+    cd = fixture.componentRef.injector.get(ChangeDetectorRef);
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should request data on init', () => {
+    const expectedRequestedPagination = new KypoRequestedPagination(
+      0,
+      contextSpy.config.defaultPaginationSize,
+      component.INIT_SORT_NAME,
+      component.INIT_SORT_DIR
+    );
+    expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
+    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, null);
+  });
+
+  it('should init controls on init', () => {
+    expect(component.controls).toBeTruthy();
+  });
+
+  it('should diplay kypo table component', () => {
+    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    expect(kypoTableEl).toBeTruthy();
+  });
+
+  it('should diplay kypo controls component', () => {
+    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_CONTROLS_COMPONENT_SELECTOR));
+    expect(kypoTableEl).toBeTruthy();
+  });
+
+  it('should call service on delete action of controls', () => {
+    expect(overviewSpy.deleteSelected).toHaveBeenCalledTimes(0);
+    const deleteControlItem = component.controls.find((control) => control.id === DeleteControlItem.ID);
+    expect(deleteControlItem).toBeTruthy();
+    component.onControlsAction(deleteControlItem);
+    expect(overviewSpy.deleteSelected).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call service on save action of controls', () => {
+    expect(overviewSpy.create).toHaveBeenCalledTimes(0);
+    const saveControlItem = component.controls.find((control) => control.id === SaveControlItem.ID);
+    expect(saveControlItem).toBeTruthy();
+    component.onControlsAction(saveControlItem);
+    expect(overviewSpy.create).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call service on delete action of table', (done) => {
+    expect(overviewSpy.delete).toHaveBeenCalledTimes(0);
+    component.groups$.pipe(take(1)).subscribe(
+      (table) => {
+        const firstRow = table.rows[0];
+        expect(firstRow).toBeTruthy();
+        const expectedGroup = firstRow.element.group;
+        const deleteTableAction = firstRow.actions.find((action) => action.id === 'delete');
+        expect(deleteTableAction).toBeTruthy();
+        component.onTableAction(new TableActionEvent(firstRow.element, deleteTableAction));
+        expect(overviewSpy.delete).toHaveBeenCalledTimes(1);
+        expect(overviewSpy.delete).toHaveBeenCalledWith(expectedGroup);
+        done();
+      },
+      () => fail()
+    );
+  });
+
+  it('should call service on edit action of table', (done) => {
+    expect(overviewSpy.edit).toHaveBeenCalledTimes(0);
+    component.groups$.pipe(take(1)).subscribe(
+      (table) => {
+        const firstRow = table.rows[0];
+        expect(firstRow).toBeTruthy();
+        const expectedGroup = firstRow.element.group;
+        const editTableAction = firstRow.actions.find((action) => action.id === 'edit');
+        expect(editTableAction).toBeTruthy();
+        component.onTableAction(new TableActionEvent(firstRow.element, editTableAction));
+        expect(overviewSpy.edit).toHaveBeenCalledTimes(1);
+        expect(overviewSpy.edit).toHaveBeenCalledWith(expectedGroup);
+        done();
+      },
+      () => fail()
+    );
+  });
+
+  it('should call service on load event', () => {
+    expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
+    const expectedPagination = createPagination();
+    const expectedFilter = 'someFilter';
+    const loadEvent = new LoadTableEvent(expectedPagination, expectedFilter);
+
+    component.onLoadTableEvent(loadEvent);
+    expect(overviewSpy.getAll).toHaveBeenCalledTimes(2);
+    expect(overviewSpy.getAll).toHaveBeenCalledWith(loadEvent.pagination, loadEvent.filter);
+  });
+
+  it('should call service on group selected', () => {
+    expect(overviewSpy.setSelection).toHaveBeenCalledTimes(0);
+    const expectedGroups = createDefaultResource().elements;
+    const groupAdapters = expectedGroups.map((element) => new GroupTableRowAdapter(element));
+
+    component.onGroupSelected(groupAdapters);
+    expect(overviewSpy.setSelection).toHaveBeenCalledTimes(1);
+    expect(overviewSpy.setSelection).toHaveBeenCalledWith(expectedGroups);
+  });
+
+  it('should call bound method on kypo table refresh output', () => {
+    spyOn(component, 'onLoadTableEvent');
+    expect(component.onLoadTableEvent).toHaveBeenCalledTimes(0);
+
+    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
+
+    kypoTableEl.triggerEventHandler('refresh', expectedEvent);
+    expect(component.onLoadTableEvent).toHaveBeenCalledTimes(1);
+    expect(component.onLoadTableEvent).toHaveBeenCalledWith(expectedEvent);
+  });
+
+  it('should call bound method on kypo table row action', () => {
+    spyOn(component, 'onTableAction');
+    expect(component.onTableAction).toHaveBeenCalledTimes(0);
+
+    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const group = new Group();
+    group.id = 1;
+    const expectedEvent = new TableActionEvent<GroupTableRowAdapter>(
+      new GroupTableRowAdapter(group),
+      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY)
+    );
+
+    kypoTableEl.triggerEventHandler('rowAction', expectedEvent);
+    expect(component.onTableAction).toHaveBeenCalledTimes(1);
+    expect(component.onTableAction).toHaveBeenCalledWith(expectedEvent);
+  });
+
+  it('should call bound method on kypo table row selection', () => {
+    spyOn(component, 'onGroupSelected');
+    expect(component.onGroupSelected).toHaveBeenCalledTimes(0);
+
+    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const expectedEvent = createDefaultResource().elements.map((element) => new GroupTableRowAdapter(element));
+
+    kypoTableEl.triggerEventHandler('rowSelection', expectedEvent);
+    expect(component.onGroupSelected).toHaveBeenCalledTimes(1);
+    expect(component.onGroupSelected).toHaveBeenCalledWith(expectedEvent);
+  });
+
+  it('should call bound method on kypo controls action', () => {
+    spyOn(component, 'onControlsAction');
+    expect(component.onControlsAction).toHaveBeenCalledTimes(0);
+
+    const kypoControlsEl = fixture.debugElement.query(By.css(KYPO_CONTROLS_COMPONENT_SELECTOR));
+    const expectedEvent = new DeleteControlItem(0, EMPTY);
+
+    kypoControlsEl.triggerEventHandler('itemClicked', expectedEvent);
+    expect(component.onControlsAction).toHaveBeenCalledTimes(1);
+    expect(component.onControlsAction).toHaveBeenCalledWith(expectedEvent);
+  });
+
+  function createDefaultResource(): KypoPaginatedResource<Group> {
+    const groups = [new Group(), new Group(), new Group()];
+    groups.forEach((group, index) => {
+      group.id = index;
+      group.expirationDate = new Date();
+      group.roles = [];
+      group.members = [];
+    });
+    const pagination = new KypoPagination(0, groups.length, 5, groups.length, 1);
+    return new KypoPaginatedResource<Group>(groups, pagination);
+  }
+});

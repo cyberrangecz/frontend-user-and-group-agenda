@@ -4,15 +4,21 @@ import { GroupApi } from 'kypo-user-and-group-api';
 import { Group } from 'kypo-user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
-import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '../../model/client/default-paths';
-import { UserAndGroupErrorHandler } from '../client/user-and-group-error-handler.service';
+import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '../../../model/client/default-paths';
+import { UserAndGroupErrorHandler } from '../../client/user-and-group-error-handler.service';
+import { UserAndGroupNavigator } from '../../client/user-and-group-navigator.service';
 
 /**
  * Example resolver for user and group edit component
  */
 @Injectable()
 export class GroupResolver implements Resolve<Group> {
-  constructor(private router: Router, private api: GroupApi, private errorHandler: UserAndGroupErrorHandler) {}
+  constructor(
+    private router: Router,
+    private api: GroupApi,
+    private errorHandler: UserAndGroupErrorHandler,
+    private navigator: UserAndGroupNavigator
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Group> | Promise<Group> | Group {
     if (state.url.endsWith(`${GROUP_PATH}/${GROUP_NEW_PATH}`)) {
@@ -25,8 +31,7 @@ export class GroupResolver implements Resolve<Group> {
         mergeMap((group) => (group ? of(group) : this.navigateToNew())),
         catchError((err) => {
           this.errorHandler.emit(err, 'Resolving group');
-          this.navigateToNew();
-          return EMPTY;
+          return this.navigateToNew();
         })
       );
     }
@@ -34,7 +39,7 @@ export class GroupResolver implements Resolve<Group> {
   }
 
   private navigateToNew(): Observable<never> {
-    this.router.navigate([GROUP_NEW_PATH]);
+    this.router.navigate([this.navigator.toNewGroup()]);
     return EMPTY;
   }
 }

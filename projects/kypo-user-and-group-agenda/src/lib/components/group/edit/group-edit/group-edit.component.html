@@ -3,7 +3,7 @@
     <div class="row-panel">
       <div class="row-item">
         <!-- NAME field> -->
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="name-form">
           <mat-label>Name</mat-label>
           <input matInput placeholder="Name" formControlName="name" required>
           <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name.setValue('')">
@@ -17,7 +17,7 @@
       <div class="row-item">
         <!-- EXPIRATION Date field -->
         <div class="expiration">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="expiration-form">
             <mat-label>Expiration Date</mat-label>
             <button mat-button *ngIf="expirationDate.value" matSuffix mat-icon-button aria-label="Clear" (click)="expirationDate.setValue(null)">
               <mat-icon>close</mat-icon>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- DESCRIPTION field -->
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="description-form">
       <mat-label>Description</mat-label>
       <textarea matInput placeholder="Description" formControlName="description" required></textarea>
       <button mat-button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description.setValue('')">

@@ -8,7 +8,7 @@ import { GroupTable } from '../../../model/adapters/table/group/group-table';
 import { GroupTableRowAdapter } from '../../../model/adapters/table/group/group-table-row-adapter';
 import { DeleteControlItem } from '../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
-import { GroupOverviewService } from '../../../services/group/group-overview.service';
+import { GroupOverviewService } from '../../../services/group/overview/group-overview.service';
 import { UserAndGroupContext } from '../../../services/shared/user-and-group-context.service';
 
 /**
@@ -52,7 +52,7 @@ export class GroupOverviewComponent extends KypoBaseComponent implements OnInit 
     this.groups$ = this.groupService.resource$.pipe(map((groups) => new GroupTable(groups, this.groupService)));
     this.groupsHasError$ = this.groupService.hasError$;
     this.groupService.selected$.pipe(takeWhile((_) => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
-    this.onLoadTable(initialLoadEvent);
+    this.onLoadTableEvent(initialLoadEvent);
   }
 
   onControlsAction(controlItem: KypoControlItem) {
@@ -63,7 +63,7 @@ export class GroupOverviewComponent extends KypoBaseComponent implements OnInit 
    * Clears selected groups and calls service to get new data for groups table
    * @param event event emitted from table component
    */
-  onLoadTable(event: LoadTableEvent) {
+  onLoadTableEvent(event: LoadTableEvent) {
     this.groupService
       .getAll(event.pagination, event.filter)
       .pipe(takeWhile((_) => this.isAlive))

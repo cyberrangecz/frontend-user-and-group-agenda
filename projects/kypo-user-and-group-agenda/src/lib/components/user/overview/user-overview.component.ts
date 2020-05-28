@@ -8,7 +8,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { UserTable } from '../../../model/adapters/table/user/user-table';
 import { DeleteControlItem } from '../../../model/controls/delete-control-item';
 import { UserAndGroupContext } from '../../../services/shared/user-and-group-context.service';
-import { UserOverviewService } from '../../../services/user/user-overview.service';
+import { UserOverviewService } from '../../../services/user/overview/user-overview.service';
 
 /**
  * Main smart component of user overview page

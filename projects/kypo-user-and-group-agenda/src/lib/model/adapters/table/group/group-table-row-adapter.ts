@@ -22,7 +22,7 @@ export class GroupTableRowAdapter {
     } else {
       this.expirationDate = '-';
     }
-    this.rolesCount = group.roles.length;
-    this.membersCount = group.members.length;
+    this.rolesCount = group.roles ? group.roles.length : 0;
+    this.membersCount = group.members ? group.members.length : 0;
   }
 }

@@ -1,8 +1,8 @@
 import { KypoPaginatedResource } from 'kypo-common';
-import { UserRole } from 'kypo2-auth';
+import { UserRole } from 'kypo-user-and-group-model';
 import { Column, Kypo2Table, Row } from 'kypo2-table';
 import { defer, of } from 'rxjs';
-import { RoleAssignService } from '../../../../services/role/role-assign.service';
+import { RoleAssignService } from '../../../../services/role/assign/role-assign.service';
 import { RoleDeleteAction } from './role-delete-action';
 
 /**

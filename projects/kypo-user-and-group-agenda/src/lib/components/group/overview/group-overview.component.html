@@ -5,7 +5,7 @@
   [defaultSortDirection]="INIT_SORT_DIR"
   [data]="groups$ | async"
   [hasError]="groupsHasError$ | async"
-  (refresh)="onLoadTable($event)"
+  (refresh)="onLoadTableEvent($event)"
   (rowAction)="onTableAction($event)"
   (rowSelection)="onGroupSelected($event)">
 </kypo2-table>

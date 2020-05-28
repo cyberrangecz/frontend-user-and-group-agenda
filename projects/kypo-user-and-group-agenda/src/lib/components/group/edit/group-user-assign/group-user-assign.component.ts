@@ -21,7 +21,7 @@ import { GroupMemberTable } from '../../../../model/adapters/table/user/group-me
 import { DeleteControlItem } from '../../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../../model/controls/save-control-item';
 import { UserAndGroupContext } from '../../../../services/shared/user-and-group-context.service';
-import { UserAssignService } from '../../../../services/user/user-assign.service';
+import { UserAssignService } from '../../../../services/user/user-assign/user-assign.service';
 
 /**
  * Component for user assignment to groups
@@ -109,7 +109,7 @@ export class GroupUserAssignComponent extends KypoBaseComponent implements OnIni
     }
   }
 
-  onAssignControl(controlItem: KypoControlItem) {
+  onControlAction(controlItem: KypoControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 

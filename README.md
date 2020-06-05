@@ -1,10 +1,18 @@
 # User and Group Management
 
-
-If you wish to use this library locally, you will need to run backend service as well. [Guide](https://gitlab.ics.muni.cz/kypo2/services-and-portlets/kypo2-user-and-group)
-
 User and Group Management is a library containing components and services to manage users, groups, microservices and roles in KYPO microservices.
-It is developed to communicate with REST API of [KYPO2 User and Group Management service](https://gitlab.ics.muni.cz/kypo2/services-and-portlets/kypo2-user-and-group)
+It is developed as a frontend of [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo2-user-and-group)
+
+The library follows smart-dumb architecture. Smart components are exported from the library, and you can use them at your will. The project contains example implementation with lazy loading modules which you can use as an inspiration.
+You can modify the behaviour of components by implementing abstract service class and injecting it through Angular dependency injection.
+
+## Prerequisites
+
+To use the library you need to have installed:
+
+* NPM with private [KYPO Nexus repository](https://projects.ics.muni.cz/projects/kbase/knowledgebase/articles/153)
+* Angular 9+
+* Angular Material 9+
 
 ## Features
 
@@ -12,48 +20,78 @@ It is developed to communicate with REST API of [KYPO2 User and Group Management
 * Overview component and services for Group
 * Create/Edit component and services for Group
 * Create component and services for Microservice
-* Errors, notification and routing requests emitted through shared service
-* API services and services integrating components with API.
+* Default routing (overridable)
+* Errors, notification, and navigation services
 * CanDeactivate interface on all main components
-
-You can use the components and services as they are import only "components" modules and alter its behaviour.
-
-## Prerequisites
-
-To use the library you need to have installed:
-
-* NPM with private [KYPO Nexus repository](https://projects.ics.muni.cz/projects/kbase/knowledgebase/articles/153)
-* Angular Material 8
-* [kypo2-auth](https://gitlab.ics.muni.cz/kypo2/frontend-new/kypo2-auth)
-* [kypo2-table](https://gitlab.ics.muni.cz/kypo2/frontend-new/kypo2-table)
-* [kypo2-user-assign](https://gitlab.ics.muni.cz/kypo2/frontend-new/kypo2-user-assign)
-* [typescript-collections](https://www.npmjs.com/package/typescript-collections)
+* Resolvers for all main components
 
 ## Usage
 
 To use the user and group management in your Angular application follow these steps:
 
-1. Run `npm install kypo2-user-and-group-management`
-1. Create topology config class extending **UserAndGroupManagementConfig** from the library. Config contains following options:
-    + userAndGroupRestBasePath
+1. Run `npm install kypo-user-and-group-agenda`
+1. Install all peer dependencies
+1. Create config class extending `UserAndGroupAgendaConfig` from the library. Config contains following options:
     + defaultPaginationSize
-1. Import **Kypo2GroupOverviewModule**, **Kypo2MicroserviceEditModule** and **Kypo2UserModule** with `forRoot(userAndGroupConfig)` method in desired modules (routing and lazy-loaded modules are recommended). 
-1. Provide necessary resolvers (as of now, only Group resolver is required)
-1. Subscribe to observables of `UserAndGroupErrorService`, `UserAndGroupNotificationService` and `Kypo2UserAndGroupRoutingEventService` to handle events emitted by libary in your app
+1. Import specific modules containing components (for example `UserComponentsModule`) and provide config through `.forRoot()` method.
+1. If you do not override the services, you will also need to provide API service. See [kypo-user-and-group-api library](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-user-and-group-api).
+1. You need to provide implementation of abstract services `ClientErrorHandlerService` and `ClientNotificationService` for error handling and notification displaying.
+1. Optionally, you can override `UserAndGroupNavigator` service to provide custom navigation if you do not want to use default routes.
+1. Optionally, cou can override and provide own implementation of services
 
-**NOTE:** The library is implemented with Angular best practices in mind and detail components (GroupEdit) are expecting to get data from ActivatedRoute service. You need to implement and provide your own GroupResolver service. You can use `Kypo2GroupResolverHelperService` to get the data by id. You are expected to store the data in `.activeRoute.data.group`
+For example, you would add `UserOverviewComponent` like this:
 
+1. Create feature module `UserOverviewModule` containing all necessary imports and providers
+
+``
+@NgModule({
+  imports: [
+    CommonModule,
+    UserOverviewRoutingModule,
+    UserComponentsModule.forRoot(agendaConfig),
+    KypoUserAndGroupApiModule.forRoot(apiConfig),
+  ],
+  providers: [
+    { provide: UserAndGroupErrorHandler, useClass: ClientErrorHandlerService },
+    { provide: UserAndGroupNotificationService, useClass: ClientNotificationService },
+  ],
+})
+export class UserOverviewModule {}
+``
+
+1. Create routing module importing the `UserOverviewModule`
+
+``
+const routes: Routes = [
+  {
+    path: '',
+    component: UserOverviewComponent,
+  },
+];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class UserOverviewRoutingModule {}
+``
+
+1. Lazy load the module in the parent routing module
+
+``
+  {
+    path: USER_PATH,
+    loadChildren: () => import('./lazy-loaded-modules/user/user-overview.module').then((m) => m.UserOverviewModule)
+  }
+`` 
 ## Example
 
-To see the library in work and to see example of integration of the library with your app, you can run the example app.
-To run the example you need to run [KYPO2 User and Group Management service](https://gitlab.ics.muni.cz/kypo2/services-and-portlets/kypo2-user-and-group) or have access to a running instance and provide the URL to the service in `UserAndGroupConfig`. Optionally, you can run mock service as [json-server](https://www.npmjs.com/package/json-server).
+To see the library in work and to see example setup, you can run the example app.
+To run the example you need to run [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo2-user-and-group) or have access to a running instance and provide the URL to the service in when importing API module.
 
 1. Clone this repository
 1. Run `npm install`
 1. Run `ng serve --ssl`
 1. See the app at `https://localhost:4200`
-
-
 
 ## Developers
 

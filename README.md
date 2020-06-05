@@ -43,7 +43,7 @@ For example, you would add `UserOverviewComponent` like this:
 
 1. Create feature module `UserOverviewModule` containing all necessary imports and providers
 
-``
+```
 @NgModule({
   imports: [
     CommonModule,
@@ -57,11 +57,11 @@ For example, you would add `UserOverviewComponent` like this:
   ],
 })
 export class UserOverviewModule {}
-``
+```
 
 1. Create routing module importing the `UserOverviewModule`
 
-``
+```
 const routes: Routes = [
   {
     path: '',
@@ -73,16 +73,17 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class UserOverviewRoutingModule {}
-``
+```
 
 1. Lazy load the module in the parent routing module
 
-``
+```
   {
     path: USER_PATH,
     loadChildren: () => import('./lazy-loaded-modules/user/user-overview.module').then((m) => m.UserOverviewModule)
   }
-`` 
+```
+
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.

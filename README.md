@@ -1,6 +1,6 @@
-# User and Group Management
+# User and Group Agenda
 
-User and Group Management is a library containing components and services to manage users, groups, microservices and roles in KYPO microservices.
+User and Group Agenda is a library containing components and services to manage users, groups, microservices and roles in KYPO microservices.
 It is developed as a frontend of [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo2-user-and-group)
 
 The library follows smart-dumb architecture. Smart components are exported from the library, and you can use them at your will. The project contains example implementation with lazy loading modules which you can use as an inspiration.

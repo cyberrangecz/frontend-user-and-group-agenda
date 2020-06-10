@@ -22,7 +22,7 @@ export class GroupMemberTable extends Kypo2Table<User> {
     const columns = [
       new Column('id', 'id', false),
       new Column('name', 'name', true, 'familyName'),
-      new Column('login', 'login', true),
+      new Column('login', 'login', true, 'sub'),
       new Column('issuer', 'issuer', false),
     ];
     super(rows, columns);

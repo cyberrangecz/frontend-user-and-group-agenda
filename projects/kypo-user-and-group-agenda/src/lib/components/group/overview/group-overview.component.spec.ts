@@ -7,7 +7,7 @@ import { Group } from 'kypo-user-and-group-model';
 import { Kypo2TableComponent, LoadTableEvent, RowAction, TableActionEvent } from 'kypo2-table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { GroupTableRowAdapter } from '../../../model/adapters/table/group/group-table-row-adapter';
+import { GroupRowAdapter } from '../../../model/adapters/table/group/group-row-adapter';
 import { DeleteControlItem } from '../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
 import { GroupOverviewService } from '../../../services/group/overview/group-overview.service';
@@ -117,7 +117,7 @@ describe('GroupOverviewComponent', () => {
       (table) => {
         const firstRow = table.rows[0];
         expect(firstRow).toBeTruthy();
-        const expectedGroup = firstRow.element.group;
+        const expectedGroup = firstRow.element;
         const deleteTableAction = firstRow.actions.find((action) => action.id === 'delete');
         expect(deleteTableAction).toBeTruthy();
         component.onTableAction(new TableActionEvent(firstRow.element, deleteTableAction));
@@ -135,7 +135,7 @@ describe('GroupOverviewComponent', () => {
       (table) => {
         const firstRow = table.rows[0];
         expect(firstRow).toBeTruthy();
-        const expectedGroup = firstRow.element.group;
+        const expectedGroup = firstRow.element;
         const editTableAction = firstRow.actions.find((action) => action.id === 'edit');
         expect(editTableAction).toBeTruthy();
         component.onTableAction(new TableActionEvent(firstRow.element, editTableAction));
@@ -161,9 +161,8 @@ describe('GroupOverviewComponent', () => {
   it('should call service on group selected', () => {
     expect(overviewSpy.setSelection).toHaveBeenCalledTimes(0);
     const expectedGroups = createDefaultResource().elements;
-    const groupAdapters = expectedGroups.map((element) => new GroupTableRowAdapter(element));
 
-    component.onGroupSelected(groupAdapters);
+    component.onGroupSelected(expectedGroups);
     expect(overviewSpy.setSelection).toHaveBeenCalledTimes(1);
     expect(overviewSpy.setSelection).toHaveBeenCalledWith(expectedGroups);
   });
@@ -187,8 +186,8 @@ describe('GroupOverviewComponent', () => {
     const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
     const group = new Group();
     group.id = 1;
-    const expectedEvent = new TableActionEvent<GroupTableRowAdapter>(
-      new GroupTableRowAdapter(group),
+    const expectedEvent = new TableActionEvent<Group>(
+      group,
       new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY)
     );
 
@@ -202,7 +201,7 @@ describe('GroupOverviewComponent', () => {
     expect(component.onGroupSelected).toHaveBeenCalledTimes(0);
 
     const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
-    const expectedEvent = createDefaultResource().elements.map((element) => new GroupTableRowAdapter(element));
+    const expectedEvent = createDefaultResource().elements;
 
     kypoTableEl.triggerEventHandler('rowSelection', expectedEvent);
     expect(component.onGroupSelected).toHaveBeenCalledTimes(1);

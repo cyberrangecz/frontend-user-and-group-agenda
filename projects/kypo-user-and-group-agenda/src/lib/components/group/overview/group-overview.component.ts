@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
+import { Group } from 'kypo-user-and-group-model';
 import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupTable } from '../../../model/adapters/table/group/group-table';
-import { GroupTableRowAdapter } from '../../../model/adapters/table/group/group-table-row-adapter';
 import { DeleteControlItem } from '../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
 import { GroupOverviewService } from '../../../services/group/overview/group-overview.service';
@@ -27,7 +27,7 @@ export class GroupOverviewComponent extends KypoBaseComponent implements OnInit 
   /**
    * Data for groups table component
    */
-  groups$: Observable<Kypo2Table<GroupTableRowAdapter>>;
+  groups$: Observable<Kypo2Table<Group>>;
 
   /**
    * True if error was thrown while getting data for groups table, false otherwise
@@ -74,7 +74,7 @@ export class GroupOverviewComponent extends KypoBaseComponent implements OnInit 
    * Resolves type of action call appropriate handler
    * @param event action event emitted by table component
    */
-  onTableAction(event: TableActionEvent<GroupTableRowAdapter>) {
+  onTableAction(event: TableActionEvent<Group>) {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
@@ -82,8 +82,8 @@ export class GroupOverviewComponent extends KypoBaseComponent implements OnInit 
    * Changes internal state of the component when selection is changed in table component
    * @param selected groups selected in table component
    */
-  onGroupSelected(selected: GroupTableRowAdapter[]) {
-    this.groupService.setSelection(selected.map((adapter) => adapter.group));
+  onGroupSelected(selected: Group[]) {
+    this.groupService.setSelection(selected);
   }
 
   private initControls(selectedLength: number) {

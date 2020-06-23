@@ -92,7 +92,8 @@ editVersionAndDeploy:
     - git clone $REPOSITORY_SSH_URL
     - cd $CI_PROJECT_NAME
     - git config --global user.name "$GIT_SERVICE_USER_NAME" && git config --global user.email "$GIT_SERVICE_USER_EMAIL"
-    - npm run ci-update-version $VERSION
+    - npm config set $VERSION $NEW_VERSION
+    - npm run ci-update-version
     - git commit -am "Update project package.json version based on GitLab tag. Done by CI" && sleep 1
     - git push
     - sleep 5

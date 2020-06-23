@@ -43,7 +43,7 @@ unitTests:
     - branches
     - tags
 
-buildAngular:
+buildExampleApp:
   stage: build
   cache:
     key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
@@ -61,23 +61,25 @@ buildAngular:
       - ./dist
     expire_in: 1 hour
 
-editVersion:
-  stage: deploy
+buildLibary:
+  stage: build
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - .npm/
+    policy: pull
   script:
-    - export GIT_SSH_COMMAND='ssh -i ~/.ssh/kyposervicekey'
-    - ssh -o "StrictHostKeyChecking no" git@gitlab.ics.muni.cz && sleep 1
-    - git clone $REPOSITORY_SSH_URL
-    - cd $CI_PROJECT_NAME
-    - git config --global user.name "$GIT_SERVICE_USER_NAME" && git config --global user.email "$GIT_SERVICE_USER_EMAIL"
-    - bash /usr/local/changeVersion.sh $VERSION $LIBRARY_PROJECT_NAME
-    - git commit -am "Update project package.json version based on GitLab tag. Done by CI" && sleep 1
-    - git push
-    - sleep 5
-
+    - npm run build-lib
   only:
+    - triggers
+    - branches
     - tags
+  artifacts:
+    paths:
+      - ./dist
+    expire_in: 1 hour
 
-publishPackage:
+editVersionAndDeploy:
   stage: deploy
   cache:
     key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
@@ -85,6 +87,15 @@ publishPackage:
       - .npm/
     policy: pull
   script:
+    - export GIT_SSH_COMMAND='ssh -i ~/.ssh/kyposervicekey'
+    - ssh -o "StrictHostKeyChecking no" git@gitlab.ics.muni.cz && sleep 1
+    - git clone $REPOSITORY_SSH_URL
+    - cd $CI_PROJECT_NAME
+    - git config --global user.name "$GIT_SERVICE_USER_NAME" && git config --global user.email "$GIT_SERVICE_USER_EMAIL"
+    - 'npm run ci-update-version'
+    - git commit -am "Update project package.json version based on GitLab tag. Done by CI" && sleep 1
+    - git push
+    - sleep 5
     - cp $NPMRC_PULL ~/.npmrc
     - 'npm run ci-build-and-pack'
     - cp $NPMRC_PUSH ~/.npmrc

@@ -8,6 +8,7 @@ import { GroupEditAction } from './group-edit-action';
 import { GroupRowAdapter } from './group-row-adapter';
 
 /**
+ * @dynamic
  * Class creating data source for group table
  */
 export class GroupTable extends Kypo2Table<GroupRowAdapter> {

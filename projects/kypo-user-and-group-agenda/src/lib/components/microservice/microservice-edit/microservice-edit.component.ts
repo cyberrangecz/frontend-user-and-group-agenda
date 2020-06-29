@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { Microservice } from 'kypo-user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRolesState } from '../../../model/microservice/microservice-roles-state';
@@ -24,7 +24,7 @@ import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
   styleUrls: ['./microservice-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceEditComponent extends KypoBaseComponent implements OnInit, OnChanges {
+export class MicroserviceEditComponent extends KypoBaseDirective implements OnInit, OnChanges {
   /**
    * Edited microservice
    */

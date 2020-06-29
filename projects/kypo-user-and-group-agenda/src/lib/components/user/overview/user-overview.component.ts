@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
+import { KypoBaseDirective, KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { User } from 'kypo-user-and-group-model';
 import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
@@ -19,7 +19,7 @@ import { UserOverviewService } from '../../../services/user/overview/user-overvi
   styleUrls: ['./user-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserOverviewComponent extends KypoBaseComponent implements OnInit {
+export class UserOverviewComponent extends KypoBaseDirective implements OnInit {
   readonly INIT_SORT_NAME = 'familyName';
   readonly INIT_SORT_DIR = 'asc';
 

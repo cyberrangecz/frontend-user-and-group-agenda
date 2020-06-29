@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
+import { KypoBaseDirective, KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { Group } from 'kypo-user-and-group-model';
 import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
@@ -20,7 +20,7 @@ import { UserAndGroupContext } from '../../../services/shared/user-and-group-con
   styleUrls: ['./group-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupOverviewComponent extends KypoBaseComponent implements OnInit {
+export class GroupOverviewComponent extends KypoBaseDirective implements OnInit {
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 

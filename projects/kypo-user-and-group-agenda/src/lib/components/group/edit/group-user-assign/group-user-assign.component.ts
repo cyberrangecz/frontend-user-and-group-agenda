@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { KypoRequestedPagination } from 'kypo-common';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { User } from 'kypo-user-and-group-model';
 import { Group } from 'kypo-user-and-group-model';
@@ -32,7 +32,7 @@ import { UserAssignService } from '../../../../services/user/user-assign/user-as
   styleUrls: ['./group-user-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupUserAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
+export class GroupUserAssignComponent extends KypoBaseDirective implements OnInit, OnChanges {
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
   readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
 

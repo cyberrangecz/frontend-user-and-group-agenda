@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { Group } from 'kypo-user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../../../model/events/group-changed-event';
@@ -23,7 +23,7 @@ import { GroupEditFormGroup } from './group-edit-form-group';
   styleUrls: ['./group-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupEditComponent extends KypoBaseComponent implements OnInit, OnChanges {
+export class GroupEditComponent extends KypoBaseDirective implements OnInit, OnChanges {
   /**
    * Edited group
    */

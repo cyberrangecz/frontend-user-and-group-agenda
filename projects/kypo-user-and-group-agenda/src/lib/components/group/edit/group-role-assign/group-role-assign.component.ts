@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { KypoPaginatedResource } from 'kypo-common';
-import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
+import { KypoBaseDirective, KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { Group } from 'kypo-user-and-group-model';
 import { UserRole } from 'kypo-user-and-group-model';
@@ -32,7 +32,7 @@ import { UserAndGroupContext } from '../../../../services/shared/user-and-group-
   styleUrls: ['./group-role-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupRoleAssignComponent extends KypoBaseComponent implements OnInit, OnChanges {
+export class GroupRoleAssignComponent extends KypoBaseDirective implements OnInit, OnChanges {
   readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';
   readonly ROLES_OF_GROUP_INIT_SORT_DIR = 'asc';
 

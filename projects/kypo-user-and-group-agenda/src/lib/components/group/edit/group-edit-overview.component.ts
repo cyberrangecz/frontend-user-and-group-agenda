@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { Group } from 'kypo-user-and-group-model';
 import { defer, Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { GroupEditService } from '../../../services/group/edit/group-edit.servic
   styleUrls: ['./group-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupEditOverviewComponent extends KypoBaseComponent implements OnInit {
+export class GroupEditOverviewComponent extends KypoBaseDirective implements OnInit {
   @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();
 
   group$: Observable<Group>;

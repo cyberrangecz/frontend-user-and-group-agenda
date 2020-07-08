@@ -3,13 +3,13 @@ import { async, ComponentFixture, fakeAsync, flush, TestBed } from '@angular/cor
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { KypoControlsComponent } from 'kypo-controls';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
 import { BehaviorSubject, of } from 'rxjs';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
 import { GroupChangedEvent } from '../../../model/events/group-changed-event';
 import { GroupEditService } from '../../../services/group/edit/group-edit.service';
-import { createKypoControlsOverride } from '../../../testing/testing-commons';
+import { createSentinelControlsOverride } from '../../../testing/testing-commons';
 import { GroupEditMaterialModule } from './group-edit-material.module';
 import { GroupEditOverviewComponent } from './group-edit-overview.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
@@ -39,7 +39,7 @@ describe('GroupEditOverviewComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteSpy },
       ],
     })
-      .overrideComponent(KypoControlsComponent, createKypoControlsOverride())
+      .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
       .overrideComponent(GroupEditComponent, {
         set: {
           selector: 'kypo-group-edit',

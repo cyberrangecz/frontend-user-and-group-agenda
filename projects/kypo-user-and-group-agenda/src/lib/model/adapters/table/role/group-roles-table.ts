@@ -1,6 +1,6 @@
-import { KypoPaginatedResource } from 'kypo-common';
+import { PaginatedResource } from '@sentinel/common';
 import { UserRole } from 'kypo-user-and-group-model';
-import { Column, Kypo2Table, Row } from 'kypo2-table';
+import { Column, SentinelTable, Row } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { RoleAssignService } from '../../../../services/role/assign/role-assign.service';
 import { RoleDeleteAction } from './role-delete-action';
@@ -8,8 +8,8 @@ import { RoleDeleteAction } from './role-delete-action';
 /**
  * Class creating data source for role table
  */
-export class GroupRolesTable extends Kypo2Table<UserRole> {
-  constructor(resource: KypoPaginatedResource<UserRole>, groupId: number, service: RoleAssignService) {
+export class GroupRolesTable extends SentinelTable<UserRole> {
+  constructor(resource: PaginatedResource<UserRole>, groupId: number, service: RoleAssignService) {
     const columns = [
       new Column('id', 'id', true),
       new Column('microserviceId', 'microservice id', false),

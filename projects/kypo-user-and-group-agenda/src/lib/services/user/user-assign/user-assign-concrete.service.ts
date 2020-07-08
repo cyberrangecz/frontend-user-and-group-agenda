@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoPagination } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+import { RequestedPagination, SentinelPagination, PaginatedResource } from '@sentinel/common';
 import { UserApi } from 'kypo-user-and-group-api';
 import { GroupApi } from 'kypo-user-and-group-api';
 import { User } from 'kypo-user-and-group-model';
@@ -29,14 +27,14 @@ export class UserAssignConcreteService extends UserAssignService {
     super();
   }
 
-  private lastAssignedPagination: KypoRequestedPagination;
+  private lastAssignedPagination: RequestedPagination;
   private lastAssignedFilter: string;
 
-  private assignedUsersSubject$: BehaviorSubject<KypoPaginatedResource<User>> = new BehaviorSubject(this.initSubject());
+  private assignedUsersSubject$: BehaviorSubject<PaginatedResource<User>> = new BehaviorSubject(this.initSubject());
   /**
    * Subscribe to receive assigned users
    */
-  assignedUsers$: Observable<KypoPaginatedResource<User>> = this.assignedUsersSubject$.asObservable();
+  assignedUsers$: Observable<PaginatedResource<User>> = this.assignedUsersSubject$.asObservable();
 
   /**
    * Assigns (associates) selected users or groups to a resource
@@ -77,9 +75,9 @@ export class UserAssignConcreteService extends UserAssignService {
    */
   getAssigned(
     resourceId: number,
-    pagination: KypoRequestedPagination,
+    pagination: RequestedPagination,
     filterValue: string = null
-  ): Observable<KypoPaginatedResource<User>> {
+  ): Observable<PaginatedResource<User>> {
     this.clearSelectedAssignedUsers();
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
     this.lastAssignedPagination = pagination;
@@ -106,10 +104,10 @@ export class UserAssignConcreteService extends UserAssignService {
    * @param resourceId id of a resource which has no association with users
    * @param filterValue filter to be applied on users
    */
-  getUsersToAssign(resourceId: number, filterValue: string): Observable<KypoPaginatedResource<User>> {
+  getUsersToAssign(resourceId: number, filterValue: string): Observable<PaginatedResource<User>> {
     const pageSize = 50;
     return this.userApi
-      .getUsersNotInGroup(resourceId, new KypoRequestedPagination(0, pageSize, 'familyName', 'asc'), [
+      .getUsersNotInGroup(resourceId, new RequestedPagination(0, pageSize, 'familyName', 'asc'), [
         new UserFilter(filterValue),
       ])
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching users') }));
@@ -119,15 +117,15 @@ export class UserAssignConcreteService extends UserAssignService {
    * Get groups available to import (assign its users to a resource)
    * @param filterValue filter to be applied on groups
    */
-  getGroupsToImport(filterValue: string): Observable<KypoPaginatedResource<Group>> {
+  getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>> {
     const pageSize = 50;
     return this.api
-      .getAll(new KypoRequestedPagination(0, pageSize, 'name', 'asc'), [new GroupFilter(filterValue)])
+      .getAll(new RequestedPagination(0, pageSize, 'name', 'asc'), [new GroupFilter(filterValue)])
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching groups') }));
   }
 
   private initSubject() {
-    return new KypoPaginatedResource([], new KypoPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
+    return new PaginatedResource([], new SentinelPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
   }
 
   private callApiToAssign(resourceId: number, userIds: number[], groupIds: number[]) {

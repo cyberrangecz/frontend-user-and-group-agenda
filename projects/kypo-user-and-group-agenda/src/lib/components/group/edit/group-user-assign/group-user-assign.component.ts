@@ -8,13 +8,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoRequestedPagination } from 'kypo-common';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from 'kypo-user-and-group-model';
 import { Group } from 'kypo-user-and-group-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
-import { Kypo2SelectorResourceMapping } from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { combineLatest, defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupMemberTable } from '../../../../model/adapters/table/user/group-member-table';
@@ -32,7 +31,7 @@ import { UserAssignService } from '../../../../services/user/user-assign/user-as
   styleUrls: ['./group-user-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupUserAssignComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class GroupUserAssignComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
   readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -54,7 +53,7 @@ export class GroupUserAssignComponent extends KypoBaseDirective implements OnIni
   /**
    * Mapping of user model attributes to selector component
    */
-  userMapping: Kypo2SelectorResourceMapping;
+  userMapping: SentinelResourceSelectorMapping;
 
   /**
    * Groups available to import (assign its users to edited group)
@@ -64,12 +63,12 @@ export class GroupUserAssignComponent extends KypoBaseDirective implements OnIni
   /**
    * Mapping of group model attribute to selector component
    */
-  groupMapping: Kypo2SelectorResourceMapping;
+  groupMapping: SentinelResourceSelectorMapping;
 
   /**
    * Data for table component of already assigned users
    */
-  assignedUsers$: Observable<Kypo2Table<User>>;
+  assignedUsers$: Observable<SentinelTable<User>>;
 
   /**
    * True if error was thrown while getting data for assigned users table component, false otherwise
@@ -84,8 +83,8 @@ export class GroupUserAssignComponent extends KypoBaseDirective implements OnIni
   selectedUsersToAssign$: Observable<User[]>;
   selectedGroupsToImport$: Observable<Group[]>;
 
-  assignUsersControls: KypoControlItem[];
-  assignedUsersControls: KypoControlItem[];
+  assignUsersControls: SentinelControlItem[];
+  assignedUsersControls: SentinelControlItem[];
 
   constructor(private userAssignService: UserAssignService, private configService: UserAndGroupContext) {
     super();
@@ -109,7 +108,7 @@ export class GroupUserAssignComponent extends KypoBaseDirective implements OnIni
     }
   }
 
-  onControlAction(controlItem: KypoControlItem) {
+  onControlAction(controlItem: SentinelControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -217,7 +216,7 @@ export class GroupUserAssignComponent extends KypoBaseDirective implements OnIni
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new KypoRequestedPagination(
+      new RequestedPagination(
         0,
         this.configService.config.defaultPaginationSize,
         this.MEMBERS_OF_GROUP_INIT_SORT_NAME,

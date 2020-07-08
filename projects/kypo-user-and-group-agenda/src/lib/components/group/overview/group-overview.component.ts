@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KypoBaseDirective, KypoRequestedPagination } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupTable } from '../../../model/adapters/table/group/group-table';
@@ -20,21 +20,21 @@ import { UserAndGroupContext } from '../../../services/shared/user-and-group-con
   styleUrls: ['./group-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupOverviewComponent extends KypoBaseDirective implements OnInit {
+export class GroupOverviewComponent extends SentinelBaseDirective implements OnInit {
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
   /**
    * Data for groups table component
    */
-  groups$: Observable<Kypo2Table<Group>>;
+  groups$: Observable<SentinelTable<Group>>;
 
   /**
    * True if error was thrown while getting data for groups table, false otherwise
    */
   groupsHasError$: Observable<boolean>;
 
-  controls: KypoControlItem[];
+  controls: SentinelControlItem[];
 
   constructor(private groupService: GroupOverviewService, private configService: UserAndGroupContext) {
     super();
@@ -42,7 +42,7 @@ export class GroupOverviewComponent extends KypoBaseDirective implements OnInit 
 
   ngOnInit() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new KypoRequestedPagination(
+      new RequestedPagination(
         0,
         this.configService.config.defaultPaginationSize,
         this.INIT_SORT_NAME,
@@ -55,7 +55,7 @@ export class GroupOverviewComponent extends KypoBaseDirective implements OnInit 
     this.onLoadTableEvent(initialLoadEvent);
   }
 
-  onControlsAction(controlItem: KypoControlItem) {
+  onControlsAction(controlItem: SentinelControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { KypoControlsModule } from 'kypo-controls';
-import { Kypo2TableModule } from 'kypo2-table';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelTableModule } from '@sentinel/components/table';
 import { UserAndGroupAgendaConfig } from '../../../model/client/user-and-group-agenda-config';
 import { UserAndGroupDefaultNavigator } from '../../../services/client/user-and-group-default-navigator.service';
 import { UserAndGroupNavigator } from '../../../services/client/user-and-group-navigator.service';
@@ -25,8 +25,8 @@ import { GroupOverviewComponent } from './group-overview.component';
     GroupOverviewMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    Kypo2TableModule,
-    KypoControlsModule,
+    SentinelTableModule,
+    SentinelControlsModule,
   ],
   declarations: [GroupOverviewComponent],
   providers: [

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { KypoPaginatedResource, KypoPagination } from 'kypo-common';
+import { PaginatedResource, SentinelPagination } from '@sentinel/common';
 import { GroupApi, RoleApi } from 'kypo-user-and-group-api';
 import { UserRole } from 'kypo-user-and-group-model';
 import { of, throwError } from 'rxjs';
@@ -263,10 +263,10 @@ describe('RoleAssignConcreteService', () => {
       );
   });
 
-  function createResource(): KypoPaginatedResource<UserRole> {
+  function createResource(): PaginatedResource<UserRole> {
     const roles = [new UserRole(), new UserRole(), new UserRole()];
     roles.forEach((role, index) => (role.id = index));
-    const pagination = new KypoPagination(0, roles.length, 5, roles.length, 1);
-    return new KypoPaginatedResource<UserRole>(roles, pagination);
+    const pagination = new SentinelPagination(0, roles.length, 5, roles.length, 1);
+    return new PaginatedResource<UserRole>(roles, pagination);
   }
 });

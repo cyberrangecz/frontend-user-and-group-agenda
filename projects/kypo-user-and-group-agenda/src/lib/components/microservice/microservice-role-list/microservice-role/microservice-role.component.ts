@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseDirective } from 'kypo-common';
+import { SentinelBaseDirective } from '@sentinel/common';
 import { MicroserviceRole } from 'kypo-user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRoleItem } from '../../../../model/microservice/microservice-role-item';
@@ -23,7 +23,7 @@ import { MicroserviceRoleForm } from './microservice-role-form';
   styleUrls: ['./microservice-role.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceRoleComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class MicroserviceRoleComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   /**
    * Edited role
    */

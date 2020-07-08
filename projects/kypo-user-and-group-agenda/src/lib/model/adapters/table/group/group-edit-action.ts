@@ -1,4 +1,4 @@
-import { EditAction } from 'kypo2-table';
+import { EditAction } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
 
 export class GroupEditAction extends EditAction {

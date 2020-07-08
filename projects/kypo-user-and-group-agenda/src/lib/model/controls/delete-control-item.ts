@@ -1,7 +1,7 @@
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Observable, of } from 'rxjs';
 
-export class DeleteControlItem extends KypoControlItem {
+export class DeleteControlItem extends SentinelControlItem {
   static readonly ID = 'delete';
 
   constructor(count: number, result$: Observable<any>) {

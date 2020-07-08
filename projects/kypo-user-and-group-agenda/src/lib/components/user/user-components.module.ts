@@ -2,8 +2,8 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { KypoControlsModule } from 'kypo-controls';
-import { Kypo2TableModule } from 'kypo2-table';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelTableModule } from '@sentinel/components/table';
 import { UserAndGroupAgendaConfig } from '../../model/client/user-and-group-agenda-config';
 import { UserAndGroupDefaultNavigator } from '../../services/client/user-and-group-default-navigator.service';
 import { UserAndGroupNavigator } from '../../services/client/user-and-group-navigator.service';
@@ -19,7 +19,14 @@ import { UserMaterialModule } from './user-material.module';
  */
 @NgModule({
   declarations: [UserOverviewComponent, UserDetailComponent],
-  imports: [CommonModule, FormsModule, Kypo2TableModule, UserMaterialModule, InternalSharedModule, KypoControlsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SentinelTableModule,
+    UserMaterialModule,
+    InternalSharedModule,
+    SentinelControlsModule,
+  ],
   exports: [UserMaterialModule, UserOverviewComponent, UserDetailComponent],
   providers: [
     { provide: UserOverviewService, useClass: UserOverviewConcreteService },

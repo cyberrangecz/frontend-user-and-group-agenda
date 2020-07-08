@@ -1,7 +1,7 @@
-import { KypoPaginatedResourceService } from 'kypo-common';
+import { PaginatedResourceService } from '@sentinel/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export abstract class SelectablePaginatedService<T> extends KypoPaginatedResourceService<T> {
+export abstract class SelectablePaginatedService<T> extends PaginatedResourceService<T> {
   protected constructor(pageSize: number) {
     super(pageSize);
   }

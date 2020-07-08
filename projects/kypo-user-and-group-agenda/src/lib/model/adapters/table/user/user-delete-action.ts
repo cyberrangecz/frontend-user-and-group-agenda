@@ -1,4 +1,4 @@
-import { DeleteAction } from 'kypo2-table';
+import { DeleteAction } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
 
 export class UserDeleteAction extends DeleteAction {

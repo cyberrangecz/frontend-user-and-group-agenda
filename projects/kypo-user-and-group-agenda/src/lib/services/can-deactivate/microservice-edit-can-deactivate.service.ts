@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { MicroserviceEditOverviewComponent } from '../../components/microservice/microservice-edit-overview.component';
@@ -27,16 +27,16 @@ export class MicroserviceEditCanDeactivate implements CanDeactivate<Microservice
     if (component.canDeactivate()) {
       return of(true);
     }
-    const dialogData = new CsirtMuConfirmationDialogConfig(
+    const dialogData = new SentinelConfirmationDialogConfig(
       'Unsaved changes',
       'There are some unsaved changes. Do you want to leave without saving?',
       'Cancel',
       'Leave'
     );
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, { data: dialogData });
     return dialogRef.afterClosed().pipe(
       take(1),
-      map((result) => result === CsirtMuDialogResultEnum.CONFIRMED)
+      map((result) => result === SentinelDialogResultEnum.CONFIRMED)
     );
   }
 }

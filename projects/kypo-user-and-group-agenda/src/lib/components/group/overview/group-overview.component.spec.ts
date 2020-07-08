@@ -1,24 +1,23 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { KypoPaginatedResource, KypoPagination, KypoRequestedPagination } from 'kypo-common';
-import { KypoControlsComponent } from 'kypo-controls';
+import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
-import { Kypo2TableComponent, LoadTableEvent, RowAction, TableActionEvent } from 'kypo2-table';
+import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { GroupRowAdapter } from '../../../model/adapters/table/group/group-row-adapter';
 import { DeleteControlItem } from '../../../model/controls/delete-control-item';
 import { SaveControlItem } from '../../../model/controls/save-control-item';
 import { GroupOverviewService } from '../../../services/group/overview/group-overview.service';
 import { UserAndGroupContext } from '../../../services/shared/user-and-group-context.service';
 import {
   createContextSpy,
-  createKypoControlsOverride,
-  createKypoTableOverride,
+  createSentinelControlsOverride,
+  createSentinelOverride,
   createPagination,
-  KYPO_CONTROLS_COMPONENT_SELECTOR,
-  KYPO_TABLE_COMPONENT_SELECTOR,
+  SENTINEL_CONTROLS_COMPONENT_SELECTOR,
+  SENTINEL_TABLE_COMPONENT_SELECTOR,
 } from '../../../testing/testing-commons';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
@@ -54,8 +53,8 @@ describe('GroupOverviewComponent', () => {
         { provide: GroupOverviewService, useValue: overviewSpy },
       ],
     })
-      .overrideComponent(Kypo2TableComponent, createKypoTableOverride())
-      .overrideComponent(KypoControlsComponent, createKypoControlsOverride())
+      .overrideComponent(SentinelTableComponent, createSentinelOverride())
+      .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
       .compileComponents();
   }));
 
@@ -71,7 +70,7 @@ describe('GroupOverviewComponent', () => {
   });
 
   it('should request data on init', () => {
-    const expectedRequestedPagination = new KypoRequestedPagination(
+    const expectedRequestedPagination = new RequestedPagination(
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
@@ -86,12 +85,12 @@ describe('GroupOverviewComponent', () => {
   });
 
   it('should diplay kypo table component', () => {
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     expect(kypoTableEl).toBeTruthy();
   });
 
   it('should diplay kypo controls component', () => {
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_CONTROLS_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_CONTROLS_COMPONENT_SELECTOR));
     expect(kypoTableEl).toBeTruthy();
   });
 
@@ -171,7 +170,7 @@ describe('GroupOverviewComponent', () => {
     spyOn(component, 'onLoadTableEvent');
     expect(component.onLoadTableEvent).toHaveBeenCalledTimes(0);
 
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
 
     kypoTableEl.triggerEventHandler('refresh', expectedEvent);
@@ -183,7 +182,7 @@ describe('GroupOverviewComponent', () => {
     spyOn(component, 'onTableAction');
     expect(component.onTableAction).toHaveBeenCalledTimes(0);
 
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const group = new Group();
     group.id = 1;
     const expectedEvent = new TableActionEvent<Group>(
@@ -200,7 +199,7 @@ describe('GroupOverviewComponent', () => {
     spyOn(component, 'onGroupSelected');
     expect(component.onGroupSelected).toHaveBeenCalledTimes(0);
 
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const expectedEvent = createDefaultResource().elements;
 
     kypoTableEl.triggerEventHandler('rowSelection', expectedEvent);
@@ -212,7 +211,7 @@ describe('GroupOverviewComponent', () => {
     spyOn(component, 'onControlsAction');
     expect(component.onControlsAction).toHaveBeenCalledTimes(0);
 
-    const kypoControlsEl = fixture.debugElement.query(By.css(KYPO_CONTROLS_COMPONENT_SELECTOR));
+    const kypoControlsEl = fixture.debugElement.query(By.css(SENTINEL_CONTROLS_COMPONENT_SELECTOR));
     const expectedEvent = new DeleteControlItem(0, EMPTY);
 
     kypoControlsEl.triggerEventHandler('itemClicked', expectedEvent);
@@ -220,7 +219,7 @@ describe('GroupOverviewComponent', () => {
     expect(component.onControlsAction).toHaveBeenCalledWith(expectedEvent);
   });
 
-  function createDefaultResource(): KypoPaginatedResource<Group> {
+  function createDefaultResource(): PaginatedResource<Group> {
     const groups = [new Group(), new Group(), new Group()];
     groups.forEach((group, index) => {
       group.id = index;
@@ -228,7 +227,7 @@ describe('GroupOverviewComponent', () => {
       group.roles = [];
       group.members = [];
     });
-    const pagination = new KypoPagination(0, groups.length, 5, groups.length, 1);
-    return new KypoPaginatedResource<Group>(groups, pagination);
+    const pagination = new SentinelPagination(0, groups.length, 5, groups.length, 1);
+    return new PaginatedResource<Group>(groups, pagination);
   }
 });

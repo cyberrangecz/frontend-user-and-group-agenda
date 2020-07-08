@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoFilter, KypoPagination, KypoRequestedPagination } from 'kypo-common';
+import { SentinelFilter, SentinelPagination, RequestedPagination, PaginatedResource } from '@sentinel/common';
 import { RoleApi } from 'kypo-user-and-group-api';
 import { GroupApi } from 'kypo-user-and-group-api';
 import { UserRole } from 'kypo-user-and-group-model';
@@ -16,15 +15,13 @@ import { RoleAssignService } from './role-assign.service';
  */
 @Injectable()
 export class RoleAssignConcreteService extends RoleAssignService {
-  private assignedRolesSubject$: BehaviorSubject<KypoPaginatedResource<UserRole>> = new BehaviorSubject(
-    this.initSubject()
-  );
+  private assignedRolesSubject$: BehaviorSubject<PaginatedResource<UserRole>> = new BehaviorSubject(this.initSubject());
   /**
    * Subscribe to receive assigned roles
    */
-  assignedRoles$: Observable<KypoPaginatedResource<UserRole>> = this.assignedRolesSubject$.asObservable();
+  assignedRoles$: Observable<PaginatedResource<UserRole>> = this.assignedRolesSubject$.asObservable();
 
-  private lastPagination: KypoRequestedPagination;
+  private lastPagination: RequestedPagination;
   private lastFilter: string;
 
   constructor(private api: GroupApi, private roleApi: RoleApi, private errorHandler: UserAndGroupErrorHandler) {
@@ -54,12 +51,12 @@ export class RoleAssignConcreteService extends RoleAssignService {
    */
   getAssigned(
     resourceId: number,
-    pagination: KypoRequestedPagination,
+    pagination: RequestedPagination,
     filterValue: string = null
-  ): Observable<KypoPaginatedResource<UserRole>> {
+  ): Observable<PaginatedResource<UserRole>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
-    const filter = new KypoFilter('name', filterValue);
+    const filter = new SentinelFilter('name', filterValue);
     this.clearSelectedAssignedRoles();
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
@@ -82,10 +79,10 @@ export class RoleAssignConcreteService extends RoleAssignService {
    * Gets roles available to assign
    * @param filterValue filter to be applied on roles
    */
-  getAvailableToAssign(filterValue: string = null): Observable<KypoPaginatedResource<UserRole>> {
+  getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
-    const pagination = new KypoRequestedPagination(0, paginationSize, 'roleType', 'asc');
+    const pagination = new RequestedPagination(0, paginationSize, 'roleType', 'asc');
     return this.roleApi
       .getAll(pagination, filter)
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching roles') }));
@@ -134,7 +131,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
     );
   }
 
-  private initSubject(): KypoPaginatedResource<UserRole> {
-    return new KypoPaginatedResource([], new KypoPagination(0, 0, 10, 0, 0));
+  private initSubject(): PaginatedResource<UserRole> {
+    return new PaginatedResource([], new SentinelPagination(0, 0, 10, 0, 0));
   }
 }

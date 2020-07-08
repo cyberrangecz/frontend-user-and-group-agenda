@@ -1,4 +1,4 @@
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { UserRole } from 'kypo-user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -30,7 +30,7 @@ export abstract class RoleAssignService {
   /**
    * List of roles already assigned to the resource
    */
-  abstract assignedRoles$: Observable<KypoPaginatedResource<UserRole>>;
+  abstract assignedRoles$: Observable<PaginatedResource<UserRole>>;
 
   setSelectedRolesToAssign(roles: UserRole[]) {
     this.selectedRolesToAssignSubject$.next(roles);
@@ -52,7 +52,7 @@ export abstract class RoleAssignService {
    * Search for roles available to assign to resource
    * @param filter filter to be applied on roles
    */
-  abstract getAvailableToAssign(filter: string): Observable<KypoPaginatedResource<UserRole>>;
+  abstract getAvailableToAssign(filter: string): Observable<PaginatedResource<UserRole>>;
 
   /**
    * Get roles already assigned to the resource
@@ -63,9 +63,9 @@ export abstract class RoleAssignService {
    */
   abstract getAssigned(
     resourceId: number,
-    pagination: KypoRequestedPagination,
+    pagination: RequestedPagination,
     filterValue?: string
-  ): Observable<KypoPaginatedResource<UserRole>>;
+  ): Observable<PaginatedResource<UserRole>>;
 
   /**
    * Assigns roles to a resource

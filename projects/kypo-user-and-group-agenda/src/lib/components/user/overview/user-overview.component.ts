@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KypoBaseDirective, KypoRequestedPagination } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from 'kypo-user-and-group-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { UserTable } from '../../../model/adapters/table/user/user-table';
@@ -19,20 +19,20 @@ import { UserOverviewService } from '../../../services/user/overview/user-overvi
   styleUrls: ['./user-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserOverviewComponent extends KypoBaseDirective implements OnInit {
+export class UserOverviewComponent extends SentinelBaseDirective implements OnInit {
   readonly INIT_SORT_NAME = 'familyName';
   readonly INIT_SORT_DIR = 'asc';
 
   /**
    * Data for users table
    */
-  users$: Observable<Kypo2Table<User>>;
+  users$: Observable<SentinelTable<User>>;
   /**
    * True, if data requested for table has error, false otherwise
    */
   usersHasError$: Observable<boolean>;
 
-  controls: KypoControlItem[];
+  controls: SentinelControlItem[];
 
   constructor(private configService: UserAndGroupContext, private userService: UserOverviewService) {
     super();
@@ -40,7 +40,7 @@ export class UserOverviewComponent extends KypoBaseDirective implements OnInit {
 
   ngOnInit() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new KypoRequestedPagination(
+      new RequestedPagination(
         0,
         this.configService.config.defaultPaginationSize,
         this.INIT_SORT_NAME,
@@ -72,7 +72,7 @@ export class UserOverviewComponent extends KypoBaseDirective implements OnInit {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
-  onControlsAction(controlItem: KypoControlItem) {
+  onControlsAction(controlItem: SentinelControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 

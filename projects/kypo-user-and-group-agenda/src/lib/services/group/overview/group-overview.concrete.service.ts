@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { GroupApi } from 'kypo-user-and-group-api';
 import { Group } from 'kypo-user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
@@ -25,7 +25,7 @@ import { GroupOverviewService } from './group-overview.service';
 
 @Injectable()
 export class GroupOverviewConcreteService extends GroupOverviewService {
-  private lastPagination: KypoRequestedPagination;
+  private lastPagination: RequestedPagination;
   private lastFilter: string;
 
   constructor(
@@ -45,7 +45,7 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  getAll(pagination: KypoRequestedPagination, filter: string = null): Observable<KypoPaginatedResource<Group>> {
+  getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Group>> {
     this.lastPagination = pagination;
     this.lastFilter = filter;
     this.clearSelection();
@@ -97,9 +97,9 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
     const message = multipleGroups
       ? `Do you want to remove ${groups.length} selected groups?`
       : `Do you want to remove selected group?`;
-    const dialogData = new CsirtMuConfirmationDialogConfig(title, message, 'Cancel', 'Delete');
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
-    return dialogRef.afterClosed().pipe(map((result) => result === CsirtMuDialogResultEnum.CONFIRMED));
+    const dialogData = new SentinelConfirmationDialogConfig(title, message, 'Cancel', 'Delete');
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, { data: dialogData });
+    return dialogRef.afterClosed().pipe(map((result) => result === SentinelDialogResultEnum.CONFIRMED));
   }
 
   private callApiToDelete(groups: Group[]): Observable<any> {

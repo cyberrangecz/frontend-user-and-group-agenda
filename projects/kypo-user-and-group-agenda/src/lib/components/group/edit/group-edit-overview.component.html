@@ -11,7 +11,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <kypo-controls [controls]="controls" (itemClicked)="onControlAction($event)"></kypo-controls>
+  <sentinel-controls [controls]="controls" (itemClicked)="onControlAction($event)"></sentinel-controls>
   <mat-divider></mat-divider>
   <kypo-group-edit
     (edited)="onGroupChanged($event)"

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { CsirtMuDialogResultEnum } from 'csirt-mu-common';
-import { KypoPaginatedResource, KypoPagination } from 'kypo-common';
+import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
+import { PaginatedResource, SentinelPagination } from '@sentinel/common';
 import { UserApi } from 'kypo-user-and-group-api';
 import { User } from 'kypo-user-and-group-model';
 import { of, throwError } from 'rxjs';
@@ -114,7 +114,7 @@ describe('UserOverviewConcreteService', () => {
   });
 
   it('should open dialog and call api if confirmed on delete', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.CONFIRMED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.CONFIRMED) } as any);
     apiSpy.getAll.and.returnValue(of(createExpectedResource()));
     apiSpy.deleteMultiple.and.returnValue(of(true));
     expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
@@ -136,7 +136,7 @@ describe('UserOverviewConcreteService', () => {
   });
 
   it('should open dialog and not call api if dismissed on delete', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.DISMISSED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.DISMISSED) } as any);
     apiSpy.getAll.and.returnValue(of(createExpectedResource()));
     apiSpy.deleteMultiple.and.returnValue(of(true));
     expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
@@ -158,7 +158,7 @@ describe('UserOverviewConcreteService', () => {
   });
 
   it('should open dialog and call api if confirmed on delete selected', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.CONFIRMED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.CONFIRMED) } as any);
     apiSpy.getAll.and.returnValue(of(createExpectedResource()));
     apiSpy.deleteMultiple.and.returnValue(of(true));
     expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
@@ -181,7 +181,7 @@ describe('UserOverviewConcreteService', () => {
   });
 
   it('should open dialog and not call api if dismissed on delete selected', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.DISMISSED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.DISMISSED) } as any);
     apiSpy.getAll.and.returnValue(of(createExpectedResource()));
     apiSpy.deleteMultiple.and.returnValue(of(true));
     expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
@@ -204,7 +204,7 @@ describe('UserOverviewConcreteService', () => {
   });
 
   it('should reload data after delete', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.CONFIRMED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.CONFIRMED) } as any);
     apiSpy.getAll.and.returnValue(of(createExpectedResource()));
     apiSpy.deleteMultiple.and.returnValue(of(true));
     const userToDelete = new User();
@@ -223,7 +223,7 @@ describe('UserOverviewConcreteService', () => {
   });
 
   it('should reload data after delete selected', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.CONFIRMED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.CONFIRMED) } as any);
     apiSpy.getAll.and.returnValue(of(createExpectedResource()));
     apiSpy.deleteMultiple.and.returnValue(of(true));
     const userToDelete = new User();
@@ -242,9 +242,9 @@ describe('UserOverviewConcreteService', () => {
       );
   });
 
-  function createExpectedResource(): KypoPaginatedResource<User> {
+  function createExpectedResource(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
-    const pagination = new KypoPagination(0, users.length, 5, users.length, 1);
-    return new KypoPaginatedResource<User>(users, pagination);
+    const pagination = new SentinelPagination(0, users.length, 5, users.length, 1);
+    return new PaginatedResource<User>(users, pagination);
   }
 });

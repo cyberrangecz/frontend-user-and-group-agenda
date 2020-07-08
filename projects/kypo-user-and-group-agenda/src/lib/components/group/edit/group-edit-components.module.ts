@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { KypoControlsModule } from 'kypo-controls';
-import { Kypo2TableModule } from 'kypo2-table';
-import { Kypo2ResourceSelectorModule } from 'kypo2-user-assign';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelTableModule } from '@sentinel/components/table';
+import { SentinelResourceSelectorModule } from '@sentinel/components/resource-selector';
 import { UserAndGroupAgendaConfig } from '../../../model/client/user-and-group-agenda-config';
 import { GroupEditCanDeactivate } from '../../../services/can-deactivate/group-edit-can-deactivate.service';
 import { UserAndGroupDefaultNavigator } from '../../../services/client/user-and-group-default-navigator.service';
@@ -30,9 +30,9 @@ import { GroupUserAssignComponent } from './group-user-assign/group-user-assign.
     FormsModule,
     ReactiveFormsModule,
     GroupEditMaterialModule,
-    Kypo2ResourceSelectorModule,
-    Kypo2TableModule,
-    KypoControlsModule,
+    SentinelResourceSelectorModule,
+    SentinelTableModule,
+    SentinelControlsModule,
   ],
   exports: [
     GroupEditMaterialModule,

@@ -1,4 +1,4 @@
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { Group } from 'kypo-user-and-group-model';
 import { Observable } from 'rxjs';
 import { SelectablePaginatedService } from '../../shared/selectable-paginated.service';
@@ -18,7 +18,7 @@ export abstract class GroupOverviewService extends SelectablePaginatedService<Gr
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  abstract getAll(pagination?: KypoRequestedPagination, filter?: string): Observable<KypoPaginatedResource<Group>>;
+  abstract getAll(pagination?: RequestedPagination, filter?: string): Observable<PaginatedResource<Group>>;
 
   /**
    * Deletes group

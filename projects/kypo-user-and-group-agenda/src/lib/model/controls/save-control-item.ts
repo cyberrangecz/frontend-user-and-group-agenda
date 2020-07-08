@@ -1,7 +1,7 @@
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Observable } from 'rxjs';
 
-export class SaveControlItem extends KypoControlItem {
+export class SaveControlItem extends SentinelControlItem {
   static readonly ID = 'save';
 
   constructor(label: string, disabled$: Observable<boolean>, result$: Observable<any>) {

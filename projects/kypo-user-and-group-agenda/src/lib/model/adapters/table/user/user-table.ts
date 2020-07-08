@@ -1,6 +1,6 @@
-import { KypoPaginatedResource } from 'kypo-common';
+import { PaginatedResource } from '@sentinel/common';
 import { User } from 'kypo-user-and-group-model';
-import { Column, Kypo2Table, Row } from 'kypo2-table';
+import { Column, SentinelTable, Row } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { UserDetailComponent } from '../../../../components/user/overview/detail/user-detail.component';
 import { UserOverviewService } from '../../../../services/user/overview/user-overview.service';
@@ -10,8 +10,8 @@ import { UserTableExpand } from './user-table-expand';
 /**
  * Class creating data source for user table
  */
-export class UserTable extends Kypo2Table<User> {
-  constructor(resource: KypoPaginatedResource<User>, service: UserOverviewService) {
+export class UserTable extends SentinelTable<User> {
+  constructor(resource: PaginatedResource<User>, service: UserOverviewService) {
     const rows = resource.elements.map(
       (user) =>
         new Row(user, [

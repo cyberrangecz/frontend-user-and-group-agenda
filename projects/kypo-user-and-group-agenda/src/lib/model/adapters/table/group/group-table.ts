@@ -1,6 +1,6 @@
-import { KypoPaginatedResource } from 'kypo-common';
+import { PaginatedResource } from '@sentinel/common';
 import { Group } from 'kypo-user-and-group-model';
-import { Column, Kypo2Table, Row, RowAction } from 'kypo2-table';
+import { Column, SentinelTable, Row, RowAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { GroupOverviewService } from '../../../../services/group/overview/group-overview.service';
 import { GroupDeleteAction } from './group-delete-action';
@@ -11,8 +11,8 @@ import { GroupRowAdapter } from './group-row-adapter';
  * @dynamic
  * Class creating data source for group table
  */
-export class GroupTable extends Kypo2Table<GroupRowAdapter> {
-  constructor(resource: KypoPaginatedResource<Group>, service: GroupOverviewService) {
+export class GroupTable extends SentinelTable<GroupRowAdapter> {
+  constructor(resource: PaginatedResource<Group>, service: GroupOverviewService) {
     const rows = resource.elements.map((element) => GroupTable.createRow(element, service));
     const columns = [
       new Column('id', 'id', false),

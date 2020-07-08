@@ -1,10 +1,10 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { KypoPaginatedResource, KypoPagination, KypoRequestedPagination } from 'kypo-common';
-import { KypoControlsComponent } from 'kypo-controls';
+import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { User } from 'kypo-user-and-group-model';
-import { Kypo2TableComponent, LoadTableEvent, RowAction, TableActionEvent } from 'kypo2-table';
+import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DeleteControlItem } from '../../../model/controls/delete-control-item';
@@ -12,11 +12,11 @@ import { UserAndGroupContext } from '../../../services/shared/user-and-group-con
 import { UserOverviewService } from '../../../services/user/overview/user-overview.service';
 import {
   createContextSpy,
-  createKypoControlsOverride,
-  createKypoTableOverride,
+  createSentinelControlsOverride,
+  createSentinelOverride,
   createPagination,
-  KYPO_CONTROLS_COMPONENT_SELECTOR,
-  KYPO_TABLE_COMPONENT_SELECTOR,
+  SENTINEL_CONTROLS_COMPONENT_SELECTOR,
+  SENTINEL_TABLE_COMPONENT_SELECTOR,
 } from '../../../testing/testing-commons';
 import { UserMaterialModule } from '../user-material.module';
 import { UserOverviewComponent } from './user-overview.component';
@@ -45,8 +45,8 @@ describe('UserOverviewComponent', () => {
         { provide: UserOverviewService, useValue: overviewSpy },
       ],
     })
-      .overrideComponent(Kypo2TableComponent, createKypoTableOverride())
-      .overrideComponent(KypoControlsComponent, createKypoControlsOverride())
+      .overrideComponent(SentinelTableComponent, createSentinelOverride())
+      .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
       .compileComponents();
   }));
 
@@ -62,7 +62,7 @@ describe('UserOverviewComponent', () => {
   });
 
   it('should request data on init', () => {
-    const expectedRequestedPagination = new KypoRequestedPagination(
+    const expectedRequestedPagination = new RequestedPagination(
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
@@ -77,12 +77,12 @@ describe('UserOverviewComponent', () => {
   });
 
   it('should diplay kypo table component', () => {
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     expect(kypoTableEl).toBeTruthy();
   });
 
   it('should diplay kypo controls component', () => {
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_CONTROLS_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_CONTROLS_COMPONENT_SELECTOR));
     expect(kypoTableEl).toBeTruthy();
   });
 
@@ -132,18 +132,18 @@ describe('UserOverviewComponent', () => {
     expect(overviewSpy.setSelection).toHaveBeenCalledWith(expectedUsers);
   });
 
-  function createDefaultResource(): KypoPaginatedResource<User> {
+  function createDefaultResource(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
     users.forEach((user, index) => (user.id = index));
-    const pagination = new KypoPagination(0, users.length, 5, users.length, 1);
-    return new KypoPaginatedResource<User>(users, pagination);
+    const pagination = new SentinelPagination(0, users.length, 5, users.length, 1);
+    return new PaginatedResource<User>(users, pagination);
   }
 
   it('should call bound method on kypo table refresh output', () => {
     spyOn(component, 'onLoadEvent');
     expect(component.onLoadEvent).toHaveBeenCalledTimes(0);
 
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
 
     kypoTableEl.triggerEventHandler('refresh', expectedEvent);
@@ -155,7 +155,7 @@ describe('UserOverviewComponent', () => {
     spyOn(component, 'onTableAction');
     expect(component.onTableAction).toHaveBeenCalledTimes(0);
 
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const user = new User();
     user.id = 1;
     const expectedEvent = new TableActionEvent<User>(
@@ -172,7 +172,7 @@ describe('UserOverviewComponent', () => {
     spyOn(component, 'onUserSelected');
     expect(component.onUserSelected).toHaveBeenCalledTimes(0);
 
-    const kypoTableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const expectedEvent = createDefaultResource().elements;
 
     kypoTableEl.triggerEventHandler('rowSelection', expectedEvent);
@@ -184,7 +184,7 @@ describe('UserOverviewComponent', () => {
     spyOn(component, 'onControlsAction');
     expect(component.onControlsAction).toHaveBeenCalledTimes(0);
 
-    const kypoControlsEl = fixture.debugElement.query(By.css(KYPO_CONTROLS_COMPONENT_SELECTOR));
+    const kypoControlsEl = fixture.debugElement.query(By.css(SENTINEL_CONTROLS_COMPONENT_SELECTOR));
     const expectedEvent = new DeleteControlItem(0, EMPTY);
 
     kypoControlsEl.triggerEventHandler('itemClicked', expectedEvent);

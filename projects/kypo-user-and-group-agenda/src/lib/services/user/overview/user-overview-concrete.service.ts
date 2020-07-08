@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
+import { RequestedPagination, PaginatedResource } from '@sentinel/common';
 import { UserApi } from 'kypo-user-and-group-api';
 import { User } from 'kypo-user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
@@ -24,7 +23,7 @@ import { UserOverviewService } from './user-overview.service';
 
 @Injectable()
 export class UserOverviewConcreteService extends UserOverviewService {
-  private lastPagination: KypoRequestedPagination;
+  private lastPagination: RequestedPagination;
   private lastFilter: string;
 
   constructor(
@@ -42,7 +41,7 @@ export class UserOverviewConcreteService extends UserOverviewService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on resources
    */
-  getAll(pagination?: KypoRequestedPagination, filterValue: string = null): Observable<KypoPaginatedResource<User>> {
+  getAll(pagination?: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
     const filters = filterValue ? [new UserFilter(filterValue)] : [];
@@ -84,10 +83,10 @@ export class UserOverviewConcreteService extends UserOverviewService {
     const content = multipleUsers
       ? `Do you want to delete ${users.length} selected users?`
       : `Do you want to delete selected user?`;
-    const dialogData = new CsirtMuConfirmationDialogConfig(title, content, 'Cancel', 'Delete');
+    const dialogData = new SentinelConfirmationDialogConfig(title, content, 'Cancel', 'Delete');
 
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, { data: dialogData });
-    return dialogRef.afterClosed().pipe(map((result) => result === CsirtMuDialogResultEnum.CONFIRMED));
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, { data: dialogData });
+    return dialogRef.afterClosed().pipe(map((result) => result === SentinelDialogResultEnum.CONFIRMED));
   }
 
   private callApiToDelete(users: User[]): Observable<any> {

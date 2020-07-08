@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
 import { defer, Observable } from 'rxjs';
 import { take, takeWhile, tap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { GroupEditService } from '../../../services/group/edit/group-edit.servic
   styleUrls: ['./group-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupEditOverviewComponent extends KypoBaseDirective implements OnInit {
+export class GroupEditOverviewComponent extends SentinelBaseDirective implements OnInit {
   @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();
 
   group$: Observable<Group>;
@@ -24,7 +24,7 @@ export class GroupEditOverviewComponent extends KypoBaseDirective implements OnI
   canDeactivateGroupEdit = true;
   canDeactivateMembers = true;
   canDeactivateRoles = true;
-  controls: KypoControlItem[];
+  controls: SentinelControlItem[];
 
   constructor(private activeRoute: ActivatedRoute, private editService: GroupEditService) {
     super();
@@ -44,7 +44,7 @@ export class GroupEditOverviewComponent extends KypoBaseDirective implements OnI
     return this.canDeactivateGroupEdit && this.canDeactivateMembers && this.canDeactivateRoles;
   }
 
-  onControlAction(controlItem: KypoControlItem) {
+  onControlAction(controlItem: SentinelControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 

@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { KypoPaginatedResource, KypoPagination } from 'kypo-common';
-import { KypoControlsComponent } from 'kypo-controls';
+import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group, User } from 'kypo-user-and-group-model';
-import { Kypo2TableComponent, LoadTableEvent, TableActionEvent } from 'kypo2-table';
-import { Kypo2ResourceSelectorComponent } from 'kypo2-user-assign';
+import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
 import { UserDeleteAction } from '../../../../model/adapters/table/user/user-delete-action';
 import { DeleteControlItem } from '../../../../model/controls/delete-control-item';
@@ -14,11 +14,11 @@ import { UserAndGroupContext } from '../../../../services/shared/user-and-group-
 import { UserAssignService } from '../../../../services/user/user-assign/user-assign.service';
 import {
   createContextSpy,
-  createKypoControlsOverride,
-  createKypoTableOverride,
+  createSentinelControlsOverride,
+  createSentinelOverride,
   createPagination,
   createResourceSelectorOverride,
-  KYPO_TABLE_COMPONENT_SELECTOR,
+  SENTINEL_TABLE_COMPONENT_SELECTOR,
 } from '../../../../testing/testing-commons';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupUserAssignComponent } from './group-user-assign.component';
@@ -64,9 +64,9 @@ describe('GroupUserAssignComponent', () => {
         { provide: UserAssignService, useValue: userAssignService },
       ],
     })
-      .overrideComponent(KypoControlsComponent, createKypoControlsOverride())
-      .overrideComponent(Kypo2TableComponent, createKypoTableOverride())
-      .overrideComponent(Kypo2ResourceSelectorComponent, createResourceSelectorOverride())
+      .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
+      .overrideComponent(SentinelTableComponent, createSentinelOverride())
+      .overrideComponent(SentinelResourceSelectorComponent, createResourceSelectorOverride())
       .compileComponents();
   }));
 
@@ -270,7 +270,7 @@ describe('GroupUserAssignComponent', () => {
   });
 
   it('should display kypo table of assigned users', () => {
-    const tableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const tableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     expect(tableEl).toBeTruthy();
   });
 
@@ -279,7 +279,7 @@ describe('GroupUserAssignComponent', () => {
     expect(component.onAssignedUsersSelection).toHaveBeenCalledTimes(0);
     const expectedSelection = createUserResource().elements;
 
-    const tableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const tableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     tableEl.triggerEventHandler('rowSelection', expectedSelection);
 
     expect(component.onAssignedUsersSelection).toHaveBeenCalledTimes(1);
@@ -294,7 +294,7 @@ describe('GroupUserAssignComponent', () => {
 
     const expectedEvent = new TableActionEvent<User>(userRow, action);
 
-    const tableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const tableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     tableEl.triggerEventHandler('rowAction', expectedEvent);
 
     expect(component.onAssignedUsersTableAction).toHaveBeenCalledTimes(1);
@@ -306,24 +306,24 @@ describe('GroupUserAssignComponent', () => {
     expect(component.onAssignedLoadEvent).toHaveBeenCalledTimes(0);
     const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
 
-    const tableEl = fixture.debugElement.query(By.css(KYPO_TABLE_COMPONENT_SELECTOR));
+    const tableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     tableEl.triggerEventHandler('refresh', expectedEvent);
 
     expect(component.onAssignedLoadEvent).toHaveBeenCalledTimes(1);
     expect(component.onAssignedLoadEvent).toHaveBeenCalledWith(expectedEvent);
   });
 
-  function createUserResource(): KypoPaginatedResource<User> {
+  function createUserResource(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
     users.forEach((user, index) => (user.id = index));
-    const pagination = new KypoPagination(0, 3, 10, 3, 1);
-    return new KypoPaginatedResource<User>(users, pagination);
+    const pagination = new SentinelPagination(0, 3, 10, 3, 1);
+    return new PaginatedResource<User>(users, pagination);
   }
 
-  function createGroupResource(): KypoPaginatedResource<Group> {
+  function createGroupResource(): PaginatedResource<Group> {
     const groups = [new Group(), new Group(), new Group()];
     groups.forEach((group, index) => (group.id = index));
-    const pagination = new KypoPagination(0, 3, 10, 3, 1);
-    return new KypoPaginatedResource<Group>(groups, pagination);
+    const pagination = new SentinelPagination(0, 3, 10, 3, 1);
+    return new PaginatedResource<Group>(groups, pagination);
   }
 });

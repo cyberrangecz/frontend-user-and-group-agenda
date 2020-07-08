@@ -8,13 +8,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoBaseDirective, KypoRequestedPagination } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective, RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
 import { UserRole } from 'kypo-user-and-group-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
-import { Kypo2SelectorResourceMapping } from 'kypo2-user-assign/lib/model/kypo2-selector-resource-mapping';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupRolesTable } from '../../../../model/adapters/table/role/group-roles-table';
@@ -32,7 +31,7 @@ import { UserAndGroupContext } from '../../../../services/shared/user-and-group-
   styleUrls: ['./group-role-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupRoleAssignComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class GroupRoleAssignComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';
   readonly ROLES_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -54,7 +53,7 @@ export class GroupRoleAssignComponent extends KypoBaseDirective implements OnIni
   /**
    * Mapping of role model attributes to selector component
    */
-  roleMapping: Kypo2SelectorResourceMapping;
+  roleMapping: SentinelResourceSelectorMapping;
 
   /**
    * True if error was thrown while getting data for table of already assigned roles, false otherwise
@@ -64,7 +63,7 @@ export class GroupRoleAssignComponent extends KypoBaseDirective implements OnIni
   /**
    * Data for assigned roles table component
    */
-  assignedRoles$: Observable<Kypo2Table<UserRole>>;
+  assignedRoles$: Observable<SentinelTable<UserRole>>;
 
   /**
    * True if getting data for table component is in progress, false otherwise
@@ -76,8 +75,8 @@ export class GroupRoleAssignComponent extends KypoBaseDirective implements OnIni
    */
   selectedRolesToAssign$: Observable<UserRole[]>;
 
-  rolesToAssignControls: KypoControlItem[];
-  assignedRolesControls: KypoControlItem[];
+  rolesToAssignControls: SentinelControlItem[];
+  assignedRolesControls: SentinelControlItem[];
 
   constructor(private roleAssignService: RoleAssignService, private config: UserAndGroupContext) {
     super();
@@ -96,7 +95,7 @@ export class GroupRoleAssignComponent extends KypoBaseDirective implements OnIni
     }
   }
 
-  onControlAction(controlItem: KypoControlItem) {
+  onControlAction(controlItem: SentinelControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -107,7 +106,7 @@ export class GroupRoleAssignComponent extends KypoBaseDirective implements OnIni
   search(filterValue: string) {
     this.roles$ = this.roleAssignService
       .getAvailableToAssign(filterValue)
-      .pipe(map((resource: KypoPaginatedResource<UserRole>) => resource.elements));
+      .pipe(map((resource: PaginatedResource<UserRole>) => resource.elements));
   }
 
   /**
@@ -156,7 +155,7 @@ export class GroupRoleAssignComponent extends KypoBaseDirective implements OnIni
     this.assignedRolesHasError$ = this.roleAssignService.hasError$;
     this.isLoadingAssignedRoles$ = this.roleAssignService.isLoadingAssigned$;
     const initialLoadEvent = new LoadTableEvent(
-      new KypoRequestedPagination(
+      new RequestedPagination(
         0,
         this.config.config.defaultPaginationSize,
         this.ROLES_OF_GROUP_INIT_SORT_NAME,

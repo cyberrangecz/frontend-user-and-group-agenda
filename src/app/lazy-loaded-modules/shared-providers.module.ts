@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
-import {
-  UserAndGroupErrorHandler,
-  UserAndGroupNotificationService,
-} from '../../../projects/kypo-user-and-group-agenda/src/public_api';
 import { ClientErrorHandlerService } from '../services/client-error-handler.service';
 import { ClientNotificationService } from '../services/client-notification.service';
+import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from 'kypo-user-and-group-agenda';
 
 @NgModule({
   providers: [

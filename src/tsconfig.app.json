@@ -3,7 +3,15 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "types": []
+    "types": [],
+    "paths": {
+      "kypo-user-and-group-agenda": [
+        "./../dist/kypo-user-and-group-agenda"
+      ],
+      "kypo-user-and-group-agenda/*": [
+        "./../dist/kypo-user-and-group-agenda/*"
+      ]
+    }
   },
   "files": [
     "main.ts",

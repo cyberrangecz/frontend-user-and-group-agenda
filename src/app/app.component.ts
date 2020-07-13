@@ -56,7 +56,11 @@ export class AppComponent {
     const roles = user.roles;
     if (roles.some((role) => role.roleType === 'ROLE_USER_AND_GROUP_ADMINISTRATOR')) {
       agendas.push(
-        ...[new Agenda('User', 'user'), new Agenda('Group', 'group'), new Agenda('Microservice', 'microservice')]
+        ...[
+          new Agenda('User', 'user'),
+          new Agenda('Group', 'group'),
+          new Agenda('Microservice', 'microservice-registration'),
+        ]
       );
     }
     if (agendas.length > 0) {

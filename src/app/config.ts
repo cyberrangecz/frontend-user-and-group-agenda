@@ -1,9 +1,9 @@
 import { KypoUserAndGroupApiConfig } from 'kypo-user-and-group-api';
-import { UserAndGroupAgendaConfig } from '../../projects/kypo-user-and-group-agenda/src/public_api';
 import { environment } from '../environments/environment';
+import { UserAndGroupAgendaConfig } from 'kypo-user-and-group-agenda';
 
 /**
- * Example config of user and group library
+ * Example config of user and group-overview library
  */
 export const agendaConfig: UserAndGroupAgendaConfig = {
   defaultPaginationSize: environment.defaultPaginationSize,

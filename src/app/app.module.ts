@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
 /**
- * Main module of the user and group example app
+ * Main module of the user and group-overview example app
  */
 @NgModule({
   declarations: [AppComponent, HomeComponent],

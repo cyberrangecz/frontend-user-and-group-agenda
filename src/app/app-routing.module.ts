@@ -27,7 +27,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'microservice',
+    path: 'microservice-registration',
     loadChildren: () =>
       import('./lazy-loaded-modules/microservice/new/microservice-new.module').then(
         (m) => m.MicroserviceNewModuleModule

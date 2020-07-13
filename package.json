@@ -12,6 +12,7 @@
     "build-lib": "ng build kypo-user-and-group-agenda --prod",
     "create-package": "cd dist/kypo-user-and-group-agenda && npm pack",
     "build-and-pack": "npm install && npm run build-lib && npm run create-package",
+    "bundle-report": "webpack-bundle-analyzer dist/user-and-group-management-example/stats.json",
     "ci-update-version": "cd ./projects/kypo-user-and-group-agenda/ && npm version $VERSION",
     "ci-build-and-pack": "npm ci --cache .npm --prefer-offline && npm run build-lib && npm run create-package",
     "ci-publish-package": "cd dist/kypo-user-and-group-agenda && npm publish"
@@ -36,7 +37,7 @@
     "@sentinel/common": "~10.0.0",
     "@sentinel/layout": "~10.0.0",
     "@sentinel/components": "~10.0.0",
-    "kypo2-auth": "~10.0.0",
+    "kypo2-auth": "~10.0.2",
     "kypo-user-and-group-model": "~10.0.0",
     "kypo-user-and-group-api": "~10.1.0",
     "angular-oauth2-oidc": "~10.0.0",
@@ -75,6 +76,7 @@
     "tslint": "~6.1.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.3.0",
-    "typescript": "~3.9.5"
+    "typescript": "~3.9.5",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }

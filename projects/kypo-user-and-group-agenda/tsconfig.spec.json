@@ -8,12 +8,12 @@
       "node"
     ],
     "paths": {
-      "kypo-user-and-group-agenda": ["./public_api.ts"],
-      "kypo-user-and-group-agenda/group-edit": ["../group-edit/src/public_api.ts"],
-      "kypo-user-and-group-agenda/group-overview": ["../group-overview/src/public_api.ts"],
-      "kypo-user-and-group-agenda/internal": ["../internal/src/public_api.ts"],
-      "kypo-user-and-group-agenda/microservice-registration": ["../microservice-registration/src/public_api.ts"],
-      "kypo-user-and-group-agenda/user-overview": ["../user-overview/src/public_api.ts"]
+      "kypo-user-and-group-agenda": [
+        "../src/public_api.ts"
+      ],
+      "kypo-user-and-group-agenda/*": [
+        "../*/src/public_api.ts"
+      ]
     }
   },
   "files": [

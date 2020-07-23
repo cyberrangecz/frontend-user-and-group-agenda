@@ -9,12 +9,14 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ngcc",
-    "build-lib": "ng build kypo-user-and-group-agenda --prod",
+    "ci-test": "ng test --browsers ChromeHeadless --watch=false",
+    "build-example-app": "ng build user-and-group-management-example --prod",
+    "build-library": "ng build kypo-user-and-group-agenda --prod",
     "create-package": "cd dist/kypo-user-and-group-agenda && npm pack",
-    "build-and-pack": "npm install && npm run build-lib && npm run create-package",
+    "build-and-pack": "npm install && npm run build-library && npm run create-package",
     "bundle-report": "webpack-bundle-analyzer dist/user-and-group-management-example/stats.json",
     "ci-update-version": "cd ./projects/kypo-user-and-group-agenda/ && npm version $VERSION",
-    "ci-build-and-pack": "npm ci --cache .npm --prefer-offline && npm run build-lib && npm run create-package",
+    "ci-build-and-pack": "npm ci --cache .npm --prefer-offline && npm run build-library && npm run create-package",
     "ci-publish-package": "cd dist/kypo-user-and-group-agenda && npm publish"
   },
   "husky": {

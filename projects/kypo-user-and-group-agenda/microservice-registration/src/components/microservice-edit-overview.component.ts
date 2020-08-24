@@ -78,7 +78,7 @@ export class MicroserviceEditOverviewComponent implements OnInit {
   create() {
     this.api.create(this.microservice).subscribe(
       (_) => {
-        this.router.navigate([this.navigator.toGroupOverview()]);
+        this.router.navigate([this.navigator.toMicroserviceOverview()]);
         this.notificationService.emit('success', 'Microservice was created');
         this.canDeactivateForm = true;
       },

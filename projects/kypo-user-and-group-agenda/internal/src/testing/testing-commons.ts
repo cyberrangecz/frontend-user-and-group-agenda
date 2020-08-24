@@ -2,7 +2,7 @@ import { MetadataOverride } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RequestedPagination } from '@sentinel/common';
-import { GroupApi, RoleApi, UserApi } from 'kypo-user-and-group-api';
+import { GroupApi, RoleApi, UserApi, MicroserviceApi } from 'kypo-user-and-group-api';
 import { UserAndGroupErrorHandler } from '../../../src/user-and-group-error-handler.service';
 import { UserAndGroupNavigator } from '../../../src/user-and-group-navigator.service';
 import { UserAndGroupNotificationService } from '../../../src/user-and-group-notification.service';
@@ -42,6 +42,10 @@ export function createRoleApiSpy(): jasmine.SpyObj<RoleApi> {
   return jasmine.createSpyObj('RoleApi', ['getAll']);
 }
 
+export function createMicroserviceApiSpy(): jasmine.SpyObj<MicroserviceApi> {
+  return jasmine.createSpyObj('MicroserviceApi', ['getAll', 'register']);
+}
+
 export function createRouterSpy(): jasmine.SpyObj<Router> {
   return jasmine.createSpyObj('Router', ['navigate']);
 }
@@ -64,6 +68,7 @@ export function createNavigatorSpy(): jasmine.SpyObj<UserAndGroupNavigator> {
     'toGroupEdit',
     'toGroupOverview',
     'toUserOverview',
+    'toNewMicroservice',
   ]);
 }
 

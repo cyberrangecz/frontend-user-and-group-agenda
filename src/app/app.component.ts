@@ -8,7 +8,7 @@ import { filter, map } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   activeUser$: Observable<User>;
@@ -56,11 +56,7 @@ export class AppComponent {
     const roles = user.roles;
     if (roles.some((role) => role.roleType === 'ROLE_USER_AND_GROUP_ADMINISTRATOR')) {
       agendas.push(
-        ...[
-          new Agenda('User', 'user'),
-          new Agenda('Group', 'group'),
-          new Agenda('Microservice', 'microservice-registration'),
-        ]
+        ...[new Agenda('User', 'user'), new Agenda('Group', 'group'), new Agenda('Microservice', 'microservice')]
       );
     }
     if (agendas.length > 0) {

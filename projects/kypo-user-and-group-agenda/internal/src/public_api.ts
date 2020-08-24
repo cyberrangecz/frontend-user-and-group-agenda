@@ -4,6 +4,8 @@ export * from './services/user-and-group-context.service';
 export * from './model/table/user-delete-action';
 export * from './model/controls/delete-control-item';
 export * from './model/controls/save-control-item';
+export * from './model/controls/register-control-item';
 export * from './model/filters/group-filter';
 export * from './model/filters/role-filter';
 export * from './model/filters/user-filter';
+export * from './model/filters/microservice-filter';

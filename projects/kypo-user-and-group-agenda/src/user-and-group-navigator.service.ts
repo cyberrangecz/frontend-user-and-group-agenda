@@ -25,6 +25,11 @@ export abstract class UserAndGroupNavigator {
   abstract toNewGroup(): string;
 
   /**
+   * Returns route to new microservice-overview page
+   */
+  abstract toMicroserviceOverview(): string;
+
+  /**
    * Returns route to new microservice-registration page
    */
   abstract toNewMicroservice(): string;

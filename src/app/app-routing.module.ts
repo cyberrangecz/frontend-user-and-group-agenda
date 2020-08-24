@@ -27,14 +27,14 @@ const routes: Routes = [
     },
   },
   {
-    path: 'microservice-registration',
+    path: 'microservice',
     loadChildren: () =>
-      import('./lazy-loaded-modules/microservice/new/microservice-new.module').then(
-        (m) => m.MicroserviceNewModuleModule
+      import('./lazy-loaded-modules/microservice/microservice-overview.module').then(
+        (m) => m.MicroserviceOverviewModule
       ),
     data: {
       breadcrumb: 'Microservice',
-      title: 'Register Microservice',
+      title: 'Microservice Overview',
     },
   },
   {

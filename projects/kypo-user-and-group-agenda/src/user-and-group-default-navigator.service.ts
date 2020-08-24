@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { GROUP_EDIT_PATH, GROUP_NEW_PATH, GROUP_PATH, MICROSERVICE_PATH, USER_PATH } from './default-paths';
+import {
+  GROUP_EDIT_PATH,
+  GROUP_NEW_PATH,
+  GROUP_PATH,
+  MICROSERVICE_PATH,
+  USER_PATH,
+  MICROSERVICE_NEW_PATH,
+} from './default-paths';
 import { UserAndGroupNavigator } from './user-and-group-navigator.service';
 
 /**
@@ -19,8 +26,12 @@ export class UserAndGroupDefaultNavigator extends UserAndGroupNavigator {
     return `${GROUP_PATH}/${GROUP_NEW_PATH}`;
   }
 
-  toNewMicroservice(): string {
+  toMicroserviceOverview(): string {
     return MICROSERVICE_PATH;
+  }
+
+  toNewMicroservice(): string {
+    return `${MICROSERVICE_PATH}/${MICROSERVICE_NEW_PATH}`;
   }
 
   toUserOverview(): string {

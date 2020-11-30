@@ -4,7 +4,7 @@ import { Column, SentinelTable, Row } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { UserDetailComponent } from '../components/detail/user-detail.component';
 import { UserOverviewService } from '../services/overview/user-overview.service';
-import { UserDeleteAction } from 'kypo-user-and-group-agenda/internal';
+import { UserDeleteAction } from '@kypo/user-and-group-agenda/internal';
 import { UserTableExpand } from './user-table-expand';
 
 /**

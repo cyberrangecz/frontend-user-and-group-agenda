@@ -5,8 +5,8 @@ import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
 import { defer, Observable } from 'rxjs';
 import { take, takeWhile, tap } from 'rxjs/operators';
-import { GROUP_DATA_ATTRIBUTE_NAME } from 'kypo-user-and-group-agenda';
-import { SaveControlItem } from 'kypo-user-and-group-agenda/internal';
+import { GROUP_DATA_ATTRIBUTE_NAME } from '@kypo/user-and-group-agenda';
+import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
 

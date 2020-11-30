@@ -5,8 +5,8 @@ import { GroupApi } from 'kypo-user-and-group-api';
 import { UserRole } from 'kypo-user-and-group-model';
 import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { RoleFilter } from 'kypo-user-and-group-agenda/internal';
-import { UserAndGroupErrorHandler } from 'kypo-user-and-group-agenda';
+import { RoleFilter } from '@kypo/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler } from '@kypo/user-and-group-agenda';
 import { RoleAssignService } from './role-assign.service';
 
 /**

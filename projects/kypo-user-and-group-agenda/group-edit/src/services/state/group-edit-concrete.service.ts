@@ -8,7 +8,7 @@ import {
   UserAndGroupNotificationService,
   UserAndGroupNavigator,
   UserAndGroupErrorHandler,
-} from 'kypo-user-and-group-agenda';
+} from '@kypo/user-and-group-agenda';
 import { GroupEditService } from './group-edit.service';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 

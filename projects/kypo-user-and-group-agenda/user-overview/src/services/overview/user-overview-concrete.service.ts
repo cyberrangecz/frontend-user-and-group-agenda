@@ -10,8 +10,8 @@ import { UserApi } from 'kypo-user-and-group-api';
 import { User } from 'kypo-user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { UserFilter, UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
-import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from 'kypo-user-and-group-agenda';
+import { UserFilter, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@kypo/user-and-group-agenda';
 import { UserOverviewService } from './user-overview.service';
 
 /**

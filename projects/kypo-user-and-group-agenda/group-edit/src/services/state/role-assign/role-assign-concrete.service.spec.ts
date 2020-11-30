@@ -4,14 +4,14 @@ import { GroupApi, RoleApi } from 'kypo-user-and-group-api';
 import { UserRole } from 'kypo-user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
-import { RoleFilter } from 'kypo-user-and-group-agenda/internal';
+import { RoleFilter } from '@kypo/user-and-group-agenda/internal';
 import {
   createErrorHandlerSpy,
   createGroupApiSpy,
   createPagination,
   createRoleApiSpy,
 } from '../../../../../internal/src/testing/testing-commons';
-import { UserAndGroupErrorHandler } from 'kypo-user-and-group-agenda';
+import { UserAndGroupErrorHandler } from '@kypo/user-and-group-agenda';
 import { RoleAssignConcreteService } from './role-assign-concrete.service';
 import { RoleAssignService } from './role-assign.service';
 

@@ -9,7 +9,7 @@ import {
   UserAndGroupNavigator,
   UserAndGroupDefaultNavigator,
   UserAndGroupAgendaConfig,
-} from 'kypo-user-and-group-agenda';
+} from '@kypo/user-and-group-agenda';
 import { GroupEditConcreteService } from '../services/state/group-edit-concrete.service';
 import { GroupEditService } from '../services/state/group-edit.service';
 import { RoleAssignConcreteService } from '../services/state/role-assign/role-assign-concrete.service';

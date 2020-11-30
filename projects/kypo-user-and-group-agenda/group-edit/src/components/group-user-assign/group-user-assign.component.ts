@@ -17,7 +17,7 @@ import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-s
 import { combineLatest, defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupMemberTable } from '../../model/table/group-member-table';
-import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
+import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';
 
 /**

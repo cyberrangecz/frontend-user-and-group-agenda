@@ -6,7 +6,7 @@ import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/compo
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { UserTable } from '../model/user-table';
-import { UserAndGroupContext, DeleteControlItem } from 'kypo-user-and-group-agenda/internal';
+import { UserAndGroupContext, DeleteControlItem } from '@kypo/user-and-group-agenda/internal';
 import { UserOverviewService } from '../services/overview/user-overview.service';
 
 /**

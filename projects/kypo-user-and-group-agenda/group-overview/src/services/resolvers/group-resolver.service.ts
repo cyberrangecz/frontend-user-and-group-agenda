@@ -10,7 +10,7 @@ import {
   GROUP_SELECTOR,
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
-} from 'kypo-user-and-group-agenda';
+} from '@kypo/user-and-group-agenda';
 
 /**
  * Example resolver for user and group-overview state component

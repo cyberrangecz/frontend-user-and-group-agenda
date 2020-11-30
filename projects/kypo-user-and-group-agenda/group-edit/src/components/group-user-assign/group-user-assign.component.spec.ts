@@ -7,11 +7,11 @@ import { Group, User } from 'kypo-user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
-import { UserDeleteAction } from 'kypo-user-and-group-agenda/internal';
-import { DeleteControlItem } from 'kypo-user-and-group-agenda/internal';
-import { SaveControlItem } from 'kypo-user-and-group-agenda/internal';
-import { UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
-import { UserAssignService } from 'kypo-user-and-group-agenda/group-edit';
+import { UserDeleteAction } from '@kypo/user-and-group-agenda/internal';
+import { DeleteControlItem } from '@kypo/user-and-group-agenda/internal';
+import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
+import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
+import { UserAssignService } from '@kypo/user-and-group-agenda/group-edit';
 import {
   createContextSpy,
   createSentinelControlsOverride,

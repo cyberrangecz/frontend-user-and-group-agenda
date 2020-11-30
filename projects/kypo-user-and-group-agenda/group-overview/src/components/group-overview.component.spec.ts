@@ -7,10 +7,10 @@ import { Group } from 'kypo-user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DeleteControlItem } from 'kypo-user-and-group-agenda/internal';
-import { SaveControlItem } from 'kypo-user-and-group-agenda/internal';
+import { DeleteControlItem } from '@kypo/user-and-group-agenda/internal';
+import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
-import { UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
+import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createSentinelControlsOverride,

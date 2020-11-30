@@ -6,7 +6,7 @@ import {
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
   UserAndGroupNotificationService,
-} from 'kypo-user-and-group-agenda';
+} from '@kypo/user-and-group-agenda';
 
 /**
  * Main smart component of microservice-registration state page

@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group } from 'kypo-user-and-group-model';
 import { BehaviorSubject, of } from 'rxjs';
-import { SaveControlItem } from 'kypo-user-and-group-agenda/internal';
+import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
 import { createSentinelControlsOverride } from '../../../internal/src/testing/testing-commons';

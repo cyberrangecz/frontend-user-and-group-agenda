@@ -15,8 +15,8 @@ import {
   UserAndGroupNotificationService,
   UserAndGroupNavigator,
   UserAndGroupErrorHandler,
-} from 'kypo-user-and-group-agenda';
-import { UserAndGroupContext, GroupFilter } from 'kypo-user-and-group-agenda/internal';
+} from '@kypo/user-and-group-agenda';
+import { UserAndGroupContext, GroupFilter } from '@kypo/user-and-group-agenda/internal';
 import { GroupOverviewService } from './group-overview.service';
 
 /**

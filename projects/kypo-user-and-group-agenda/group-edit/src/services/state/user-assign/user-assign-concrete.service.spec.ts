@@ -4,8 +4,8 @@ import { GroupApi, UserApi } from 'kypo-user-and-group-api';
 import { Group, User } from 'kypo-user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
-import { GroupFilter } from 'kypo-user-and-group-agenda/internal';
-import { UserFilter } from 'kypo-user-and-group-agenda/internal';
+import { GroupFilter } from '@kypo/user-and-group-agenda/internal';
+import { UserFilter } from '@kypo/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createErrorHandlerSpy,
@@ -13,8 +13,8 @@ import {
   createPagination,
   createUserApiSpy,
 } from '../../../../../internal/src/testing/testing-commons';
-import { UserAndGroupErrorHandler } from 'kypo-user-and-group-agenda';
-import { UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler } from '@kypo/user-and-group-agenda';
+import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import { UserAssignConcreteService } from './user-assign-concrete.service';
 import { UserAssignService } from './user-assign.service';
 

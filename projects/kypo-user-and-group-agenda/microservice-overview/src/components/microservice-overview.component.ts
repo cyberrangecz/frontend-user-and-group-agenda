@@ -1,4 +1,4 @@
-import { RegisterControlItem, UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
+import { RegisterControlItem, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
 import { Microservice } from 'kypo-user-and-group-model';

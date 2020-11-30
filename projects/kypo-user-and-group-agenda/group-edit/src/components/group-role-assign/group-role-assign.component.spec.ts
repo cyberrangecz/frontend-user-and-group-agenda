@@ -8,10 +8,10 @@ import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@senti
 import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
 import { RoleDeleteAction } from '../../model/table/role-delete-action';
-import { DeleteControlItem } from 'kypo-user-and-group-agenda/internal';
-import { SaveControlItem } from 'kypo-user-and-group-agenda/internal';
-import { RoleAssignService } from 'kypo-user-and-group-agenda/group-edit';
-import { UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
+import { DeleteControlItem } from '@kypo/user-and-group-agenda/internal';
+import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
+import { RoleAssignService } from '@kypo/user-and-group-agenda/group-edit';
+import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createSentinelControlsOverride,

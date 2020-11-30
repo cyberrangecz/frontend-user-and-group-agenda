@@ -12,9 +12,9 @@ import {
   createNotificationSpy,
   createRouterSpy,
 } from '../../../../internal/src/testing/testing-commons';
-import { UserAndGroupErrorHandler } from 'kypo-user-and-group-agenda';
-import { UserAndGroupNavigator } from 'kypo-user-and-group-agenda';
-import { UserAndGroupNotificationService } from 'kypo-user-and-group-agenda';
+import { UserAndGroupErrorHandler } from '@kypo/user-and-group-agenda';
+import { UserAndGroupNavigator } from '@kypo/user-and-group-agenda';
+import { UserAndGroupNotificationService } from '@kypo/user-and-group-agenda';
 import { GroupEditConcreteService } from './group-edit-concrete.service';
 import { GroupEditService } from './group-edit.service';
 

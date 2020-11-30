@@ -5,8 +5,8 @@ import {
   UserAndGroupAgendaConfig,
   UserAndGroupNavigator,
   UserAndGroupDefaultNavigator,
-} from 'kypo-user-and-group-agenda';
-import { InternalSharedModule } from 'kypo-user-and-group-agenda/internal';
+} from '@kypo/user-and-group-agenda';
+import { InternalSharedModule } from '@kypo/user-and-group-agenda/internal';
 import { MicroserviceEditCanDeactivate } from '../services/microservice-edit-can-deactivate.service';
 import { MicroserviceEditControlsComponent } from './microservice-edit-controls/microservice-edit-controls.component';
 import { MicroserviceEditMaterialModule } from './microservice-edit-material.module';

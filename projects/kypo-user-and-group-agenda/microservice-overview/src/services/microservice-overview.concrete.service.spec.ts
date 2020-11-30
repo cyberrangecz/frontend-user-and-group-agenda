@@ -1,5 +1,5 @@
 import { take, skip } from 'rxjs/operators';
-import { MicroserviceFilter } from 'kypo-user-and-group-agenda/internal';
+import { MicroserviceFilter } from '@kypo/user-and-group-agenda/internal';
 import { Microservice } from 'kypo-user-and-group-model';
 import { PaginatedResource, SentinelPagination } from '@sentinel/common';
 import { of, throwError } from 'rxjs';
@@ -9,7 +9,7 @@ import {
   UserAndGroupNotificationService,
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
-} from 'kypo-user-and-group-agenda';
+} from '@kypo/user-and-group-agenda';
 import { Router } from '@angular/router';
 import { MicroserviceApi } from 'kypo-user-and-group-api';
 import { TestBed, inject } from '@angular/core/testing';

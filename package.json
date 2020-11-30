@@ -1,5 +1,5 @@
 {
-  "name": "user-and-group-management-example",
+  "name": "@kypo/user-and-group-agenda",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

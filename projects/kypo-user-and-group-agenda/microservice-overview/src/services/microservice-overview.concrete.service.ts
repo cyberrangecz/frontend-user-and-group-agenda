@@ -1,5 +1,5 @@
-import { MicroserviceFilter } from 'kypo-user-and-group-agenda/internal';
-import { UserAndGroupContext } from 'kypo-user-and-group-agenda/internal';
+import { MicroserviceFilter } from '@kypo/user-and-group-agenda/internal';
+import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import { Injectable } from '@angular/core';
 import { MicroserviceOverviewService } from './microservice-overview.service';
 import { RequestedPagination, PaginatedResource } from '@sentinel/common';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Microservice } from 'kypo-user-and-group-model';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserAndGroupNavigator, UserAndGroupErrorHandler } from 'kypo-user-and-group-agenda';
+import { UserAndGroupNavigator, UserAndGroupErrorHandler } from '@kypo/user-and-group-agenda';
 
 @Injectable()
 export class MicroserviceOverviewConcreteService extends MicroserviceOverviewService {

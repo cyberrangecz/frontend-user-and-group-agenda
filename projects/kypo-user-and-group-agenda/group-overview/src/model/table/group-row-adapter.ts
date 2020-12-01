@@ -1,4 +1,4 @@
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 
 /**
  * Adapter class for group-overview table

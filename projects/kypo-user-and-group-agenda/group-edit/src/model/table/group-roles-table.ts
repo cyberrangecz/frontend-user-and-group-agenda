@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common';
-import { UserRole } from 'kypo-user-and-group-model';
+import { UserRole } from '@kypo/user-and-group-model';
 import { Column, SentinelTable, Row } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';

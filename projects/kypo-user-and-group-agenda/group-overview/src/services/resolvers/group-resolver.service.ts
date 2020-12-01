@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { GroupApi } from 'kypo-user-and-group-api';
-import { Group } from 'kypo-user-and-group-model';
+import { GroupApi } from '@kypo/user-and-group-api';
+import { Group } from '@kypo/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupEditComponent } from './group-edit.component';

@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { User } from 'kypo-user-and-group-model';
-import { Group } from 'kypo-user-and-group-model';
+import { User } from '@kypo/user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { combineLatest, defer, Observable } from 'rxjs';

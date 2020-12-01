@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { User } from 'kypo-user-and-group-model';
+import { User } from '@kypo/user-and-group-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';

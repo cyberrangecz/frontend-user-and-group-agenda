@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 
 /**
  * Form control class for state group-overview componnet

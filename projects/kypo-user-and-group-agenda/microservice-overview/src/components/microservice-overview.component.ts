@@ -1,7 +1,7 @@
 import { RegisterControlItem, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
-import { Microservice } from 'kypo-user-and-group-model';
+import { Microservice } from '@kypo/user-and-group-model';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, defer, of } from 'rxjs';

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { BehaviorSubject, of } from 'rxjs';
 import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';

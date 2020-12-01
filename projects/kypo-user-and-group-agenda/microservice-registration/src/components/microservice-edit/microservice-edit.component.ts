@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { Microservice } from 'kypo-user-and-group-model';
+import { Microservice } from '@kypo/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRolesState } from '../../model/microservice-roles-state';
 import { MicroserviceEditFormGroup } from './microservice-edit-form-group';

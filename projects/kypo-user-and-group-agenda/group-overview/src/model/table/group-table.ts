@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { Column, SentinelTable, Row, RowAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { GroupOverviewService } from '../../services/group-overview.service';

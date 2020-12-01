@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { PaginatedResource, SentinelPagination } from '@sentinel/common';
-import { GroupApi, UserApi } from 'kypo-user-and-group-api';
-import { Group, User } from 'kypo-user-and-group-model';
+import { GroupApi, UserApi } from '@kypo/user-and-group-api';
+import { Group, User } from '@kypo/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
 import { GroupFilter } from '@kypo/user-and-group-agenda/internal';

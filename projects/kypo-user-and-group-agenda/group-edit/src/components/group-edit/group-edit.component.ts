@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 import { GroupEditFormGroup } from './group-edit-form-group';

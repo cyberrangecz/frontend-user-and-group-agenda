@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '@kypo/user-and-group-agenda';

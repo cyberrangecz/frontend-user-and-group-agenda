@@ -7,8 +7,8 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { GroupApi } from 'kypo-user-and-group-api';
-import { Group } from 'kypo-user-and-group-model';
+import { GroupApi } from '@kypo/user-and-group-api';
+import { Group } from '@kypo/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import {

@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common';
-import { User } from 'kypo-user-and-group-model';
+import { User } from '@kypo/user-and-group-model';
 import { Column, SentinelTable, Row } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';

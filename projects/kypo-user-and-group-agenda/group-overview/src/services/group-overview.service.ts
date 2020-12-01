@@ -1,5 +1,5 @@
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { Observable } from 'rxjs';
 import { SelectablePaginatedService } from '@kypo/user-and-group-agenda/internal';
 

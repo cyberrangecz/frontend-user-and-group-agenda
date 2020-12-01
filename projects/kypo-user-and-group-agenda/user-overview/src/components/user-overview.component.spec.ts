@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { User } from 'kypo-user-and-group-model';
+import { User } from '@kypo/user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';

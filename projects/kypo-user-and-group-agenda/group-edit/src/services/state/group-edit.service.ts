@@ -1,4 +1,4 @@
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { Observable } from 'rxjs';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 

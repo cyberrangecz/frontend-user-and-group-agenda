@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { RequestedPagination, SentinelPagination, PaginatedResource } from '@sentinel/common';
-import { UserApi } from 'kypo-user-and-group-api';
-import { GroupApi } from 'kypo-user-and-group-api';
-import { User } from 'kypo-user-and-group-model';
-import { Group } from 'kypo-user-and-group-model';
+import { UserApi } from '@kypo/user-and-group-api';
+import { GroupApi } from '@kypo/user-and-group-api';
+import { User } from '@kypo/user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { GroupFilter, UserFilter, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';

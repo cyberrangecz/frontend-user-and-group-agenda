@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { User } from 'kypo-user-and-group-model';
+import { User } from '@kypo/user-and-group-model';
 
 /**
  * User detail component displayed in expanded row of a table component.

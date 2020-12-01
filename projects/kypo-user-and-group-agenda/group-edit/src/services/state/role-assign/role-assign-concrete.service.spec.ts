@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { PaginatedResource, SentinelPagination } from '@sentinel/common';
-import { GroupApi, RoleApi } from 'kypo-user-and-group-api';
-import { UserRole } from 'kypo-user-and-group-model';
+import { GroupApi, RoleApi } from '@kypo/user-and-group-api';
+import { UserRole } from '@kypo/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
 import { RoleFilter } from '@kypo/user-and-group-agenda/internal';

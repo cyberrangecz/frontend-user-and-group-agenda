@@ -1,4 +1,4 @@
-import { KypoUserAndGroupApiConfig } from 'kypo-user-and-group-api';
+import { KypoUserAndGroupApiConfig } from '@kypo/user-and-group-api';
 import { environment } from '../environments/environment';
 import { UserAndGroupAgendaConfig } from '@kypo/user-and-group-agenda';
 

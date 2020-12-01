@@ -1,7 +1,7 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { User, UserRole } from 'kypo-user-and-group-model';
+import { User, UserRole } from '@kypo/user-and-group-model';
 import { UserMaterialModule } from '../user-material.module';
 import { UserDetailComponent } from './user-detail.component';
 

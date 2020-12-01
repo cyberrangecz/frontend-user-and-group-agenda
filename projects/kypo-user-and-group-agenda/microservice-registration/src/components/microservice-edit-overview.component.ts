@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MicroserviceApi } from 'kypo-user-and-group-api';
-import { Microservice } from 'kypo-user-and-group-model';
+import { MicroserviceApi } from '@kypo/user-and-group-api';
+import { Microservice } from '@kypo/user-and-group-model';
 import {
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,

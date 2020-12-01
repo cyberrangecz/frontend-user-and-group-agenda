@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { GroupApi } from 'kypo-user-and-group-api';
-import { Group } from 'kypo-user-and-group-model';
+import { GroupApi } from '@kypo/user-and-group-api';
+import { Group } from '@kypo/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/group-changed-event';

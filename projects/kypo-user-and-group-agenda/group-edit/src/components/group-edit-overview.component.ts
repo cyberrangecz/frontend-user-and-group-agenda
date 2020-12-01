@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Group } from 'kypo-user-and-group-model';
+import { Group } from '@kypo/user-and-group-model';
 import { defer, Observable } from 'rxjs';
 import { take, takeWhile, tap } from 'rxjs/operators';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '@kypo/user-and-group-agenda';

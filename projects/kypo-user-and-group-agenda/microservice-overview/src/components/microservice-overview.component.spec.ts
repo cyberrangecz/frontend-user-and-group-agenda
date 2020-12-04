@@ -21,7 +21,7 @@ import {
   createSentinelControlsOverride,
   createContextSpy,
 } from '../../../internal/src/testing/testing-commons';
-import { Microservice } from '@kypo/user-and-group-model';
+import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { RegisterControlItem } from '../../../internal/src/model/controls/register-control-item';
 
 describe('MicroserviceOverviewComponent', () => {

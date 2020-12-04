@@ -1,7 +1,7 @@
 import { SentinelTable, Column, Row } from '@sentinel/components/table';
 import { PaginatedResource } from '@sentinel/common';
 import { MicroserviceOverviewService } from '../../services/microservice-overview.service';
-import { Microservice } from '@kypo/user-and-group-model';
+import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 
 /**
  * @dynamic

@@ -3,15 +3,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PaginatedResource, SentinelPagination } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { Group, UserRole } from '@kypo/user-and-group-model';
+import { Group, UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
 import { RoleDeleteAction } from '../../model/table/role-delete-action';
-import { DeleteControlItem } from '@kypo/user-and-group-agenda/internal';
-import { SaveControlItem } from '@kypo/user-and-group-agenda/internal';
-import { RoleAssignService } from '@kypo/user-and-group-agenda/group-edit';
-import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
+import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { RoleAssignService } from '@muni-kypo-crp/user-and-group-agenda/group-edit';
+import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createSentinelControlsOverride,

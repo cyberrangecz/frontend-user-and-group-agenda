@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { MicroserviceRole } from '@kypo/user-and-group-model';
+import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
 import { MicroserviceRoleItem } from '../../model/microservice-role-item';
 import { MicroserviceRolesState } from '../../model/microservice-roles-state';
 

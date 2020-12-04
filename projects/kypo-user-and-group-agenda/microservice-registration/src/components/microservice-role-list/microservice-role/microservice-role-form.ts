@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MicroserviceRole } from '@kypo/user-and-group-model';
+import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
 
 /**
  * Form control of microservice-registration state form

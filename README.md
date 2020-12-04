@@ -27,12 +27,12 @@ To use the library you need to have installed:
 
 To use the user and group management in your Angular application follow these steps:
 
-1. Run `npm install @kypo/user-and-group-agenda`
+1. Run `npm install @muni-kypo-crp/user-and-group-agenda`
 1. Install all peer dependencies
 1. Create config class extending `UserAndGroupAgendaConfig` from the library. Config contains following options:
     + defaultPaginationSize
 1. Import specific modules containing components (for example `UserComponentsModule`) and provide config through `.forRoot()` method.
-1. If you do not override the services, you will also need to provide API service. See [@kypo/user-and-group-api library](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-user-and-group-api).
+1. If you do not override the services, you will also need to provide API service. See [@muni-kypo-crp/user-and-group-api library](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-user-and-group-api).
 1. You need to provide implementation of abstract services `ClientErrorHandlerService` and `ClientNotificationService` for error handling and notification displaying.
 1. Optionally, you can override `UserAndGroupNavigator` service to provide custom navigation if you do not want to use default routes.
 1. Optionally, cou can override and provide own implementation of services

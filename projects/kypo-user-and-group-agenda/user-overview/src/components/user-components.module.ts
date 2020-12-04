@@ -8,10 +8,10 @@ import {
   UserAndGroupNavigator,
   UserAndGroupDefaultNavigator,
   UserAndGroupAgendaConfig,
-} from '@kypo/user-and-group-agenda';
+} from '@muni-kypo-crp/user-and-group-agenda';
 import { UserOverviewConcreteService } from '../services/overview/user-overview-concrete.service';
 import { UserOverviewService } from '../services/overview/user-overview.service';
-import { InternalSharedModule } from '@kypo/user-and-group-agenda/internal';
+import { InternalSharedModule } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserDetailComponent } from './detail/user-detail.component';
 import { UserOverviewComponent } from './user-overview.component';
 import { UserMaterialModule } from './user-material.module';

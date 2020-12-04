@@ -10,14 +10,14 @@ import {
 } from '@angular/core';
 import { SentinelBaseDirective, RequestedPagination, PaginatedResource } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Group } from '@kypo/user-and-group-model';
-import { UserRole } from '@kypo/user-and-group-model';
+import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupRolesTable } from '../../model/table/group-roles-table';
-import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
+import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';
 
 /**

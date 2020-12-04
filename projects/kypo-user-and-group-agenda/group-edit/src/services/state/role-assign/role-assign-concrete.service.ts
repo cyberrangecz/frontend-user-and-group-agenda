@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { SentinelFilter, SentinelPagination, RequestedPagination, PaginatedResource } from '@sentinel/common';
-import { RoleApi } from '@kypo/user-and-group-api';
-import { GroupApi } from '@kypo/user-and-group-api';
-import { UserRole } from '@kypo/user-and-group-model';
+import { RoleApi } from '@muni-kypo-crp/user-and-group-api';
+import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
+import { UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { RoleFilter } from '@kypo/user-and-group-agenda/internal';
-import { UserAndGroupErrorHandler } from '@kypo/user-and-group-agenda';
+import { RoleFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { RoleAssignService } from './role-assign.service';
 
 /**

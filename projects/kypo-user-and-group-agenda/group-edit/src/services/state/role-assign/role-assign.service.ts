@@ -1,5 +1,5 @@
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { UserRole } from '@kypo/user-and-group-model';
+import { UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**

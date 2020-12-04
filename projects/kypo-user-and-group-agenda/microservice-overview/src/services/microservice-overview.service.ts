@@ -1,5 +1,5 @@
-import { SelectablePaginatedService } from '@kypo/user-and-group-agenda/internal';
-import { Microservice } from '@kypo/user-and-group-model';
+import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { RequestedPagination, PaginatedResource } from '@sentinel/common';
 import { Observable } from 'rxjs';
 

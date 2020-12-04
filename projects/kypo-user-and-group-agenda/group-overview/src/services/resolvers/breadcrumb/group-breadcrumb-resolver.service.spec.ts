@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, ParamMap, RouterStateSnapshot } from '@angular/router';
-import { Group } from '@kypo/user-and-group-model';
+import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { Observable, of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { GROUP_EDIT_PATH, GROUP_NEW_PATH } from '../../../../../src/default-paths';

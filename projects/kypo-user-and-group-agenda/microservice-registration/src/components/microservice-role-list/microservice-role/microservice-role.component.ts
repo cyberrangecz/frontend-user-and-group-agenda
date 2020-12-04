@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { MicroserviceRole } from '@kypo/user-and-group-model';
+import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRoleItem } from '../../../model/microservice-role-item';
 import { MicroserviceRoleForm } from './microservice-role-form';

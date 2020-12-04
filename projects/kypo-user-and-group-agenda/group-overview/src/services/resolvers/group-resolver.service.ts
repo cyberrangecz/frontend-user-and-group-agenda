@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { GroupApi } from '@kypo/user-and-group-api';
-import { Group } from '@kypo/user-and-group-model';
+import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
+import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
@@ -10,7 +10,7 @@ import {
   GROUP_SELECTOR,
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
-} from '@kypo/user-and-group-agenda';
+} from '@muni-kypo-crp/user-and-group-agenda';
 
 /**
  * Example resolver for user and group-overview state component

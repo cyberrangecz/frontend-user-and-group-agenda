@@ -3,13 +3,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { User } from '@kypo/user-and-group-model';
+import { User } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DeleteControlItem } from '@kypo/user-and-group-agenda/internal';
-import { UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
-import { UserOverviewService } from '@kypo/user-and-group-agenda/user-overview';
+import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserOverviewService } from '@muni-kypo-crp/user-and-group-agenda/user-overview';
 import {
   createContextSpy,
   createSentinelControlsOverride,

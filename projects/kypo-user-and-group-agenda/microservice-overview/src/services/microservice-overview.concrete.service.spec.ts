@@ -1,6 +1,6 @@
 import { take, skip } from 'rxjs/operators';
-import { MicroserviceFilter } from '@kypo/user-and-group-agenda/internal';
-import { Microservice } from '@kypo/user-and-group-model';
+import { MicroserviceFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { PaginatedResource, SentinelPagination } from '@sentinel/common';
 import { of, throwError } from 'rxjs';
 import { MicroserviceOverviewConcreteService } from './microservice-overview.concrete.service';
@@ -9,9 +9,9 @@ import {
   UserAndGroupNotificationService,
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
-} from '@kypo/user-and-group-agenda';
+} from '@muni-kypo-crp/user-and-group-agenda';
 import { Router } from '@angular/router';
-import { MicroserviceApi } from '@kypo/user-and-group-api';
+import { MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
 import { TestBed, inject } from '@angular/core/testing';
 import { MicroserviceOverviewService } from './microservice-overview.service';
 import {

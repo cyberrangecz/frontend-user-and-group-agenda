@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Group } from '@kypo/user-and-group-model';
+import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupTable } from '../model/table/group-table';
-import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@kypo/user-and-group-agenda/internal';
+import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
 
 /**

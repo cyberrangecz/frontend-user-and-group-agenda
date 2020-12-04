@@ -1,10 +1,10 @@
 import { PaginatedResource } from '@sentinel/common';
-import { User } from '@kypo/user-and-group-model';
+import { User } from '@muni-kypo-crp/user-and-group-model';
 import { Column, SentinelTable, Row } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { UserDetailComponent } from '../components/detail/user-detail.component';
 import { UserOverviewService } from '../services/overview/user-overview.service';
-import { UserDeleteAction } from '@kypo/user-and-group-agenda/internal';
+import { UserDeleteAction } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserTableExpand } from './user-table-expand';
 
 /**

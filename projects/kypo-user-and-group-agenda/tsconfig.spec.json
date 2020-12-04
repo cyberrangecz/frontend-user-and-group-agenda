@@ -8,10 +8,10 @@
       "node"
     ],
     "paths": {
-      "@kypo/user-and-group-agenda": [
+      "@muni-kypo-crp/user-and-group-agenda": [
         "../src/public_api.ts"
       ],
-      "@kypo/user-and-group-agenda/*": [
+      "@muni-kypo-crp/user-and-group-agenda/*": [
         "../*/src/public_api.ts"
       ]
     }

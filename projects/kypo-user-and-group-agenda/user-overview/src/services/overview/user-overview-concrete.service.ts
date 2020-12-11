@@ -91,7 +91,7 @@ export class UserOverviewConcreteService extends UserOverviewService {
     const ids = users.map((user) => user.id);
     return this.api.deleteMultiple(ids).pipe(
       tap(
-        (_) => {
+        () => {
           this.clearSelection();
           this.alertService.emit('success', 'Selected users were deleted');
         },
@@ -100,7 +100,7 @@ export class UserOverviewConcreteService extends UserOverviewService {
           this.hasErrorSubject$.next(true);
         }
       ),
-      switchMap((_) => this.getAll(this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
     );
   }
 }

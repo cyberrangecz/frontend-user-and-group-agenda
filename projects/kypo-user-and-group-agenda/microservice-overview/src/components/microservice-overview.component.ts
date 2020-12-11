@@ -35,7 +35,7 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(
         0,
@@ -45,14 +45,14 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
       )
     );
     this.microservices$ = this.microserviceService.resource$.pipe(
-      map((microservices) => new MicroserviceTable(microservices, this.microserviceService))
+      map((microservices) => new MicroserviceTable(microservices))
     );
     this.microservicesHasError$ = this.microserviceService.hasError$;
-    this.microserviceService.selected$.pipe(takeWhile((_) => this.isAlive)).subscribe(() => this.initControls());
+    this.microserviceService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.initControls());
     this.onLoadTableEvent(initialLoadEvent);
   }
 
-  onControlsAction(controlItem: SentinelControlItem) {
+  onControlsAction(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -60,10 +60,10 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
    * Clears selected microservices and calls service to get new data for microservices table
    * @param event event emitted from table component
    */
-  onLoadTableEvent(event: LoadTableEvent) {
+  onLoadTableEvent(event: LoadTableEvent): void {
     this.microserviceService
       .getAll(event.pagination, event.filter)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -71,7 +71,7 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
    * Resolves type of action call appropriate handler
    * @param event action event emitted by table component
    */
-  onTableAction(event: TableActionEvent<Microservice>) {
+  onTableAction(event: TableActionEvent<Microservice>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 

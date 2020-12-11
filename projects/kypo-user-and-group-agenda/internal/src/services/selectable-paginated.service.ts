@@ -9,11 +9,11 @@ export abstract class SelectablePaginatedService<T> extends PaginatedResourceSer
   protected selectedSubject$: BehaviorSubject<T[]> = new BehaviorSubject([]);
   selected$: Observable<T[]> = this.selectedSubject$.asObservable();
 
-  setSelection(selection: T[]) {
+  setSelection(selection: T[]): void {
     this.selectedSubject$.next(selection);
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.selectedSubject$.next([]);
   }
 }

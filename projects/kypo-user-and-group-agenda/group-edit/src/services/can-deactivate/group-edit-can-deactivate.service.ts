@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanDeactivate, UrlTree } from '@angular/router';
 import {
   SentinelConfirmationDialogComponent,
   SentinelConfirmationDialogConfig,
@@ -19,10 +19,7 @@ export class GroupEditCanDeactivate implements CanDeactivate<GroupEditOverviewCo
   constructor(private dialog: MatDialog) {}
 
   canDeactivate(
-    component: GroupEditOverviewComponent,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot
+    component: GroupEditOverviewComponent
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.canDeactivate()) {
       return true;

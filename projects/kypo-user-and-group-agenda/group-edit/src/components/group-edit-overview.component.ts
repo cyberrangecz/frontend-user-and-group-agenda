@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
@@ -16,7 +16,7 @@ import { GroupEditService } from '../services/state/group-edit.service';
   styleUrls: ['./group-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupEditOverviewComponent extends SentinelBaseDirective implements OnInit {
+export class GroupEditOverviewComponent extends SentinelBaseDirective {
   @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();
 
   group$: Observable<Group>;
@@ -31,11 +31,9 @@ export class GroupEditOverviewComponent extends SentinelBaseDirective implements
     this.group$ = this.editService.group$;
     this.editMode$ = this.editService.editMode$.pipe(tap((editMode) => this.initControls(editMode)));
     this.activeRoute.data
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe((data) => this.editService.set(data[GROUP_DATA_ATTRIBUTE_NAME]));
   }
-
-  ngOnInit() {}
 
   /**
    * Determines if all changes in sub components are saved and user can navigate to different component
@@ -44,20 +42,20 @@ export class GroupEditOverviewComponent extends SentinelBaseDirective implements
     return this.canDeactivateGroupEdit && this.canDeactivateMembers && this.canDeactivateRoles;
   }
 
-  onControlAction(controlItem: SentinelControlItem) {
+  onControlAction(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
-  onGroupChanged(groupEvent: GroupChangedEvent) {
+  onGroupChanged(groupEvent: GroupChangedEvent): void {
     this.canDeactivateGroupEdit = false;
     this.editService.change(groupEvent);
   }
 
-  onUnsavedMembersChange(hasUnsavedChanges: boolean) {
+  onUnsavedMembersChange(hasUnsavedChanges: boolean): void {
     this.canDeactivateMembers = !hasUnsavedChanges;
   }
 
-  onUnsavedRolesChange(hasUnsavedChanges: boolean) {
+  onUnsavedRolesChange(hasUnsavedChanges: boolean): void {
     this.canDeactivateRoles = !hasUnsavedChanges;
   }
 
@@ -65,7 +63,7 @@ export class GroupEditOverviewComponent extends SentinelBaseDirective implements
     const saveItem = new SaveControlItem(
       'Save',
       this.editService.saveDisabled$,
-      defer(() => this.editService.save().pipe(tap((_) => (this.canDeactivateGroupEdit = true))))
+      defer(() => this.editService.save().pipe(tap(() => (this.canDeactivateGroupEdit = true))))
     );
     if (isEditMode) {
       this.controls = [saveItem];
@@ -74,7 +72,7 @@ export class GroupEditOverviewComponent extends SentinelBaseDirective implements
       const saveAndStayItem = new SaveControlItem(
         'Create and continue editing',
         this.editService.saveDisabled$,
-        defer(() => this.editService.createAndEdit().pipe(tap((_) => (this.canDeactivateGroupEdit = true))))
+        defer(() => this.editService.createAndEdit().pipe(tap(() => (this.canDeactivateGroupEdit = true))))
       );
       saveAndStayItem.id = 'save_and_stay';
       this.controls = [saveItem, saveAndStayItem];

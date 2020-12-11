@@ -1,5 +1,5 @@
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 export class RegisterControlItem extends SentinelControlItem {
   static readonly ID = 'register  ';

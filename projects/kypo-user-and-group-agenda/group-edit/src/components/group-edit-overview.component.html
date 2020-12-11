@@ -1,4 +1,4 @@
-<mat-expansion-panel class="group-edit-panel" [expanded]="!(editMode$ | async)">
+<mat-expansion-panel class="group-edit-panel" [expanded]="(editMode$ | async) === false">
   <mat-expansion-panel-header>
     <mat-panel-title class="group-edit-title">
       <span *ngIf="(editMode$ | async) else newGroupTitle">Edit Group</span>
@@ -19,7 +19,7 @@
   </kypo-group-edit>
 </mat-expansion-panel>
 
-<mat-expansion-panel class="group-members-panel" [disabled]="!(editMode$ | async)" [expanded]="editMode$ | async">
+<mat-expansion-panel class="group-members-panel" [disabled]="(editMode$ | async) === false" [expanded]="editMode$ | async">
   <mat-expansion-panel-header>
     <mat-panel-title>Edit Members</mat-panel-title>
     <mat-panel-description>
@@ -36,7 +36,7 @@
   </kypo-group-user-assign>
 </mat-expansion-panel>
 
-<mat-expansion-panel class="group-roles-panel" [disabled]="!(editMode$ | async)" [expanded]="editMode$ | async">
+<mat-expansion-panel class="group-roles-panel" [disabled]="(editMode$ | async) === false" [expanded]="editMode$ | async">
   <mat-expansion-panel-header>
     <mat-panel-title>Edit Roles</mat-panel-title>
     <mat-panel-description>

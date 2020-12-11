@@ -68,7 +68,7 @@ describe('GroupResolver', () => {
         expect(groupApiSpy.get).toHaveBeenCalledTimes(1);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -86,8 +86,8 @@ describe('GroupResolver', () => {
 
     const resolvedGroup = resolver.resolve(routeSnapshot, routerState) as Observable<Group>;
     resolvedGroup.pipe(take(1)).subscribe(
-      (_) => fail(),
-      (_) => fail(),
+      () => fail(),
+      () => fail(),
       () => {
         expect(groupApiSpy.get).toHaveBeenCalledTimes(1);
         expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
@@ -111,8 +111,8 @@ describe('GroupResolver', () => {
 
     const resolvedGroup$ = resolver.resolve(routeSnapshot, routerState) as Observable<Group>;
     resolvedGroup$.pipe(take(1)).subscribe(
-      (_) => fail(),
-      (_) => fail(),
+      () => fail(),
+      () => fail(),
       () => {
         expect(groupApiSpy.get).toHaveBeenCalledTimes(1);
         expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
@@ -134,8 +134,8 @@ describe('GroupResolver', () => {
 
     const resolvedGroup$ = resolver.resolve(routeSnapshot, routerState) as Observable<Group>;
     resolvedGroup$.pipe(take(1)).subscribe(
-      (_) => fail(),
-      (_) => fail(),
+      () => fail(),
+      () => fail(),
       () => {
         expect(groupApiSpy.get).toHaveBeenCalledTimes(0);
         expect(routerSpy.navigate).toHaveBeenCalledTimes(1);

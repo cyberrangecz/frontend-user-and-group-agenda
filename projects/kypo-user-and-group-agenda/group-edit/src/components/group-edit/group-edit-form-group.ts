@@ -19,7 +19,7 @@ export class GroupEditFormGroup {
    * Sets values inserted to form inputs to group-overview object
    * @param group group-overview to be filled with form data
    */
-  setValuesToGroup(group: Group) {
+  setValuesToGroup(group: Group): void {
     group.name = this.formGroup.get('name').value;
     group.description = this.formGroup.get('description').value;
     group.expirationDate = this.formGroup.get('expirationDate').value;

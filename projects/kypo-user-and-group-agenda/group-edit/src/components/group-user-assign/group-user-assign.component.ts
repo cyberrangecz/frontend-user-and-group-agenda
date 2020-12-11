@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -29,7 +28,7 @@ import { UserAssignService } from '../../services/state/user-assign/user-assign.
   styleUrls: ['./group-user-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupUserAssignComponent extends SentinelBaseDirective implements OnInit, OnChanges {
+export class GroupUserAssignComponent extends SentinelBaseDirective implements OnChanges {
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
   readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -98,15 +97,13 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
     };
   }
 
-  ngOnInit(): void {}
-
   ngOnChanges(changes: SimpleChanges): void {
     if ('resource' in changes && this.resource && this.resource.id !== undefined) {
       this.init();
     }
   }
 
-  onControlAction(controlItem: SentinelControlItem) {
+  onControlAction(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -114,7 +111,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Changes internal state of the component when users to assign are selected
    * @param users selected users to assign
    */
-  onUserToAssignSelection(users: User[]) {
+  onUserToAssignSelection(users: User[]): void {
     this.userAssignService.setSelectedUsersToAssign(users);
   }
 
@@ -122,7 +119,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Changes internal state of the component when assigned users are selected in table component
    * @param users selected assigned users
    */
-  onAssignedUsersSelection(users: User[]) {
+  onAssignedUsersSelection(users: User[]): void {
     this.userAssignService.setSelectedAssignedUsers(users);
   }
 
@@ -130,7 +127,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Changes internal state of the component when groups to import are selected
    * @param groups selected groups to import
    */
-  onGroupToImportSelection(groups: Group[]) {
+  onGroupToImportSelection(groups: Group[]): void {
     this.userAssignService.setSelectedGroupsToImport(groups);
   }
 
@@ -138,7 +135,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Searches for users to assign
    * @param filterValue search value
    */
-  searchUsers(filterValue: string) {
+  searchUsers(filterValue: string): void {
     this.users$ = this.userAssignService
       .getUsersToAssign(this.resource.id, filterValue)
       .pipe(map((resource) => resource.elements));
@@ -148,7 +145,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Searches for groups to import
    * @param filterValue search value
    */
-  searchGroups(filterValue: string) {
+  searchGroups(filterValue: string): void {
     this.groups$ = this.userAssignService.getGroupsToImport(filterValue).pipe(map((resource) => resource.elements));
   }
 
@@ -156,7 +153,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Resolves type of action and calls appropriate handler
    * @param event action event emitted from assigned users table component
    */
-  onAssignedUsersTableAction(event: TableActionEvent<User>) {
+  onAssignedUsersTableAction(event: TableActionEvent<User>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
@@ -164,10 +161,10 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Calls service to get data for assigned users table
    * @param loadEvent event to load new data emitted by assigned users table component
    */
-  onAssignedLoadEvent(loadEvent: LoadTableEvent) {
+  onAssignedLoadEvent(loadEvent: LoadTableEvent): void {
     this.userAssignService
       .getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -182,12 +179,12 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
 
   private initUnsavedChangesEmitter() {
     combineLatest([this.userAssignService.selectedGroupsToImport$, this.userAssignService.selectedUsersToAssign$])
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe((selections) => this.hasUnsavedChanges.emit(selections.some((selection) => selection.length > 0)));
   }
 
   private initAssignedUsersControls() {
-    this.userAssignService.selectedAssignedUsers$.pipe(takeWhile((_) => this.isAlive)).subscribe((selection) => {
+    this.userAssignService.selectedAssignedUsers$.pipe(takeWhile(() => this.isAlive)).subscribe((selection) => {
       this.assignedUsersControls = [
         new DeleteControlItem(
           selection.length,

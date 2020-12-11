@@ -22,7 +22,7 @@ export class MicroserviceEditFormGroup {
    * Sets values inserted to form to microservice-registration object
    * @param microservice microservice-registration to be filled with values
    */
-  setValuesToMicroservice(microservice: Microservice) {
+  setValuesToMicroservice(microservice: Microservice): void {
     microservice.name = this.formGroup.get('name').value;
     microservice.endpoint = this.formGroup.get('endpoint').value;
     microservice.roles = this.formGroup.get('roles').value;

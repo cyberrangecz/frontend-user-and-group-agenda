@@ -55,7 +55,7 @@ describe('GroupEditConcreteService', () => {
         expect(editMode).toBeFalsy();
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.set(undefined);
   });
@@ -67,7 +67,7 @@ describe('GroupEditConcreteService', () => {
         expect(editMode).toBeTruthy();
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.set(group);
   });
@@ -80,7 +80,7 @@ describe('GroupEditConcreteService', () => {
         expect(emittedGroup).toEqual(group);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.set(group);
   });
@@ -96,7 +96,7 @@ describe('GroupEditConcreteService', () => {
         expect(saveDisabled).not.toEqual(isGroupValid);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.change(changeEvent);
   });
@@ -115,7 +115,7 @@ describe('GroupEditConcreteService', () => {
       .createAndEdit()
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(apiSpy.create).toHaveBeenCalledTimes(1);
           expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
           expect(routerSpy.navigate).toHaveBeenCalledWith([expectedRoute]);
@@ -124,7 +124,7 @@ describe('GroupEditConcreteService', () => {
           expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -141,14 +141,14 @@ describe('GroupEditConcreteService', () => {
       .save()
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(apiSpy.create).toHaveBeenCalledTimes(0);
           expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
           expect(apiSpy.update).toHaveBeenCalledTimes(1);
           expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -165,7 +165,7 @@ describe('GroupEditConcreteService', () => {
       .save()
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(apiSpy.update).toHaveBeenCalledTimes(0);
           expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
           expect(navigatorSpy.toGroupOverview).toHaveBeenCalledTimes(1);
@@ -173,7 +173,7 @@ describe('GroupEditConcreteService', () => {
           expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -186,7 +186,7 @@ describe('GroupEditConcreteService', () => {
       .save()
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
@@ -202,7 +202,7 @@ describe('GroupEditConcreteService', () => {
       .save()
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
@@ -218,7 +218,7 @@ describe('GroupEditConcreteService', () => {
       .createAndEdit()
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());

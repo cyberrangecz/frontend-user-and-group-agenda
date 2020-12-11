@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -29,7 +28,7 @@ import { RoleAssignService } from '../../services/state/role-assign/role-assign.
   styleUrls: ['./group-role-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupRoleAssignComponent extends SentinelBaseDirective implements OnInit, OnChanges {
+export class GroupRoleAssignComponent extends SentinelBaseDirective implements OnChanges {
   readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';
   readonly ROLES_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -85,15 +84,13 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
     };
   }
 
-  ngOnInit(): void {}
-
   ngOnChanges(changes: SimpleChanges): void {
     if ('resource' in changes && this.resource && this.resource.id !== undefined) {
       this.init();
     }
   }
 
-  onControlAction(controlItem: SentinelControlItem) {
+  onControlAction(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -101,7 +98,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
    * Searches for roles available to assign
    * @param filterValue search value
    */
-  search(filterValue: string) {
+  search(filterValue: string): void {
     this.roles$ = this.roleAssignService
       .getAvailableToAssign(filterValue)
       .pipe(map((resource: PaginatedResource<UserRole>) => resource.elements));
@@ -111,14 +108,14 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
    * Changes internal state of the component when roles to assign are selected
    * @param selected selected roles available to assign to edited group-overview
    */
-  onRolesToAssignSelection(selected: UserRole[]) {
+  onRolesToAssignSelection(selected: UserRole[]): void {
     this.roleAssignService.setSelectedRolesToAssign(selected);
   }
 
-  onAssignedRolesLoad(event: LoadTableEvent) {
+  onAssignedRolesLoad(event: LoadTableEvent): void {
     this.roleAssignService
       .getAssigned(this.resource.id, event.pagination, event.filter)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -126,7 +123,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
    * Resolves type of action and calls appropriate handler
    * @param event action emitted from assigned roles table component
    */
-  onAssignedRolesTableAction(event: TableActionEvent<UserRole>) {
+  onAssignedRolesTableAction(event: TableActionEvent<UserRole>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
@@ -134,7 +131,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
    * Changes internal state of the component when assigned roles are selected
    * @param selected selected assigned roles
    */
-  onAssignedRolesSelection(selected: UserRole[]) {
+  onAssignedRolesSelection(selected: UserRole[]): void {
     this.roleAssignService.setSelectedAssignedRoles(selected);
   }
 
@@ -164,7 +161,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
   }
 
   private initAssignedRolesControls() {
-    this.roleAssignService.selectedAssignedRoles$.pipe(takeWhile((_) => this.isAlive)).subscribe((selection) => {
+    this.roleAssignService.selectedAssignedRoles$.pipe(takeWhile(() => this.isAlive)).subscribe((selection) => {
       this.assignedRolesControls = [
         new DeleteControlItem(
           selection.length,
@@ -186,7 +183,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
 
   private initUnsavedChangesEmitter() {
     this.roleAssignService.selectedRolesToAssign$
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe((selection) => this.hasUnsavedChanges.emit(selection.length > 0));
   }
 }

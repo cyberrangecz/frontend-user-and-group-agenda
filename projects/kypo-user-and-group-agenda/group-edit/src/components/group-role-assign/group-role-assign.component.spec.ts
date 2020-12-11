@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, SimpleChange } from '@angular/core';
+import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PaginatedResource, SentinelPagination } from '@sentinel/common';
@@ -27,8 +27,6 @@ import { GroupRoleAssignComponent } from './group-role-assign.component';
 describe('GroupRoleAssignComponent', () => {
   let component: GroupRoleAssignComponent;
   let fixture: ComponentFixture<GroupRoleAssignComponent>;
-  let cd: ChangeDetectorRef;
-
   let roleAssignServiceSpy: jasmine.SpyObj<RoleAssignService>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
 
@@ -73,7 +71,6 @@ describe('GroupRoleAssignComponent', () => {
     group.id = 1;
     component.resource = group;
     component.ngOnChanges({ resource: new SimpleChange(undefined, group, true) });
-    cd = fixture.componentRef.injector.get(ChangeDetectorRef);
     fixture.detectChanges();
   });
 

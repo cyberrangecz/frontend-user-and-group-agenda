@@ -50,7 +50,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(groupResolverSpy.resolve).toHaveBeenCalledTimes(1);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -71,7 +71,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(groupResolverSpy.resolve).toHaveBeenCalledTimes(1);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -90,7 +90,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(title).toEqual('');
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -109,7 +109,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(title).toEqual('');
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -122,8 +122,8 @@ describe('GroupBreadcrumbResolver', () => {
 
     const resolvedTitle$ = resolver.resolve(routeSnapshot, routerState) as Observable<string>;
     resolvedTitle$.pipe(take(1)).subscribe(
-      (_) => fail(),
-      (_) => fail(),
+      () => fail(),
+      () => fail(),
       () => done()
     );
   });

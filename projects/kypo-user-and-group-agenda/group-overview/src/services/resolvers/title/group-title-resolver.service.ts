@@ -25,7 +25,7 @@ export class GroupTitleResolver implements Resolve<string> {
       return resolved.pipe(
         take(1),
         map((group) => (group ? `Edit ${group.name}` : '')),
-        catchError((err) => of(''))
+        catchError(() => of(''))
       );
     }
     return '';

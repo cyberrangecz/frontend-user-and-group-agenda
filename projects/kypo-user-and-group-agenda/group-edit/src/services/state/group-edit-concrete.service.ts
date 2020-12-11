@@ -55,7 +55,7 @@ export class GroupEditConcreteService extends GroupEditService {
    * Sets group-overview to state
    * @param initialGroup group-overview to state
    */
-  set(initialGroup: Group) {
+  set(initialGroup: Group): void {
     let group = initialGroup;
     this.setEditMode(group);
     if (group === null || group === undefined) {
@@ -68,7 +68,7 @@ export class GroupEditConcreteService extends GroupEditService {
    * Handles group-overview state changes. Updates internal state and emits observables
    * @param changeEvent edited group-overview change event
    */
-  change(changeEvent: GroupChangedEvent) {
+  change(changeEvent: GroupChangedEvent): void {
     this.saveDisabledSubject$.next(!changeEvent.isValid);
     this.editedGroup = changeEvent.group;
   }
@@ -79,7 +79,7 @@ export class GroupEditConcreteService extends GroupEditService {
   save(): Observable<any> {
     return this.editModeSubject$.getValue()
       ? this.update()
-      : this.create().pipe(tap((_) => this.router.navigate([this.navigator.toGroupOverview()])));
+      : this.create().pipe(tap(() => this.router.navigate([this.navigator.toGroupOverview()])));
   }
 
   createAndEdit(): Observable<any> {
@@ -93,7 +93,7 @@ export class GroupEditConcreteService extends GroupEditService {
   private update() {
     return this.api.update(this.editedGroup).pipe(
       tap(
-        (id) => {
+        () => {
           this.notificationService.emit('success', 'Group was saved');
           this.onSaved();
         },
@@ -105,7 +105,7 @@ export class GroupEditConcreteService extends GroupEditService {
   private create(): Observable<number> {
     return this.api.create(this.editedGroup).pipe(
       tap(
-        (id) => {
+        () => {
           this.notificationService.emit('success', 'Group was created');
           this.onSaved();
         },

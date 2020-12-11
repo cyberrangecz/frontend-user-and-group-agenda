@@ -13,6 +13,7 @@ import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 import { GroupEditFormGroup } from './group-edit-form-group';
+import { AbstractControl } from '@angular/forms';
 
 /**
  * Component for editing basic group-overview attributes
@@ -37,15 +38,15 @@ export class GroupEditComponent extends SentinelBaseDirective implements OnInit,
   tomorrow: Date;
   groupEditFormGroup: GroupEditFormGroup;
 
-  get name() {
+  get name(): AbstractControl {
     return this.groupEditFormGroup.formGroup.get('name');
   }
 
-  get description() {
+  get description(): AbstractControl {
     return this.groupEditFormGroup.formGroup.get('description');
   }
 
-  get expirationDate() {
+  get expirationDate(): AbstractControl {
     return this.groupEditFormGroup.formGroup.get('expirationDate');
   }
 
@@ -63,8 +64,8 @@ export class GroupEditComponent extends SentinelBaseDirective implements OnInit,
 
   private setupOnFormChangedEvent() {
     this.groupEditFormGroup.formGroup.valueChanges
-      .pipe(takeWhile((_) => this.isAlive))
-      .subscribe((_) => this.onChanged());
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(() => this.onChanged());
   }
 
   private onChanged() {

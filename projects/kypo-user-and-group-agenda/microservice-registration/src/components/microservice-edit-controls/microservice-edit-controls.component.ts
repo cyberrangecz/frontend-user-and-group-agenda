@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
  * Microservice state controls for microservice-registration state component
@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
   styleUrls: ['./microservice-edit-controls.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceEditControlsComponent implements OnInit {
+export class MicroserviceEditControlsComponent {
   /**
    * True if form is valid, false otherwise
    */
@@ -25,14 +25,10 @@ export class MicroserviceEditControlsComponent implements OnInit {
    */
   @Output() create = new EventEmitter();
 
-  constructor() {}
-
-  ngOnInit() {}
-
   /**
    * Emits event to create new role
    */
-  onCreate() {
+  onCreate(): void {
     this.create.emit();
   }
 }

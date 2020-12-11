@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -13,6 +12,7 @@ import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRoleItem } from '../../../model/microservice-role-item';
 import { MicroserviceRoleForm } from './microservice-role-form';
+import { AbstractControl } from '@angular/forms';
 
 /**
  * Component of individual microservice-registration role
@@ -23,7 +23,7 @@ import { MicroserviceRoleForm } from './microservice-role-form';
   styleUrls: ['./microservice-role.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceRoleComponent extends SentinelBaseDirective implements OnInit, OnChanges {
+export class MicroserviceRoleComponent extends SentinelBaseDirective implements OnChanges {
   /**
    * Edited role
    */
@@ -44,11 +44,11 @@ export class MicroserviceRoleComponent extends SentinelBaseDirective implements 
    */
   microserviceRoleFormGroup: MicroserviceRoleForm;
 
-  get description() {
+  get description(): AbstractControl {
     return this.microserviceRoleFormGroup.formGroup.get('description');
   }
 
-  get type() {
+  get type(): AbstractControl {
     return this.microserviceRoleFormGroup.formGroup.get('type');
   }
 
@@ -56,9 +56,7 @@ export class MicroserviceRoleComponent extends SentinelBaseDirective implements 
     super();
   }
 
-  ngOnInit() {}
-
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if ('role' in changes) {
       this.microserviceRoleFormGroup = new MicroserviceRoleForm(this.role);
       this.setupOnFormChangedEvent();
@@ -68,14 +66,14 @@ export class MicroserviceRoleComponent extends SentinelBaseDirective implements 
   /**
    * Emits event to delete this role
    */
-  deleteRole() {
+  deleteRole(): void {
     this.delete.emit();
   }
 
   /**
    * Clears values of the form
    */
-  onClear() {
+  onClear(): void {
     this.microserviceRoleFormGroup.setValuesToRole(this.role);
     this.roleChange.emit({
       role: this.role,
@@ -85,8 +83,8 @@ export class MicroserviceRoleComponent extends SentinelBaseDirective implements 
 
   private setupOnFormChangedEvent() {
     this.microserviceRoleFormGroup.formGroup.valueChanges
-      .pipe(takeWhile((_) => this.isAlive))
-      .subscribe((_) => this.onChanged());
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(() => this.onChanged());
   }
 
   private onChanged() {

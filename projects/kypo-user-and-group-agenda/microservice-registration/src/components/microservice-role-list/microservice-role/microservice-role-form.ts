@@ -19,7 +19,7 @@ export class MicroserviceRoleForm {
    * Sets values inserted to form to microservice-registration role object
    * @param role role to be filled from inserted form values
    */
-  setValuesToRole(role: MicroserviceRole) {
+  setValuesToRole(role: MicroserviceRole): void {
     role.description = this.formGroup.get('description').value;
     role.default = this.formGroup.get('default').value;
     role.type = this.formGroup.get('type').value;

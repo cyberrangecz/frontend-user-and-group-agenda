@@ -107,7 +107,7 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
     const ids = groups.map((group) => group.id);
     return this.api.deleteMultiple(ids).pipe(
       tap(
-        (resp) => {
+        () => {
           this.clearSelection();
           this.alertService.emit('success', 'Groups were deleted');
         },
@@ -116,7 +116,7 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
           this.hasErrorSubject$.next(true);
         }
       ),
-      switchMap((_) => this.getAll(this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
     );
   }
 }

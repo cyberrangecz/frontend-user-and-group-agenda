@@ -32,19 +32,19 @@ export abstract class RoleAssignService {
    */
   abstract assignedRoles$: Observable<PaginatedResource<UserRole>>;
 
-  setSelectedRolesToAssign(roles: UserRole[]) {
+  setSelectedRolesToAssign(roles: UserRole[]): void {
     this.selectedRolesToAssignSubject$.next(roles);
   }
 
-  clearSelectedRolesToAssign() {
+  clearSelectedRolesToAssign(): void {
     this.selectedRolesToAssignSubject$.next([]);
   }
 
-  setSelectedAssignedRoles(roles: UserRole[]) {
+  setSelectedAssignedRoles(roles: UserRole[]): void {
     this.selectedAssignedRolesSubject$.next(roles);
   }
 
-  clearSelectedAssignedRoles() {
+  clearSelectedAssignedRoles(): void {
     this.selectedAssignedRolesSubject$.next([]);
   }
 
@@ -91,5 +91,5 @@ export abstract class RoleAssignService {
    * Unassigns selected roles from resource
    * @param resourceId id of a resource which association with roles should be cancelled
    */
-  abstract unassignSelected(resourceId): Observable<any>;
+  abstract unassignSelected(resourceId: number): Observable<any>;
 }

@@ -52,11 +52,11 @@ describe('RoleAssignConcreteService', () => {
       .assign(resourceId, roles)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(groupApiSpy.assignRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -72,11 +72,11 @@ describe('RoleAssignConcreteService', () => {
       .unassign(resourceId, roles)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(groupApiSpy.removeRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -87,7 +87,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual(expectedRoles);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.setSelectedAssignedRoles(expectedRoles);
   });
@@ -99,7 +99,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual(expectedRoles);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.setSelectedRolesToAssign(expectedRoles);
   });
@@ -110,7 +110,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.clearSelectedAssignedRoles();
   });
@@ -121,7 +121,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.clearSelectedRolesToAssign();
   });
@@ -139,11 +139,11 @@ describe('RoleAssignConcreteService', () => {
       .assignSelected(resourceId)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(groupApiSpy.assignRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -160,11 +160,11 @@ describe('RoleAssignConcreteService', () => {
       .unassignSelected(resourceId)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(groupApiSpy.removeRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -179,12 +179,12 @@ describe('RoleAssignConcreteService', () => {
       .getAssigned(resourceId, pagination, filterValue)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(groupApiSpy.getRolesOfGroup).toHaveBeenCalledTimes(1);
           expect(groupApiSpy.getRolesOfGroup).toHaveBeenCalledWith(resourceId, pagination, jasmine.anything());
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -199,7 +199,7 @@ describe('RoleAssignConcreteService', () => {
       .getAssigned(resourceId, pagination, filterValue)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
@@ -220,7 +220,7 @@ describe('RoleAssignConcreteService', () => {
         expect(role).toEqual(expectedRoles);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
 
     service.getAssigned(resourceId, pagination, filterValue).pipe(take(1)).subscribe();
@@ -236,12 +236,12 @@ describe('RoleAssignConcreteService', () => {
       .getAvailableToAssign(filterValue)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(roleApiSpy.getAll).toHaveBeenCalledTimes(1);
           expect(roleApiSpy.getAll).toHaveBeenCalledWith(jasmine.anything(), expectedFilter);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -254,7 +254,7 @@ describe('RoleAssignConcreteService', () => {
       .getAvailableToAssign(filterValue)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());

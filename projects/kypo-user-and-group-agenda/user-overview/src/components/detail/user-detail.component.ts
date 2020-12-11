@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 
 /**
@@ -10,9 +10,7 @@ import { User } from '@muni-kypo-crp/user-and-group-model';
   styleUrls: ['./user-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailComponent {
   @HostBinding('style.width') width = '100%';
   @Input() data: User;
-
-  ngOnInit(): void {}
 }

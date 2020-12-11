@@ -74,7 +74,7 @@ describe('UserOverviewConcreteService', () => {
         expect(resource).toEqual(expectedResource);
         done();
       },
-      (err) => fail()
+      () => fail()
     );
 
     service.getAll(pagination).pipe(take(1)).subscribe();
@@ -90,7 +90,7 @@ describe('UserOverviewConcreteService', () => {
         expect(hasError).toBeFalsy();
         done();
       },
-      (err) => fail()
+      () => fail()
     );
 
     service.getAll(pagination).pipe(take(1)).subscribe();
@@ -105,7 +105,7 @@ describe('UserOverviewConcreteService', () => {
       .getAll(pagination)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(err).toEqual(expectedErr);
           done();
@@ -125,13 +125,13 @@ describe('UserOverviewConcreteService', () => {
       .delete(userToDelete)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledWith([userToDelete.id]);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -147,8 +147,8 @@ describe('UserOverviewConcreteService', () => {
       .delete(userToDelete)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
-        (_) => fail(),
+        () => fail(),
+        () => fail(),
         () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
@@ -170,13 +170,13 @@ describe('UserOverviewConcreteService', () => {
       .deleteSelected()
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledWith([userToDelete.id]);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -193,8 +193,8 @@ describe('UserOverviewConcreteService', () => {
       .delete(userToDelete)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
-        (_) => fail(),
+        () => fail(),
+        () => fail(),
         () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
@@ -214,11 +214,11 @@ describe('UserOverviewConcreteService', () => {
       .delete(userToDelete)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -234,11 +234,11 @@ describe('UserOverviewConcreteService', () => {
       .deleteSelected()
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 

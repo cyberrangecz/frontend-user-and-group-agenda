@@ -38,7 +38,7 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(
         0,
@@ -49,11 +49,11 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
     );
     this.groups$ = this.groupService.resource$.pipe(map((groups) => new GroupTable(groups, this.groupService)));
     this.groupsHasError$ = this.groupService.hasError$;
-    this.groupService.selected$.pipe(takeWhile((_) => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
+    this.groupService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
     this.onLoadTableEvent(initialLoadEvent);
   }
 
-  onControlsAction(controlItem: SentinelControlItem) {
+  onControlsAction(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -61,10 +61,10 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
    * Clears selected groups and calls service to get new data for groups table
    * @param event event emitted from table component
    */
-  onLoadTableEvent(event: LoadTableEvent) {
+  onLoadTableEvent(event: LoadTableEvent): void {
     this.groupService
       .getAll(event.pagination, event.filter)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -72,7 +72,7 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
    * Resolves type of action call appropriate handler
    * @param event action event emitted by table component
    */
-  onTableAction(event: TableActionEvent<Group>) {
+  onTableAction(event: TableActionEvent<Group>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
@@ -80,7 +80,7 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
    * Changes internal state of the component when selection is changed in table component
    * @param selected groups selected in table component
    */
-  onGroupSelected(selected: Group[]) {
+  onGroupSelected(selected: Group[]): void {
     this.groupService.setSelection(selected);
   }
 

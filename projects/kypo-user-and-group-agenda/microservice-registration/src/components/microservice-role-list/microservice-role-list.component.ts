@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
 import { MicroserviceRoleItem } from '../../model/microservice-role-item';
 import { MicroserviceRolesState } from '../../model/microservice-roles-state';
@@ -20,7 +12,7 @@ import { MicroserviceRolesState } from '../../model/microservice-roles-state';
   styleUrls: ['./microservice-role-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceRoleListComponent implements OnInit, OnChanges {
+export class MicroserviceRoleListComponent {
   /**
    * Roles of microservice-registration
    */
@@ -41,16 +33,10 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
    */
   @Output() microserviceRoles: EventEmitter<MicroserviceRolesState> = new EventEmitter();
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnChanges(changes: SimpleChanges) {}
-
   /**
    * Adds new microservice-registration role
    */
-  addRole() {
+  addRole(): void {
     this.roles.push(this.createRole());
     this.microserviceRoles.emit({
       roles: this.roles,
@@ -63,7 +49,7 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
    * Deletes role on given index
    * @param index index of a role to be deleted
    */
-  deleteRole(index: number) {
+  deleteRole(index: number): void {
     this.roles.splice(index, 1);
     this.microserviceRoles.emit({
       roles: this.roles,
@@ -78,7 +64,7 @@ export class MicroserviceRoleListComponent implements OnInit, OnChanges {
    * @param event event containing data about role change
    * @param index index of changed role
    */
-  onRoleChange(event: MicroserviceRoleItem, index: number) {
+  onRoleChange(event: MicroserviceRoleItem, index: number): void {
     this.roles[index] = event.role;
     this.rolesFormValidity = this.updateValidity(event.valid, index);
     this.microserviceRoles.emit({

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, SimpleChange, SimpleChanges } from '@angular/core';
+import { SimpleChange, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +10,6 @@ import { GroupEditComponent } from './group-edit.component';
 describe('GroupEditComponent', () => {
   let component: GroupEditComponent;
   let fixture: ComponentFixture<GroupEditComponent>;
-  let cd: ChangeDetectorRef;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -22,7 +21,6 @@ describe('GroupEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupEditComponent);
     component = fixture.componentInstance;
-    cd = fixture.componentRef.injector.get(ChangeDetectorRef);
     const initGroup = createGroup();
     component.group = initGroup;
     component.ngOnChanges(createSimpleChanges(initGroup));

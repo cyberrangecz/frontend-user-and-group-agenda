@@ -96,14 +96,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.component.html"
             ]
           }
         },
@@ -133,13 +130,13 @@
           "options": {
             "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.json",
             "project": "projects/kypo-user-and-group-agenda/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -149,14 +146,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/kypo-user-and-group-agenda/tsconfig.lib.json",
-              "projects/kypo-user-and-group-agenda/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/kypo-user-and-group-agenda/**/*.ts",
+              "projects/kypo-user-and-group-agenda/**/*.component.html"
             ]
           }
         }

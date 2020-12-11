@@ -37,7 +37,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(
         0,
@@ -49,17 +49,17 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
     this.users$ = this.userService.resource$.pipe(map((groups) => new UserTable(groups, this.userService)));
     this.usersHasError$ = this.userService.hasError$;
     this.onLoadEvent(initialLoadEvent);
-    this.userService.selected$.pipe(takeWhile((_) => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
+    this.userService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
   }
 
   /**
    * Clears selected users and calls service to get new data for table component
    * @param event load table vent emitted by table component
    */
-  onLoadEvent(event: LoadTableEvent) {
+  onLoadEvent(event: LoadTableEvent): void {
     this.userService
       .getAll(event.pagination, event.filter)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -67,11 +67,11 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
    * Resolves type of action and call appropriate handler
    * @param event action event emitted by table component
    */
-  onTableAction(event: TableActionEvent<User>) {
+  onTableAction(event: TableActionEvent<User>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
-  onControlsAction(controlItem: SentinelControlItem) {
+  onControlsAction(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
@@ -79,7 +79,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
    * Changes internal state of the component, stores ids of users selected in table component
    * @param selected users selected in table component
    */
-  onUserSelected(selected: User[]) {
+  onUserSelected(selected: User[]): void {
     this.userService.setSelection(selected);
   }
 

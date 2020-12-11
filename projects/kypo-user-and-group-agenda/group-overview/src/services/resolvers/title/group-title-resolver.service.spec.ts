@@ -50,7 +50,7 @@ describe('GroupTitleResolver', () => {
         expect(groupResolverSpy.resolve).toHaveBeenCalledTimes(1);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -69,7 +69,7 @@ describe('GroupTitleResolver', () => {
         expect(title).toEqual('');
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 
@@ -88,7 +88,7 @@ describe('GroupTitleResolver', () => {
         expect(title).toEqual('');
         done();
       },
-      (_) => fail()
+      () => fail()
     );
   });
 

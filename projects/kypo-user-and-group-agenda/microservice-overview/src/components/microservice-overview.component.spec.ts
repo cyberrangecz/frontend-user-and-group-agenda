@@ -9,11 +9,8 @@ import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableComponent, LoadTableEvent } from '@sentinel/components/table';
 import { UserAndGroupContext } from './../../../internal/src/services/user-and-group-context.service';
 import { MicroserviceOverviewMaterialModule } from './microservice-overview-material.module';
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, ChangeDetectorRef } from '@angular/core';
-
 import { MicroserviceOverviewComponent } from './microservice-overview.component';
 import { MicroserviceOverviewService } from '../services/microservice-overview.service';
 import {
@@ -27,7 +24,6 @@ import { RegisterControlItem } from '../../../internal/src/model/controls/regist
 describe('MicroserviceOverviewComponent', () => {
   let component: MicroserviceOverviewComponent;
   let fixture: ComponentFixture<MicroserviceOverviewComponent>;
-  let cd: ChangeDetectorRef;
 
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<MicroserviceOverviewService>;
@@ -56,7 +52,6 @@ describe('MicroserviceOverviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MicroserviceOverviewComponent);
     component = fixture.componentInstance;
-    cd = fixture.componentRef.injector.get(ChangeDetectorRef);
     fixture.detectChanges();
   });
 

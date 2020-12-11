@@ -129,23 +129,23 @@ export class UserAssignConcreteService extends UserAssignService {
   private callApiToAssign(resourceId: number, userIds: number[], groupIds: number[]) {
     return this.api.addUsersToGroup(resourceId, userIds, groupIds).pipe(
       tap(
-        (_) => {
+        () => {
           this.clearSelectedUsersToAssign();
           this.clearSelectedGroupsToImport();
         },
         (err) => this.errorHandler.emit(err, 'Adding users')
       ),
-      switchMap((_) => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
     );
   }
 
   private callApiToUnassign(resourceId: number, userIds: number[]) {
     return this.api.removeUsersFromGroup(resourceId, userIds).pipe(
       tap(
-        (_) => this.clearSelectedAssignedUsers(),
+        () => this.clearSelectedAssignedUsers(),
         (err) => this.errorHandler.emit(err, 'Removing users')
       ),
-      switchMap((_) => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
     );
   }
 }

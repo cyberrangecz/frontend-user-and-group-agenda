@@ -98,7 +98,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
     return this.callApiToUnassign(resourceId, roleIds);
   }
 
-  unassignSelected(resourceId): Observable<any> {
+  unassignSelected(resourceId: number): Observable<any> {
     const roleIds = this.selectedAssignedRolesSubject$.getValue().map((role) => role.id);
     return this.callApiToUnassign(resourceId, roleIds);
   }
@@ -106,28 +106,28 @@ export class RoleAssignConcreteService extends RoleAssignService {
   private callApiToAssign(resourceId: number, roleIds: number[]) {
     this.clearSelectedRolesToAssign();
     return forkJoin(roleIds.map((id) => this.api.assignRole(resourceId, id))).pipe(
-      catchError((error) => of('failed')),
+      catchError(() => of('failed')),
       tap((results: any[]) => {
         const failedRequests = results.filter((result) => result === 'failed');
         if (failedRequests.length > 1) {
           this.errorHandler.emit(undefined, 'Assigning some roles failed');
         }
       }),
-      switchMap((_) => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
     );
   }
 
   private callApiToUnassign(resourceId: number, roleIds: number[]) {
     this.clearSelectedAssignedRoles();
     return forkJoin(roleIds.map((id) => this.api.removeRole(resourceId, id))).pipe(
-      catchError((error) => of('failed')),
+      catchError(() => of('failed')),
       tap((results: any[]) => {
         const failedRequests = results.filter((result) => result === 'failed');
         if (failedRequests.length > 1) {
           this.errorHandler.emit(undefined, 'Assigning some roles failed');
         }
       }),
-      switchMap((_) => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
     );
   }
 

@@ -4,11 +4,10 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormArray, FormControl } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl } from '@angular/forms';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
@@ -24,7 +23,7 @@ import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
   styleUrls: ['./microservice-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceEditComponent extends SentinelBaseDirective implements OnInit, OnChanges {
+export class MicroserviceEditComponent extends SentinelBaseDirective implements OnChanges {
   /**
    * Edited microservice-registration
    */
@@ -38,15 +37,15 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
   microserviceFormGroup: MicroserviceEditFormGroup;
   private rolesValidity: boolean;
 
-  get name() {
+  get name(): AbstractControl {
     return this.microserviceFormGroup.formGroup.get('name');
   }
 
-  get endpoint() {
+  get endpoint(): AbstractControl {
     return this.microserviceFormGroup.formGroup.get('endpoint');
   }
 
-  get roles() {
+  get roles(): FormArray {
     return this.microserviceFormGroup.formGroup.get('roles') as FormArray;
   }
 
@@ -54,9 +53,7 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
     super();
   }
 
-  ngOnInit() {}
-
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if ('microservice' in changes) {
       this.microserviceFormGroup = new MicroserviceEditFormGroup(this.microservice);
       this.setupOnFormChangedEvent();
@@ -67,7 +64,7 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
    * Changes internal state of the component when one of the roles is changed
    * @param event event describing state of the microservice-registration roles
    */
-  onRolesChanged(event: MicroserviceRolesState) {
+  onRolesChanged(event: MicroserviceRolesState): void {
     if (event.isAdded) {
       (this.roles as FormArray).push(new FormControl(''));
     } else if (event.isRemoved) {
@@ -81,8 +78,8 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
 
   private setupOnFormChangedEvent() {
     this.microserviceFormGroup.formGroup.valueChanges
-      .pipe(takeWhile((_) => this.isAlive))
-      .subscribe((_) => this.onChanged());
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(() => this.onChanged());
   }
 
   private onChanged() {

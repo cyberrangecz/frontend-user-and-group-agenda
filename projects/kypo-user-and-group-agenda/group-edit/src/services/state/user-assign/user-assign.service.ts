@@ -38,27 +38,27 @@ export abstract class UserAssignService {
    */
   abstract assignedUsers$: Observable<PaginatedResource<User>>;
 
-  setSelectedUsersToAssign(users: User[]) {
+  setSelectedUsersToAssign(users: User[]): void {
     this.selectedUsersToAssignSubject$.next(users);
   }
 
-  clearSelectedUsersToAssign() {
+  clearSelectedUsersToAssign(): void {
     this.selectedUsersToAssignSubject$.next([]);
   }
 
-  setSelectedAssignedUsers(users: User[]) {
+  setSelectedAssignedUsers(users: User[]): void {
     this.selectedAssignedUsersSubject$.next(users);
   }
 
-  clearSelectedAssignedUsers() {
+  clearSelectedAssignedUsers(): void {
     this.selectedAssignedUsersSubject$.next([]);
   }
 
-  setSelectedGroupsToImport(groups: Group[]) {
+  setSelectedGroupsToImport(groups: Group[]): void {
     this.selectedGroupsToImportSubject$.next(groups);
   }
 
-  clearSelectedGroupsToImport() {
+  clearSelectedGroupsToImport(): void {
     this.selectedGroupsToImportSubject$.next([]);
   }
 

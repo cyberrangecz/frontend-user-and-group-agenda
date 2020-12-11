@@ -1,4 +1,3 @@
-import { ChangeDetectorRef } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
@@ -24,8 +23,6 @@ import { UserOverviewComponent } from './user-overview.component';
 describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;
   let fixture: ComponentFixture<UserOverviewComponent>;
-  let cd: ChangeDetectorRef;
-
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<UserOverviewService>;
 
@@ -53,7 +50,6 @@ describe('UserOverviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserOverviewComponent);
     component = fixture.componentInstance;
-    cd = fixture.componentRef.injector.get(ChangeDetectorRef);
     fixture.detectChanges();
   });
 

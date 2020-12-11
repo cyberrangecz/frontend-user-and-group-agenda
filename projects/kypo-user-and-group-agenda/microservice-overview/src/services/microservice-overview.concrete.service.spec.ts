@@ -80,7 +80,7 @@ describe('MicroserviceOverviewConcreteService', () => {
         expect(resource).toEqual(expectedResource);
         done();
       },
-      (err) => fail()
+      () => fail()
     );
 
     service.getAll(pagination).pipe(take(1)).subscribe();
@@ -96,7 +96,7 @@ describe('MicroserviceOverviewConcreteService', () => {
         expect(hasError).toBeFalsy();
         done();
       },
-      (err) => fail()
+      () => fail()
     );
 
     service.getAll(pagination).pipe(take(1)).subscribe();
@@ -111,7 +111,7 @@ describe('MicroserviceOverviewConcreteService', () => {
       .getAll(pagination)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
+        () => fail(),
         (err) => {
           expect(err).toEqual(expectedErr);
           done();

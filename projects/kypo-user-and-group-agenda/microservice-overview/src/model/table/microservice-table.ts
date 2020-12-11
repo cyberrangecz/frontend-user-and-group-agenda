@@ -1,6 +1,5 @@
 import { SentinelTable, Column, Row } from '@sentinel/components/table';
 import { PaginatedResource } from '@sentinel/common';
-import { MicroserviceOverviewService } from '../../services/microservice-overview.service';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 
 /**
@@ -8,7 +7,7 @@ import { Microservice } from '@muni-kypo-crp/user-and-group-model';
  * Class creating data source for microservice-overview table
  */
 export class MicroserviceTable extends SentinelTable<Microservice> {
-  constructor(resource: PaginatedResource<Microservice>, service: MicroserviceOverviewService) {
+  constructor(resource: PaginatedResource<Microservice>) {
     const rows = resource.elements.map((element) => MicroserviceTable.createRow(element));
     const columns = [
       new Column('id', 'id', false),

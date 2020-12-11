@@ -46,7 +46,7 @@ export class MicroserviceEditOverviewComponent implements OnInit {
     private errorHandler: UserAndGroupErrorHandler
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initMicroservice();
   }
 
@@ -61,7 +61,7 @@ export class MicroserviceEditOverviewComponent implements OnInit {
    * Changes internal state of the component when microservice-registration is edited
    * @param microservice edited microservice-registration
    */
-  onChange(microservice: Microservice) {
+  onChange(microservice: Microservice): void {
     if (microservice.valid) {
       this.microservice.name = microservice.name;
       this.microservice.endpoint = microservice.endpoint;
@@ -75,9 +75,9 @@ export class MicroserviceEditOverviewComponent implements OnInit {
   /**
    * Calls service to create microservice-registration and handles eventual error
    */
-  create() {
+  create(): void {
     this.api.create(this.microservice).subscribe(
-      (_) => {
+      () => {
         this.router.navigate([this.navigator.toMicroserviceOverview()]);
         this.notificationService.emit('success', 'Microservice was created');
         this.canDeactivateForm = true;

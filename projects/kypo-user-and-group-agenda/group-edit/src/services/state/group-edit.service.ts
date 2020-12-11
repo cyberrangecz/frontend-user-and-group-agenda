@@ -29,7 +29,7 @@ export abstract class GroupEditService {
    * Sets group-overview for editing
    * @param group group-overview to be edited
    */
-  abstract set(group: Group);
+  abstract set(group: Group): void;
 
   /**
    * Saves/creates edited group-overview
@@ -45,5 +45,5 @@ export abstract class GroupEditService {
    * Handles change in edited group-overview
    * @param changeEvent event of edited group-overview
    */
-  abstract change(changeEvent: GroupChangedEvent);
+  abstract change(changeEvent: GroupChangedEvent): void;
 }

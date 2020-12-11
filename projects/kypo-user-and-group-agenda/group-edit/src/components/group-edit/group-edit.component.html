@@ -19,7 +19,12 @@
         <div class="expiration">
           <mat-form-field appearance="outline" class="expiration-form">
             <mat-label>Expiration Date</mat-label>
-            <button mat-button *ngIf="expirationDate.value" matSuffix mat-icon-button aria-label="Clear" (click)="expirationDate.setValue(null)">
+            <button mat-button
+                    *ngIf="expirationDate.value"
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    (click)="expirationDate.setValue(null)">
               <mat-icon>close</mat-icon>
             </button>
             <input matInput [min]="tomorrow" [matDatepicker]="picker" formControlName="expirationDate" placeholder="Expires on">

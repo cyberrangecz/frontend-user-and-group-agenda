@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/no-output-on-prefix */
+/* eslint-disable @angular-eslint/no-output-native */
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
 import { MicroserviceRoleItem } from '../../model/microservice-role-item';

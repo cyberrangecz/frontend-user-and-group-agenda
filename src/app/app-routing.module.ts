@@ -49,12 +49,9 @@ const routes: Routes = [
       import('./notifications/notifications-overview.module').then((m) => m.NotificationsOverviewModule),
     data: { breadcrumb: 'Notifications' },
   },
-  {
-    path: '',
+  { path: '',
     redirectTo: 'home',
-    pathMatch: 'full',
-    canActivate: [SentinelAuthGuardWithLogin],
-  },
+    pathMatch: 'full' },
   {
     path: 'logout-confirmed',
     redirectTo: 'home',

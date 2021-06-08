@@ -3,6 +3,7 @@
  */
 
 export { GroupOverviewComponentsModule } from './components/group-overview-components.module';
+export { GroupOverviewMaterialModule } from './components/group-overview-material.module';
 export { GroupOverviewComponent } from './components/group-overview.component';
 export { GroupOverviewService } from './services/group-overview.service';
 export { GroupResolver } from './services/resolvers/group-resolver.service';

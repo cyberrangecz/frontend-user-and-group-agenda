@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/no-output-on-prefix */
+/* eslint-disable @angular-eslint/no-output-native */
 import {
   ChangeDetectionStrategy,
   Component,

@@ -1,0 +1,96 @@
+### 12.0.3 Update gitlab CI
+* 2949a0a -- [CI/CD] Update packages.json version based on GitLab tag.
+*   861305c -- Merge branch '104-simplify-gitlab-ci-cd-using-csirt-mu-docker-image' into 'master'
+|\  
+| * bc52f93 -- Update gitlab CI
+|/  
+* 8f0af5f -- Update project package.json version based on GitLab tag. Done by CI
+*   b3b075f -- Merge branch '103-bump-sentinel-layout-version' into 'master'
+|\  
+| * 57597a7 -- Bump sentinel layout
+|/  
+* 663594c -- Update project package.json version based on GitLab tag. Done by CI
+*   daae4ce -- Merge branch '102-bump-version-of-sentinel' into 'master'
+|\  
+| * f3973c7 -- Resolve "Bump version of Sentinel"
+|/  
+* 7df6bf4 -- Update project package.json version based on GitLab tag. Done by CI
+*   af93d29 -- Merge branch '101-update-to-angular-12' into 'master'
+|\  
+| * 861c1d9 -- Resolve "Update to Angular 12"
+|/  
+*   0b478ad -- Merge branch '100-update-oidc-configuration' into 'master'
+|\  
+| * 8d7c014 -- Resolve "Update oidc configuration"
+|/  
+* 1bba0b0 -- Update project package.json version based on GitLab tag. Done by CI
+*   5990b0b -- Merge branch '99-update-to-angular-11' into 'master'
+|\  
+| * ec4dd77 -- Resolve "Update to Angular 11"
+|/  
+*   f1929d6 -- Merge branch '98-migrate-from-tslint-to-eslint' into 'master'
+|\  
+| * 8ab7229 -- Migrate to eslint, fix errors/warnings
+|/  
+*   daff81b -- Merge branch '97-recreate-package-lock-for-new-package-registry' into 'master'
+|\  
+| * 167f8ac -- recreate package lock
+|/  
+* af039e1 -- Update project package.json version based on GitLab tag. Done by CI
+*   7608d34 -- Merge branch '96-rename-package-scope-to-muni-kypo-crp' into 'master'
+|\  
+| * 92ba915 -- Rename package and update dependencies
+|/  
+* 4a4a872 -- Update project package.json version based on GitLab tag. Done by CI
+*   34ba884 -- Merge branch '445720-master-patch-18186' into 'master'
+|\  
+| * f712ba8 -- Update projects/kypo-user-and-group-agenda/package.json
+|/  
+*   cab4d54 -- Merge branch '95-update-dependencies-in-example-app' into 'master'
+|\  
+| * 4ff05d6 -- Update example app dependencies
+|/  
+*   b273613 -- Merge branch '94-update-dependencies-to-new-format' into 'master'
+|\  
+| * cce74f6 -- Rename dependencies
+|/  
+* 75553a6 -- Update project package.json version based on GitLab tag. Done by CI
+*   9236e49 -- Merge branch '93-rename-package-to-kypo-user-and-group-agenda' into 'master'
+|\  
+| * 02ff9b3 -- Rename package
+|/  
+*   980c174 -- Merge branch '91-clear-personal-data-of-developers-from-the-source-code' into 'master'
+|\  
+| * 3df4d8c -- Remove personal info from README
+|/  
+*   1a97242 -- Merge branch '90-replace-kypo-auth-with-sentinel-auth-in-example-app' into 'master'
+|\  
+| * 528e2d2 -- Resolve "Replace kypo-auth with @sentinel/auth in example app"
+|/  
+* 4b2e4fb -- Update project package.json version based on GitLab tag. Done by CI
+*   7963e22 -- Merge branch '84-add-microservice-overview-page' into 'master'
+|\  
+| * 19f1a77 -- Resolve "Add microservice overview page"
+|/  
+*   5a59241 -- Merge branch '89-use-cypress-docker-image-in-ci' into 'master'
+|\  
+| * ab56500 -- Resolve "Use cypress docker image in CI"
+|/  
+* d788538 -- Update project package.json version based on GitLab tag. Done by CI
+*   7b9f265 -- Merge branch '88-fix-example-app-build' into 'master'
+|\  
+| * 5173563 -- Optimize paths for tests and example app
+|/  
+*   c3d4619 -- Merge branch '87-add-secondary-entry-points-to-allow-for-lazy-loading-of-parts-of-the-agenda' into 'master'
+|\  
+| * 44d2e9a -- Resolve "Add secondary entry points to allow for lazy loading of parts of the agenda"
+|/  
+* 70f869b -- Update project package.json version based on GitLab tag. Done by CI
+*   b7a81a1 -- Merge branch '86-refactor-to-use-sentinel-components' into 'master'
+|\  
+| * f031ed6 -- Refactor to use sentinel components, layout and common instead of the kypo ones
+|/  
+* 25c989a -- Update project package.json version based on GitLab tag. Done by CI
+* c3c6ee5 -- Merge branch '85-update-to-angular-10' into 'master'
+* b9b1965 -- Resolve "Update to Angular 10"
+

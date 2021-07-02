@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  userAndGroupRestBasePath: 'https://172.19.0.22/kypo2-rest-user-and-group/api/v1/',
+  userAndGroupRestBasePath: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/',
   defaultPaginationSize: 10,
   authConfig: {
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
     interceptorAllowedUrls: ['https://172.19.0.22'],
     authorizationStrategyConfig: {
-      authorizationUrl: 'https://172.19.0.22/kypo2-rest-user-and-group/api/v1/users/info',
+      authorizationUrl: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/users/info',
     },
     providers: [
       {

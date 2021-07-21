@@ -17,7 +17,7 @@ import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-s
 import { combineLatest, defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupMemberTable } from '../../model/table/group-member-table';
-import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';
 
 /**
@@ -84,7 +84,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
   assignUsersControls: SentinelControlItem[];
   assignedUsersControls: SentinelControlItem[];
 
-  constructor(private userAssignService: UserAssignService, private configService: UserAndGroupContext) {
+  constructor(private userAssignService: UserAssignService, private paginationService: PaginationService) {
     super();
     this.userMapping = {
       id: 'id',
@@ -163,6 +163,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * @param loadEvent event to load new data emitted by assigned users table component
    */
   onAssignedLoadEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.userAssignService
       .getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
       .pipe(takeWhile(() => this.isAlive))
@@ -214,7 +215,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(
         0,
-        this.configService.config.defaultPaginationSize,
+        this.paginationService.getPagination(),
         this.MEMBERS_OF_GROUP_INIT_SORT_NAME,
         this.MEMBERS_OF_GROUP_INIT_SORT_DIR
       )

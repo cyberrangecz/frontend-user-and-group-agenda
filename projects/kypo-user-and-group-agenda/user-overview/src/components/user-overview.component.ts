@@ -6,7 +6,7 @@ import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/compo
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { UserTable } from '../model/user-table';
-import { UserAndGroupContext, DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { PaginationService, DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserOverviewService } from '../services/overview/user-overview.service';
 
 /**
@@ -33,18 +33,13 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
 
   controls: SentinelControlItem[];
 
-  constructor(private configService: UserAndGroupContext, private userService: UserOverviewService) {
+  constructor(private userService: UserOverviewService, private paginationService: PaginationService) {
     super();
   }
 
   ngOnInit(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(
-        0,
-        this.configService.config.defaultPaginationSize,
-        this.INIT_SORT_NAME,
-        this.INIT_SORT_DIR
-      )
+      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
     );
     this.users$ = this.userService.resource$.pipe(map((groups) => new UserTable(groups, this.userService)));
     this.usersHasError$ = this.userService.hasError$;
@@ -57,6 +52,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
    * @param event load table vent emitted by table component
    */
   onLoadEvent(event: LoadTableEvent): void {
+    this.paginationService.setPagination(event.pagination.size);
     this.userService
       .getAll(event.pagination, event.filter)
       .pipe(takeWhile(() => this.isAlive))

@@ -1,4 +1,4 @@
-import { RegisterControlItem, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { RegisterControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
@@ -31,18 +31,13 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
 
   controls: SentinelControlItem[];
 
-  constructor(private microserviceService: MicroserviceOverviewService, private configService: UserAndGroupContext) {
+  constructor(private microserviceService: MicroserviceOverviewService, private paginationService: PaginationService) {
     super();
   }
 
   ngOnInit(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(
-        0,
-        this.configService.config.defaultPaginationSize,
-        this.INIT_SORT_NAME,
-        this.INIT_SORT_DIR
-      )
+      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
     );
     this.microservices$ = this.microserviceService.resource$.pipe(
       map((microservices) => new MicroserviceTable(microservices))
@@ -61,6 +56,7 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
    * @param event event emitted from table component
    */
   onLoadTableEvent(event: LoadTableEvent): void {
+    this.paginationService.setPagination(event.pagination.size);
     this.microserviceService
       .getAll(event.pagination, event.filter)
       .pipe(takeWhile(() => this.isAlive))

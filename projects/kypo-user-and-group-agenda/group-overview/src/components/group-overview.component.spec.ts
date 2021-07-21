@@ -6,7 +6,7 @@ import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -17,6 +17,7 @@ import {
   createPagination,
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
+  createPaginationServiceSpy,
 } from '../../../internal/src/testing/testing-commons';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
@@ -24,11 +25,13 @@ import { GroupOverviewComponent } from './group-overview.component';
 describe('GroupOverviewComponent', () => {
   let component: GroupOverviewComponent;
   let fixture: ComponentFixture<GroupOverviewComponent>;
+  let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<GroupOverviewService>;
 
   beforeEach(async(() => {
     contextSpy = createContextSpy();
+    paginationServiceSpy = createPaginationServiceSpy();
     overviewSpy = jasmine.createSpyObj('UserOverviewComponent', [
       'getAll',
       'delete',
@@ -48,6 +51,7 @@ describe('GroupOverviewComponent', () => {
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
         { provide: GroupOverviewService, useValue: overviewSpy },
+        { provide: PaginationService, useValue: paginationServiceSpy },
       ],
     })
       .overrideComponent(SentinelTableComponent, createSentinelOverride())

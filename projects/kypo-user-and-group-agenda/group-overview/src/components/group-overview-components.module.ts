@@ -13,7 +13,7 @@ import { GroupOverviewService } from '../services/group-overview.service';
 import { GroupBreadcrumbResolver } from '../services/resolvers/breadcrumb/group-breadcrumb-resolver.service';
 import { GroupResolver } from '../services/resolvers/group-resolver.service';
 import { GroupTitleResolver } from '../services/resolvers/title/group-title-resolver.service';
-import { InternalSharedModule } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { InternalSharedModule, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
 
@@ -32,6 +32,7 @@ import { GroupOverviewComponent } from './group-overview.component';
   ],
   declarations: [GroupOverviewComponent],
   providers: [
+    PaginationService,
     GroupResolver,
     GroupTitleResolver,
     GroupBreadcrumbResolver,

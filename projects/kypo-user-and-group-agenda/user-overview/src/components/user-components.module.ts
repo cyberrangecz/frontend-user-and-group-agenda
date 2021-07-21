@@ -11,7 +11,7 @@ import {
 } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserOverviewConcreteService } from '../services/overview/user-overview-concrete.service';
 import { UserOverviewService } from '../services/overview/user-overview.service';
-import { InternalSharedModule } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { InternalSharedModule, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserDetailComponent } from './detail/user-detail.component';
 import { UserOverviewComponent } from './user-overview.component';
 import { UserMaterialModule } from './user-material.module';
@@ -31,6 +31,7 @@ import { UserMaterialModule } from './user-material.module';
   ],
   exports: [UserMaterialModule, UserOverviewComponent, UserDetailComponent],
   providers: [
+    PaginationService,
     { provide: UserOverviewService, useClass: UserOverviewConcreteService },
     { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
   ],

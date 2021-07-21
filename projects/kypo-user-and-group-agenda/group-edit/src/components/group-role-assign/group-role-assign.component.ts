@@ -17,7 +17,7 @@ import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-s
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupRolesTable } from '../../model/table/group-roles-table';
-import { DeleteControlItem, SaveControlItem, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';
 
 /**
@@ -76,7 +76,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
   rolesToAssignControls: SentinelControlItem[];
   assignedRolesControls: SentinelControlItem[];
 
-  constructor(private roleAssignService: RoleAssignService, private config: UserAndGroupContext) {
+  constructor(private roleAssignService: RoleAssignService, private paginationService: PaginationService) {
     super();
     this.roleMapping = {
       id: 'id',
@@ -114,6 +114,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
   }
 
   onAssignedRolesLoad(event: LoadTableEvent): void {
+    this.paginationService.setPagination(event.pagination.size);
     this.roleAssignService
       .getAssigned(this.resource.id, event.pagination, event.filter)
       .pipe(takeWhile(() => this.isAlive))
@@ -153,7 +154,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
     const initialLoadEvent = new LoadTableEvent(
       new RequestedPagination(
         0,
-        this.config.config.defaultPaginationSize,
+        this.paginationService.getPagination(),
         this.ROLES_OF_GROUP_INIT_SORT_NAME,
         this.ROLES_OF_GROUP_INIT_SORT_DIR
       )

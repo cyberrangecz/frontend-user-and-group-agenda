@@ -1,4 +1,5 @@
 export * from './internal-shared.module';
+export * from './services/pagination.service';
 export * from './services/selectable-paginated.service';
 export * from './services/user-and-group-context.service';
 export * from './model/table/user-delete-action';

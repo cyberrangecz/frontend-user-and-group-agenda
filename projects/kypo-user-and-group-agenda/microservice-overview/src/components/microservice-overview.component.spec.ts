@@ -2,6 +2,7 @@ import {
   SENTINEL_TABLE_COMPONENT_SELECTOR,
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   createPagination,
+  createPaginationServiceSpy,
 } from './../../../internal/src/testing/testing-commons';
 import { of, EMPTY } from 'rxjs';
 import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
@@ -20,16 +21,19 @@ import {
 } from '../../../internal/src/testing/testing-commons';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { RegisterControlItem } from '../../../internal/src/model/controls/register-control-item';
+import { PaginationService } from '../../../internal/src/services/pagination.service';
 
 describe('MicroserviceOverviewComponent', () => {
   let component: MicroserviceOverviewComponent;
   let fixture: ComponentFixture<MicroserviceOverviewComponent>;
 
+  let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<MicroserviceOverviewService>;
 
   beforeEach(async(() => {
     contextSpy = createContextSpy();
+    paginationServiceSpy = createPaginationServiceSpy();
     overviewSpy = jasmine.createSpyObj('MicroserviceOverviewService', ['getAll', 'register']);
     overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
     overviewSpy.resource$ = of(createDefaultResource());
@@ -41,6 +45,7 @@ describe('MicroserviceOverviewComponent', () => {
       declarations: [MicroserviceOverviewComponent],
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
+        { provide: PaginationService, useValue: paginationServiceSpy },
         { provide: MicroserviceOverviewService, useValue: overviewSpy },
       ],
     })

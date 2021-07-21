@@ -7,7 +7,7 @@ import { Group, User } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
-import { UserDeleteAction } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { PaginationService, UserDeleteAction } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -19,6 +19,7 @@ import {
   createPagination,
   createResourceSelectorOverride,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
+  createPaginationServiceSpy,
 } from '../../../../internal/src/testing/testing-commons';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupUserAssignComponent } from './group-user-assign.component';
@@ -26,6 +27,7 @@ import { GroupUserAssignComponent } from './group-user-assign.component';
 describe('GroupUserAssignComponent', () => {
   let component: GroupUserAssignComponent;
   let fixture: ComponentFixture<GroupUserAssignComponent>;
+  let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
   let userAssignService: jasmine.SpyObj<UserAssignService>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
 
@@ -33,6 +35,7 @@ describe('GroupUserAssignComponent', () => {
     const testUsers = createUserResource();
     const testGroups = createGroupResource();
     contextSpy = createContextSpy();
+    paginationServiceSpy = createPaginationServiceSpy();
     userAssignService = jasmine.createSpyObj([
       'getUsersToAssign',
       'getGroupsToImport',
@@ -60,6 +63,7 @@ describe('GroupUserAssignComponent', () => {
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
         { provide: UserAssignService, useValue: userAssignService },
+        { provide: PaginationService, useValue: paginationServiceSpy },
       ],
     })
       .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())

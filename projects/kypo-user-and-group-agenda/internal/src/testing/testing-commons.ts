@@ -7,6 +7,7 @@ import { UserAndGroupErrorHandler } from '../../../src/user-and-group-error-hand
 import { UserAndGroupNavigator } from '../../../src/user-and-group-navigator.service';
 import { UserAndGroupNotificationService } from '../../../src/user-and-group-notification.service';
 import { UserAndGroupContext } from '../services/user-and-group-context.service';
+import { PaginationService } from '../services/pagination.service';
 
 export const SENTINEL_TABLE_COMPONENT_SELECTOR = 'sentinel-table';
 export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
@@ -60,6 +61,10 @@ export function createMatDialogSpy(): jasmine.SpyObj<MatDialog> {
 
 export function createContextSpy(): jasmine.SpyObj<UserAndGroupContext> {
   return jasmine.createSpyObj('KypoUserAndGroupContext', ['config']);
+}
+
+export function createPaginationServiceSpy(): jasmine.SpyObj<PaginationService> {
+  return jasmine.createSpyObj('PaginationService', ['setPagination', 'getPagination']);
 }
 
 export function createNavigatorSpy(): jasmine.SpyObj<UserAndGroupNavigator> {

@@ -6,7 +6,7 @@ import { User } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserOverviewService } from '@muni-kypo-crp/user-and-group-agenda/user-overview';
 import {
@@ -16,6 +16,7 @@ import {
   createPagination,
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
+  createPaginationServiceSpy,
 } from '../../../internal/src/testing/testing-commons';
 import { UserMaterialModule } from './user-material.module';
 import { UserOverviewComponent } from './user-overview.component';
@@ -25,9 +26,11 @@ describe('UserOverviewComponent', () => {
   let fixture: ComponentFixture<UserOverviewComponent>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<UserOverviewService>;
+  let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
 
   beforeEach(async(() => {
     contextSpy = createContextSpy();
+    paginationServiceSpy = createPaginationServiceSpy();
     overviewSpy = jasmine.createSpyObj('UserOverviewComponent', ['getAll', 'delete', 'deleteSelected', 'setSelection']);
     overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
     overviewSpy.resource$ = of(createDefaultResource());
@@ -40,6 +43,7 @@ describe('UserOverviewComponent', () => {
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
         { provide: UserOverviewService, useValue: overviewSpy },
+        { provide: PaginationService, useValue: paginationServiceSpy },
       ],
     })
       .overrideComponent(SentinelTableComponent, createSentinelOverride())

@@ -1,4 +1,8 @@
-import { UserAndGroupContext, InternalSharedModule } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import {
+  UserAndGroupContext,
+  InternalSharedModule,
+  PaginationService,
+} from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { MicroserviceOverviewConcreteService } from './../services/microservice-overview.concrete.service';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SentinelControlsModule } from '@sentinel/components/controls';
@@ -27,6 +31,7 @@ import { MicroserviceOverviewService } from '../services/microservice-overview.s
   declarations: [MicroserviceOverviewComponent],
   exports: [MicroserviceOverviewMaterialModule, MicroserviceOverviewComponent],
   providers: [
+    PaginationService,
     UserAndGroupContext,
     { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
     { provide: MicroserviceOverviewService, useClass: MicroserviceOverviewConcreteService },

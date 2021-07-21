@@ -8,7 +8,7 @@ import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@senti
 import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
 import { RoleDeleteAction } from '../../model/table/role-delete-action';
-import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { RoleAssignService } from '@muni-kypo-crp/user-and-group-agenda/group-edit';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -20,6 +20,7 @@ import {
   createResourceSelectorOverride,
   SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
+  createPaginationServiceSpy,
 } from '../../../../internal/src/testing/testing-commons';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupRoleAssignComponent } from './group-role-assign.component';
@@ -27,12 +28,14 @@ import { GroupRoleAssignComponent } from './group-role-assign.component';
 describe('GroupRoleAssignComponent', () => {
   let component: GroupRoleAssignComponent;
   let fixture: ComponentFixture<GroupRoleAssignComponent>;
+  let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
   let roleAssignServiceSpy: jasmine.SpyObj<RoleAssignService>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
 
   beforeEach(async(() => {
     const testUserRoles = createUserRoleResource();
     contextSpy = createContextSpy();
+    paginationServiceSpy = createPaginationServiceSpy();
     roleAssignServiceSpy = jasmine.createSpyObj([
       'getAvailableToAssign',
       'getAssigned',
@@ -55,6 +58,7 @@ describe('GroupRoleAssignComponent', () => {
       declarations: [GroupRoleAssignComponent],
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
+        { provide: PaginationService, useValue: paginationServiceSpy },
         { provide: RoleAssignService, useValue: roleAssignServiceSpy },
       ],
     })

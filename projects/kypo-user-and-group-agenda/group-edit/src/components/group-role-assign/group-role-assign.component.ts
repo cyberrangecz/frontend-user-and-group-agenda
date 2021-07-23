@@ -19,6 +19,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupRolesTable } from '../../model/table/group-roles-table';
 import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';
+import { RoleAssignConcreteService } from '../../services/state/role-assign/role-assign-concrete.service';
 
 /**
  * Component for role assignment to edited group-overview
@@ -28,6 +29,7 @@ import { RoleAssignService } from '../../services/state/role-assign/role-assign.
   templateUrl: './group-role-assign.component.html',
   styleUrls: ['./group-role-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: RoleAssignService, useClass: RoleAssignConcreteService }],
 })
 export class GroupRoleAssignComponent extends SentinelBaseDirective implements OnChanges {
   readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';

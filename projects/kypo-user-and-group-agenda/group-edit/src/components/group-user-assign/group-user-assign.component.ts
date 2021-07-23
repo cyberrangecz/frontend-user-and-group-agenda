@@ -19,6 +19,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupMemberTable } from '../../model/table/group-member-table';
 import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';
+import { UserAssignConcreteService } from '../../services/state/user-assign/user-assign-concrete.service';
 
 /**
  * Component for user assignment to groups
@@ -28,6 +29,7 @@ import { UserAssignService } from '../../services/state/user-assign/user-assign.
   templateUrl: './group-user-assign.component.html',
   styleUrls: ['./group-user-assign.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: UserAssignService, useClass: UserAssignConcreteService }],
 })
 export class GroupUserAssignComponent extends SentinelBaseDirective implements OnChanges {
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';

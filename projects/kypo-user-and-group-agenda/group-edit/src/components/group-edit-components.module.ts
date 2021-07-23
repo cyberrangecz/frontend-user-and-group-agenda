@@ -10,12 +10,6 @@ import {
   UserAndGroupDefaultNavigator,
   UserAndGroupAgendaConfig,
 } from '@muni-kypo-crp/user-and-group-agenda';
-import { GroupEditConcreteService } from '../services/state/group-edit-concrete.service';
-import { GroupEditService } from '../services/state/group-edit.service';
-import { RoleAssignConcreteService } from '../services/state/role-assign/role-assign-concrete.service';
-import { RoleAssignService } from '../services/state/role-assign/role-assign.service';
-import { UserAssignConcreteService } from '../services/state/user-assign/user-assign-concrete.service';
-import { UserAssignService } from '../services/state/user-assign/user-assign.service';
 import { GroupEditMaterialModule } from './group-edit-material.module';
 import { GroupEditOverviewComponent } from './group-edit-overview.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
@@ -43,13 +37,7 @@ import { GroupUserAssignComponent } from './group-user-assign/group-user-assign.
     GroupRoleAssignComponent,
     GroupUserAssignComponent,
   ],
-  providers: [
-    GroupEditCanDeactivate,
-    { provide: GroupEditService, useClass: GroupEditConcreteService },
-    { provide: RoleAssignService, useClass: RoleAssignConcreteService },
-    { provide: UserAssignService, useClass: UserAssignConcreteService },
-    { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
-  ],
+  providers: [GroupEditCanDeactivate, { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator }],
 })
 export class GroupEditComponentsModule {
   static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<GroupEditComponentsModule> {

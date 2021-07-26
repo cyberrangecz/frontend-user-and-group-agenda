@@ -11,12 +11,14 @@ import { GROUP_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda'
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
+import { GroupEditConcreteService } from '../services/state/group-edit-concrete.service';
 
 @Component({
   selector: 'kypo-group-edit-overview',
   templateUrl: './group-edit-overview.component.html',
   styleUrls: ['./group-edit-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: GroupEditService, useClass: GroupEditConcreteService }],
 })
 export class GroupEditOverviewComponent extends SentinelBaseDirective {
   @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();

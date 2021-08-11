@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./projects/kypo-user-and-group-agenda",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -11,6 +11,14 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2018",
+    "paths": {
+      "@muni-kypo-crp/user-and-group-agenda": [
+        "./src/public_api.ts"
+      ],
+      "@muni-kypo-crp/user-and-group-agenda/*": [
+        "./src/public_api.ts"
+      ]
+    },
     "typeRoots": [
       "node_modules/@types"
     ],

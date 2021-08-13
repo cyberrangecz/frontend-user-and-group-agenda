@@ -45,7 +45,7 @@
     "angular-oauth2-oidc": "^10.0.3",
     "angular-oauth2-oidc-jwks": "^9.0.0",
     "core-js": "^2.5.4",
-    "@muni-kypo-crp/user-and-group-api": "~12.0.0",
+    "@muni-kypo-crp/user-and-group-api": "~12.0.2",
     "@muni-kypo-crp/user-and-group-model": "~12.0.1",
     "ngx-indexed-db": "^6.1.2",
     "rxjs": "~6.5.4",

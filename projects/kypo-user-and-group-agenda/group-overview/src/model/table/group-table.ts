@@ -19,8 +19,6 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
       new Column('name', 'name', true),
       new Column('description', 'description', false),
       new Column('expirationDateFormatted', 'expiration date', false),
-      new Column('rolesCount', 'roles count', false),
-      new Column('membersCount', 'members count', false),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -37,8 +35,6 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
     } else {
       rowAdapter.expirationDateFormatted = '-';
     }
-    rowAdapter.rolesCount = rowAdapter.roles ? rowAdapter.roles.length : 0;
-    rowAdapter.membersCount = rowAdapter.members ? rowAdapter.members.length : 0;
     return new Row(rowAdapter, GroupTable.createActions(group, service));
   }
 

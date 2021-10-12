@@ -72,7 +72,7 @@ describe('MicroserviceOverviewComponent', () => {
       component.INIT_SORT_DIR
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
-    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, null);
+    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, undefined);
   });
 
   it('should init controls on init', () => {

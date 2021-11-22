@@ -33,11 +33,11 @@ describe('GroupTitleResolver', () => {
     expect(resolvedTitle).toEqual(resolver.CREATE_GROUP_TITLE);
   });
 
-  it('should resolve to group-overview name when has id param and group-overview resolver returns group-overview', (done) => {
+  it('should resolve to group-edit name when has id param and group-overview resolver returns edit', (done) => {
     const paramMapSpy: jasmine.SpyObj<ParamMap> = jasmine.createSpyObj('ParamMap', ['has']);
     paramMapSpy.has.and.returnValue(true);
     const routeSnapshot = new ActivatedRouteSnapshot();
-    const routerState: RouterStateSnapshot = { root: undefined, url: `something` };
+    const routerState: RouterStateSnapshot = { root: undefined, url: `edit` };
     spyOnProperty(routeSnapshot, 'paramMap', 'get').and.returnValue(paramMapSpy);
     const group = new Group();
     group.name = 'Group Test Name';

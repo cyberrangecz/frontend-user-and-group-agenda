@@ -8,7 +8,7 @@
     "typescript-collections": "~1.3.3",
     "@sentinel/common": "~12.2.1",
     "@sentinel/components": "~12.3.2",
-    "@muni-kypo-crp/user-and-group-api": "~12.0.0",
+    "@muni-kypo-crp/user-and-group-api": "~12.0.2",
     "@muni-kypo-crp/user-and-group-model": "~12.0.1"
   },
   "dependencies": {

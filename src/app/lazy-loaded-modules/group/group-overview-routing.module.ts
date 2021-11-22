@@ -4,13 +4,14 @@ import {
   GroupBreadcrumbResolver,
   GroupOverviewComponent,
   GroupResolver,
-  GroupTitleResolver,
+  GroupTitleResolver
 } from '@muni-kypo-crp/user-and-group-agenda/group-overview';
 import {
   GROUP_DATA_ATTRIBUTE_NAME,
   GROUP_EDIT_PATH,
   GROUP_NEW_PATH,
   GROUP_SELECTOR,
+  GROUP_DETAIL_PATH
 } from '@muni-kypo-crp/user-and-group-agenda';
 
 const routes: Routes = [
@@ -30,6 +31,15 @@ const routes: Routes = [
   {
     path: `:${GROUP_SELECTOR}/${GROUP_EDIT_PATH}`,
     loadChildren: () => import('./edit/group-edit.module').then((m) => m.GroupEditModule),
+    resolve: {
+      [GROUP_DATA_ATTRIBUTE_NAME]: GroupResolver,
+      breadcrumb: GroupBreadcrumbResolver,
+      title: GroupTitleResolver,
+    },
+  },
+  {
+    path: `:${GROUP_SELECTOR}/${GROUP_DETAIL_PATH}`,
+    loadChildren: () => import('./detail/group-detail.module').then((m) => m.GroupDetailModule),
     resolve: {
       [GROUP_DATA_ATTRIBUTE_NAME]: GroupResolver,
       breadcrumb: GroupBreadcrumbResolver,

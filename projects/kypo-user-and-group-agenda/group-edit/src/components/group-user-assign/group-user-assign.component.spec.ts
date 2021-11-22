@@ -11,7 +11,7 @@ import { PaginationService, UserDeleteAction } from '@muni-kypo-crp/user-and-gro
 import { DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserAssignService } from '@muni-kypo-crp/user-and-group-agenda/group-edit';
+import { GroupEditService, UserAssignService } from '@muni-kypo-crp/user-and-group-agenda/group-edit';
 import {
   createContextSpy,
   createSentinelControlsOverride,
@@ -20,9 +20,22 @@ import {
   createResourceSelectorOverride,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
   createPaginationServiceSpy,
+  createGroupApiSpy,
+  createRouterSpy,
+  createNavigatorSpy,
+  createErrorHandlerSpy,
+  createNotificationSpy,
+  createUserApiSpy,
 } from '../../../../internal/src/testing/testing-commons';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupUserAssignComponent } from './group-user-assign.component';
+import { GroupApi, UserApi } from '@muni-kypo-crp/user-and-group-api';
+import { Router } from '@angular/router';
+import {
+  UserAndGroupErrorHandler,
+  UserAndGroupNavigator,
+  UserAndGroupNotificationService,
+} from '@muni-kypo-crp/user-and-group-agenda';
 
 describe('GroupUserAssignComponent', () => {
   let component: GroupUserAssignComponent;
@@ -31,11 +44,24 @@ describe('GroupUserAssignComponent', () => {
   let userAssignService: jasmine.SpyObj<UserAssignService>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
 
+  let apiSpy: jasmine.SpyObj<GroupApi>;
+  let userApiSpy: jasmine.SpyObj<UserApi>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let notificationSpy: jasmine.SpyObj<UserAndGroupNotificationService>;
+  let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
+  let errorHandlerSpy: jasmine.SpyObj<UserAndGroupErrorHandler>;
+
   beforeEach(async(() => {
     const testUsers = createUserResource();
     const testGroups = createGroupResource();
     contextSpy = createContextSpy();
     paginationServiceSpy = createPaginationServiceSpy();
+    apiSpy = createGroupApiSpy();
+    userApiSpy = createUserApiSpy();
+    routerSpy = createRouterSpy();
+    navigatorSpy = createNavigatorSpy();
+    errorHandlerSpy = createErrorHandlerSpy();
+    notificationSpy = createNotificationSpy();
     userAssignService = jasmine.createSpyObj([
       'getUsersToAssign',
       'getGroupsToImport',
@@ -61,6 +87,12 @@ describe('GroupUserAssignComponent', () => {
       imports: [GroupEditMaterialModule],
       declarations: [GroupUserAssignComponent],
       providers: [
+        { provide: GroupApi, useValue: apiSpy },
+        { provide: UserApi, useValue: userApiSpy },
+        { provide: Router, useValue: routerSpy },
+        { provide: UserAndGroupNavigator, useValue: navigatorSpy },
+        { provide: UserAndGroupErrorHandler, useValue: errorHandlerSpy },
+        { provide: UserAndGroupNotificationService, useValue: notificationSpy },
         { provide: UserAndGroupContext, useValue: contextSpy },
         { provide: UserAssignService, useValue: userAssignService },
         { provide: PaginationService, useValue: paginationServiceSpy },

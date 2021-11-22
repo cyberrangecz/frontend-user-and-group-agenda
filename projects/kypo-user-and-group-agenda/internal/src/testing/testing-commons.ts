@@ -71,8 +71,10 @@ export function createNavigatorSpy(): jasmine.SpyObj<UserAndGroupNavigator> {
   return jasmine.createSpyObj('UserAndGroupNavigator', [
     'toNewGroup',
     'toGroupEdit',
+    'toGroupDetail',
     'toGroupOverview',
     'toUserOverview',
+    'toUserDetail',
     'toNewMicroservice',
   ]);
 }
@@ -89,8 +91,16 @@ export function createSentinelOverride(): MetadataOverride<any> {
   return {
     set: {
       selector: SENTINEL_TABLE_COMPONENT_SELECTOR,
-      inputs: ['hasError', 'defaultSortName', 'defaultSortDirection', 'data'],
-      outputs: ['refresh', 'rowAction', 'rowSelection'],
+      inputs: [
+        'hasError',
+        'defaultSortName',
+        'defaultSortDirection',
+        'data',
+        'preselected',
+        'totalElements',
+        'showMoreDefaultSize',
+      ],
+      outputs: ['refresh', 'rowAction', 'rowSelection', 'rowClick', 'tableLoad'],
     },
   };
 }

@@ -3,7 +3,13 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
-import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '@muni-kypo-crp/user-and-group-agenda';
+import {
+  GROUP_DETAIL_PATH,
+  GROUP_EDIT_PATH,
+  GROUP_NEW_PATH,
+  GROUP_PATH,
+  GROUP_SELECTOR,
+} from '@muni-kypo-crp/user-and-group-agenda';
 import { GroupResolver } from '../group-resolver.service';
 
 @Injectable()
@@ -24,10 +30,20 @@ export class GroupTitleResolver implements Resolve<string> {
       const resolved = this.groupResolver.resolve(route, state) as Observable<Group>;
       return resolved.pipe(
         take(1),
-        map((group) => (group ? `Edit ${group.name}` : '')),
+        map((group) => (group ? this.getTitleFromGroup(group, state) : '')),
         catchError(() => of(''))
       );
     }
     return '';
+  }
+
+  private getTitleFromGroup(group: Group, state: RouterStateSnapshot): string {
+    if (state.url.includes(GROUP_EDIT_PATH)) {
+      return `Edit ${group.name}`;
+    }
+    if (state.url.includes(GROUP_DETAIL_PATH)) {
+      return `${group.name} Detail`;
+    }
+    return group.name;
   }
 }

@@ -6,6 +6,8 @@ import {
   MICROSERVICE_PATH,
   USER_PATH,
   MICROSERVICE_NEW_PATH,
+  GROUP_DETAIL_PATH,
+  USER_DETAIL_PATH,
 } from './default-paths';
 import { UserAndGroupNavigator } from './user-and-group-navigator.service';
 
@@ -22,6 +24,10 @@ export class UserAndGroupDefaultNavigator extends UserAndGroupNavigator {
     return GROUP_PATH;
   }
 
+  toGroupDetail(id: number | string): string {
+    return `${GROUP_PATH}/${id}/${GROUP_DETAIL_PATH}`;
+  }
+
   toNewGroup(): string {
     return `${GROUP_PATH}/${GROUP_NEW_PATH}`;
   }
@@ -36,5 +42,9 @@ export class UserAndGroupDefaultNavigator extends UserAndGroupNavigator {
 
   toUserOverview(): string {
     return USER_PATH;
+  }
+
+  toUserDetail(id: number | string): string {
+    return `${USER_PATH}/${id}/${USER_DETAIL_PATH}`;
   }
 }

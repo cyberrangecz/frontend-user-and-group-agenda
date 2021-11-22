@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
@@ -18,20 +18,24 @@ import {
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
   createPaginationServiceSpy,
+  createNavigatorSpy,
 } from '../../../internal/src/testing/testing-commons';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
+import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
 
 describe('GroupOverviewComponent', () => {
   let component: GroupOverviewComponent;
   let fixture: ComponentFixture<GroupOverviewComponent>;
   let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
+  let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<GroupOverviewService>;
 
   beforeEach(async(() => {
     contextSpy = createContextSpy();
     paginationServiceSpy = createPaginationServiceSpy();
+    navigatorSpy = createNavigatorSpy();
     overviewSpy = jasmine.createSpyObj('UserOverviewComponent', [
       'getAll',
       'delete',
@@ -45,11 +49,14 @@ describe('GroupOverviewComponent', () => {
     overviewSpy.hasError$ = of(false);
     overviewSpy.isLoading$ = of(false);
     overviewSpy.selected$ = of([]);
+    navigatorSpy.toGroupDetail.and.returnValue('group-detail');
+    navigatorSpy.toUserOverview.and.returnValue('group-overview');
     TestBed.configureTestingModule({
       imports: [GroupOverviewMaterialModule],
       declarations: [GroupOverviewComponent],
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
+        { provide: UserAndGroupNavigator, useValue: navigatorSpy },
         { provide: GroupOverviewService, useValue: overviewSpy },
         { provide: PaginationService, useValue: paginationServiceSpy },
       ],
@@ -69,16 +76,16 @@ describe('GroupOverviewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should request data on init', () => {
+  it('should request data on init', fakeAsync(() => {
     const expectedRequestedPagination = new RequestedPagination(
       0,
-      contextSpy.config.defaultPaginationSize,
+      paginationServiceSpy.getPagination(),
       component.INIT_SORT_NAME,
       component.INIT_SORT_DIR
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, undefined);
-  });
+  }));
 
   it('should init controls on init', () => {
     expect(component.controls).toBeTruthy();
@@ -166,7 +173,7 @@ describe('GroupOverviewComponent', () => {
     expect(overviewSpy.setSelection).toHaveBeenCalledWith(expectedGroups);
   });
 
-  it('should call bound method on kypo table refresh output', () => {
+  it('should call bound method on kypo table refresh output', fakeAsync(() => {
     spyOn(component, 'onLoadTableEvent');
     expect(component.onLoadTableEvent).toHaveBeenCalledTimes(0);
 
@@ -176,11 +183,12 @@ describe('GroupOverviewComponent', () => {
     kypoTableEl.triggerEventHandler('refresh', expectedEvent);
     expect(component.onLoadTableEvent).toHaveBeenCalledTimes(1);
     expect(component.onLoadTableEvent).toHaveBeenCalledWith(expectedEvent);
-  });
+  }));
 
-  it('should call bound method on kypo table row action', () => {
+  it('should call bound method on kypo table row action', fakeAsync(() => {
     spyOn(component, 'onTableAction');
     expect(component.onTableAction).toHaveBeenCalledTimes(0);
+    navigatorSpy.toGroupDetail.and.returnValue('test-url');
 
     const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const group = new Group();
@@ -193,9 +201,9 @@ describe('GroupOverviewComponent', () => {
     kypoTableEl.triggerEventHandler('rowAction', expectedEvent);
     expect(component.onTableAction).toHaveBeenCalledTimes(1);
     expect(component.onTableAction).toHaveBeenCalledWith(expectedEvent);
-  });
+  }));
 
-  it('should call bound method on kypo table row selection', () => {
+  it('should call bound method on kypo table row selection', fakeAsync(() => {
     spyOn(component, 'onGroupSelected');
     expect(component.onGroupSelected).toHaveBeenCalledTimes(0);
 
@@ -205,9 +213,9 @@ describe('GroupOverviewComponent', () => {
     kypoTableEl.triggerEventHandler('rowSelection', expectedEvent);
     expect(component.onGroupSelected).toHaveBeenCalledTimes(1);
     expect(component.onGroupSelected).toHaveBeenCalledWith(expectedEvent);
-  });
+  }));
 
-  it('should call bound method on kypo controls action', () => {
+  it('should call bound method on kypo controls action', fakeAsync(() => {
     spyOn(component, 'onControlsAction');
     expect(component.onControlsAction).toHaveBeenCalledTimes(0);
 
@@ -217,12 +225,14 @@ describe('GroupOverviewComponent', () => {
     kypoControlsEl.triggerEventHandler('itemClicked', expectedEvent);
     expect(component.onControlsAction).toHaveBeenCalledTimes(1);
     expect(component.onControlsAction).toHaveBeenCalledWith(expectedEvent);
-  });
+  }));
 
   function createDefaultResource(): PaginatedResource<Group> {
     const groups = [new Group(), new Group(), new Group()];
     groups.forEach((group, index) => {
       group.id = index;
+      group.name = 'name';
+      group.description = 'description';
       group.expirationDate = new Date();
       group.roles = [];
       group.members = [];

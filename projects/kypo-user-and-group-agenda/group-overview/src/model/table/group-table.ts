@@ -6,16 +6,16 @@ import { GroupOverviewService } from '../../services/group-overview.service';
 import { GroupDeleteAction } from './group-delete-action';
 import { GroupEditAction } from './group-edit-action';
 import { GroupRowAdapter } from './group-row-adapter';
+import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
 
 /**
  * @dynamic
  * Class creating data source for group-overview table
  */
 export class GroupTable extends SentinelTable<GroupRowAdapter> {
-  constructor(resource: PaginatedResource<Group>, service: GroupOverviewService) {
-    const rows = resource.elements.map((element) => GroupTable.createRow(element, service));
+  constructor(resource: PaginatedResource<Group>, service: GroupOverviewService, navigator: UserAndGroupNavigator) {
+    const rows = resource.elements.map((element) => GroupTable.createRow(element, service, navigator));
     const columns = [
-      new Column('id', 'id', false),
       new Column('name', 'name', true),
       new Column('description', 'description', false),
       new Column('expirationDateFormatted', 'expiration date', false),
@@ -27,7 +27,11 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
     this.selectable = true;
   }
 
-  private static createRow(group: Group, service: GroupOverviewService): Row<GroupRowAdapter> {
+  private static createRow(
+    group: Group,
+    service: GroupOverviewService,
+    navigator: UserAndGroupNavigator
+  ): Row<GroupRowAdapter> {
     const rowAdapter = group as GroupRowAdapter;
     if (rowAdapter.expirationDate) {
       rowAdapter.expirationDateFormatted = `${group.expirationDate.getFullYear()}-${group.expirationDate.getMonth()}
@@ -35,7 +39,9 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
     } else {
       rowAdapter.expirationDateFormatted = '-';
     }
-    return new Row(rowAdapter, GroupTable.createActions(group, service));
+    const row = new Row(rowAdapter, GroupTable.createActions(group, service));
+    row.addLink('name', navigator.toGroupDetail(rowAdapter.id));
+    return row;
   }
 
   private static createActions(group: Group, service: GroupOverviewService): RowAction[] {

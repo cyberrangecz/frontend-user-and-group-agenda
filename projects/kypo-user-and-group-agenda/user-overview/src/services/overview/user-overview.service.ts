@@ -19,6 +19,12 @@ export abstract class UserOverviewService extends SelectablePaginatedService<Use
   abstract getAll(pagination?: RequestedPagination, filter?: string): Observable<PaginatedResource<User>>;
 
   /**
+   * Gets user with given user id
+   * @param userId user id
+   */
+  abstract get(userId: number): Observable<User>;
+
+  /**
    * Deletes user
    * @param user a user to be deleted
    */

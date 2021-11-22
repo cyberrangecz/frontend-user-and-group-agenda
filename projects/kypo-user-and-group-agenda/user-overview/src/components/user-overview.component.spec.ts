@@ -17,32 +17,39 @@ import {
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
   createPaginationServiceSpy,
+  createNavigatorSpy,
 } from '../../../internal/src/testing/testing-commons';
 import { UserMaterialModule } from './user-material.module';
 import { UserOverviewComponent } from './user-overview.component';
+import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
 
 describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;
   let fixture: ComponentFixture<UserOverviewComponent>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<UserOverviewService>;
+  let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
   let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
 
   beforeEach(async(() => {
     contextSpy = createContextSpy();
     paginationServiceSpy = createPaginationServiceSpy();
+    navigatorSpy = createNavigatorSpy();
     overviewSpy = jasmine.createSpyObj('UserOverviewComponent', ['getAll', 'delete', 'deleteSelected', 'setSelection']);
     overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
     overviewSpy.resource$ = of(createDefaultResource());
     overviewSpy.hasError$ = of(false);
     overviewSpy.isLoading$ = of(false);
     overviewSpy.selected$ = of([]);
+    navigatorSpy.toUserDetail.and.returnValue('user-detail');
+    navigatorSpy.toUserOverview.and.returnValue('user-overview');
     TestBed.configureTestingModule({
       imports: [UserMaterialModule],
       declarations: [UserOverviewComponent],
       providers: [
         { provide: UserAndGroupContext, useValue: contextSpy },
         { provide: UserOverviewService, useValue: overviewSpy },
+        { provide: UserAndGroupNavigator, useValue: navigatorSpy },
         { provide: PaginationService, useValue: paginationServiceSpy },
       ],
     })
@@ -126,6 +133,7 @@ describe('UserOverviewComponent', () => {
   it('should call service on user selected', () => {
     expect(overviewSpy.setSelection).toHaveBeenCalledTimes(0);
     const expectedUsers = createDefaultResource().elements;
+    navigatorSpy.toUserOverview.and.returnValue('test-url');
 
     component.onUserSelected(expectedUsers);
     expect(overviewSpy.setSelection).toHaveBeenCalledTimes(1);
@@ -142,7 +150,6 @@ describe('UserOverviewComponent', () => {
   it('should call bound method on kypo table refresh output', () => {
     spyOn(component, 'onLoadEvent');
     expect(component.onLoadEvent).toHaveBeenCalledTimes(0);
-
     const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
 
@@ -154,6 +161,7 @@ describe('UserOverviewComponent', () => {
   it('should call bound method on kypo table row action', () => {
     spyOn(component, 'onTableAction');
     expect(component.onTableAction).toHaveBeenCalledTimes(0);
+    navigatorSpy.toUserDetail.and.returnValue('test-url');
 
     const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
     const user = new User();
@@ -183,7 +191,6 @@ describe('UserOverviewComponent', () => {
   it('should call bound method on kypo controls action', () => {
     spyOn(component, 'onControlsAction');
     expect(component.onControlsAction).toHaveBeenCalledTimes(0);
-
     const kypoControlsEl = fixture.debugElement.query(By.css(SENTINEL_CONTROLS_COMPONENT_SELECTOR));
     const expectedEvent = new DeleteControlItem(0, EMPTY);
 

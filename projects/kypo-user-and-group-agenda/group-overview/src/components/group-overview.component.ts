@@ -8,6 +8,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupTable } from '../model/table/group-table';
 import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
+import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
 
 /**
  * Main smart component of group-overview overview page
@@ -34,7 +35,11 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
 
   controls: SentinelControlItem[];
 
-  constructor(private groupService: GroupOverviewService, private paginationService: PaginationService) {
+  constructor(
+    private groupService: GroupOverviewService,
+    private paginationService: PaginationService,
+    private navigator: UserAndGroupNavigator
+  ) {
     super();
   }
 
@@ -42,7 +47,9 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
     );
-    this.groups$ = this.groupService.resource$.pipe(map((groups) => new GroupTable(groups, this.groupService)));
+    this.groups$ = this.groupService.resource$.pipe(
+      map((groups) => new GroupTable(groups, this.groupService, this.navigator))
+    );
     this.groupsHasError$ = this.groupService.hasError$;
     this.groupService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
     this.onLoadTableEvent(initialLoadEvent);

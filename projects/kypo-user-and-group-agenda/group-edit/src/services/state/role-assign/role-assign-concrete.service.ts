@@ -56,11 +56,11 @@ export class RoleAssignConcreteService extends RoleAssignService {
   ): Observable<PaginatedResource<UserRole>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
-    const filter = new SentinelFilter('name', filterValue);
+    const filter = filterValue ? [new SentinelFilter('roleType', filterValue)] : [];
     this.clearSelectedAssignedRoles();
     this.hasErrorSubject$.next(false);
     this.isLoadingAssignedSubject$.next(true);
-    return this.api.getRolesOfGroup(resourceId, pagination, [filter]).pipe(
+    return this.api.getRolesOfGroup(resourceId, pagination, filter).pipe(
       tap(
         (roles) => {
           this.assignedRolesSubject$.next(roles);

@@ -8,6 +8,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { UserTable } from '../model/user-table';
 import { PaginationService, DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserOverviewService } from '../services/overview/user-overview.service';
+import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
 
 /**
  * Main smart component of user overview page
@@ -33,7 +34,11 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
 
   controls: SentinelControlItem[];
 
-  constructor(private userService: UserOverviewService, private paginationService: PaginationService) {
+  constructor(
+    private userService: UserOverviewService,
+    private paginationService: PaginationService,
+    private navigator: UserAndGroupNavigator
+  ) {
     super();
   }
 
@@ -41,7 +46,9 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
     );
-    this.users$ = this.userService.resource$.pipe(map((groups) => new UserTable(groups, this.userService)));
+    this.users$ = this.userService.resource$.pipe(
+      map((groups) => new UserTable(groups, this.userService, this.navigator))
+    );
     this.usersHasError$ = this.userService.hasError$;
     this.onLoadEvent(initialLoadEvent);
     this.userService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));

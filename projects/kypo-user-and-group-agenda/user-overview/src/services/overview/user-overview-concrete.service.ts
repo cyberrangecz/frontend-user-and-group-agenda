@@ -59,6 +59,23 @@ export class UserOverviewConcreteService extends UserOverviewService {
   }
 
   /**
+   * Gets user with given user id
+   * @param userId user id
+   */
+  get(userId: number): Observable<User> {
+    this.hasErrorSubject$.next(false);
+    return this.api.get(userId).pipe(
+      tap(
+        (_) => _,
+        (err) => {
+          this.errorHandler.emit(err, `Fetching user with id: ${userId}`);
+          this.hasErrorSubject$.next(true);
+        }
+      )
+    );
+  }
+
+  /**
    * Deletes user, informs about the result and refreshes list of users or handles error
    * @param user user to be deleted
    */

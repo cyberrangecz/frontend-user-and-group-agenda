@@ -20,7 +20,7 @@ export const environment = {
         backgroundColor: '#002776',
         oidcConfig: {
           issuer: 'https://172.19.0.22:8443/csirtmu-dummy-issuer-server/',
-          clientId: '0bf33f00-2700-4efb-ab09-186076f85c7d',
+          clientId: '6e81dde5-91c0-4a9d-b21b-d443989fd1b9',
           redirectUri: 'https:/localhost:4200', // redirect after successful login
           scope: 'openid email profile',
           logoutUrl: 'https://172.19.0.22/csirtmu-dummy-issuer-server/endsession/endsession',

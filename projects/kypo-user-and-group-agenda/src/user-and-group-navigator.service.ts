@@ -9,6 +9,11 @@ export abstract class UserAndGroupNavigator {
   abstract toUserOverview(): string;
 
   /**
+   * Returns route to user detail page
+   */
+  abstract toUserDetail(id: number | string): string;
+
+  /**
    * Return route to group-overview overview page
    */
   abstract toGroupOverview(): string;
@@ -18,6 +23,11 @@ export abstract class UserAndGroupNavigator {
    * @param id id of the group-overview
    */
   abstract toGroupEdit(id: number | string): string;
+
+  /**
+   * Returns route to new group-detail page
+   */
+  abstract toGroupDetail(id: number | string): string;
 
   /**
    * Returns route to new group-overview page

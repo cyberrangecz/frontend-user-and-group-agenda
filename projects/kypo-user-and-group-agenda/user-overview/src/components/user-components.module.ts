@@ -12,15 +12,17 @@ import {
 import { UserOverviewConcreteService } from '../services/overview/user-overview-concrete.service';
 import { UserOverviewService } from '../services/overview/user-overview.service';
 import { InternalSharedModule, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserDetailComponent } from './detail/user-detail.component';
 import { UserOverviewComponent } from './user-overview.component';
 import { UserMaterialModule } from './user-material.module';
+import { UserResolverService } from '../services/resolvers/user-resolver.service';
+import { UserTitleResolverService } from '../services/resolvers/user-title-resolver.service';
+import { UserBreadcrumbResolverService } from '../services/resolvers/user-breadcrumb-resolver.service';
 
 /**
  * Module containing declarations and necessary imports for user related components
  */
 @NgModule({
-  declarations: [UserOverviewComponent, UserDetailComponent],
+  declarations: [UserOverviewComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,8 +31,11 @@ import { UserMaterialModule } from './user-material.module';
     InternalSharedModule,
     SentinelControlsModule,
   ],
-  exports: [UserMaterialModule, UserOverviewComponent, UserDetailComponent],
+  exports: [UserMaterialModule, UserOverviewComponent],
   providers: [
+    UserResolverService,
+    UserTitleResolverService,
+    UserBreadcrumbResolverService,
     PaginationService,
     { provide: UserOverviewService, useClass: UserOverviewConcreteService },
     { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },

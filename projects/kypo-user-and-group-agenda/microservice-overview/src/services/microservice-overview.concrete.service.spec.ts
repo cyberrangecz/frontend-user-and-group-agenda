@@ -1,7 +1,7 @@
 import { take, skip } from 'rxjs/operators';
 import { MicroserviceFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { of, throwError } from 'rxjs';
 import { MicroserviceOverviewConcreteService } from './microservice-overview.concrete.service';
 import { UserAndGroupContext } from '../../../internal/src/services/user-and-group-context.service';
@@ -137,7 +137,7 @@ describe('MicroserviceOverviewConcreteService', () => {
       new Microservice('2', 'endpoint2', []),
       new Microservice('3', 'endpoint3', []),
     ];
-    const pagination = new SentinelPagination(0, microservices.length, 5, microservices.length, 1);
+    const pagination = new OffsetPagination(0, microservices.length, 5, microservices.length, 1);
     return new PaginatedResource<Microservice>(microservices, pagination);
   }
 });

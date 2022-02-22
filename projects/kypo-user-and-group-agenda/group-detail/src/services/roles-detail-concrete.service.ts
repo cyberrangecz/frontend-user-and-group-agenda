@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GroupApi, RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, RequestedPagination, SentinelFilter, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, SentinelFilter, OffsetPagination } from '@sentinel/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { RolesDetailService } from './roles-detail.service';
@@ -13,7 +13,7 @@ import { tap } from 'rxjs/operators';
  */
 @Injectable()
 export class RolesDetailConcreteService extends RolesDetailService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
   constructor(private api: GroupApi, private roleApi: RoleApi, private errorHandler: UserAndGroupErrorHandler) {
@@ -34,7 +34,7 @@ export class RolesDetailConcreteService extends RolesDetailService {
    */
   getAssigned(
     resourceId: number,
-    pagination: RequestedPagination,
+    pagination: OffsetPaginationEvent,
     filterValue: string = null
   ): Observable<PaginatedResource<UserRole>> {
     this.lastPagination = pagination;
@@ -58,6 +58,6 @@ export class RolesDetailConcreteService extends RolesDetailService {
   }
 
   private initSubject(): PaginatedResource<UserRole> {
-    return new PaginatedResource([], new SentinelPagination(0, 0, 10, 0, 0));
+    return new PaginatedResource([], new OffsetPagination(0, 0, 10, 0, 0));
   }
 }

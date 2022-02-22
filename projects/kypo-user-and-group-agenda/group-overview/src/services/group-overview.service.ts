@@ -1,4 +1,4 @@
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { Observable } from 'rxjs';
 import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -18,7 +18,7 @@ export abstract class GroupOverviewService extends SelectablePaginatedService<Gr
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  abstract getAll(pagination?: RequestedPagination, filter?: string): Observable<PaginatedResource<Group>>;
+  abstract getAll(pagination?: PaginationBaseEvent, filter?: string): Observable<PaginatedResource<Group>>;
 
   /**
    * Deletes group-overview

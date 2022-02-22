@@ -2,7 +2,7 @@ import { MicroserviceFilter } from '@muni-kypo-crp/user-and-group-agenda/interna
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { Injectable } from '@angular/core';
 import { MicroserviceOverviewService } from './microservice-overview.service';
-import { RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
 import { Router } from '@angular/router';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
@@ -12,7 +12,7 @@ import { UserAndGroupNavigator, UserAndGroupErrorHandler } from '@muni-kypo-crp/
 
 @Injectable()
 export class MicroserviceOverviewConcreteService extends MicroserviceOverviewService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
   constructor(
@@ -30,7 +30,7 @@ export class MicroserviceOverviewConcreteService extends MicroserviceOverviewSer
    * @param pagination requested pagination
    * @param filter filter to be applied on microservices
    */
-  getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Microservice>> {
+  getAll(pagination: OffsetPaginationEvent, filter: string = null): Observable<PaginatedResource<Microservice>> {
     this.lastPagination = pagination;
     this.lastFilter = filter;
     this.clearSelection();

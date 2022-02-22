@@ -1,10 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
-import { EMPTY, of } from 'rxjs';
+import { SentinelTableComponent, TableLoadEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
+import { defer, EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -32,39 +32,45 @@ describe('GroupOverviewComponent', () => {
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<GroupOverviewService>;
 
-  beforeEach(async(() => {
-    contextSpy = createContextSpy();
-    paginationServiceSpy = createPaginationServiceSpy();
-    navigatorSpy = createNavigatorSpy();
-    overviewSpy = jasmine.createSpyObj('UserOverviewComponent', [
-      'getAll',
-      'delete',
-      'deleteSelected',
-      'edit',
-      'create',
-      'setSelection',
-    ]);
-    overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
-    overviewSpy.resource$ = of(createDefaultResource());
-    overviewSpy.hasError$ = of(false);
-    overviewSpy.isLoading$ = of(false);
-    overviewSpy.selected$ = of([]);
-    navigatorSpy.toGroupDetail.and.returnValue('group-detail');
-    navigatorSpy.toUserOverview.and.returnValue('group-overview');
-    TestBed.configureTestingModule({
-      imports: [GroupOverviewMaterialModule],
-      declarations: [GroupOverviewComponent],
-      providers: [
-        { provide: UserAndGroupContext, useValue: contextSpy },
-        { provide: UserAndGroupNavigator, useValue: navigatorSpy },
-        { provide: GroupOverviewService, useValue: overviewSpy },
-        { provide: PaginationService, useValue: paginationServiceSpy },
-      ],
+  beforeEach(
+    waitForAsync(() => {
+      contextSpy = createContextSpy();
+      paginationServiceSpy = createPaginationServiceSpy();
+      navigatorSpy = createNavigatorSpy();
+      overviewSpy = jasmine.createSpyObj('GroupOverviewComponent', [
+        'getAll',
+        'delete',
+        'deleteSelected',
+        'edit',
+        'create',
+        'setSelection',
+      ]);
+      overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
+      overviewSpy.create.and.returnValue(EMPTY);
+      overviewSpy.delete.and.returnValue(EMPTY);
+      overviewSpy.edit.and.returnValue(EMPTY);
+      overviewSpy.deleteSelected.and.returnValue(EMPTY);
+      overviewSpy.resource$ = of(createDefaultResource());
+      overviewSpy.hasError$ = of(false);
+      overviewSpy.isLoading$ = of(false);
+      overviewSpy.selected$ = of([]);
+      navigatorSpy.toGroupDetail.and.returnValue('group-detail');
+      navigatorSpy.toUserOverview.and.returnValue('group-overview');
+      TestBed.configureTestingModule({
+        imports: [GroupOverviewMaterialModule],
+        declarations: [GroupOverviewComponent],
+        providers: [
+          { provide: UserAndGroupContext, useValue: contextSpy },
+          { provide: UserAndGroupNavigator, useValue: navigatorSpy },
+          { provide: GroupOverviewService, useValue: overviewSpy },
+          { provide: PaginationService, useValue: paginationServiceSpy },
+        ],
+      })
+        .overrideComponent(SentinelTableComponent, createSentinelOverride())
+        .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
+        .compileComponents();
     })
-      .overrideComponent(SentinelTableComponent, createSentinelOverride())
-      .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupOverviewComponent);
@@ -77,14 +83,14 @@ describe('GroupOverviewComponent', () => {
   });
 
   it('should request data on init', fakeAsync(() => {
-    const expectedRequestedPagination = new RequestedPagination(
+    const expectedOffsetPaginationEvent = new OffsetPaginationEvent(
       0,
       paginationServiceSpy.getPagination(),
       component.INIT_SORT_NAME,
       component.INIT_SORT_DIR
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
-    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, undefined);
+    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);
   }));
 
   it('should init controls on init', () => {
@@ -157,9 +163,9 @@ describe('GroupOverviewComponent', () => {
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     const expectedPagination = createPagination();
     const expectedFilter = 'someFilter';
-    const loadEvent = new LoadTableEvent(expectedPagination, expectedFilter);
+    const loadEvent: TableLoadEvent = { pagination: expectedPagination, filter: expectedFilter };
 
-    component.onLoadTableEvent(loadEvent);
+    component.onTableLoadEvent(loadEvent);
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(2);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(loadEvent.pagination, loadEvent.filter);
   });
@@ -174,15 +180,15 @@ describe('GroupOverviewComponent', () => {
   });
 
   it('should call bound method on kypo table refresh output', fakeAsync(() => {
-    spyOn(component, 'onLoadTableEvent');
-    expect(component.onLoadTableEvent).toHaveBeenCalledTimes(0);
+    spyOn(component, 'onTableLoadEvent');
+    expect(component.onTableLoadEvent).toHaveBeenCalledTimes(0);
 
     const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
-    const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
+    const expectedEvent: TableLoadEvent = { pagination: createPagination(), filter: 'someFilter' };
 
-    kypoTableEl.triggerEventHandler('refresh', expectedEvent);
-    expect(component.onLoadTableEvent).toHaveBeenCalledTimes(1);
-    expect(component.onLoadTableEvent).toHaveBeenCalledWith(expectedEvent);
+    kypoTableEl.triggerEventHandler('tableLoad', expectedEvent);
+    expect(component.onTableLoadEvent).toHaveBeenCalledTimes(1);
+    expect(component.onTableLoadEvent).toHaveBeenCalledWith(expectedEvent);
   }));
 
   it('should call bound method on kypo table row action', fakeAsync(() => {
@@ -237,7 +243,7 @@ describe('GroupOverviewComponent', () => {
       group.roles = [];
       group.members = [];
     });
-    const pagination = new SentinelPagination(0, groups.length, 5, groups.length, 1);
+    const pagination = new OffsetPagination(0, groups.length, 5, groups.length, 1);
     return new PaginatedResource<Group>(groups, pagination);
   }
 });

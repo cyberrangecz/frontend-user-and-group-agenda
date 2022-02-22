@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';
@@ -281,7 +281,7 @@ describe('GroupOverviewConcreteService', () => {
 
   function createExpectedResource(): PaginatedResource<Group> {
     const groups = [new Group(), new Group(), new Group()];
-    const pagination = new SentinelPagination(0, groups.length, 5, groups.length, 1);
+    const pagination = new OffsetPagination(0, groups.length, 5, groups.length, 1);
     return new PaginatedResource<Group>(groups, pagination);
   }
 });

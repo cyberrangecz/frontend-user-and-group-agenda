@@ -6,7 +6,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
@@ -26,7 +26,7 @@ import { GroupOverviewService } from './group-overview.service';
 
 @Injectable()
 export class GroupOverviewConcreteService extends GroupOverviewService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
   constructor(
@@ -46,7 +46,7 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
    * @param pagination requested pagination
    * @param filter filter to be applied on groups
    */
-  getAll(pagination: RequestedPagination, filter: string = null): Observable<PaginatedResource<Group>> {
+  getAll(pagination: OffsetPaginationEvent, filter: string = null): Observable<PaginatedResource<Group>> {
     this.lastPagination = pagination;
     this.lastFilter = filter;
     this.clearSelection();

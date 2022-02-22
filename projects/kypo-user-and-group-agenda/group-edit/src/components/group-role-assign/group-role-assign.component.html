@@ -40,7 +40,7 @@
                  [hasError]="assignedRolesHasError$ | async"
                  [data]="assignedRoles$ | async"
                  [isLoading]="isLoadingAssignedRoles$ | async"
-                 (refresh)="onAssignedRolesLoad($event)"
+                 (tableLoad)="onAssignedRolesLoad($event)"
                  (rowAction)="onAssignedRolesTableAction($event)"
                  (rowSelection)="onAssignedRolesSelection($event)">
     </sentinel-table>

@@ -4,7 +4,7 @@
   [defaultSortDirection]="INIT_SORT_DIR"
   [data]="microservices$ | async"
   [hasError]="microservicesHasError$ | async"
-  (refresh)="onLoadTableEvent($event)"
+  (tableLoad)="onTableLoadEvent($event)"
   (rowAction)="onTableAction($event)"
 >
 </sentinel-table>

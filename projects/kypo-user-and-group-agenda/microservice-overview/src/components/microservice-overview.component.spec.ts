@@ -5,9 +5,9 @@ import {
   createPaginationServiceSpy,
 } from './../../../internal/src/testing/testing-commons';
 import { of, EMPTY } from 'rxjs';
-import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { SentinelTableComponent, LoadTableEvent } from '@sentinel/components/table';
+import { SentinelTableComponent, TableLoadEvent } from '@sentinel/components/table';
 import { UserAndGroupContext } from './../../../internal/src/services/user-and-group-context.service';
 import { MicroserviceOverviewMaterialModule } from './microservice-overview-material.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -36,6 +36,7 @@ describe('MicroserviceOverviewComponent', () => {
     paginationServiceSpy = createPaginationServiceSpy();
     overviewSpy = jasmine.createSpyObj('MicroserviceOverviewService', ['getAll', 'register']);
     overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
+    overviewSpy.register.and.returnValue(EMPTY);
     overviewSpy.resource$ = of(createDefaultResource());
     overviewSpy.hasError$ = of(false);
     overviewSpy.isLoading$ = of(false);
@@ -65,14 +66,14 @@ describe('MicroserviceOverviewComponent', () => {
   });
 
   it('should request data on init', () => {
-    const expectedRequestedPagination = new RequestedPagination(
+    const expectedOffsetPaginationEvent = new OffsetPaginationEvent(
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
       component.INIT_SORT_DIR
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
-    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, undefined);
+    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);
   });
 
   it('should init controls on init', () => {
@@ -101,23 +102,23 @@ describe('MicroserviceOverviewComponent', () => {
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     const expectedPagination = createPagination();
     const expectedFilter = 'someFilter';
-    const loadEvent = new LoadTableEvent(expectedPagination, expectedFilter);
+    const loadEvent: TableLoadEvent = { pagination: expectedPagination, filter: expectedFilter };
 
-    component.onLoadTableEvent(loadEvent);
+    component.onTableLoadEvent(loadEvent);
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(2);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(loadEvent.pagination, loadEvent.filter);
   });
 
   it('should call bound method on kypo table refresh output', () => {
-    spyOn(component, 'onLoadTableEvent');
-    expect(component.onLoadTableEvent).toHaveBeenCalledTimes(0);
+    spyOn(component, 'onTableLoadEvent');
+    expect(component.onTableLoadEvent).toHaveBeenCalledTimes(0);
 
     const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
-    const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
+    const expectedEvent: TableLoadEvent = { pagination: createPagination(), filter: 'someFilter' };
 
-    kypoTableEl.triggerEventHandler('refresh', expectedEvent);
-    expect(component.onLoadTableEvent).toHaveBeenCalledTimes(1);
-    expect(component.onLoadTableEvent).toHaveBeenCalledWith(expectedEvent);
+    kypoTableEl.triggerEventHandler('tableLoad', expectedEvent);
+    expect(component.onTableLoadEvent).toHaveBeenCalledTimes(1);
+    expect(component.onTableLoadEvent).toHaveBeenCalledWith(expectedEvent);
   });
 
   it('should call bound method on kypo controls action', () => {
@@ -142,7 +143,7 @@ describe('MicroserviceOverviewComponent', () => {
       microservice.id = index;
       microservice.valid = true;
     });
-    const pagination = new SentinelPagination(0, microservices.length, 5, microservices.length, 1);
+    const pagination = new OffsetPagination(0, microservices.length, 5, microservices.length, 1);
     return new PaginatedResource<Microservice>(microservices, pagination);
   }
 });

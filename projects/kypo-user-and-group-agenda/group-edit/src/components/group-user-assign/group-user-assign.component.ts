@@ -8,11 +8,11 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { combineLatest, defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
@@ -164,7 +164,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
    * Calls service to get data for assigned users table
    * @param loadEvent event to load new data emitted by assigned users table component
    */
-  onAssignedLoadEvent(loadEvent: LoadTableEvent): void {
+  onAssignedLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.userAssignService
       .getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
@@ -214,14 +214,14 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
   }
 
   private initTable() {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(
         0,
         this.paginationService.getPagination(),
         this.MEMBERS_OF_GROUP_INIT_SORT_NAME,
         this.MEMBERS_OF_GROUP_INIT_SORT_DIR
-      )
-    );
+      ),
+    };
     this.assignedUsers$ = this.userAssignService.assignedUsers$.pipe(
       map((paginatedUsers) => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService))
     );

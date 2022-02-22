@@ -1,10 +1,10 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group, User } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTableComponent, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTableComponent, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 import { EMPTY, of } from 'rxjs';
 import { PaginationService, UserDeleteAction } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -185,7 +185,7 @@ describe('GroupUserAssignComponent', () => {
   // it('should call service on assigned users load', () => {
   //   userAssignService.getAssigned.and.returnValue(of(createUserResource()));
   //   expect(userAssignService.getAssigned).toHaveBeenCalledTimes(1);
-  //   const expectedLoadEvent = new LoadTableEvent(createPagination(), 'some filter');
+  //   const expectedLoadEvent = new TableLoadEvent(createPagination(), 'some filter');
   //
   //   component.onAssignedLoadEvent(expectedLoadEvent);
   //
@@ -340,7 +340,7 @@ describe('GroupUserAssignComponent', () => {
   // it('should call method on kypo table refresh event', () => {
   //   spyOn(component, 'onAssignedLoadEvent');
   //   expect(component.onAssignedLoadEvent).toHaveBeenCalledTimes(0);
-  //   const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
+  //   const expectedEvent = new TableLoadEvent(createPagination(), 'someFilter');
   //
   //   const tableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
   //   tableEl.triggerEventHandler('refresh', expectedEvent);
@@ -352,14 +352,14 @@ describe('GroupUserAssignComponent', () => {
   function createUserResource(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
     users.forEach((user, index) => (user.id = index));
-    const pagination = new SentinelPagination(0, 3, 10, 3, 1);
+    const pagination = new OffsetPagination(0, 3, 10, 3, 1);
     return new PaginatedResource<User>(users, pagination);
   }
 
   function createGroupResource(): PaginatedResource<Group> {
     const groups = [new Group(), new Group(), new Group()];
     groups.forEach((group, index) => (group.id = index));
-    const pagination = new SentinelPagination(0, 3, 10, 3, 1);
+    const pagination = new OffsetPagination(0, 3, 10, 3, 1);
     return new PaginatedResource<Group>(groups, pagination);
   }
 });

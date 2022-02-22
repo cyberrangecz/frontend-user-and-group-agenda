@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { GroupTable } from '../model/table/group-table';
@@ -44,15 +44,20 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
   }
 
   ngOnInit(): void {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
-    );
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(),
+        this.INIT_SORT_NAME,
+        this.INIT_SORT_DIR
+      ),
+    };
     this.groups$ = this.groupService.resource$.pipe(
       map((groups) => new GroupTable(groups, this.groupService, this.navigator))
     );
     this.groupsHasError$ = this.groupService.hasError$;
     this.groupService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
-    this.onLoadTableEvent(initialLoadEvent);
+    this.onTableLoadEvent(initialLoadEvent);
   }
 
   onControlsAction(controlItem: SentinelControlItem): void {
@@ -63,7 +68,7 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
    * Clears selected groups and calls service to get new data for groups table
    * @param event event emitted from table component
    */
-  onLoadTableEvent(event: LoadTableEvent): void {
+  onTableLoadEvent(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
     this.groupService
       .getAll(event.pagination, event.filter)

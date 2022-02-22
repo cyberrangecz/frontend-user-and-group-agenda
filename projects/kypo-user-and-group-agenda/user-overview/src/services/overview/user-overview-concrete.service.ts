@@ -5,7 +5,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
@@ -21,7 +21,7 @@ import { UserOverviewService } from './user-overview.service';
 
 @Injectable()
 export class UserOverviewConcreteService extends UserOverviewService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
   constructor(
@@ -39,7 +39,7 @@ export class UserOverviewConcreteService extends UserOverviewService {
    * @param pagination requested pagination
    * @param filterValue filter to be applied on resources
    */
-  getAll(pagination?: RequestedPagination, filterValue: string = null): Observable<PaginatedResource<User>> {
+  getAll(pagination?: OffsetPaginationEvent, filterValue: string = null): Observable<PaginatedResource<User>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
     const filters = filterValue ? [new UserFilter(filterValue)] : [];
@@ -119,5 +119,14 @@ export class UserOverviewConcreteService extends UserOverviewService {
       ),
       switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
     );
+  }
+
+  /**
+   * Gets OIDC users info
+   */
+  getLocalOIDCUsers(): Observable<any> {
+    return this.api
+      .getLocalOIDCUsers()
+      .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Downloading OIDC users info') }));
   }
 }

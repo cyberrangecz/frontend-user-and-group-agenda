@@ -8,11 +8,11 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SentinelBaseDirective, RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { defer, Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
@@ -115,7 +115,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
     this.roleAssignService.setSelectedRolesToAssign(selected);
   }
 
-  onAssignedRolesLoad(event: LoadTableEvent): void {
+  onAssignedRolesLoad(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
     this.roleAssignService
       .getAssigned(this.resource.id, event.pagination, event.filter)
@@ -153,14 +153,14 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
     );
     this.assignedRolesHasError$ = this.roleAssignService.hasError$;
     this.isLoadingAssignedRoles$ = this.roleAssignService.isLoadingAssigned$;
-    const initialLoadEvent = new LoadTableEvent(
-      new RequestedPagination(
+    const initialLoadEvent = {
+      pagination: new OffsetPaginationEvent(
         0,
         this.paginationService.getPagination(),
         this.ROLES_OF_GROUP_INIT_SORT_NAME,
         this.ROLES_OF_GROUP_INIT_SORT_DIR
-      )
-    );
+      ),
+    };
     this.onAssignedRolesLoad(initialLoadEvent);
   }
 

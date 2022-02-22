@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { GroupApi, UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group, User } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';
@@ -344,14 +344,14 @@ describe('UserAssignConcreteService', () => {
   function createUsers(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
     users.forEach((user, index) => (user.id = index));
-    const pagination = new SentinelPagination(0, users.length, 5, users.length, 1);
+    const pagination = new OffsetPagination(0, users.length, 5, users.length, 1);
     return new PaginatedResource<User>(users, pagination);
   }
 
   function createGroups(): PaginatedResource<Group> {
     const groups = [new Group(), new Group(), new Group()];
     groups.forEach((group, index) => (group.id = index));
-    const pagination = new SentinelPagination(0, groups.length, 5, groups.length, 1);
+    const pagination = new OffsetPagination(0, groups.length, 5, groups.length, 1);
     return new PaginatedResource<Group>(groups, pagination);
   }
 });

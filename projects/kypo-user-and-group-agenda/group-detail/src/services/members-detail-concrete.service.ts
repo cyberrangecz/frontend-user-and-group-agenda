@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestedPagination, PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -22,7 +22,7 @@ export class MembersDetailConcreteService extends MembersDetailService {
     super();
   }
 
-  private lastAssignedPagination: RequestedPagination;
+  private lastAssignedPagination: OffsetPaginationEvent;
   private lastAssignedFilter: string;
 
   private assignedUsersSubject$: BehaviorSubject<PaginatedResource<User>> = new BehaviorSubject(this.initSubject());
@@ -39,7 +39,7 @@ export class MembersDetailConcreteService extends MembersDetailService {
    */
   getAssigned(
     resourceId: number,
-    pagination: RequestedPagination,
+    pagination: OffsetPaginationEvent,
     filterValue: string = null
   ): Observable<PaginatedResource<User>> {
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
@@ -63,6 +63,6 @@ export class MembersDetailConcreteService extends MembersDetailService {
   }
 
   private initSubject() {
-    return new PaginatedResource([], new SentinelPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
+    return new PaginatedResource([], new OffsetPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
   }
 }

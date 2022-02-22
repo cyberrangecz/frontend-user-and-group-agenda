@@ -2,10 +2,10 @@ import { RegisterControlItem, PaginationService } from '@muni-kypo-crp/user-and-
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, defer, of } from 'rxjs';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { take, takeWhile, map } from 'rxjs/operators';
 
@@ -36,15 +36,20 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
   }
 
   ngOnInit(): void {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
-    );
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(),
+        this.INIT_SORT_NAME,
+        this.INIT_SORT_DIR
+      ),
+    };
     this.microservices$ = this.microserviceService.resource$.pipe(
       map((microservices) => new MicroserviceTable(microservices))
     );
     this.microservicesHasError$ = this.microserviceService.hasError$;
     this.microserviceService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.initControls());
-    this.onLoadTableEvent(initialLoadEvent);
+    this.onTableLoadEvent(initialLoadEvent);
   }
 
   onControlsAction(controlItem: SentinelControlItem): void {
@@ -55,7 +60,7 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
    * Clears selected microservices and calls service to get new data for microservices table
    * @param event event emitted from table component
    */
-  onLoadTableEvent(event: LoadTableEvent): void {
+  onTableLoadEvent(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
     this.microserviceService
       .getAll(event.pagination, event.filter)

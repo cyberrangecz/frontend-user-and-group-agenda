@@ -5,7 +5,7 @@
   [defaultSortDirection]="INIT_SORT_DIR"
   [data]="groups$ | async"
   [hasError]="groupsHasError$ | async"
-  (refresh)="onLoadTableEvent($event)"
+  (tableLoad)="onTableLoadEvent($event)"
   (rowAction)="onTableAction($event)"
   (rowSelection)="onGroupSelected($event)">
 </sentinel-table>

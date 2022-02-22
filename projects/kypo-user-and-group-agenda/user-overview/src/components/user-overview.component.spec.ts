@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, SentinelPagination, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTableComponent, LoadTableEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTableComponent, TableLoadEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -37,6 +37,8 @@ describe('UserOverviewComponent', () => {
     navigatorSpy = createNavigatorSpy();
     overviewSpy = jasmine.createSpyObj('UserOverviewComponent', ['getAll', 'delete', 'deleteSelected', 'setSelection']);
     overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
+    overviewSpy.delete.and.returnValue(EMPTY);
+    overviewSpy.deleteSelected.and.returnValue(EMPTY);
     overviewSpy.resource$ = of(createDefaultResource());
     overviewSpy.hasError$ = of(false);
     overviewSpy.isLoading$ = of(false);
@@ -69,14 +71,14 @@ describe('UserOverviewComponent', () => {
   });
 
   it('should request data on init', () => {
-    const expectedRequestedPagination = new RequestedPagination(
+    const expectedOffsetPaginationEvent = new OffsetPaginationEvent(
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
       component.INIT_SORT_DIR
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
-    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedRequestedPagination, undefined);
+    expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);
   });
 
   it('should init controls on init', () => {
@@ -123,7 +125,7 @@ describe('UserOverviewComponent', () => {
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     const expectedPagination = createPagination();
     const expectedFilter = 'someFilter';
-    const loadEvent = new LoadTableEvent(expectedPagination, expectedFilter);
+    const loadEvent: TableLoadEvent = { pagination: expectedPagination, filter: expectedFilter };
 
     component.onLoadEvent(loadEvent);
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(2);
@@ -143,7 +145,7 @@ describe('UserOverviewComponent', () => {
   function createDefaultResource(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
     users.forEach((user, index) => (user.id = index));
-    const pagination = new SentinelPagination(0, users.length, 5, users.length, 1);
+    const pagination = new OffsetPagination(0, users.length, 5, users.length, 1);
     return new PaginatedResource<User>(users, pagination);
   }
 
@@ -151,9 +153,9 @@ describe('UserOverviewComponent', () => {
     spyOn(component, 'onLoadEvent');
     expect(component.onLoadEvent).toHaveBeenCalledTimes(0);
     const kypoTableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
-    const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
+    const expectedEvent: TableLoadEvent = { pagination: createPagination(), filter: 'someFilter' };
 
-    kypoTableEl.triggerEventHandler('refresh', expectedEvent);
+    kypoTableEl.triggerEventHandler('tableLoad', expectedEvent);
     expect(component.onLoadEvent).toHaveBeenCalledTimes(1);
     expect(component.onLoadEvent).toHaveBeenCalledWith(expectedEvent);
   });

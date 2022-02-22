@@ -1,7 +1,7 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group, UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, TableActionEvent } from '@sentinel/components/table';
@@ -128,7 +128,7 @@ describe('GroupRoleAssignComponent', () => {
   // it('should call service on assigned roles load', () => {
   //   roleAssignServiceSpy.getAssigned.and.returnValue(of(createUserRoleResource()));
   //   expect(roleAssignServiceSpy.getAssigned).toHaveBeenCalledTimes(1);
-  //   const expectedLoadEvent = new LoadTableEvent(createPagination(), 'some filter');
+  //   const expectedLoadEvent = new TableLoadEvent(createPagination(), 'some filter');
   //
   //   component.onAssignedRolesLoad(expectedLoadEvent);
   //
@@ -251,7 +251,7 @@ describe('GroupRoleAssignComponent', () => {
   // it('should call method on kypo table refresh event', () => {
   //   spyOn(component, 'onAssignedRolesLoad');
   //   expect(component.onAssignedRolesLoad).toHaveBeenCalledTimes(0);
-  //   const expectedEvent = new LoadTableEvent(createPagination(), 'someFilter');
+  //   const expectedEvent = new TableLoadEvent(createPagination(), 'someFilter');
   //
   //   const tableEl = fixture.debugElement.query(By.css(SENTINEL_TABLE_COMPONENT_SELECTOR));
   //   tableEl.triggerEventHandler('refresh', expectedEvent);
@@ -262,7 +262,7 @@ describe('GroupRoleAssignComponent', () => {
 
   function createUserRoleResource(): PaginatedResource<UserRole> {
     const roles = [new UserRole(), new UserRole(), new UserRole()];
-    const pagination = new SentinelPagination(0, 3, 10, 3, 1);
+    const pagination = new OffsetPagination(0, 3, 10, 3, 1);
     return new PaginatedResource<UserRole>(roles, pagination);
   }
 });

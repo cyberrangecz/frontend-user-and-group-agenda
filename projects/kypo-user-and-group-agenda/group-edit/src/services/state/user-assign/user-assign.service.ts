@@ -1,4 +1,4 @@
-import { RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { IPaginationEvent, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { Group, User } from '@muni-kypo-crp/user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -84,7 +84,7 @@ export abstract class UserAssignService {
    */
   abstract getAssigned(
     resourceId: number,
-    pagination: RequestedPagination,
+    pagination: IPaginationEvent,
     filterValue: string
   ): Observable<PaginatedResource<User>>;
 

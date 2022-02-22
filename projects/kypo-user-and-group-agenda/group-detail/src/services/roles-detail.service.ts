@@ -1,5 +1,5 @@
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
@@ -34,7 +34,7 @@ export abstract class RolesDetailService {
    */
   abstract getAssigned(
     resourceId: number,
-    pagination: RequestedPagination,
+    pagination: PaginationBaseEvent,
     filterValue?: string
   ): Observable<PaginatedResource<UserRole>>;
 }

@@ -28,7 +28,7 @@ import {
   UserAndGroupNavigator,
   UserAndGroupNotificationService,
 } from '@muni-kypo-crp/user-and-group-agenda';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 
 describe('GroupEditOverviewComponent', () => {
   let component: GroupEditOverviewComponent;

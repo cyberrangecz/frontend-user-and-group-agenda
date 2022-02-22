@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
-import { defer, Observable } from 'rxjs';
+import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { UserTable } from '../model/user-table';
 import { PaginationService, DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -43,9 +43,14 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
   }
 
   ngOnInit(): void {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
-    );
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(),
+        this.INIT_SORT_NAME,
+        this.INIT_SORT_DIR
+      ),
+    };
     this.users$ = this.userService.resource$.pipe(
       map((groups) => new UserTable(groups, this.userService, this.navigator))
     );
@@ -58,7 +63,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
    * Clears selected users and calls service to get new data for table component
    * @param event load table vent emitted by table component
    */
-  onLoadEvent(event: LoadTableEvent): void {
+  onLoadEvent(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
     this.userService
       .getAll(event.pagination, event.filter)
@@ -91,6 +96,13 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
       new DeleteControlItem(
         selectedUsersLength,
         defer(() => this.userService.deleteSelected())
+      ),
+      new SentinelControlItem(
+        'download_oidc_users',
+        'Get Local OIDC Users',
+        'primary',
+        of(false),
+        defer(() => this.userService.getLocalOIDCUsers())
       ),
     ];
   }

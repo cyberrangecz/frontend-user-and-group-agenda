@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestedPagination, SentinelPagination, PaginatedResource } from '@sentinel/common';
+import { OffsetPaginationEvent, OffsetPagination, PaginatedResource } from '@sentinel/common';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
@@ -25,7 +25,7 @@ export class UserAssignConcreteService extends UserAssignService {
     super();
   }
 
-  private lastAssignedPagination: RequestedPagination;
+  private lastAssignedPagination: OffsetPaginationEvent;
   private lastAssignedFilter: string;
 
   private assignedUsersSubject$: BehaviorSubject<PaginatedResource<User>> = new BehaviorSubject(this.initSubject());
@@ -73,7 +73,7 @@ export class UserAssignConcreteService extends UserAssignService {
    */
   getAssigned(
     resourceId: number,
-    pagination: RequestedPagination,
+    pagination: OffsetPaginationEvent,
     filterValue: string = null
   ): Observable<PaginatedResource<User>> {
     this.clearSelectedAssignedUsers();
@@ -105,7 +105,7 @@ export class UserAssignConcreteService extends UserAssignService {
   getUsersToAssign(resourceId: number, filterValue: string): Observable<PaginatedResource<User>> {
     const pageSize = 50;
     return this.userApi
-      .getUsersNotInGroup(resourceId, new RequestedPagination(0, pageSize, 'familyName', 'asc'), [
+      .getUsersNotInGroup(resourceId, new OffsetPaginationEvent(0, pageSize, 'familyName', 'asc'), [
         new UserFilter(filterValue),
       ])
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching users') }));
@@ -118,12 +118,12 @@ export class UserAssignConcreteService extends UserAssignService {
   getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>> {
     const pageSize = 50;
     return this.api
-      .getAll(new RequestedPagination(0, pageSize, 'name', 'asc'), [new GroupFilter(filterValue)])
+      .getAll(new OffsetPaginationEvent(0, pageSize, 'name', 'asc'), [new GroupFilter(filterValue)])
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching groups') }));
   }
 
   private initSubject() {
-    return new PaginatedResource([], new SentinelPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
+    return new PaginatedResource([], new OffsetPagination(0, 0, this.context.config.defaultPaginationSize, 0, 0));
   }
 
   private callApiToAssign(resourceId: number, userIds: number[], groupIds: number[]) {

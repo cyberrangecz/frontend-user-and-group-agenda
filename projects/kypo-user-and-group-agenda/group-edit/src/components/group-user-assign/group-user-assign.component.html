@@ -58,7 +58,7 @@
                  [isLoading]="isLoadingAssignedUsers$ | async"
                  (rowAction)="onAssignedUsersTableAction($event)"
                  (rowSelection)="onAssignedUsersSelection($event)"
-                 (refresh)="onAssignedLoadEvent($event)">
+                 (tableLoad)="onAssignedLoadEvent($event)">
     </sentinel-table>
   </mat-card-content>
 </mat-card>

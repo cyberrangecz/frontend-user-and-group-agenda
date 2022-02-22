@@ -1,4 +1,4 @@
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { Observable } from 'rxjs';
 import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -16,7 +16,7 @@ export abstract class UserOverviewService extends SelectablePaginatedService<Use
    * @param pagination requested pagination
    * @param filter filer to be applied on resource
    */
-  abstract getAll(pagination?: RequestedPagination, filter?: string): Observable<PaginatedResource<User>>;
+  abstract getAll(pagination?: PaginationBaseEvent, filter?: string): Observable<PaginatedResource<User>>;
 
   /**
    * Gets user with given user id
@@ -34,4 +34,9 @@ export abstract class UserOverviewService extends SelectablePaginatedService<Use
    * Deletes selected users
    */
   abstract deleteSelected(): Observable<any>;
+
+  /**
+   * Gets OIDC users info
+   */
+  abstract getLocalOIDCUsers(): Observable<boolean>;
 }

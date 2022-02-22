@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';
@@ -244,7 +244,7 @@ describe('UserOverviewConcreteService', () => {
 
   function createExpectedResource(): PaginatedResource<User> {
     const users = [new User(), new User(), new User()];
-    const pagination = new SentinelPagination(0, users.length, 5, users.length, 1);
+    const pagination = new OffsetPagination(0, users.length, 5, users.length, 1);
     return new PaginatedResource<User>(users, pagination);
   }
 });

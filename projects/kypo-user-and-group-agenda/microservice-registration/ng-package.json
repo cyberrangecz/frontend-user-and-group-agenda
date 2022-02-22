@@ -1,11 +1,5 @@
 {
   "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {
-      "@sentinel/common": "sentinel.common",
-      "@sentinel/components/dialogs": "sentinel.components.dialogs",
-      "@muni-kypo-crp/user-and-group-api": "muni-kypo-crp.user-and-group-api",
-      "@muni-kypo-crp/user-and-group-model": "muni-kypo-crp.user-and-group-model"
-    }
+    "entryFile": "src/public_api.ts"
   }
 }

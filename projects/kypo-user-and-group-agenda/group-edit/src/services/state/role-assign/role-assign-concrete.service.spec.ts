@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { GroupApi, RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';
@@ -266,7 +266,7 @@ describe('RoleAssignConcreteService', () => {
   function createResource(): PaginatedResource<UserRole> {
     const roles = [new UserRole(), new UserRole(), new UserRole()];
     roles.forEach((role, index) => (role.id = index));
-    const pagination = new SentinelPagination(0, roles.length, 5, roles.length, 1);
+    const pagination = new OffsetPagination(0, roles.length, 5, roles.length, 1);
     return new PaginatedResource<UserRole>(roles, pagination);
   }
 });

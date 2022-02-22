@@ -4,7 +4,7 @@
   [defaultSortDirection]="INIT_SORT_DIR"
   [data]="users$ | async"
   [hasError]="usersHasError$ | async"
-  (refresh)="onLoadEvent($event)"
+  (tableLoad)="onLoadEvent($event)"
   (rowAction)="onTableAction($event)"
   (rowSelection)="onUserSelected($event)">
 </sentinel-table>

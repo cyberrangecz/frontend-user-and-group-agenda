@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SentinelFilter, SentinelPagination, RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { SentinelFilter, OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
@@ -21,7 +21,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
    */
   assignedRoles$: Observable<PaginatedResource<UserRole>> = this.assignedRolesSubject$.asObservable();
 
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
   constructor(private api: GroupApi, private roleApi: RoleApi, private errorHandler: UserAndGroupErrorHandler) {
@@ -51,7 +51,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
    */
   getAssigned(
     resourceId: number,
-    pagination: RequestedPagination,
+    pagination: OffsetPaginationEvent,
     filterValue: string = null
   ): Observable<PaginatedResource<UserRole>> {
     this.lastPagination = pagination;
@@ -82,7 +82,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
   getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
-    const pagination = new RequestedPagination(0, paginationSize, 'roleType', 'asc');
+    const pagination = new OffsetPaginationEvent(0, paginationSize, 'roleType', 'asc');
     return this.roleApi
       .getAll(pagination, filter)
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching roles') }));
@@ -132,6 +132,6 @@ export class RoleAssignConcreteService extends RoleAssignService {
   }
 
   private initSubject(): PaginatedResource<UserRole> {
-    return new PaginatedResource([], new SentinelPagination(0, 0, 10, 0, 0));
+    return new PaginatedResource([], new OffsetPagination(0, 0, 10, 0, 0));
   }
 }

@@ -66,7 +66,7 @@
     [hasError]="membersTableHasError$ | async"
     [isLoading]="isLoadingMembers$ | async"
     [elevation]="0"
-    (refresh)="onMembersLoadEvent($event)"
+    (tableLoad)="onMembersLoadEvent($event)"
   >
   <ng-container *sentinelRow="'picture'; template: userPicture"></ng-container></sentinel-table>
 </mat-card>
@@ -78,7 +78,7 @@
     [hasError]="rolesTableHasError$ | async"
     [isLoading]="isLoadingRoles$ | async"
     [elevation]="0"
-    (refresh)="onRolesLoadEvent($event)"
+    (tableLoad)="onRolesLoadEvent($event)"
   >
 </sentinel-table>
 </mat-card>

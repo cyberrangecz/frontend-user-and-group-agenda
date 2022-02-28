@@ -1,3 +1,4 @@
+13.0.1 Fix package peer dependencies.
 13.0.0 Update to Angular 13, CI/CD optimization.
 12.1.0 Add group and user detail page.
 12.0.4 Add build of example app to CI. Rename endpoints from kypo2 to kypo. Save user preferred pagination. Fix problem with unsaved changes on discard. Add aliases to config. Remove roles count and members count column from group table.

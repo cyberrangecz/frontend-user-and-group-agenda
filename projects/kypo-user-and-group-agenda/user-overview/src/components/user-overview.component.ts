@@ -99,7 +99,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
       ),
       new SentinelControlItem(
         'download_oidc_users',
-        'Get Local OIDC Users',
+        'Get Users Credentials',
         'primary',
         of(false),
         defer(() => this.userService.getLocalOIDCUsers())

@@ -10,7 +10,7 @@ import {
   createGroupApiSpy,
   createPagination,
   createRoleApiSpy,
-} from '../../../../../internal/src/testing/testing-commons';
+} from '../../../../../internal/src/testing/testing-commons.spec';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { RoleAssignConcreteService } from './role-assign-concrete.service';
 import { RoleAssignService } from './role-assign.service';

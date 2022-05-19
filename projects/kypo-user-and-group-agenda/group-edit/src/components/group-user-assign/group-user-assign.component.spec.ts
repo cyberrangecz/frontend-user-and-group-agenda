@@ -26,7 +26,7 @@ import {
   createErrorHandlerSpy,
   createNotificationSpy,
   createUserApiSpy,
-} from '../../../../internal/src/testing/testing-commons';
+} from '../../../../internal/src/testing/testing-commons.spec';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupUserAssignComponent } from './group-user-assign.component';
 import { GroupApi, UserApi } from '@muni-kypo-crp/user-and-group-api';

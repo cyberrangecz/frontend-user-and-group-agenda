@@ -104,6 +104,13 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
         of(false),
         defer(() => this.userService.getLocalOIDCUsers())
       ),
+      new SentinelControlItem(
+        'import_users',
+        'Import Users',
+        'primary',
+        of(false),
+        defer(() => this.userService.importUsers())
+      ),
     ];
   }
 }

@@ -18,7 +18,7 @@ import {
   SENTINEL_TABLE_COMPONENT_SELECTOR,
   createPaginationServiceSpy,
   createNavigatorSpy,
-} from '../../../internal/src/testing/testing-commons';
+} from '../../../internal/src/testing/testing-commons.spec';
 import { UserMaterialModule } from './user-material.module';
 import { UserOverviewComponent } from './user-overview.component';
 import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';

@@ -3,7 +3,7 @@ import {
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   createPagination,
   createPaginationServiceSpy,
-} from './../../../internal/src/testing/testing-commons';
+} from '../../../internal/src/testing/testing-commons.spec';
 import { of, EMPTY } from 'rxjs';
 import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
@@ -18,7 +18,7 @@ import {
   createSentinelOverride,
   createSentinelControlsOverride,
   createContextSpy,
-} from '../../../internal/src/testing/testing-commons';
+} from '../../../internal/src/testing/testing-commons.spec';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { RegisterControlItem } from '../../../internal/src/model/controls/register-control-item';
 import { PaginationService } from '../../../internal/src/services/pagination.service';

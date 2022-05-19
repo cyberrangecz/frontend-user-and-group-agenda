@@ -11,7 +11,7 @@ import {
   createNavigatorSpy,
   createNotificationSpy,
   createRouterSpy,
-} from '../../../../internal/src/testing/testing-commons';
+} from '../../../../internal/src/testing/testing-commons.spec';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserAndGroupNotificationService } from '@muni-kypo-crp/user-and-group-agenda';

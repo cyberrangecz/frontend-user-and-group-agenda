@@ -17,12 +17,19 @@ import { UserMaterialModule } from './user-material.module';
 import { UserResolverService } from '../services/resolvers/user-resolver.service';
 import { UserTitleResolverService } from '../services/resolvers/user-title-resolver.service';
 import { UserBreadcrumbResolverService } from '../services/resolvers/user-breadcrumb-resolver.service';
+import { FileUploadProgressService } from '../services/file-upload/file-upload-progress.service';
+import { UsersUploadDialogComponent } from './upload-dialog/users-upload-dialog.component';
+import { ngfModule } from 'angular-file';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 /**
  * Module containing declarations and necessary imports for user related components
  */
 @NgModule({
-  declarations: [UserOverviewComponent],
+  declarations: [UserOverviewComponent, UsersUploadDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -30,6 +37,7 @@ import { UserBreadcrumbResolverService } from '../services/resolvers/user-breadc
     UserMaterialModule,
     InternalSharedModule,
     SentinelControlsModule,
+    ngfModule,
   ],
   exports: [UserMaterialModule, UserOverviewComponent],
   providers: [
@@ -37,6 +45,7 @@ import { UserBreadcrumbResolverService } from '../services/resolvers/user-breadc
     UserTitleResolverService,
     UserBreadcrumbResolverService,
     PaginationService,
+    FileUploadProgressService,
     { provide: UserOverviewService, useClass: UserOverviewConcreteService },
     { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
   ],

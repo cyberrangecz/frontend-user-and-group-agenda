@@ -9,10 +9,12 @@ import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { UserFilter, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserOverviewService } from './user-overview.service';
+import { UsersUploadDialogComponent } from '../../components/upload-dialog/users-upload-dialog.component';
+import { FileUploadProgressService } from '../file-upload/file-upload-progress.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -29,6 +31,7 @@ export class UserOverviewConcreteService extends UserOverviewService {
     private dialog: MatDialog,
     private alertService: UserAndGroupNotificationService,
     private configService: UserAndGroupContext,
+    private fileUploadProgressService: FileUploadProgressService,
     private errorHandler: UserAndGroupErrorHandler
   ) {
     super(configService.config.defaultPaginationSize);
@@ -128,5 +131,29 @@ export class UserOverviewConcreteService extends UserOverviewService {
     return this.api
       .getLocalOIDCUsers()
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Downloading OIDC users info') }));
+  }
+
+  /**
+   * Import users
+   */
+  importUsers(): Observable<any> {
+    const dialogRef = this.dialog.open(UsersUploadDialogComponent);
+    return dialogRef.componentInstance.onUpload$.pipe(
+      take(1),
+      tap(() => this.fileUploadProgressService.start()),
+      switchMap((file) => this.api.importUsers(file)),
+      tap(
+        () => {
+          this.alertService.emit('success', 'Users were imported');
+          this.fileUploadProgressService.finish();
+          dialogRef.close();
+        },
+        (err) => {
+          this.fileUploadProgressService.finish();
+          this.errorHandler.emit(err, 'Importing users');
+        }
+      ),
+      switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
+    );
   }
 }

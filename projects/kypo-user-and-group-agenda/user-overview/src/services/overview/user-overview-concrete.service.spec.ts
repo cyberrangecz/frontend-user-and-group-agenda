@@ -10,16 +10,18 @@ import { UserFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createErrorHandlerSpy,
+  createFileUploadProgressServiceSpy,
   createMatDialogSpy,
   createNotificationSpy,
   createPagination,
   createUserApiSpy,
-} from '../../../../internal/src/testing/testing-commons';
+} from '../../../../internal/src/testing/testing-commons.spec';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserAndGroupNotificationService } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserOverviewConcreteService } from './user-overview-concrete.service';
 import { UserOverviewService } from './user-overview.service';
+import { FileUploadProgressService } from '../file-upload/file-upload-progress.service';
 
 describe('UserOverviewConcreteService', () => {
   let service: UserOverviewService;
@@ -28,6 +30,7 @@ describe('UserOverviewConcreteService', () => {
   let dialogSpy: jasmine.SpyObj<MatDialog>;
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let errorHandlerSpy: jasmine.SpyObj<UserAndGroupErrorHandler>;
+  let fileUploadProgressServiceSpy: jasmine.SpyObj<FileUploadProgressService>;
 
   beforeEach(() => {
     apiSpy = createUserApiSpy();
@@ -35,8 +38,10 @@ describe('UserOverviewConcreteService', () => {
     dialogSpy = createMatDialogSpy();
     contextSpy = createContextSpy();
     errorHandlerSpy = createErrorHandlerSpy();
+    fileUploadProgressServiceSpy = createFileUploadProgressServiceSpy();
     TestBed.configureTestingModule({
       providers: [
+        { provide: FileUploadProgressService, useValue: fileUploadProgressServiceSpy },
         { provide: UserOverviewService, useClass: UserOverviewConcreteService },
         { provide: UserApi, useValue: apiSpy },
         { provide: UserAndGroupNotificationService, useValue: notificationSpy },

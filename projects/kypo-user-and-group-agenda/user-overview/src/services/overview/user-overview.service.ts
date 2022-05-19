@@ -39,4 +39,9 @@ export abstract class UserOverviewService extends SelectablePaginatedService<Use
    * Gets OIDC users info
    */
   abstract getLocalOIDCUsers(): Observable<boolean>;
+
+  /**
+   * Import users
+   */
+  abstract importUsers(): Observable<any>;
 }

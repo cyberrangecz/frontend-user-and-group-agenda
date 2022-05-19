@@ -21,7 +21,7 @@ import {
   SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
   createPaginationServiceSpy,
-} from '../../../../internal/src/testing/testing-commons';
+} from '../../../../internal/src/testing/testing-commons.spec';
 import { GroupEditMaterialModule } from '../group-edit-material.module';
 import { GroupRoleAssignComponent } from './group-role-assign.component';
 

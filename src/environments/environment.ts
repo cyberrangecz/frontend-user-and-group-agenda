@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  userAndGroupRestBasePath: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/',
+  userAndGroupRestBasePath: 'http://localhost:8084/kypo-rest-user-and-group/api/v1/',
   defaultPaginationSize: 10,
   authConfig: {
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
-    interceptorAllowedUrls: ['https://172.19.0.22'],
+    interceptorAllowedUrls: ['https://172.19.0.22', 'http://localhost'],
     authorizationStrategyConfig: {
-      authorizationUrl: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/users/info',
+      authorizationUrl: 'http://localhost:8084/kypo-rest-user-and-group/api/v1/users/info',
     },
     providers: [
       {
@@ -19,8 +19,8 @@ export const environment = {
         textColor: 'white',
         backgroundColor: '#002776',
         oidcConfig: {
-          issuer: 'https://172.19.0.22:8443/csirtmu-dummy-issuer-server/',
-          clientId: 'dd33644b-7c94-4d54-9bf1-b506918d479b',
+          issuer: 'https://172.19.0.22:443/csirtmu-dummy-issuer-server/',
+          clientId: 'BWqREWGcunayaSYreqWwJhfSYIMuwSgXqGlD',
           redirectUri: 'https://localhost:4200', // redirect after successful login
           scope: 'openid email profile',
           logoutUrl: 'https://172.19.0.22/csirtmu-dummy-issuer-server/endsession/endsession',

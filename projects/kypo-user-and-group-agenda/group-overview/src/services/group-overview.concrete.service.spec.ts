@@ -17,7 +17,7 @@ import {
   createNotificationSpy,
   createPagination,
   createRouterSpy,
-} from '../../../internal/src/testing/testing-commons';
+} from '../../../internal/src/testing/testing-commons.spec';
 import { UserAndGroupErrorHandler } from '../../../src/user-and-group-error-handler.service';
 import { UserAndGroupNavigator } from '../../../src/user-and-group-navigator.service';
 import { UserAndGroupNotificationService } from '../../../src/user-and-group-notification.service';

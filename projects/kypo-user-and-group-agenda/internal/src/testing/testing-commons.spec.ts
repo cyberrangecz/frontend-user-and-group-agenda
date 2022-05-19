@@ -1,5 +1,5 @@
 import { MetadataOverride } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OffsetPaginationEvent } from '@sentinel/common';
 import { GroupApi, RoleApi, UserApi, MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
@@ -8,6 +8,7 @@ import { UserAndGroupNavigator } from '../../../src/user-and-group-navigator.ser
 import { UserAndGroupNotificationService } from '../../../src/user-and-group-notification.service';
 import { UserAndGroupContext } from '../services/user-and-group-context.service';
 import { PaginationService } from '../services/pagination.service';
+import { FileUploadProgressService } from '../../../user-overview/src/services/file-upload/file-upload-progress.service';
 
 export const SENTINEL_TABLE_COMPONENT_SELECTOR = 'sentinel-table';
 export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
@@ -122,4 +123,12 @@ export function createSentinelControlsOverride(): MetadataOverride<any> {
       outputs: ['itemClicked'],
     },
   };
+}
+
+export function createDialogRefSpy(): jasmine.SpyObj<MatDialogRef<any>> {
+  return jasmine.createSpyObj(MatDialogRef, ['open', 'close']);
+}
+
+export function createFileUploadProgressServiceSpy(): jasmine.SpyObj<FileUploadProgressService> {
+  return jasmine.createSpyObj('FileUploadProgressService', ['start', 'finish']);
 }

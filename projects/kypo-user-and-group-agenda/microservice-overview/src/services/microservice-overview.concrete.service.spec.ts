@@ -22,7 +22,7 @@ import {
   createErrorHandlerSpy,
   createMicroserviceApiSpy,
   createPagination,
-} from '../../../internal/src/testing/testing-commons';
+} from '../../../internal/src/testing/testing-commons.spec';
 
 describe('MicroserviceOverviewConcreteService', () => {
   let service: MicroserviceOverviewService;

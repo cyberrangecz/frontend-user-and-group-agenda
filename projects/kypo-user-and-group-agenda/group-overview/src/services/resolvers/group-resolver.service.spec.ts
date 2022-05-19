@@ -10,7 +10,7 @@ import {
   createGroupApiSpy,
   createNavigatorSpy,
   createRouterSpy,
-} from '../../../../internal/src/testing/testing-commons';
+} from '../../../../internal/src/testing/testing-commons.spec';
 import { UserAndGroupErrorHandler } from '../../../../src/user-and-group-error-handler.service';
 import { UserAndGroupNavigator } from '../../../../src/user-and-group-navigator.service';
 import { GroupResolver } from './group-resolver.service';

@@ -16,7 +16,7 @@ import {
   createNotificationSpy,
   createRouterSpy,
   createSentinelControlsOverride,
-} from '../../../internal/src/testing/testing-commons';
+} from '../../../internal/src/testing/testing-commons.spec';
 import { GroupEditMaterialModule } from './group-edit-material.module';
 import { GroupEditOverviewComponent } from './group-edit-overview.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';

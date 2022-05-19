@@ -12,7 +12,7 @@ import {
   createGroupApiSpy,
   createPagination,
   createUserApiSpy,
-} from '../../../../../internal/src/testing/testing-commons';
+} from '../../../../../internal/src/testing/testing-commons.spec';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAssignConcreteService } from './user-assign-concrete.service';

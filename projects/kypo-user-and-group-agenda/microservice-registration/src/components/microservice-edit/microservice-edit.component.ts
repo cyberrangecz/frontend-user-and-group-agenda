@@ -9,7 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { AbstractControl, FormArray, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormControl } from '@angular/forms';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { takeWhile } from 'rxjs/operators';
@@ -47,8 +47,8 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
     return this.microserviceFormGroup.formGroup.get('endpoint');
   }
 
-  get roles(): FormArray {
-    return this.microserviceFormGroup.formGroup.get('roles') as FormArray;
+  get roles(): UntypedFormArray {
+    return this.microserviceFormGroup.formGroup.get('roles') as UntypedFormArray;
   }
 
   constructor() {
@@ -68,7 +68,7 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
    */
   onRolesChanged(event: MicroserviceRolesState): void {
     if (event.isAdded) {
-      (this.roles as FormArray).push(new FormControl(''));
+      (this.roles as UntypedFormArray).push(new UntypedFormControl(''));
     } else if (event.isRemoved) {
       this.roles.removeAt(event.roleIndex);
     } else {

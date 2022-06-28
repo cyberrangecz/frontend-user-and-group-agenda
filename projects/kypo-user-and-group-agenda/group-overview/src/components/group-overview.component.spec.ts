@@ -32,45 +32,43 @@ describe('GroupOverviewComponent', () => {
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<GroupOverviewService>;
 
-  beforeEach(
-    waitForAsync(() => {
-      contextSpy = createContextSpy();
-      paginationServiceSpy = createPaginationServiceSpy();
-      navigatorSpy = createNavigatorSpy();
-      overviewSpy = jasmine.createSpyObj('GroupOverviewComponent', [
-        'getAll',
-        'delete',
-        'deleteSelected',
-        'edit',
-        'create',
-        'setSelection',
-      ]);
-      overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
-      overviewSpy.create.and.returnValue(EMPTY);
-      overviewSpy.delete.and.returnValue(EMPTY);
-      overviewSpy.edit.and.returnValue(EMPTY);
-      overviewSpy.deleteSelected.and.returnValue(EMPTY);
-      overviewSpy.resource$ = of(createDefaultResource());
-      overviewSpy.hasError$ = of(false);
-      overviewSpy.isLoading$ = of(false);
-      overviewSpy.selected$ = of([]);
-      navigatorSpy.toGroupDetail.and.returnValue('group-detail');
-      navigatorSpy.toUserOverview.and.returnValue('group-overview');
-      TestBed.configureTestingModule({
-        imports: [GroupOverviewMaterialModule],
-        declarations: [GroupOverviewComponent],
-        providers: [
-          { provide: UserAndGroupContext, useValue: contextSpy },
-          { provide: UserAndGroupNavigator, useValue: navigatorSpy },
-          { provide: GroupOverviewService, useValue: overviewSpy },
-          { provide: PaginationService, useValue: paginationServiceSpy },
-        ],
-      })
-        .overrideComponent(SentinelTableComponent, createSentinelOverride())
-        .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
-        .compileComponents();
+  beforeEach(waitForAsync(() => {
+    contextSpy = createContextSpy();
+    paginationServiceSpy = createPaginationServiceSpy();
+    navigatorSpy = createNavigatorSpy();
+    overviewSpy = jasmine.createSpyObj('GroupOverviewComponent', [
+      'getAll',
+      'delete',
+      'deleteSelected',
+      'edit',
+      'create',
+      'setSelection',
+    ]);
+    overviewSpy.getAll.and.returnValue(of(createDefaultResource()));
+    overviewSpy.create.and.returnValue(EMPTY);
+    overviewSpy.delete.and.returnValue(EMPTY);
+    overviewSpy.edit.and.returnValue(EMPTY);
+    overviewSpy.deleteSelected.and.returnValue(EMPTY);
+    overviewSpy.resource$ = of(createDefaultResource());
+    overviewSpy.hasError$ = of(false);
+    overviewSpy.isLoading$ = of(false);
+    overviewSpy.selected$ = of([]);
+    navigatorSpy.toGroupDetail.and.returnValue('group-detail');
+    navigatorSpy.toUserOverview.and.returnValue('group-overview');
+    TestBed.configureTestingModule({
+      imports: [GroupOverviewMaterialModule],
+      declarations: [GroupOverviewComponent],
+      providers: [
+        { provide: UserAndGroupContext, useValue: contextSpy },
+        { provide: UserAndGroupNavigator, useValue: navigatorSpy },
+        { provide: GroupOverviewService, useValue: overviewSpy },
+        { provide: PaginationService, useValue: paginationServiceSpy },
+      ],
     })
-  );
+      .overrideComponent(SentinelTableComponent, createSentinelOverride())
+      .overrideComponent(SentinelControlsComponent, createSentinelControlsOverride())
+      .compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GroupOverviewComponent);

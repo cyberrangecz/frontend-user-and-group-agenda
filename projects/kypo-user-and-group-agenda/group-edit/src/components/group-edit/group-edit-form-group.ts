@@ -1,17 +1,17 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 
 /**
  * Form control class for state group-overview componnet
  */
 export class GroupEditFormGroup {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   constructor(group: Group) {
-    this.formGroup = new FormGroup({
-      name: new FormControl(group.name, Validators.required),
-      description: new FormControl(group.description, Validators.required),
-      expirationDate: new FormControl(group.expirationDate, Validators.min(this.calculateTomorrowTimestamp())),
+    this.formGroup = new UntypedFormGroup({
+      name: new UntypedFormControl(group.name, Validators.required),
+      description: new UntypedFormControl(group.description, Validators.required),
+      expirationDate: new UntypedFormControl(group.expirationDate, Validators.min(this.calculateTomorrowTimestamp())),
     });
   }
 

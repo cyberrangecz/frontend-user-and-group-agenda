@@ -1,18 +1,18 @@
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 
 /**
  * Form control for microservice-registration state component
  */
 export class MicroserviceEditFormGroup {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   constructor(microservice: Microservice) {
-    this.formGroup = new FormGroup({
-      name: new FormControl(microservice.name, Validators.required),
-      endpoint: new FormControl(microservice.endpoint, Validators.required),
-      roles: new FormArray(
-        microservice.roles.map((roles) => new FormControl(roles)),
+    this.formGroup = new UntypedFormGroup({
+      name: new UntypedFormControl(microservice.name, Validators.required),
+      endpoint: new UntypedFormControl(microservice.endpoint, Validators.required),
+      roles: new UntypedFormArray(
+        microservice.roles.map((roles) => new UntypedFormControl(roles)),
         Validators.required
       ),
     });

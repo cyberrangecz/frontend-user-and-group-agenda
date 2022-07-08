@@ -1,7 +1,7 @@
 # User and Group Agenda
 
 User and Group Agenda is a library containing components and services to manage users, groups, microservices and roles in KYPO microservices.
-It is developed as a frontend of [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo2-user-and-group)
+It is developed as a frontend of [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo-user-and-group)
 
 The library follows smart-dumb architecture. Smart components are exported from the library, and you can use them at your will. The project contains example implementation with lazy loading modules which you can use as an inspiration.
 You can modify the behaviour of components by implementing abstract service class and injecting it through Angular dependency injection.
@@ -85,7 +85,7 @@ export class UserOverviewRoutingModule {}
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
-To run the example you need to run [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo2-user-and-group) or have access to a running instance and provide the URL to the service in when importing API module.
+To run the example you need to run [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo-user-and-group) or have access to a running instance and provide the URL to the service in when importing API module.
 
 1. Clone this repository
 1. Run `npm install`

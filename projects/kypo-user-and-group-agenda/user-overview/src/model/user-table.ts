@@ -14,7 +14,7 @@ export class UserTable extends SentinelTable<User> {
     const rows = resource.elements.map((element) => UserTable.createRow(element, service, navigator));
 
     const columns = [
-      new Column('id', 'id', false),
+      new Column('id', 'id', true),
       new Column('name', 'name', true, 'familyName'),
       new Column('login', 'login', true, 'sub'),
       new Column('issuer', 'issuer', false),
@@ -23,7 +23,7 @@ export class UserTable extends SentinelTable<User> {
     super(rows, columns);
     this.pagination = resource.pagination;
     this.filterable = true;
-    this.filterLabel = 'Filter by surname';
+    this.filterLabel = 'Filter by name';
     this.selectable = true;
   }
 

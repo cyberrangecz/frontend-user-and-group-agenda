@@ -5,6 +5,6 @@ import { SentinelFilter } from '@sentinel/common';
  */
 export class UserFilter extends SentinelFilter {
   constructor(value: string) {
-    super('familyName', value);
+    super('fullName', value);
   }
 }

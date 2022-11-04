@@ -34,7 +34,7 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
   ): Row<GroupRowAdapter> {
     const rowAdapter = group as GroupRowAdapter;
     if (rowAdapter.expirationDate) {
-      rowAdapter.expirationDateFormatted = `${group.expirationDate.getFullYear()}-${group.expirationDate.getMonth()}
+      rowAdapter.expirationDateFormatted = `${group.expirationDate.getFullYear()}-${group.expirationDate.getMonth() + 1}
       -${group.expirationDate.getDate()}`;
     } else {
       rowAdapter.expirationDateFormatted = '-';

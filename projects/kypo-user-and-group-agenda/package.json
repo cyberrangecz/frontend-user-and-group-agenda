@@ -1,6 +1,6 @@
 {
   "name": "@muni-kypo-crp/user-and-group-agenda",
-  "version": "14.0.3",
+  "version": "14.0.4",
   "peerDependencies": {
     "@angular/common": "14.0.3",
     "@angular/core": "14.0.3",

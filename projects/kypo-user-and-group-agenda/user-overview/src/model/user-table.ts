@@ -15,7 +15,7 @@ export class UserTable extends SentinelTable<User> {
 
     const columns = [
       new Column('id', 'id', true),
-      new Column('name', 'name', true, 'familyName'),
+      new Column('name', 'name', true, 'familyName,givenName'),
       new Column('login', 'login', true, 'sub'),
       new Column('issuer', 'issuer', false),
       new Column('mail', 'email', false),

@@ -9,8 +9,8 @@ export class MembersDetailTable extends SentinelTable<User> {
   constructor(resource: PaginatedResource<User>) {
     const columns = [
       new Column('name', 'name', true, 'familyName'),
-      new Column('login', 'login', false),
-      new Column('issuer', 'issuer', false),
+      new Column('login', 'login', true, 'sub'),
+      new Column('issuer', 'issuer', true, 'iss'),
       new Column('picture', 'picture', false),
     ];
     const rows = resource.elements.map((element) => MembersDetailTable.createRow(element));

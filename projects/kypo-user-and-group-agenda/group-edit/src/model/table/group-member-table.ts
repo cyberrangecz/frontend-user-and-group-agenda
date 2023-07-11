@@ -23,13 +23,13 @@ export class GroupMemberTable extends SentinelTable<User> {
       new Column('id', 'id', false),
       new Column('name', 'name', true, 'familyName'),
       new Column('login', 'login', true, 'sub'),
-      new Column('issuer', 'issuer', false),
+      new Column('issuer', 'issuer', true, 'iss'),
     ];
     super(rows, columns);
 
     this.pagination = resource.pagination;
     this.filterable = true;
-    this.filterLabel = 'Filter by surname';
+    this.filterLabel = 'Filter by name';
     this.selectable = true;
   }
 }

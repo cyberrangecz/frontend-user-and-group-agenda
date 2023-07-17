@@ -10,9 +10,9 @@ export class MicroserviceTable extends SentinelTable<Microservice> {
   constructor(resource: PaginatedResource<Microservice>) {
     const rows = resource.elements.map((element) => MicroserviceTable.createRow(element));
     const columns = [
-      new Column('id', 'id', false),
+      new Column('id', 'id', true),
       new Column('name', 'name', true),
-      new Column('endpoint', 'endpoint', false),
+      new Column('endpoint', 'endpoint', true),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;

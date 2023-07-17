@@ -17,8 +17,8 @@ export class UserTable extends SentinelTable<User> {
       new Column('id', 'id', true),
       new Column('name', 'name', true, 'familyName,givenName'),
       new Column('login', 'login', true, 'sub'),
-      new Column('issuer', 'issuer', false),
-      new Column('mail', 'email', false),
+      new Column('issuer', 'issuer', true, 'iss'),
+      new Column('mail', 'email', true, 'mail'),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;

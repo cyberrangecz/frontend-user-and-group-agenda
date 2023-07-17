@@ -17,8 +17,8 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
     const rows = resource.elements.map((element) => GroupTable.createRow(element, service, navigator));
     const columns = [
       new Column('name', 'name', true),
-      new Column('description', 'description', false),
-      new Column('expirationDateFormatted', 'expiration date', false),
+      new Column('description', 'description', true, 'description'),
+      new Column('expirationDateFormatted', 'expiration date', true, 'expirationDate'),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;

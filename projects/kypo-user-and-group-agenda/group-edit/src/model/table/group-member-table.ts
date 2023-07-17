@@ -20,7 +20,7 @@ export class GroupMemberTable extends SentinelTable<User> {
         ])
     );
     const columns = [
-      new Column('id', 'id', false),
+      new Column('id', 'id', true),
       new Column('name', 'name', true, 'familyName'),
       new Column('login', 'login', true, 'sub'),
       new Column('issuer', 'issuer', true, 'iss'),

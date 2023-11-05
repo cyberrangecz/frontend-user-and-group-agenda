@@ -1,5 +1,5 @@
 import { SentinelTable, Column, Row } from '@sentinel/components/table';
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 
 /**

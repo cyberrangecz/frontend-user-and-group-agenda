@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SentinelFilter, OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { SentinelFilter } from '@sentinel/common/filter';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';

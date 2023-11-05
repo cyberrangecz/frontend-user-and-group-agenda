@@ -1,4 +1,4 @@
-import { SentinelFilter } from '@sentinel/common';
+import { SentinelFilter } from '@sentinel/common/filter';
 
 /**
  * Role specific filter. Filters by role type

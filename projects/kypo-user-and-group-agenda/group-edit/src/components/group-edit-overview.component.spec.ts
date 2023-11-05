@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { BehaviorSubject, of } from 'rxjs';
-import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
 import {
@@ -28,7 +27,6 @@ import {
   UserAndGroupNavigator,
   UserAndGroupNotificationService,
 } from '@muni-kypo-crp/user-and-group-agenda';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 
 describe('GroupEditOverviewComponent', () => {
   let component: GroupEditOverviewComponent;

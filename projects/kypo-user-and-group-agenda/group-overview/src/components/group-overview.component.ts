@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';

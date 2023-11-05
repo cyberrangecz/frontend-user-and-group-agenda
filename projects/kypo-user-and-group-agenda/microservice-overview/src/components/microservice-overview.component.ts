@@ -2,7 +2,8 @@ import { RegisterControlItem, PaginationService } from '@muni-kypo-crp/user-and-
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, defer, of } from 'rxjs';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';

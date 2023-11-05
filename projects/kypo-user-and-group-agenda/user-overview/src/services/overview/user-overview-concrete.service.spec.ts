@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';

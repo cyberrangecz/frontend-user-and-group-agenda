@@ -1,5 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { Observable } from 'rxjs';
 import { FileUploadProgressService } from '../../services/file-upload/file-upload-progress.service';

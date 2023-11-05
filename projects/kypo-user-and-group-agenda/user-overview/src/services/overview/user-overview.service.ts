@@ -1,4 +1,4 @@
-import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
+import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { Observable } from 'rxjs';
 import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';

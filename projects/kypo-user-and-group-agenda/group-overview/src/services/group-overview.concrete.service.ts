@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import {
   SentinelConfirmationDialogComponent,
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';

@@ -1,7 +1,7 @@
 import { take, skip } from 'rxjs/operators';
 import { MicroserviceFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { of, throwError } from 'rxjs';
 import { MicroserviceOverviewConcreteService } from './microservice-overview.concrete.service';
 import { UserAndGroupContext } from '../../../internal/src/services/user-and-group-context.service';

@@ -8,7 +8,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { Group } from '@muni-kypo-crp/user-and-group-model';

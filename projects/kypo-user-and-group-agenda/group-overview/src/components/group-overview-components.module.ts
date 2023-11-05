@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import {
   UserAndGroupAgendaConfig,
@@ -16,6 +15,7 @@ import { GroupTitleResolver } from '../services/resolvers/title/group-title-reso
 import { InternalSharedModule, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 
 /**
  * Module containing components and necessary imports for group-overview overview page
@@ -28,7 +28,7 @@ import { GroupOverviewComponent } from './group-overview.component';
     FormsModule,
     ReactiveFormsModule,
     SentinelTableModule,
-    SentinelControlsModule,
+    SentinelControlsComponent,
   ],
   declarations: [GroupOverviewComponent],
   providers: [

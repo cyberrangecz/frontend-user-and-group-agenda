@@ -2,7 +2,7 @@ import { MicroserviceFilter } from '@muni-kypo-crp/user-and-group-agenda/interna
 import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { Injectable } from '@angular/core';
 import { MicroserviceOverviewService } from './microservice-overview.service';
-import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
 import { Router } from '@angular/router';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';

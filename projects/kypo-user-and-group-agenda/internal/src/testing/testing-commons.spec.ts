@@ -1,5 +1,5 @@
 import { MetadataOverride } from '@angular/core/testing';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { GroupApi, RoleApi, UserApi, MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';

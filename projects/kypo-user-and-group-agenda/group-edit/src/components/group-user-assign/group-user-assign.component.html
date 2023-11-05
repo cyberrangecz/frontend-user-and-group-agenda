@@ -1,6 +1,6 @@
 <sentinel-controls class="to-assign-controls" [controls]="assignUsersControls" (itemClicked)="onControlAction($event)"></sentinel-controls>
 <div class="add-content">
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-card-header>
       <div mat-card-avatar>
         <mat-icon color="primary">person_add</mat-icon>
@@ -20,7 +20,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-card-header>
       <div mat-card-avatar>
         <mat-icon color="primary">group_add</mat-icon>
@@ -42,7 +42,7 @@
 </div>
 
 <sentinel-controls class="assigned-controls" [controls]="assignedUsersControls" (itemClicked)="onControlAction($event)"></sentinel-controls>
-<mat-card>
+<mat-card appearance="outlined">
   <mat-card-header>
     <div mat-card-avatar>
       <mat-icon color="primary">person</mat-icon>

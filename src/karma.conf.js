@@ -19,8 +19,8 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../coverage'),
-      reports: ['html', 'lcovonly', 'text-summary'],
+      dir: require('path').join(__dirname, '../../coverage'),
+      reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
     customLaunchers: {
@@ -33,8 +33,8 @@ module.exports = function (config) {
           '--remote-debugging-port=9222',
         ]
       }
-    },	  
-    reporters: ['progress', 'kjhtml'],
+    },
+    reporters: ['progress', 'kjhtml', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

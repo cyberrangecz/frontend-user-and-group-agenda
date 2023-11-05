@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
 import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';

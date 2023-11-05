@@ -9,7 +9,7 @@ import {
   createFileUploadProgressServiceSpy,
 } from '../../../../internal/src/testing/testing-commons.spec';
 import { FileUploadProgressService } from '../../services/file-upload/file-upload-progress.service';
-import { asyncData } from '@sentinel/layout/internal';
+import { asyncData } from '@sentinel/common/testing';
 
 describe('UsersUploadDialogComponent', () => {
   let component: UsersUploadDialogComponent;

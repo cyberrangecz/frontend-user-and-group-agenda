@@ -128,7 +128,7 @@
     },
     "kypo-user-and-group-agenda": {
       "root": "projects/kypo-user-and-group-agenda",
-      "sourceRoot": "projects/kypo-user-and-group-agenda/src",
+      "sourceRoot": "projects/kypo-user-and-group-agenda",
       "projectType": "library",
       "prefix": "kypo",
       "architect": {
@@ -148,7 +148,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/kypo-user-and-group-agenda/test.ts",
-            "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.spec.json",
+            "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.spec.json",
             "karmaConfig": "projects/kypo-user-and-group-agenda/karma.conf.js"
           }
         },

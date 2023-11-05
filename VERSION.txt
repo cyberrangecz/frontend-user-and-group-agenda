@@ -1,3 +1,4 @@
+15.0.0 Update to Angular 15.
 14.0.5 Add additional sorting options to user, group and microservice tables.
 14.0.4 Added sorting options for group edit and group detail tables. Fixed unintuitive sorting by name in user table.
 14.0.3 Fixed expiration date off-by-one error for groups.

@@ -146,8 +146,7 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "codeCoverage": true,
+          "options": {coverage
             "main": "projects/kypo-user-and-group-agenda/test.ts",
             "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.spec.json",
             "karmaConfig": "projects/kypo-user-and-group-agenda/karma.conf.js"

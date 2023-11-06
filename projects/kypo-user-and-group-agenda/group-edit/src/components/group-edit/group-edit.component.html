@@ -6,7 +6,7 @@
         <mat-form-field appearance="outline" class="name-form">
           <mat-label>Name</mat-label>
           <input matInput placeholder="Name" formControlName="name" required>
-          <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name.setValue('')">
+          <button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="name.setValue('')">
             <mat-icon>close</mat-icon>
           </button>
           <mat-error>Name is required</mat-error>
@@ -40,7 +40,7 @@
     <mat-form-field appearance="outline" class="description-form">
       <mat-label>Description</mat-label>
       <textarea matInput placeholder="Description" formControlName="description" required></textarea>
-      <button mat-button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description.setValue('')">
+      <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description.setValue('')">
         <mat-icon>close</mat-icon>
       </button>
       <mat-error>Description is required</mat-error>

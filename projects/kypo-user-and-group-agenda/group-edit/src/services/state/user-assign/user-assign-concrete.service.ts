@@ -103,9 +103,9 @@ export class UserAssignConcreteService extends UserAssignService {
    * @param filterValue filter to be applied on users
    */
   getUsersToAssign(resourceId: number, filterValue: string): Observable<PaginatedResource<User>> {
-    const pageSize = 50;
+    const pageSize = 100;
     return this.userApi
-      .getUsersNotInGroup(resourceId, new OffsetPaginationEvent(0, pageSize, 'familyName', 'asc'), [
+      .getUsersNotInGroup(resourceId, new OffsetPaginationEvent(0, pageSize, 'fullName', 'asc'), [
         new UserFilter(filterValue),
       ])
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching users') }));

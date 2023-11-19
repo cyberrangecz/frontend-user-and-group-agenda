@@ -128,7 +128,7 @@
     },
     "kypo-user-and-group-agenda": {
       "root": "projects/kypo-user-and-group-agenda",
-      "sourceRoot": "projects/kypo-user-and-group-agenda/src",
+      "sourceRoot": "projects/kypo-user-and-group-agenda",
       "projectType": "library",
       "prefix": "kypo",
       "architect": {
@@ -146,9 +146,9 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
-          "options": {
+          "options": {coverage
             "main": "projects/kypo-user-and-group-agenda/test.ts",
-            "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.spec.json",
+            "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.spec.json",
             "karmaConfig": "projects/kypo-user-and-group-agenda/karma.conf.js"
           }
         },
@@ -162,6 +162,14 @@
           }
         }
       }
+    }
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
     }
   }
 }

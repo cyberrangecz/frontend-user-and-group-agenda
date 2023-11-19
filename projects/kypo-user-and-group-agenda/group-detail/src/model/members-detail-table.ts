@@ -1,5 +1,5 @@
 import { User } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { Column, Row, SentinelTable } from '@sentinel/components/table';
 
 /**

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GroupApi, RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, OffsetPaginationEvent, SentinelFilter, OffsetPagination } from '@sentinel/common';
+import { SentinelFilter } from '@sentinel/common/filter';
+import { PaginatedResource, OffsetPaginationEvent, OffsetPagination } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { RolesDetailService } from './roles-detail.service';

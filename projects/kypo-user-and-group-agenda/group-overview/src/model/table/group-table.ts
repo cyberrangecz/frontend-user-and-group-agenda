@@ -1,4 +1,4 @@
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { Column, SentinelTable, Row, RowAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';

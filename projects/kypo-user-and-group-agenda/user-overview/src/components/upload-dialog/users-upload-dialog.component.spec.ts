@@ -3,12 +3,13 @@ import { UsersUploadDialogComponent } from './users-upload-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { asyncData, SentinelPipesModule } from '@sentinel/common';
+import { SentinelPipesModule } from '@sentinel/common/pipes';
 import {
   createDialogRefSpy,
   createFileUploadProgressServiceSpy,
 } from '../../../../internal/src/testing/testing-commons.spec';
 import { FileUploadProgressService } from '../../services/file-upload/file-upload-progress.service';
+import { asyncData } from '@sentinel/common/testing';
 
 describe('UsersUploadDialogComponent', () => {
   let component: UsersUploadDialogComponent;

@@ -9,7 +9,7 @@ import { MembersDetailConcreteService } from '../services/members-detail-concret
 import { MembersDetailService } from '../services/members-detail.service';
 import { RolesDetailConcreteService } from '../services/roles-detail-concrete.service';
 import { RolesDetailService } from '../services/roles-detail.service';
-import { SentinelPipesModule } from '@sentinel/common';
+import { SentinelPipesModule } from '@sentinel/common/pipes';
 import { RoleExpandComponent } from './role-expand/role-expand.component';
 
 /**

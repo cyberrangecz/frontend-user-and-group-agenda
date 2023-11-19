@@ -2,7 +2,6 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import {
   UserAndGroupNavigator,
@@ -20,10 +19,7 @@ import { UserBreadcrumbResolverService } from '../services/resolvers/user-breadc
 import { FileUploadProgressService } from '../services/file-upload/file-upload-progress.service';
 import { UsersUploadDialogComponent } from './upload-dialog/users-upload-dialog.component';
 import { ngfModule } from 'angular-file';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 
 /**
  * Module containing declarations and necessary imports for user related components
@@ -36,8 +32,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SentinelTableModule,
     UserMaterialModule,
     InternalSharedModule,
-    SentinelControlsModule,
     ngfModule,
+    SentinelControlsComponent,
   ],
   exports: [UserMaterialModule, UserOverviewComponent],
   providers: [

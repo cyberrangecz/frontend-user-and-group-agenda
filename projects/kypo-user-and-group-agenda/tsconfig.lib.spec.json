@@ -2,17 +2,17 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "baseUrl": "src",
+    "baseUrl": "./",
     "types": [
       "jasmine",
       "node"
     ],
     "paths": {
       "@muni-kypo-crp/user-and-group-agenda": [
-        "../src/public_api.ts"
+        "./src/public_api.ts"
       ],
       "@muni-kypo-crp/user-and-group-agenda/*": [
-        "../*/src/public_api.ts"
+        "./*/src/public_api.ts"
       ]
     }
   },
@@ -20,7 +20,7 @@
     "test.ts"
   ],
   "include": [
-    "**/*spec.ts",
+    "**/*.spec.ts",
     "**/*d.ts"
   ]
 }

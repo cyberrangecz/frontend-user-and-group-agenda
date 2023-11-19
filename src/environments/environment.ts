@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  userAndGroupRestBasePath: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/',
+  userAndGroupRestBasePath: 'http://localhost:3000/kypo-rest-user-and-group/api/v1/',
   defaultPaginationSize: 10,
   authConfig: {
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in

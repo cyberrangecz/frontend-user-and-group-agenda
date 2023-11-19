@@ -5,7 +5,7 @@ import {
   createPaginationServiceSpy,
 } from '../../../internal/src/testing/testing-commons.spec';
 import { of, EMPTY } from 'rxjs';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableComponent, TableLoadEvent } from '@sentinel/components/table';
 import { UserAndGroupContext } from './../../../internal/src/services/user-and-group-context.service';

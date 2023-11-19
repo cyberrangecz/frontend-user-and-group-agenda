@@ -5,7 +5,6 @@ import {
 } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { MicroserviceOverviewConcreteService } from './../services/microservice-overview.concrete.service';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SentinelControlsModule } from '@sentinel/components/controls';
 import {
   UserAndGroupAgendaConfig,
   UserAndGroupDefaultNavigator,
@@ -16,6 +15,7 @@ import { MicroserviceOverviewComponent } from './microservice-overview.component
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MicroserviceOverviewService } from '../services/microservice-overview.service';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 
 /**
  * Module containing components and necessary imports for microservice-overview page
@@ -23,7 +23,7 @@ import { MicroserviceOverviewService } from '../services/microservice-overview.s
 @NgModule({
   imports: [
     CommonModule,
-    SentinelControlsModule,
+    SentinelControlsComponent,
     SentinelTableModule,
     InternalSharedModule,
     MicroserviceOverviewMaterialModule,

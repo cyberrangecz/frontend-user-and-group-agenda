@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Group, User, UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda';
 import { map, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';

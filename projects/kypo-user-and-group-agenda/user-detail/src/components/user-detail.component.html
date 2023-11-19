@@ -1,4 +1,4 @@
-<mat-card class="info-card">
+<mat-card appearance="outlined" class="info-card">
   <div class="left-panel">
     <div class="user-base-info">
       <img class="user-picture" src="{{'data:image/png;base64,'+user.picture}}" [alt]="user.name" />
@@ -14,7 +14,7 @@
     </div>
   </div>
 </mat-card>
-<mat-card class="members-card">
+<mat-card appearance="outlined" class="members-card">
   <div class='detail-action-buttons'>
     <button mat-button color="primary" (click)="accordion.openAll()">Expand All</button>
     <button mat-button color="primary" (click)="accordion.closeAll()">Collapse All</button>

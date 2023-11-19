@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OffsetPaginationEvent, PaginatedResource, OffsetPagination } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';

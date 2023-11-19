@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTableComponent, TableLoadEvent, RowAction, TableActionEvent } from '@sentinel/components/table';

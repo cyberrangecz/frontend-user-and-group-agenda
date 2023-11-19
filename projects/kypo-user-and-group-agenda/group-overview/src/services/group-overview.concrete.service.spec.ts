@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';

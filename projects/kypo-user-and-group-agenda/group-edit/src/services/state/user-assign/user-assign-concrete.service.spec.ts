@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { GroupApi, UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group, User } from '@muni-kypo-crp/user-and-group-model';
 import { of, throwError } from 'rxjs';

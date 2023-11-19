@@ -85,7 +85,9 @@ export class UserOverviewRoutingModule {}
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
-To run the example you need to run [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo-user-and-group) or have access to a running instance and provide the URL to the service in when importing API module.
+To run the example you need to run [KYPO User and Group Service](https://gitlab.ics.muni.cz/kypo-crp/backend-java/kypo-user-and-group) or have access to a running instance and provide the URL to the service in when importing API module. 
+
+Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [kypo-trainings](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/kypo-trainings) project and can be run via `npm run api`.
 
 1. Clone this repository
 1. Run `npm install`

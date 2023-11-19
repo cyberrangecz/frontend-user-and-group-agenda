@@ -6,7 +6,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';

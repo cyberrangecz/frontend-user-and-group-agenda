@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { EMPTY, Observable, of } from 'rxjs';
 import { USER_DETAIL_PATH, USER_SELECTOR } from '@muni-kypo-crp/user-and-group-agenda';
 import { User } from '@muni-kypo-crp/user-and-group-model';
@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { UserResolverService } from './user-resolver.service';
 
 @Injectable()
-export class UserBreadcrumbResolverService implements Resolve<string> {
+export class UserBreadcrumbResolverService {
   constructor(private userResolver: UserResolverService) {}
 
   /**

@@ -1,20 +1,20 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { Column, Row, RowExpand, SentinelTable } from '@sentinel/components/table';
+import { Column, ExpandableSentinelTable, Row, RowExpand, SentinelTable } from '@sentinel/components/table';
 import { RoleExpandComponent } from '../components/role-expand/role-expand.component';
 
 /**
  * @dynamic
  */
-export class RolesDetailTable extends SentinelTable<UserRole> {
+export class RolesDetailTable extends ExpandableSentinelTable<UserRole, RoleExpandComponent, null> {
   constructor(resource: PaginatedResource<UserRole>) {
     const columns = [
       new Column('roleType', 'role type', true, 'roleType'),
       new Column('microserviceName', 'microservice name', false),
     ];
     const rows = resource.elements.map((element) => RolesDetailTable.createRow(element));
-    super(rows, columns);
-    this.expand = new RowExpand(RoleExpandComponent);
+    const expand = new RowExpand(RoleExpandComponent, null);
+    super(rows, columns, expand);
     this.filterable = true;
     this.filterLabel = 'Filter by role type';
     this.pagination = resource.pagination;

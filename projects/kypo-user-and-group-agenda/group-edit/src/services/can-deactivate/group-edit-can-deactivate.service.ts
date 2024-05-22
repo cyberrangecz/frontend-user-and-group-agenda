@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CanDeactivate, UrlTree } from '@angular/router';
+import { UrlTree } from '@angular/router';
 import {
   SentinelConfirmationDialogComponent,
   SentinelConfirmationDialogConfig,
@@ -15,7 +15,7 @@ import { GroupEditOverviewComponent } from '../../components/group-edit-overview
  * Usage described in @link https://angular.io/api/router/CanDeactivate
  */
 @Injectable()
-export class GroupEditCanDeactivate implements CanDeactivate<GroupEditOverviewComponent> {
+export class GroupEditCanDeactivate {
   constructor(private dialog: MatDialog) {}
 
   canDeactivate(

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
@@ -16,7 +16,7 @@ import {
  * Example resolver for user and group-overview state component
  */
 @Injectable()
-export class GroupResolver implements Resolve<Group> {
+export class GroupResolver {
   constructor(
     private router: Router,
     private api: GroupApi,

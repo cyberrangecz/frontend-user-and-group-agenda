@@ -2,31 +2,34 @@
 // `ng build --configuration production` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const BASE_URL = 'https://172.19.0.22';
+const HOME_URL = 'https://localhost:4200';
 export const environment = {
   production: true,
-  userAndGroupRestBasePath: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/',
+  userAndGroupRestBasePath: BASE_URL + '/kypo-rest-user-and-group/api/v1/',
   defaultPaginationSize: 10,
   authConfig: {
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
-    interceptorAllowedUrls: ['https://172.19.0.22'],
+    interceptorAllowedUrls: [BASE_URL],
     authorizationStrategyConfig: {
-      authorizationUrl: 'https://172.19.0.22/kypo-rest-user-and-group/api/v1/users/info',
+      authorizationUrl: BASE_URL + '/kypo-rest-user-and-group/api/v1/users/info',
     },
     providers: [
       {
-        label: 'Login with local issuer',
+        label: 'Login with MUNI',
         textColor: 'white',
         backgroundColor: '#002776',
         oidcConfig: {
-          issuer: 'https://172.19.0.22:8443/csirtmu-dummy-issuer-server/',
-          clientId: '6e81dde5-91c0-4a9d-b21b-d443989fd1b9',
-          redirectUri: 'https:/localhost:4200', // redirect after successful login
-          scope: 'openid email profile',
-          logoutUrl: 'https://172.19.0.22/csirtmu-dummy-issuer-server/endsession/endsession',
-          postLogoutRedirectUri: 'https:/localhost:4200/logout-confirmed/',
-          silentRefreshRedirectUri: 'https:/localhost:4200/silent-refresh.html',
-          clearHashAfterLogin: true, // remove token and other info from url after login
+          requireHttps: true,
+          issuer: BASE_URL + '/keycloak/realms/KYPO',
+          clientId: 'KYPO-client',
+          redirectUri: HOME_URL,
+          scope: 'openid email profile offline_access',
+          logoutUrl: BASE_URL + '/keycloak/realms/KYPO/protocol/openid-connect/logout',
+          silentRefreshRedirectUri: BASE_URL + '/silent-refresh.html',
+          postLogoutRedirectUri: HOME_URL + '/logout-confirmed',
+          clearHashAfterLogin: true,
         },
       },
     ],

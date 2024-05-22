@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { UserApi } from '@muni-kypo-crp/user-and-group-api';
 import { USER_SELECTOR, UserAndGroupErrorHandler, UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
@@ -10,7 +10,7 @@ import { catchError, mergeMap, take } from 'rxjs/operators';
  * Example resolver for user and user-overview state component
  */
 @Injectable()
-export class UserResolverService implements Resolve<User> {
+export class UserResolverService {
   constructor(
     private router: Router,
     private api: UserApi,

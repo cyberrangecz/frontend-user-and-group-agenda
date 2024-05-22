@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import {
 import { GroupResolver } from '../group-resolver.service';
 
 @Injectable()
-export class GroupTitleResolver implements Resolve<string> {
+export class GroupTitleResolver {
   readonly CREATE_GROUP_TITLE = 'Create Group';
 
   constructor(private groupResolver: GroupResolver) {}

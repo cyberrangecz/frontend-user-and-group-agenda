@@ -2,7 +2,7 @@
  * Router breadcrumb title provider
  */
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import {
 import { GroupResolver } from '../group-resolver.service';
 
 @Injectable()
-export class GroupBreadcrumbResolver implements Resolve<string> {
+export class GroupBreadcrumbResolver {
   readonly CREATE_GROUP_BREADCRUMB = 'Create';
   constructor(private groupResolver: GroupResolver) {}
 

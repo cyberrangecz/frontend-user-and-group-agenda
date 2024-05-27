@@ -40,7 +40,7 @@ export class GroupEditOverviewComponent extends SentinelBaseDirective {
   }
 
   /**
-   * Determines if all changes in sub components are saved and user can navigate to different component
+   * Determines if all changes in subcomponents are saved and user can navigate to different component
    */
   canDeactivate(): boolean {
     return this.canDeactivateGroupEdit && this.canDeactivateMembers && this.canDeactivateRoles;

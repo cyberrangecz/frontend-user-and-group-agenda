@@ -19,8 +19,7 @@
         <div class="expiration">
           <mat-form-field appearance="outline" class="expiration-form">
             <mat-label>Expiration Date</mat-label>
-            <button mat-button
-                    *ngIf="expirationDate.value"
+            <button *ngIf="expirationDate.value"
                     matSuffix
                     mat-icon-button
                     aria-label="Clear"
@@ -32,6 +31,7 @@
           </mat-form-field>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         </div>
+      </div>
       </div>
 
     </div>
@@ -45,5 +45,4 @@
       </button>
       <mat-error>Description is required</mat-error>
     </mat-form-field>
-  </div>
 </form>

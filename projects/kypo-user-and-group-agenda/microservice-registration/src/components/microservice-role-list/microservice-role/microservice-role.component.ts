@@ -2,18 +2,19 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
-import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRoleItem } from '../../../model/microservice-role-item';
 import { MicroserviceRoleForm } from './microservice-role-form';
 import { AbstractControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Component of individual microservice-registration role
@@ -24,7 +25,7 @@ import { AbstractControl } from '@angular/forms';
   styleUrls: ['./microservice-role.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceRoleComponent extends SentinelBaseDirective implements OnChanges {
+export class MicroserviceRoleComponent implements OnChanges {
   /**
    * Edited role
    */
@@ -45,16 +46,14 @@ export class MicroserviceRoleComponent extends SentinelBaseDirective implements 
    */
   microserviceRoleFormGroup: MicroserviceRoleForm;
 
+  destroyRef = inject(DestroyRef);
+
   get description(): AbstractControl {
     return this.microserviceRoleFormGroup.formGroup.get('description');
   }
 
   get type(): AbstractControl {
     return this.microserviceRoleFormGroup.formGroup.get('type');
-  }
-
-  constructor() {
-    super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -84,7 +83,7 @@ export class MicroserviceRoleComponent extends SentinelBaseDirective implements 
 
   private setupOnFormChangedEvent() {
     this.microserviceRoleFormGroup.formGroup.valueChanges
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.onChanged());
   }
 

@@ -2,13 +2,13 @@ import { RegisterControlItem, PaginationService } from '@muni-kypo-crp/user-and-
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, DestroyRef } from '@angular/core';
 import { Observable, defer, of } from 'rxjs';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { take, takeWhile, map } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-microservice-overview',
@@ -16,7 +16,7 @@ import { take, takeWhile, map } from 'rxjs/operators';
   styleUrls: ['./microservice-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceOverviewComponent extends SentinelBaseDirective implements OnInit {
+export class MicroserviceOverviewComponent implements OnInit {
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
@@ -32,9 +32,9 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
 
   controls: SentinelControlItem[];
 
-  constructor(private microserviceService: MicroserviceOverviewService, private paginationService: PaginationService) {
-    super();
-  }
+  destroyRef = inject(DestroyRef);
+
+  constructor(private microserviceService: MicroserviceOverviewService, private paginationService: PaginationService) {}
 
   ngOnInit(): void {
     const initialLoadEvent: TableLoadEvent = {
@@ -49,7 +49,7 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
       map((microservices) => new MicroserviceTable(microservices))
     );
     this.microservicesHasError$ = this.microserviceService.hasError$;
-    this.microserviceService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.initControls());
+    this.microserviceService.selected$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.initControls());
     this.onTableLoadEvent(initialLoadEvent);
   }
 
@@ -65,7 +65,7 @@ export class MicroserviceOverviewComponent extends SentinelBaseDirective impleme
     this.paginationService.setPagination(event.pagination.size);
     this.microserviceService
       .getAll(event.pagination, event.filter)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 

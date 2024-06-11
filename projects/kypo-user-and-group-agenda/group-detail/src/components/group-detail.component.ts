@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Group, User, UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda';
-import { map, takeWhile } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MembersDetailTable } from '../model/members-detail-table';
 import { RolesDetailTable } from '../model/roles-detail-table';
@@ -12,6 +11,7 @@ import { TableLoadEvent, SentinelTable } from '@sentinel/components/table';
 import { PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { MembersDetailService } from '../services/members-detail.service';
 import { RolesDetailService } from '../services/roles-detail.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-group-detail',
@@ -19,7 +19,7 @@ import { RolesDetailService } from '../services/roles-detail.service';
   styleUrls: ['./group-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupDetailComponent extends SentinelBaseDirective implements OnInit {
+export class GroupDetailComponent implements OnInit {
   readonly INIT_MEMBERS_SORT_NAME = 'familyName';
   readonly INIT_ROLES_SORT_NAME = 'roleType';
   readonly INIT_SORT_DIR = 'asc';
@@ -32,15 +32,14 @@ export class GroupDetailComponent extends SentinelBaseDirective implements OnIni
   members$: Observable<SentinelTable<User>>;
   membersTableHasError$: Observable<boolean>;
   isLoadingMembers$: Observable<boolean>;
+  destroyRef = inject(DestroyRef);
 
   constructor(
     private activeRoute: ActivatedRoute,
     private membersDetailService: MembersDetailService,
     private rolesDetailService: RolesDetailService,
     private paginationService: PaginationService
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initTables();
@@ -54,7 +53,7 @@ export class GroupDetailComponent extends SentinelBaseDirective implements OnIni
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.rolesDetailService
       .getAssigned(this.group.id, loadEvent.pagination, loadEvent.filter)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
@@ -66,12 +65,12 @@ export class GroupDetailComponent extends SentinelBaseDirective implements OnIni
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.membersDetailService
       .getAssigned(this.group.id, loadEvent.pagination, loadEvent.filter)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
   private initTables(): void {
-    this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
+    this.activeRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.group = data[GROUP_DATA_ATTRIBUTE_NAME];
       this.initMembersTable();
       this.initRolesTable();

@@ -3,18 +3,19 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormControl } from '@angular/forms';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { takeWhile } from 'rxjs/operators';
 import { MicroserviceRolesState } from '../../model/microservice-roles-state';
 import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Component for editing main info about microservice-registration and its roles
@@ -25,7 +26,7 @@ import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
   styleUrls: ['./microservice-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MicroserviceEditComponent extends SentinelBaseDirective implements OnChanges {
+export class MicroserviceEditComponent implements OnChanges {
   /**
    * Edited microservice-registration
    */
@@ -37,6 +38,7 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
   @Output() microserviceChange: EventEmitter<Microservice> = new EventEmitter<Microservice>();
 
   microserviceFormGroup: MicroserviceEditFormGroup;
+  destroyRef = inject(DestroyRef);
   private rolesValidity: boolean;
 
   get name(): AbstractControl {
@@ -49,10 +51,6 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
 
   get roles(): UntypedFormArray {
     return this.microserviceFormGroup.formGroup.get('roles') as UntypedFormArray;
-  }
-
-  constructor() {
-    super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -80,7 +78,7 @@ export class MicroserviceEditComponent extends SentinelBaseDirective implements 
 
   private setupOnFormChangedEvent() {
     this.microserviceFormGroup.formGroup.valueChanges
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.onChanged());
   }
 

@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { GroupTable } from '../model/table/group-table';
 import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
 import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Main smart component of group-overview overview page
@@ -20,7 +20,7 @@ import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
   styleUrls: ['./group-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupOverviewComponent extends SentinelBaseDirective implements OnInit {
+export class GroupOverviewComponent implements OnInit {
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
@@ -35,14 +35,13 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
   groupsHasError$: Observable<boolean>;
 
   controls: SentinelControlItem[];
+  destroyRef = inject(DestroyRef);
 
   constructor(
     private groupService: GroupOverviewService,
     private paginationService: PaginationService,
     private navigator: UserAndGroupNavigator
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
     const initialLoadEvent: TableLoadEvent = {
@@ -57,7 +56,9 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
       map((groups) => new GroupTable(groups, this.groupService, this.navigator))
     );
     this.groupsHasError$ = this.groupService.hasError$;
-    this.groupService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
+    this.groupService.selected$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((ids) => this.initControls(ids.length));
     this.onTableLoadEvent(initialLoadEvent);
   }
 
@@ -71,10 +72,7 @@ export class GroupOverviewComponent extends SentinelBaseDirective implements OnI
    */
   onTableLoadEvent(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
-    this.groupService
-      .getAll(event.pagination, event.filter)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.groupService.getAll(event.pagination, event.filter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   /**

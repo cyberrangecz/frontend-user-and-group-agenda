@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { UserTable } from '../model/user-table';
 import { PaginationService, DeleteControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserOverviewService } from '../services/overview/user-overview.service';
 import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Main smart component of user overview page
@@ -20,9 +20,10 @@ import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
   styleUrls: ['./user-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserOverviewComponent extends SentinelBaseDirective implements OnInit {
+export class UserOverviewComponent implements OnInit {
   readonly INIT_SORT_NAME = 'familyName';
   readonly INIT_SORT_DIR = 'asc';
+  destroyRef = inject(DestroyRef);
 
   /**
    * Data for users table
@@ -39,9 +40,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
     private userService: UserOverviewService,
     private paginationService: PaginationService,
     private navigator: UserAndGroupNavigator
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
     const initialLoadEvent: TableLoadEvent = {
@@ -57,7 +56,9 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
     );
     this.usersHasError$ = this.userService.hasError$;
     this.onLoadEvent(initialLoadEvent);
-    this.userService.selected$.pipe(takeWhile(() => this.isAlive)).subscribe((ids) => this.initControls(ids.length));
+    this.userService.selected$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((ids) => this.initControls(ids.length));
   }
 
   /**
@@ -66,10 +67,7 @@ export class UserOverviewComponent extends SentinelBaseDirective implements OnIn
    */
   onLoadEvent(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
-    this.userService
-      .getAll(event.pagination, event.filter)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.userService.getAll(event.pagination, event.filter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   /**

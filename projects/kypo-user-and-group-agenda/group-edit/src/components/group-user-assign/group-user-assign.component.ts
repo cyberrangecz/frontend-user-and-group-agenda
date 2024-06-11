@@ -2,13 +2,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
@@ -16,11 +17,12 @@ import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { combineLatest, defer, Observable } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { GroupMemberTable } from '../../model/table/group-member-table';
 import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';
 import { UserAssignConcreteService } from '../../services/state/user-assign/user-assign-concrete.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Component for user assignment to groups
@@ -32,7 +34,7 @@ import { UserAssignConcreteService } from '../../services/state/user-assign/user
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: UserAssignService, useClass: UserAssignConcreteService }],
 })
-export class GroupUserAssignComponent extends SentinelBaseDirective implements OnChanges {
+export class GroupUserAssignComponent implements OnChanges {
   readonly MEMBERS_OF_GROUP_INIT_SORT_NAME = 'familyName';
   readonly MEMBERS_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -87,8 +89,9 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
   assignUsersControls: SentinelControlItem[];
   assignedUsersControls: SentinelControlItem[];
 
+  destroyRef = inject(DestroyRef);
+
   constructor(private userAssignService: UserAssignService, private paginationService: PaginationService) {
-    super();
     this.userMapping = {
       id: 'id',
       title: 'name',
@@ -169,7 +172,7 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.userAssignService
       .getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
@@ -184,12 +187,12 @@ export class GroupUserAssignComponent extends SentinelBaseDirective implements O
 
   private initUnsavedChangesEmitter() {
     combineLatest([this.userAssignService.selectedGroupsToImport$, this.userAssignService.selectedUsersToAssign$])
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((selections) => this.hasUnsavedChanges.emit(selections.some((selection) => selection.length > 0)));
   }
 
   private initAssignedUsersControls() {
-    this.userAssignService.selectedAssignedUsers$.pipe(takeWhile(() => this.isAlive)).subscribe((selection) => {
+    this.userAssignService.selectedAssignedUsers$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selection) => {
       this.assignedUsersControls = [
         new DeleteControlItem(
           selection.length,

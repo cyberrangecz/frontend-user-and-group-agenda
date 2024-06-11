@@ -2,19 +2,20 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { takeWhile } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 import { GroupEditFormGroup } from './group-edit-form-group';
 import { AbstractControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Component for editing basic group-overview attributes
@@ -25,7 +26,7 @@ import { AbstractControl } from '@angular/forms';
   styleUrls: ['./group-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GroupEditComponent extends SentinelBaseDirective implements OnInit, OnChanges {
+export class GroupEditComponent implements OnInit, OnChanges {
   /**
    * Edited group-overview
    */
@@ -38,6 +39,7 @@ export class GroupEditComponent extends SentinelBaseDirective implements OnInit,
 
   tomorrow: Date;
   groupEditFormGroup: GroupEditFormGroup;
+  destroyRef = inject(DestroyRef);
 
   get name(): AbstractControl {
     return this.groupEditFormGroup.formGroup.get('name');
@@ -65,7 +67,7 @@ export class GroupEditComponent extends SentinelBaseDirective implements OnInit,
 
   private setupOnFormChangedEvent() {
     this.groupEditFormGroup.formGroup.valueChanges
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.onChanged());
   }
 

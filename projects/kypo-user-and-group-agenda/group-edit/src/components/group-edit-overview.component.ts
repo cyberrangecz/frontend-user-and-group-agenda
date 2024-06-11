@@ -1,17 +1,17 @@
 /* eslint-disable @angular-eslint/no-output-native */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
 import { defer, Observable } from 'rxjs';
-import { take, takeWhile, tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
 import { GroupEditConcreteService } from '../services/state/group-edit-concrete.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-group-edit-overview',
@@ -20,7 +20,7 @@ import { GroupEditConcreteService } from '../services/state/group-edit-concrete.
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: GroupEditService, useClass: GroupEditConcreteService }],
 })
-export class GroupEditOverviewComponent extends SentinelBaseDirective {
+export class GroupEditOverviewComponent {
   @Output() canDeactivateEvent: EventEmitter<boolean> = new EventEmitter();
 
   group$: Observable<Group>;
@@ -29,13 +29,13 @@ export class GroupEditOverviewComponent extends SentinelBaseDirective {
   canDeactivateMembers = true;
   canDeactivateRoles = true;
   controls: SentinelControlItem[];
+  destroyRef = inject(DestroyRef);
 
   constructor(private activeRoute: ActivatedRoute, private editService: GroupEditService) {
-    super();
     this.group$ = this.editService.group$;
     this.editMode$ = this.editService.editMode$.pipe(tap((editMode) => this.initControls(editMode)));
     this.activeRoute.data
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => this.editService.set(data[GROUP_DATA_ATTRIBUTE_NAME]));
   }
 

@@ -2,13 +2,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
@@ -16,11 +17,12 @@ import { UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { defer, Observable } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { GroupRolesTable } from '../../model/table/group-roles-table';
 import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';
 import { RoleAssignConcreteService } from '../../services/state/role-assign/role-assign-concrete.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Component for role assignment to edited group-overview
@@ -32,7 +34,7 @@ import { RoleAssignConcreteService } from '../../services/state/role-assign/role
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: RoleAssignService, useClass: RoleAssignConcreteService }],
 })
-export class GroupRoleAssignComponent extends SentinelBaseDirective implements OnChanges {
+export class GroupRoleAssignComponent implements OnChanges {
   readonly ROLES_OF_GROUP_INIT_SORT_NAME = 'roleType';
   readonly ROLES_OF_GROUP_INIT_SORT_DIR = 'asc';
 
@@ -78,9 +80,9 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
 
   rolesToAssignControls: SentinelControlItem[];
   assignedRolesControls: SentinelControlItem[];
+  destroyRef = inject(DestroyRef);
 
   constructor(private roleAssignService: RoleAssignService, private paginationService: PaginationService) {
-    super();
     this.roleMapping = {
       id: 'id',
       title: 'roleType',
@@ -120,7 +122,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
     this.paginationService.setPagination(event.pagination.size);
     this.roleAssignService
       .getAssigned(this.resource.id, event.pagination, event.filter)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
@@ -166,7 +168,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
   }
 
   private initAssignedRolesControls() {
-    this.roleAssignService.selectedAssignedRoles$.pipe(takeWhile(() => this.isAlive)).subscribe((selection) => {
+    this.roleAssignService.selectedAssignedRoles$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((selection) => {
       this.assignedRolesControls = [
         new DeleteControlItem(
           selection.length,
@@ -188,7 +190,7 @@ export class GroupRoleAssignComponent extends SentinelBaseDirective implements O
 
   private initUnsavedChangesEmitter() {
     this.roleAssignService.selectedRolesToAssign$
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((selection) => this.hasUnsavedChanges.emit(selection.length > 0));
   }
 }

@@ -1,6 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { Observable } from 'rxjs';
 import { FileUploadProgressService } from '../../services/file-upload/file-upload-progress.service';
 
@@ -12,7 +11,7 @@ import { FileUploadProgressService } from '../../services/file-upload/file-uploa
   templateUrl: './users-upload-dialog.component.html',
   styleUrls: ['./users-upload-dialog.component.css'],
 })
-export class UsersUploadDialogComponent extends SentinelBaseDirective {
+export class UsersUploadDialogComponent {
   selectedFile: File;
   uploadInProgress$: Observable<boolean>;
   onUpload$ = new EventEmitter<File>();
@@ -21,7 +20,6 @@ export class UsersUploadDialogComponent extends SentinelBaseDirective {
     public dialogRef: MatDialogRef<UsersUploadDialogComponent>,
     private uploadProgressService: FileUploadProgressService
   ) {
-    super();
     this.uploadInProgress$ = this.uploadProgressService.isInProgress$;
   }
 

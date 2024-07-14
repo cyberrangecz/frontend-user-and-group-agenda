@@ -44,6 +44,11 @@ export class GroupRoleAssignComponent implements OnChanges {
   @Input() resource: Group;
 
   /**
+   * Pagination id for saving and restoring pagination size
+   */
+  @Input() paginationId = 'kypo-group-role-assign';
+
+  /**
    * Event emitter of changes state
    */
   @Output() hasUnsavedChanges: EventEmitter<boolean> = new EventEmitter();
@@ -119,7 +124,7 @@ export class GroupRoleAssignComponent implements OnChanges {
   }
 
   onAssignedRolesLoad(event: TableLoadEvent): void {
-    this.paginationService.setPagination(event.pagination.size);
+    this.paginationService.setPagination(this.paginationId, event.pagination.size);
     this.roleAssignService
       .getAssigned(this.resource.id, event.pagination, event.filter)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -159,7 +164,7 @@ export class GroupRoleAssignComponent implements OnChanges {
     const initialLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.ROLES_OF_GROUP_INIT_SORT_NAME,
         this.ROLES_OF_GROUP_INIT_SORT_DIR
       ),

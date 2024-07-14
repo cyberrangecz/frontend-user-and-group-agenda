@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, O
 import { ActivatedRoute } from '@angular/router';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { defer, Observable } from 'rxjs';
+import { defer, Observable, of } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { GROUP_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda';
 import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
@@ -82,4 +82,6 @@ export class GroupEditOverviewComponent {
       this.controls = [saveItem, saveAndStayItem];
     }
   }
+
+  protected readonly of = of;
 }

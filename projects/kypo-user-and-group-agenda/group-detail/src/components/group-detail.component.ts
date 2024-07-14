@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Group, User, UserRole } from '@muni-kypo-crp/user-and-group-model';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
@@ -20,6 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupDetailComponent implements OnInit {
+  @Input() paginationId = 'kypo-group-detail';
   readonly INIT_MEMBERS_SORT_NAME = 'familyName';
   readonly INIT_ROLES_SORT_NAME = 'roleType';
   readonly INIT_SORT_DIR = 'asc';
@@ -50,7 +51,7 @@ export class GroupDetailComponent implements OnInit {
    * @param loadEvent load event emitted from roles detail table
    */
   onRolesLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.rolesDetailService
       .getAssigned(this.group.id, loadEvent.pagination, loadEvent.filter)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -62,7 +63,7 @@ export class GroupDetailComponent implements OnInit {
    * @param loadEvent load event emitted from mmebers detail table
    */
   onMembersLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.membersDetailService
       .getAssigned(this.group.id, loadEvent.pagination, loadEvent.filter)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -81,7 +82,7 @@ export class GroupDetailComponent implements OnInit {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.INIT_MEMBERS_SORT_NAME,
         this.INIT_SORT_DIR
       ),
@@ -96,7 +97,7 @@ export class GroupDetailComponent implements OnInit {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.INIT_ROLES_SORT_NAME,
         this.INIT_SORT_DIR
       ),

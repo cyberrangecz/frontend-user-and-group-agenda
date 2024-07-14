@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
@@ -21,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserOverviewComponent implements OnInit {
+  @Input() paginationId = 'kypo-user-overview';
   readonly INIT_SORT_NAME = 'familyName';
   readonly INIT_SORT_DIR = 'asc';
   destroyRef = inject(DestroyRef);
@@ -46,7 +47,7 @@ export class UserOverviewComponent implements OnInit {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.INIT_SORT_NAME,
         this.INIT_SORT_DIR
       ),
@@ -66,7 +67,7 @@ export class UserOverviewComponent implements OnInit {
    * @param event load table vent emitted by table component
    */
   onLoadEvent(event: TableLoadEvent): void {
-    this.paginationService.setPagination(event.pagination.size);
+    this.paginationService.setPagination(this.paginationId, event.pagination.size);
     this.userService.getAll(event.pagination, event.filter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 

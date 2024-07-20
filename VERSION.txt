@@ -1,4 +1,4 @@
-16.0.4 Save pagination size by component id.
+16.0.4 Update pagination to save size by component id.
 16.0.3 Update sentinel components version.
 16.0.2 Update all components to work without a deprecated Sentinel directive.
 16.0.1 Fix a group edit component material button.

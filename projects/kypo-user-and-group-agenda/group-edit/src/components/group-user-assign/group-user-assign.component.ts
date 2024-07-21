@@ -44,6 +44,11 @@ export class GroupUserAssignComponent implements OnChanges {
   @Input() resource: Group;
 
   /**
+   * Pagination id for saving and restoring pagination size
+   */
+  @Input() paginationId = 'kypo-group-user-assign';
+
+  /**
    * Event emitter of unsaved changes
    */
   @Output() hasUnsavedChanges: EventEmitter<boolean> = new EventEmitter();
@@ -169,7 +174,7 @@ export class GroupUserAssignComponent implements OnChanges {
    * @param loadEvent event to load new data emitted by assigned users table component
    */
   onAssignedLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.userAssignService
       .getAssigned(this.resource.id, loadEvent.pagination, loadEvent.filter)
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -221,7 +226,7 @@ export class GroupUserAssignComponent implements OnChanges {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.MEMBERS_OF_GROUP_INIT_SORT_NAME,
         this.MEMBERS_OF_GROUP_INIT_SORT_DIR
       ),

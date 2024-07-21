@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Group } from '@muni-kypo-crp/user-and-group-model';
@@ -21,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupOverviewComponent implements OnInit {
+  @Input() paginationId = 'kypo-group-overview';
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
@@ -47,7 +48,7 @@ export class GroupOverviewComponent implements OnInit {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.INIT_SORT_NAME,
         this.INIT_SORT_DIR
       ),
@@ -71,7 +72,7 @@ export class GroupOverviewComponent implements OnInit {
    * @param event event emitted from table component
    */
   onTableLoadEvent(event: TableLoadEvent): void {
-    this.paginationService.setPagination(event.pagination.size);
+    this.paginationService.setPagination(this.paginationId, event.pagination.size);
     this.groupService.getAll(event.pagination, event.filter).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 

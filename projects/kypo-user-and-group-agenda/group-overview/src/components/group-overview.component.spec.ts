@@ -83,7 +83,7 @@ describe('GroupOverviewComponent', () => {
   it('should request data on init', fakeAsync(() => {
     const expectedOffsetPaginationEvent = new OffsetPaginationEvent(
       0,
-      paginationServiceSpy.getPagination(),
+      paginationServiceSpy.DEFAULT_PAGINATION,
       component.INIT_SORT_NAME,
       component.INIT_SORT_DIR
     );

@@ -3,7 +3,7 @@ import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
 import { Microservice } from '@muni-kypo-crp/user-and-group-model';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { Component, OnInit, ChangeDetectionStrategy, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, DestroyRef, Input } from '@angular/core';
 import { Observable, defer, of } from 'rxjs';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { SentinelControlItem } from '@sentinel/components/controls';
@@ -17,6 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MicroserviceOverviewComponent implements OnInit {
+  @Input() paginationId = 'kypo-microservice-overview';
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
@@ -40,7 +41,7 @@ export class MicroserviceOverviewComponent implements OnInit {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(
         0,
-        this.paginationService.getPagination(),
+        this.paginationService.getPagination(this.paginationId),
         this.INIT_SORT_NAME,
         this.INIT_SORT_DIR
       ),
@@ -62,7 +63,7 @@ export class MicroserviceOverviewComponent implements OnInit {
    * @param event event emitted from table component
    */
   onTableLoadEvent(event: TableLoadEvent): void {
-    this.paginationService.setPagination(event.pagination.size);
+    this.paginationService.setPagination(this.paginationId, event.pagination.size);
     this.microserviceService
       .getAll(event.pagination, event.filter)
       .pipe(takeUntilDestroyed(this.destroyRef))

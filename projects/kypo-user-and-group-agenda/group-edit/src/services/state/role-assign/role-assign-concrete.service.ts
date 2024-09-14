@@ -4,8 +4,8 @@ import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sen
 import { RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { RoleFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { RoleAssignService } from './role-assign.service';
@@ -84,9 +84,17 @@ export class RoleAssignConcreteService extends RoleAssignService {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new OffsetPaginationEvent(0, paginationSize, 'roleType', 'asc');
-    return this.roleApi
+    const foundRoles = this.roleApi
       .getAll(pagination, filter)
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching roles') }));
+
+    return combineLatest(foundRoles, this.assignedRoles$).pipe(
+      map(([roles, assigned]) => {
+        const alreadyAssigned = new Set(assigned.elements.map((role) => role.id));
+        roles.elements = roles.elements.filter((role) => !alreadyAssigned.has(role.id));
+        return roles;
+      })
+    );
   }
 
   /**

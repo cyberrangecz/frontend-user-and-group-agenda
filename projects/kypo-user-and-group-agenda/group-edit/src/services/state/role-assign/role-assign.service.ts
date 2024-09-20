@@ -49,10 +49,12 @@ export abstract class RoleAssignService {
   }
 
   /**
-   * Search for roles available to assign to resource
-   * @param filter filter to be applied on roles
+   * Gets roles available to assign
+   * @param filterValue filter to be applied on roles
+   * @param resourceId id of a resource of which roles should be excluded from result
+   * @returns roles available to assign
    */
-  abstract getAvailableToAssign(filter: string): Observable<PaginatedResource<UserRole>>;
+  abstract getAvailableToAssign(resourceId: number, filterValue: string): Observable<PaginatedResource<UserRole>>;
 
   /**
    * Get roles already assigned to the resource

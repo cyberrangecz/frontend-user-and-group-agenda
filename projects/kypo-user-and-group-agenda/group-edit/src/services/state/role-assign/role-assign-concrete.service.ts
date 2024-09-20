@@ -79,22 +79,16 @@ export class RoleAssignConcreteService extends RoleAssignService {
   /**
    * Gets roles available to assign
    * @param filterValue filter to be applied on roles
+   * @param resourceId id of a resource of which roles should be excluded from result
+   * @returns roles available to assign
    */
-  getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole>> {
+  getAvailableToAssign(resourceId: number, filterValue: string = null): Observable<PaginatedResource<UserRole>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new OffsetPaginationEvent(0, paginationSize, 'roleType', 'asc');
-    const foundRoles = this.roleApi
-      .getAll(pagination, filter)
+    return this.roleApi
+      .getRolesNotInGroup(resourceId, pagination, filter)
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching roles') }));
-
-    return combineLatest(foundRoles, this.assignedRoles$).pipe(
-      map(([roles, assigned]) => {
-        const alreadyAssigned = new Set(assigned.elements.map((role) => role.id));
-        roles.elements = roles.elements.filter((role) => !alreadyAssigned.has(role.id));
-        return roles;
-      })
-    );
   }
 
   /**

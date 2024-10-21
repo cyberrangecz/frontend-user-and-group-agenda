@@ -39,7 +39,7 @@ export class GroupDetailComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private membersDetailService: MembersDetailService,
     private rolesDetailService: RolesDetailService,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +84,7 @@ export class GroupDetailComponent implements OnInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.INIT_MEMBERS_SORT_NAME,
-        this.INIT_SORT_DIR
+        this.INIT_SORT_DIR,
       ),
     };
     this.members$ = this.membersDetailService.assignedUsers$.pipe(map((resource) => new MembersDetailTable(resource)));
@@ -99,7 +99,7 @@ export class GroupDetailComponent implements OnInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.INIT_ROLES_SORT_NAME,
-        this.INIT_SORT_DIR
+        this.INIT_SORT_DIR,
       ),
     };
     this.roles$ = this.rolesDetailService.assignedRoles$.pipe(map((resource) => new RolesDetailTable(resource)));

@@ -4,7 +4,11 @@ import { Observable } from 'rxjs';
 export class SaveControlItem extends SentinelControlItem {
   static readonly ID = 'save';
 
-  constructor(label: string, disabled$: Observable<boolean>, result$: Observable<any>) {
+  constructor(
+    public label: string,
+    disabled$: Observable<boolean>,
+    result$: Observable<any>,
+  ) {
     super(SaveControlItem.ID, label, 'primary', disabled$, result$);
   }
 }

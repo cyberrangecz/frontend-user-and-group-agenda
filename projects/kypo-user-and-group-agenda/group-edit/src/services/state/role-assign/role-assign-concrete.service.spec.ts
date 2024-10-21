@@ -56,7 +56,7 @@ describe('RoleAssignConcreteService', () => {
           expect(groupApiSpy.assignRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -76,7 +76,7 @@ describe('RoleAssignConcreteService', () => {
           expect(groupApiSpy.removeRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -87,7 +87,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual(expectedRoles);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelectedAssignedRoles(expectedRoles);
   });
@@ -99,7 +99,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual(expectedRoles);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelectedRolesToAssign(expectedRoles);
   });
@@ -110,7 +110,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.clearSelectedAssignedRoles();
   });
@@ -121,7 +121,7 @@ describe('RoleAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.clearSelectedRolesToAssign();
   });
@@ -143,7 +143,7 @@ describe('RoleAssignConcreteService', () => {
           expect(groupApiSpy.assignRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -164,7 +164,7 @@ describe('RoleAssignConcreteService', () => {
           expect(groupApiSpy.removeRole).toHaveBeenCalledTimes(roles.length);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -184,7 +184,7 @@ describe('RoleAssignConcreteService', () => {
           expect(groupApiSpy.getRolesOfGroup).toHaveBeenCalledWith(resourceId, pagination, jasmine.anything());
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -204,7 +204,7 @@ describe('RoleAssignConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 
@@ -220,7 +220,7 @@ describe('RoleAssignConcreteService', () => {
         expect(role).toEqual(expectedRoles);
         done();
       },
-      () => fail()
+      () => fail(),
     );
 
     service.getAssigned(resourceId, pagination, filterValue).pipe(take(1)).subscribe();
@@ -242,7 +242,7 @@ describe('RoleAssignConcreteService', () => {
           expect(roleApiSpy.getRolesNotInGroup).toHaveBeenCalledWith(1, jasmine.anything(), expectedFilter);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -261,7 +261,7 @@ describe('RoleAssignConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 

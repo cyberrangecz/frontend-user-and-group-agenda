@@ -43,7 +43,7 @@ export class MicroserviceEditOverviewComponent implements OnInit {
     private navigator: UserAndGroupNavigator,
     private router: Router,
     private notificationService: UserAndGroupNotificationService,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +82,7 @@ export class MicroserviceEditOverviewComponent implements OnInit {
         this.notificationService.emit('success', 'Microservice was created');
         this.canDeactivateForm = true;
       },
-      (err) => this.errorHandler.emit(err, 'Creating microservice-registration')
+      (err) => this.errorHandler.emit(err, 'Creating microservice-registration'),
     );
   }
 

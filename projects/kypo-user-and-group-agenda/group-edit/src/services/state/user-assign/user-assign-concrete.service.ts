@@ -20,7 +20,7 @@ export class UserAssignConcreteService extends UserAssignService {
     private api: GroupApi,
     private userApi: UserApi,
     private context: UserAndGroupContext,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {
     super();
   }
@@ -74,7 +74,7 @@ export class UserAssignConcreteService extends UserAssignService {
   getAssigned(
     resourceId: number,
     pagination: OffsetPaginationEvent,
-    filterValue: string = null
+    filterValue: string = null,
   ): Observable<PaginatedResource<User>> {
     this.clearSelectedAssignedUsers();
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
@@ -92,8 +92,8 @@ export class UserAssignConcreteService extends UserAssignService {
           this.errorHandler.emit(err, 'Fetching users');
           this.isLoadingAssignedSubject$.next(false);
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -133,9 +133,9 @@ export class UserAssignConcreteService extends UserAssignService {
           this.clearSelectedUsersToAssign();
           this.clearSelectedGroupsToImport();
         },
-        (err) => this.errorHandler.emit(err, 'Adding users')
+        (err) => this.errorHandler.emit(err, 'Adding users'),
       ),
-      switchMap(() => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter)),
     );
   }
 
@@ -143,9 +143,9 @@ export class UserAssignConcreteService extends UserAssignService {
     return this.api.removeUsersFromGroup(resourceId, userIds).pipe(
       tap(
         () => this.clearSelectedAssignedUsers(),
-        (err) => this.errorHandler.emit(err, 'Removing users')
+        (err) => this.errorHandler.emit(err, 'Removing users'),
       ),
-      switchMap(() => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastAssignedPagination, this.lastAssignedFilter)),
     );
   }
 }

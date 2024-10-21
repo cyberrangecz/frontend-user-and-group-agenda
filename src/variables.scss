@@ -1,16 +1,17 @@
 @use '@angular/material' as mat;
 @use '@sentinel/layout/theming' as sentinel;
 
-$primary: mat.get-color-from-palette(sentinel.$sentinel-primary-palette);
-$accent: mat.get-color-from-palette(sentinel.$sentinel-accent-palette);
-$warn: mat.get-color-from-palette(sentinel.$sentinel-warn-palette);
+$primary: mat.m2-get-color-from-palette(sentinel.$m2-sentinel-primary-palette);
+$accent: mat.m2-get-color-from-palette(sentinel.$m2-sentinel-accent-palette);
+$warn: mat.m2-get-color-from-palette(sentinel.$m2-sentinel-warn-palette);
+$typography: mat.m2-define-legacy-typography-config(sentinel.$m2-sentinel-typography);
 $success: #6df000;
 $non-accent: #808080;
 
-$kypo-white-primary-palette: mat.define-palette(mat.$gray-palette, A100);
-$primary-inverted: mat.get-color-from-palette($kypo-white-primary-palette);
-$accent-inverted: mat.get-color-from-palette($kypo-white-primary-palette);
-$warn-inverted: mat.get-color-from-palette($kypo-white-primary-palette);
+$kypo-white-primary-palette: mat.m2-define-palette(mat.$m2-gray-palette);
+$primary-inverted: mat.m2-get-color-from-palette($kypo-white-primary-palette);
+$accent-inverted: mat.m2-get-color-from-palette($kypo-white-primary-palette);
+$warn-inverted: mat.m2-get-color-from-palette($kypo-white-primary-palette);
 
-$darker-white-primary-palette: mat.define-palette(mat.$gray-palette, 200);
-$breadcrumbs-primary: mat.get-color-from-palette($darker-white-primary-palette);
+$darker-white-primary-palette: mat.m2-define-palette(mat.$m2-gray-palette, 200);
+$breadcrumbs-primary: mat.m2-get-color-from-palette($darker-white-primary-palette);

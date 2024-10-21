@@ -17,7 +17,7 @@ export class MembersDetailConcreteService extends MembersDetailService {
   constructor(
     private userApi: UserApi,
     private context: UserAndGroupContext,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {
     super();
   }
@@ -40,7 +40,7 @@ export class MembersDetailConcreteService extends MembersDetailService {
   getAssigned(
     resourceId: number,
     pagination: OffsetPaginationEvent,
-    filterValue: string = null
+    filterValue: string = null,
   ): Observable<PaginatedResource<User>> {
     const filter = filterValue ? [new UserFilter(filterValue)] : [];
     this.lastAssignedPagination = pagination;
@@ -57,8 +57,8 @@ export class MembersDetailConcreteService extends MembersDetailService {
           this.errorHandler.emit(err, 'Fetching users');
           this.isLoadingAssignedSubject$.next(false);
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 

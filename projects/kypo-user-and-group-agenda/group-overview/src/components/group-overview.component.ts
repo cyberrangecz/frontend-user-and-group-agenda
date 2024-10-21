@@ -41,7 +41,7 @@ export class GroupOverviewComponent implements OnInit {
   constructor(
     private groupService: GroupOverviewService,
     private paginationService: PaginationService,
-    private navigator: UserAndGroupNavigator
+    private navigator: UserAndGroupNavigator,
   ) {}
 
   ngOnInit(): void {
@@ -50,11 +50,11 @@ export class GroupOverviewComponent implements OnInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.INIT_SORT_NAME,
-        this.INIT_SORT_DIR
+        this.INIT_SORT_DIR,
       ),
     };
     this.groups$ = this.groupService.resource$.pipe(
-      map((groups) => new GroupTable(groups, this.groupService, this.navigator))
+      map((groups) => new GroupTable(groups, this.groupService, this.navigator)),
     );
     this.groupsHasError$ = this.groupService.hasError$;
     this.groupService.selected$
@@ -96,12 +96,12 @@ export class GroupOverviewComponent implements OnInit {
     this.controls = [
       new DeleteControlItem(
         selectedLength,
-        defer(() => this.groupService.deleteSelected())
+        defer(() => this.groupService.deleteSelected()),
       ),
       new SaveControlItem(
         'Create',
         of(false),
-        defer(() => this.groupService.create())
+        defer(() => this.groupService.create()),
       ),
     ];
   }

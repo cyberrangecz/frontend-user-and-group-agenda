@@ -1,18 +1,33 @@
 @use '@angular/material' as mat;
-@use '@sentinel/layout/theming' as sentinel;
-@use "@sentinel/components/table";
-@import "./variables.scss";
+@use '@sentinel/layout/theming' as sentinel-vars;
+@use '@sentinel/layout/sentinel-layout-theme' as layout;
+@use '@sentinel/layout/notification-card-mixin' as sentinel-layout-notification-card;
+@use '@sentinel/layout/sidebar-mixin' as sentinel-layout-sidebar;
+@use '@sentinel/components/theming' as sentinel-components ;
+@use '@sentinel/components/typography' as sentinel-typography ;
+@use 'variables'as kypo-variables;
 
-// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
-//  The following line adds:
-//    1. Default typography styles for all components
-//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
-//  If you specify typography styles for the components you use elsewhere, you should delete this line.
-//  If you don't need the default component typographies but still want the hierarchy styles,
-//  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
-@include mat.all-component-typographies();
-@include mat.core();
-@include mat.all-component-themes(sentinel.$sentinel-theme);
-@include mat.all-component-typographies(sentinel.$sentinel-typography);
-@include table.sentinel-table-theme(sentinel.$sentinel-theme);
+$kypo-theme: mat.private-merge-all(sentinel-vars.$sentinel-theme, (
+  color: (
+    primary: kypo-variables.$primary,
+    accent: kypo-variables.$accent,
+    warn: kypo-variables.$warn,
+  )
+));
+
+
+
+:root {
+  @include mat.core();
+  @include mat.all-component-themes($kypo-theme);
+  @include mat.all-component-typographies($kypo-theme);
+  @include mat.typography-hierarchy($kypo-theme);
+  @include mat.system-level-colors($kypo-theme);
+  @include mat.system-level-typography($kypo-theme);
+  @include mat.color-variants-backwards-compatibility($kypo-theme);
+  @include sentinel-components.all-component-themes($kypo-theme);
+  @include sentinel-typography.all-component-typographies($kypo-theme);
+
+  @include layout.sentinel-layout-theme($kypo-theme);
+  @include sentinel-layout-notification-card.notification-card-theme($kypo-theme);
+}

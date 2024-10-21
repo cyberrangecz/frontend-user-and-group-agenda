@@ -21,9 +21,9 @@ export class GroupRolesTable extends SentinelTable<UserRole> {
         new Row(role, [
           new RoleDeleteAction(
             of(false),
-            defer(() => service.unassign(groupId, [role]))
+            defer(() => service.unassign(groupId, [role])),
           ),
-        ])
+        ]),
     );
     super(rows, columns);
     this.pagination = resource.pagination;

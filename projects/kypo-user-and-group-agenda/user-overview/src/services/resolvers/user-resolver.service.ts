@@ -15,7 +15,7 @@ export class UserResolverService {
     private router: Router,
     private api: UserApi,
     private errorHandler: UserAndGroupErrorHandler,
-    private navigator: UserAndGroupNavigator
+    private navigator: UserAndGroupNavigator,
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> | Promise<User> | User {
@@ -27,7 +27,7 @@ export class UserResolverService {
         catchError((err) => {
           this.errorHandler.emit(err, 'Resolving user-overview');
           return this.navigateToOverview();
-        })
+        }),
       );
     }
     return this.navigateToOverview();

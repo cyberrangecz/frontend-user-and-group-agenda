@@ -25,7 +25,7 @@ describe('SelectablePaginatedService', () => {
         expect(selection).toEqual(resources);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelection(resources);
   });
@@ -36,7 +36,7 @@ describe('SelectablePaginatedService', () => {
         expect(selection).toEqual([]);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.clearSelection();
   });
@@ -56,7 +56,7 @@ describe('SelectablePaginatedService', () => {
           done();
         }
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelection(firstSelection);
     service.setSelection(secondSelection);

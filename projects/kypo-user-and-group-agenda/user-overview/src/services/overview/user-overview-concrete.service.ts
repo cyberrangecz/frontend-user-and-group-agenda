@@ -32,7 +32,7 @@ export class UserOverviewConcreteService extends UserOverviewService {
     private alertService: UserAndGroupNotificationService,
     private configService: UserAndGroupContext,
     private fileUploadProgressService: FileUploadProgressService,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {
     super(configService.config.defaultPaginationSize);
   }
@@ -56,8 +56,8 @@ export class UserOverviewConcreteService extends UserOverviewService {
         (err) => {
           this.errorHandler.emit(err, 'Fetching users');
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -73,8 +73,8 @@ export class UserOverviewConcreteService extends UserOverviewService {
         (err) => {
           this.errorHandler.emit(err, `Fetching user with id: ${userId}`);
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -84,14 +84,14 @@ export class UserOverviewConcreteService extends UserOverviewService {
    */
   delete(user: User): Observable<any> {
     return this.displayConfirmationDialog([user]).pipe(
-      switchMap((result) => (result ? this.callApiToDelete([user]) : EMPTY))
+      switchMap((result) => (result ? this.callApiToDelete([user]) : EMPTY)),
     );
   }
 
   deleteSelected(): Observable<any> {
     const users = this.selectedSubject$.getValue();
     return this.displayConfirmationDialog(users).pipe(
-      switchMap((result) => (result ? this.callApiToDelete(users) : EMPTY))
+      switchMap((result) => (result ? this.callApiToDelete(users) : EMPTY)),
     );
   }
 
@@ -118,9 +118,9 @@ export class UserOverviewConcreteService extends UserOverviewService {
         (err) => {
           this.errorHandler.emit(err, 'Deleting user');
           this.hasErrorSubject$.next(true);
-        }
+        },
       ),
-      switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAll(this.lastPagination, this.lastFilter)),
     );
   }
 
@@ -151,9 +151,9 @@ export class UserOverviewConcreteService extends UserOverviewService {
         (err) => {
           this.fileUploadProgressService.finish();
           this.errorHandler.emit(err, 'Importing users');
-        }
+        },
       ),
-      switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAll(this.lastPagination, this.lastFilter)),
     );
   }
 }

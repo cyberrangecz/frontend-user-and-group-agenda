@@ -17,7 +17,11 @@ export class RolesDetailConcreteService extends RolesDetailService {
   private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
-  constructor(private api: GroupApi, private roleApi: RoleApi, private errorHandler: UserAndGroupErrorHandler) {
+  constructor(
+    private api: GroupApi,
+    private roleApi: RoleApi,
+    private errorHandler: UserAndGroupErrorHandler,
+  ) {
     super();
   }
 
@@ -36,7 +40,7 @@ export class RolesDetailConcreteService extends RolesDetailService {
   getAssigned(
     resourceId: number,
     pagination: OffsetPaginationEvent,
-    filterValue: string = null
+    filterValue: string = null,
   ): Observable<PaginatedResource<UserRole>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
@@ -53,8 +57,8 @@ export class RolesDetailConcreteService extends RolesDetailService {
           this.errorHandler.emit(err, 'Fetching roles of group-overview');
           this.isLoadingAssignedSubject$.next(false);
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 

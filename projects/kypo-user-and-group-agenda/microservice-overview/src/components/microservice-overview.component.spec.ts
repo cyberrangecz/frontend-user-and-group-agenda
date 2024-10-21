@@ -70,7 +70,7 @@ describe('MicroserviceOverviewComponent', () => {
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
-      component.INIT_SORT_DIR
+      component.INIT_SORT_DIR,
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);

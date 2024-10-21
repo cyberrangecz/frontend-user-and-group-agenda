@@ -20,7 +20,7 @@ export class MicroserviceOverviewConcreteService extends MicroserviceOverviewSer
     private router: Router,
     private configService: UserAndGroupContext,
     private navigator: UserAndGroupNavigator,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {
     super(configService.config.defaultPaginationSize);
   }
@@ -44,8 +44,8 @@ export class MicroserviceOverviewConcreteService extends MicroserviceOverviewSer
         (err) => {
           this.errorHandler.emit(err, 'Fetching microservices');
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 

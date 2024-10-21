@@ -31,7 +31,7 @@ export class GroupBreadcrumbResolver {
       const resolved = this.groupResolver.resolve(route, state) as Observable<Group>;
       return resolved.pipe(
         map((group) => (group ? this.getBreadcrumbFromGroup(group, state) : '')),
-        catchError(() => of(''))
+        catchError(() => of('')),
       );
     }
     return EMPTY;

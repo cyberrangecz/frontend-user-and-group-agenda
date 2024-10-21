@@ -19,7 +19,7 @@ export class GroupEditCanDeactivate {
   constructor(private dialog: MatDialog) {}
 
   canDeactivate(
-    component: GroupEditOverviewComponent
+    component: GroupEditOverviewComponent,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.canDeactivate()) {
       return true;
@@ -28,13 +28,13 @@ export class GroupEditCanDeactivate {
         'Unsaved changes',
         'There are some unsaved changes. Do you want to leave without saving?',
         'Cancel',
-        'Leave'
+        'Leave',
       );
 
       const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, { data: dialogData });
       return dialogRef.afterClosed().pipe(
         take(1),
-        map((result) => result === SentinelDialogResultEnum.CONFIRMED)
+        map((result) => result === SentinelDialogResultEnum.CONFIRMED),
       );
     }
   }

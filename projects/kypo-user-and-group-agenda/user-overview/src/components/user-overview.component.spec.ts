@@ -75,7 +75,7 @@ describe('UserOverviewComponent', () => {
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
-      component.INIT_SORT_DIR
+      component.INIT_SORT_DIR,
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);
@@ -117,7 +117,7 @@ describe('UserOverviewComponent', () => {
         expect(overviewSpy.delete).toHaveBeenCalledWith(expectedUser);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -170,7 +170,7 @@ describe('UserOverviewComponent', () => {
     user.id = 1;
     const expectedEvent = new TableActionEvent<User>(
       user,
-      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY)
+      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY),
     );
 
     kypoTableEl.triggerEventHandler('rowAction', expectedEvent);

@@ -15,9 +15,9 @@ export class GroupMemberTable extends SentinelTable<User> {
         new Row(user, [
           new UserDeleteAction(
             of(false),
-            defer(() => service.unassign(resourceId, [user]))
+            defer(() => service.unassign(resourceId, [user])),
           ),
-        ])
+        ]),
     );
     const columns = [
       new Column('id', 'id', true),

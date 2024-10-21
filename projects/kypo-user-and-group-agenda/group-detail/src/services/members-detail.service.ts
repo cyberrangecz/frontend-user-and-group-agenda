@@ -35,6 +35,6 @@ export abstract class MembersDetailService {
   abstract getAssigned(
     resourceId: number,
     pagination: PaginationBaseEvent,
-    filterValue: string
+    filterValue: string,
   ): Observable<PaginatedResource<User>>;
 }

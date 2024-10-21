@@ -68,7 +68,7 @@ describe('GroupResolver', () => {
         expect(groupApiSpy.get).toHaveBeenCalledTimes(1);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -94,7 +94,7 @@ describe('GroupResolver', () => {
         expect(routerSpy.navigate).toHaveBeenCalledWith([expectedRoute]);
         expect(navigatorSpy.toNewGroup).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 
@@ -119,7 +119,7 @@ describe('GroupResolver', () => {
         expect(routerSpy.navigate).toHaveBeenCalledWith([expectedRoute]);
         expect(navigatorSpy.toNewGroup).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 
@@ -142,7 +142,7 @@ describe('GroupResolver', () => {
         expect(routerSpy.navigate).toHaveBeenCalledWith([expectedRoute]);
         expect(navigatorSpy.toNewGroup).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 });

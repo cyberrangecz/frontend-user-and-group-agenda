@@ -36,7 +36,7 @@ export class UserTable extends SentinelTable<User> {
   private static createActions(user: User, service: UserOverviewService) {
     return new UserDeleteAction(
       of(false),
-      defer(() => service.delete(user))
+      defer(() => service.delete(user)),
     );
   }
 }

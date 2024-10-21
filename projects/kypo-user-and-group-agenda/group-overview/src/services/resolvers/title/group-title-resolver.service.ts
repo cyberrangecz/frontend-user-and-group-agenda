@@ -31,7 +31,7 @@ export class GroupTitleResolver {
       return resolved.pipe(
         take(1),
         map((group) => (group ? this.getTitleFromGroup(group, state) : '')),
-        catchError(() => of(''))
+        catchError(() => of('')),
       );
     }
     return '';

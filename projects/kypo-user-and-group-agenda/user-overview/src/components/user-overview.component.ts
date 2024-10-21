@@ -40,7 +40,7 @@ export class UserOverviewComponent implements OnInit {
   constructor(
     private userService: UserOverviewService,
     private paginationService: PaginationService,
-    private navigator: UserAndGroupNavigator
+    private navigator: UserAndGroupNavigator,
   ) {}
 
   ngOnInit(): void {
@@ -49,11 +49,11 @@ export class UserOverviewComponent implements OnInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.INIT_SORT_NAME,
-        this.INIT_SORT_DIR
+        this.INIT_SORT_DIR,
       ),
     };
     this.users$ = this.userService.resource$.pipe(
-      map((groups) => new UserTable(groups, this.userService, this.navigator))
+      map((groups) => new UserTable(groups, this.userService, this.navigator)),
     );
     this.usersHasError$ = this.userService.hasError$;
     this.onLoadEvent(initialLoadEvent);
@@ -95,21 +95,21 @@ export class UserOverviewComponent implements OnInit {
     this.controls = [
       new DeleteControlItem(
         selectedUsersLength,
-        defer(() => this.userService.deleteSelected())
+        defer(() => this.userService.deleteSelected()),
       ),
       new SentinelControlItem(
         'download_oidc_users',
         'Get Users Credentials',
         'primary',
         of(false),
-        defer(() => this.userService.getLocalOIDCUsers())
+        defer(() => this.userService.getLocalOIDCUsers()),
       ),
       new SentinelControlItem(
         'import_users',
         'Import Users',
         'primary',
         of(false),
-        defer(() => this.userService.importUsers())
+        defer(() => this.userService.importUsers()),
       ),
     ];
   }

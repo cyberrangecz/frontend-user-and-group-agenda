@@ -36,7 +36,7 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
     private router: Router,
     private configService: UserAndGroupContext,
     private navigator: UserAndGroupNavigator,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {
     super(configService.config.defaultPaginationSize);
   }
@@ -60,8 +60,8 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
         (err) => {
           this.errorHandler.emit(err, 'Fetching groups');
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -71,14 +71,14 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
    */
   delete(group: Group): Observable<any> {
     return this.displayConfirmationDialog([group]).pipe(
-      switchMap((result) => (result ? this.callApiToDelete([group]) : EMPTY))
+      switchMap((result) => (result ? this.callApiToDelete([group]) : EMPTY)),
     );
   }
 
   deleteSelected(): Observable<any> {
     const groups = this.selectedSubject$.getValue();
     return this.displayConfirmationDialog(groups).pipe(
-      switchMap((result) => (result ? this.callApiToDelete(groups) : EMPTY))
+      switchMap((result) => (result ? this.callApiToDelete(groups) : EMPTY)),
     );
   }
 
@@ -114,9 +114,9 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
         (err) => {
           this.errorHandler.emit(err, 'Deleting groups');
           this.hasErrorSubject$.next(true);
-        }
+        },
       ),
-      switchMap(() => this.getAll(this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAll(this.lastPagination, this.lastFilter)),
     );
   }
 }

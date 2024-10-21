@@ -87,7 +87,10 @@ export class GroupRoleAssignComponent implements OnChanges {
   assignedRolesControls: SentinelControlItem[];
   destroyRef = inject(DestroyRef);
 
-  constructor(private roleAssignService: RoleAssignService, private paginationService: PaginationService) {
+  constructor(
+    private roleAssignService: RoleAssignService,
+    private paginationService: PaginationService,
+  ) {
     this.roleMapping = {
       id: 'id',
       title: 'roleType',
@@ -157,7 +160,7 @@ export class GroupRoleAssignComponent implements OnChanges {
 
   private initTable() {
     this.assignedRoles$ = this.roleAssignService.assignedRoles$.pipe(
-      map((resource) => new GroupRolesTable(resource, this.resource.id, this.roleAssignService))
+      map((resource) => new GroupRolesTable(resource, this.resource.id, this.roleAssignService)),
     );
     this.assignedRolesHasError$ = this.roleAssignService.hasError$;
     this.isLoadingAssignedRoles$ = this.roleAssignService.isLoadingAssigned$;
@@ -166,7 +169,7 @@ export class GroupRoleAssignComponent implements OnChanges {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.ROLES_OF_GROUP_INIT_SORT_NAME,
-        this.ROLES_OF_GROUP_INIT_SORT_DIR
+        this.ROLES_OF_GROUP_INIT_SORT_DIR,
       ),
     };
     this.onAssignedRolesLoad(initialLoadEvent);
@@ -177,7 +180,7 @@ export class GroupRoleAssignComponent implements OnChanges {
       this.assignedRolesControls = [
         new DeleteControlItem(
           selection.length,
-          defer(() => this.roleAssignService.unassignSelected(this.resource.id))
+          defer(() => this.roleAssignService.unassignSelected(this.resource.id)),
         ),
       ];
     });
@@ -188,7 +191,7 @@ export class GroupRoleAssignComponent implements OnChanges {
       new SaveControlItem(
         'Add',
         disabled$,
-        defer(() => this.roleAssignService.assignSelected(this.resource.id))
+        defer(() => this.roleAssignService.assignSelected(this.resource.id)),
       ),
     ];
   }

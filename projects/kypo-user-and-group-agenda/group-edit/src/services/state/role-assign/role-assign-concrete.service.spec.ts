@@ -230,7 +230,7 @@ describe('RoleAssignConcreteService', () => {
     const resourceId = 1;
     const filterValue = 'sometestfilter';
     const expectedFilter = [new RoleFilter(filterValue)];
-    roleApiSpy.getAll.and.returnValue(of(createResource()));
+    roleApiSpy.getRolesNotInGroup.and.returnValue(of(createResource()));
     expect(roleApiSpy.getAll).toHaveBeenCalledTimes(0);
 
     service
@@ -249,7 +249,7 @@ describe('RoleAssignConcreteService', () => {
   it('should call error handler on get roles to assign error', (done) => {
     const resourceId = 1;
     const filterValue = 'sometestfilter';
-    roleApiSpy.getAll.and.returnValue(throwError({ status: 400 }));
+    roleApiSpy.getRolesNotInGroup.and.returnValue(throwError(() => ({ status: 400 })));
     expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(0);
 
     service

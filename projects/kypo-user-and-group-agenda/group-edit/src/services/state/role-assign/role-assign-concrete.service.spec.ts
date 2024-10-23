@@ -238,8 +238,8 @@ describe('RoleAssignConcreteService', () => {
       .pipe(take(1))
       .subscribe(
         () => {
-          expect(roleApiSpy.getAll).toHaveBeenCalledTimes(1);
-          expect(roleApiSpy.getAll).toHaveBeenCalledWith(jasmine.anything(), expectedFilter);
+          expect(roleApiSpy.getRolesNotInGroup).toHaveBeenCalledTimes(1);
+          expect(roleApiSpy.getRolesNotInGroup).toHaveBeenCalledWith(1, jasmine.anything(), expectedFilter);
           done();
         },
         () => fail()

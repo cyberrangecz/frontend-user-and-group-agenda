@@ -41,7 +41,7 @@ export function createUserApiSpy(): jasmine.SpyObj<UserApi> {
 }
 
 export function createRoleApiSpy(): jasmine.SpyObj<RoleApi> {
-  return jasmine.createSpyObj('RoleApi', ['getAll']);
+  return jasmine.createSpyObj('RoleApi', ['getAll', 'getRolesNotInGroup']);
 }
 
 export function createMicroserviceApiSpy(): jasmine.SpyObj<MicroserviceApi> {

@@ -4,8 +4,8 @@ import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sen
 import { RoleApi } from '@muni-kypo-crp/user-and-group-api';
 import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
 import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { RoleFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
 import { RoleAssignService } from './role-assign.service';
@@ -79,13 +79,15 @@ export class RoleAssignConcreteService extends RoleAssignService {
   /**
    * Gets roles available to assign
    * @param filterValue filter to be applied on roles
+   * @param resourceId id of a resource of which roles should be excluded from result
+   * @returns roles available to assign
    */
-  getAvailableToAssign(filterValue: string = null): Observable<PaginatedResource<UserRole>> {
+  getAvailableToAssign(resourceId: number, filterValue: string = null): Observable<PaginatedResource<UserRole>> {
     const filter = filterValue ? [new RoleFilter(filterValue)] : [];
     const paginationSize = 25;
     const pagination = new OffsetPaginationEvent(0, paginationSize, 'roleType', 'asc');
     return this.roleApi
-      .getAll(pagination, filter)
+      .getRolesNotInGroup(resourceId, pagination, filter)
       .pipe(tap({ error: (err) => this.errorHandler.emit(err, 'Fetching roles') }));
   }
 

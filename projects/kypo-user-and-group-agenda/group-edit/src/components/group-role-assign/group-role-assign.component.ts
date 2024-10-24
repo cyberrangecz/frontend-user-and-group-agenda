@@ -111,7 +111,7 @@ export class GroupRoleAssignComponent implements OnChanges {
    */
   search(filterValue: string): void {
     this.roles$ = this.roleAssignService
-      .getAvailableToAssign(filterValue)
+      .getAvailableToAssign(this.resource.id, filterValue)
       .pipe(map((resource: PaginatedResource<UserRole>) => resource.elements));
   }
 

@@ -33,7 +33,7 @@
     "@angular/platform-browser": "16.2.12",
     "@angular/platform-browser-dynamic": "16.2.12",
     "@angular/router": "16.2.12",
-    "@muni-kypo-crp/user-and-group-api": "~16.0.1",
+    "@muni-kypo-crp/user-and-group-api": "~16.0.2",
     "@muni-kypo-crp/user-and-group-model": "~16.0.0",
     "@sentinel/auth": "^16.1.1",
     "@sentinel/common": "~16.2.4",

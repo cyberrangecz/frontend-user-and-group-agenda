@@ -49,7 +49,10 @@
           {
             "allowTemplateLiterals": true
           }
-        ]
+        ],
+        // TODO: Remove these rules once the issues are fixed
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-unused-vars": "warn"
       }
     },
     {

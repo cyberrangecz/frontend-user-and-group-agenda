@@ -25,7 +25,11 @@ export class RoleAssignConcreteService extends RoleAssignService {
   private lastPagination: OffsetPaginationEvent;
   private lastFilter: string;
 
-  constructor(private api: GroupApi, private roleApi: RoleApi, private errorHandler: UserAndGroupErrorHandler) {
+  constructor(
+    private api: GroupApi,
+    private roleApi: RoleApi,
+    private errorHandler: UserAndGroupErrorHandler,
+  ) {
     super();
   }
 
@@ -53,7 +57,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
   getAssigned(
     resourceId: number,
     pagination: OffsetPaginationEvent,
-    filterValue: string = null
+    filterValue: string = null,
   ): Observable<PaginatedResource<UserRole>> {
     this.lastPagination = pagination;
     this.lastFilter = filterValue;
@@ -71,8 +75,8 @@ export class RoleAssignConcreteService extends RoleAssignService {
           this.errorHandler.emit(err, 'Fetching roles of group-overview');
           this.isLoadingAssignedSubject$.next(false);
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -116,7 +120,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
           this.errorHandler.emit(undefined, 'Assigning some roles failed');
         }
       }),
-      switchMap(() => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastPagination, this.lastFilter)),
     );
   }
 
@@ -130,7 +134,7 @@ export class RoleAssignConcreteService extends RoleAssignService {
           this.errorHandler.emit(undefined, 'Assigning some roles failed');
         }
       }),
-      switchMap(() => this.getAssigned(resourceId, this.lastPagination, this.lastFilter))
+      switchMap(() => this.getAssigned(resourceId, this.lastPagination, this.lastFilter)),
     );
   }
 

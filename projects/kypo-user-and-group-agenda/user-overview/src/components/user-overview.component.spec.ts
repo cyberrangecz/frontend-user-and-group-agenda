@@ -1,23 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { User } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTableComponent, TableLoadEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
+import { RowAction, SentinelTableComponent, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import {
+  DeleteControlItem,
+  PaginationService,
+  UserAndGroupContext,
+} from '@muni-kypo-crp/user-and-group-agenda/internal';
 import { UserOverviewService } from '@muni-kypo-crp/user-and-group-agenda/user-overview';
 import {
   createContextSpy,
+  createNavigatorSpy,
+  createPagination,
+  createPaginationServiceSpy,
   createSentinelControlsOverride,
   createSentinelOverride,
-  createPagination,
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
-  createPaginationServiceSpy,
-  createNavigatorSpy,
 } from '../../../internal/src/testing/testing-commons.spec';
 import { UserMaterialModule } from './user-material.module';
 import { UserOverviewComponent } from './user-overview.component';
@@ -31,7 +34,7 @@ describe('UserOverviewComponent', () => {
   let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
   let paginationServiceSpy: jasmine.SpyObj<PaginationService>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     contextSpy = createContextSpy();
     paginationServiceSpy = createPaginationServiceSpy();
     navigatorSpy = createNavigatorSpy();
@@ -75,7 +78,7 @@ describe('UserOverviewComponent', () => {
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
-      component.INIT_SORT_DIR
+      component.INIT_SORT_DIR,
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);
@@ -117,7 +120,7 @@ describe('UserOverviewComponent', () => {
         expect(overviewSpy.delete).toHaveBeenCalledWith(expectedUser);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -170,7 +173,7 @@ describe('UserOverviewComponent', () => {
     user.id = 1;
     const expectedEvent = new TableActionEvent<User>(
       user,
-      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY)
+      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY),
     );
 
     kypoTableEl.triggerEventHandler('rowAction', expectedEvent);

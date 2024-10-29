@@ -46,7 +46,7 @@ export class GroupEditConcreteService extends GroupEditService {
     private notificationService: UserAndGroupNotificationService,
     private router: Router,
     private navigator: UserAndGroupNavigator,
-    private errorHandler: UserAndGroupErrorHandler
+    private errorHandler: UserAndGroupErrorHandler,
   ) {
     super();
   }
@@ -97,8 +97,8 @@ export class GroupEditConcreteService extends GroupEditService {
           this.notificationService.emit('success', 'Group was saved');
           this.onSaved();
         },
-        (err) => this.errorHandler.emit(err, 'Editing group-overview')
-      )
+        (err) => this.errorHandler.emit(err, 'Editing group-overview'),
+      ),
     );
   }
 
@@ -109,8 +109,8 @@ export class GroupEditConcreteService extends GroupEditService {
           this.notificationService.emit('success', 'Group was created');
           this.onSaved();
         },
-        (err) => this.errorHandler.emit(err, 'Creating group-overview')
-      )
+        (err) => this.errorHandler.emit(err, 'Creating group-overview'),
+      ),
     );
   }
 

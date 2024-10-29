@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,15 +15,19 @@ import { SentinelAuthGuardWithLogin, SentinelNegativeAuthGuard } from '@sentinel
  */
 @NgModule({
   declarations: [AppComponent, HomeComponent],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     SentinelLayout1Module,
-    HttpClientModule,
     AppRoutingModule,
-    SentinelAuthModule.forRoot(environment.authConfig),
+    SentinelAuthModule.forRoot(environment.authConfig)
   ],
-  providers: [SentinelAuthGuardWithLogin, SentinelNegativeAuthGuard],
-  bootstrap: [AppComponent],
+  providers: [
+    SentinelAuthGuardWithLogin,
+    SentinelNegativeAuthGuard,
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
-export class AppModule {}
+export class AppModule {
+}

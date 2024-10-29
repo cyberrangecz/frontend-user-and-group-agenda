@@ -30,7 +30,7 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
   private static createRow(
     group: Group,
     service: GroupOverviewService,
-    navigator: UserAndGroupNavigator
+    navigator: UserAndGroupNavigator,
   ): Row<GroupRowAdapter> {
     const rowAdapter = group as GroupRowAdapter;
     if (rowAdapter.expirationDate) {
@@ -48,11 +48,11 @@ export class GroupTable extends SentinelTable<GroupRowAdapter> {
     return [
       new GroupEditAction(
         of(false),
-        defer(() => service.edit(group))
+        defer(() => service.edit(group)),
       ),
       new GroupDeleteAction(
         of(false),
-        defer(() => service.delete(group))
+        defer(() => service.delete(group)),
       ),
     ];
   }

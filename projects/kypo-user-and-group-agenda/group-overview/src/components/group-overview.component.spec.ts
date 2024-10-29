@@ -85,7 +85,7 @@ describe('GroupOverviewComponent', () => {
       0,
       paginationServiceSpy.DEFAULT_PAGINATION,
       component.INIT_SORT_NAME,
-      component.INIT_SORT_DIR
+      component.INIT_SORT_DIR,
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);
@@ -135,7 +135,7 @@ describe('GroupOverviewComponent', () => {
         expect(overviewSpy.delete).toHaveBeenCalledWith(expectedGroup);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -153,7 +153,7 @@ describe('GroupOverviewComponent', () => {
         expect(overviewSpy.edit).toHaveBeenCalledWith(expectedGroup);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -199,7 +199,7 @@ describe('GroupOverviewComponent', () => {
     group.id = 1;
     const expectedEvent = new TableActionEvent<Group>(
       group,
-      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY)
+      new RowAction('test', 'test', 'test', 'primary', 'test', of(false), EMPTY),
     );
 
     kypoTableEl.triggerEventHandler('rowAction', expectedEvent);

@@ -10,7 +10,7 @@ import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableComponent, TableLoadEvent } from '@sentinel/components/table';
 import { UserAndGroupContext } from './../../../internal/src/services/user-and-group-context.service';
 import { MicroserviceOverviewMaterialModule } from './microservice-overview-material.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MicroserviceOverviewComponent } from './microservice-overview.component';
 import { MicroserviceOverviewService } from '../services/microservice-overview.service';
@@ -31,7 +31,7 @@ describe('MicroserviceOverviewComponent', () => {
   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
   let overviewSpy: jasmine.SpyObj<MicroserviceOverviewService>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     contextSpy = createContextSpy();
     paginationServiceSpy = createPaginationServiceSpy();
     overviewSpy = jasmine.createSpyObj('MicroserviceOverviewService', ['getAll', 'register']);
@@ -70,7 +70,7 @@ describe('MicroserviceOverviewComponent', () => {
       0,
       contextSpy.config.defaultPaginationSize,
       component.INIT_SORT_NAME,
-      component.INIT_SORT_DIR
+      component.INIT_SORT_DIR,
     );
     expect(overviewSpy.getAll).toHaveBeenCalledTimes(1);
     expect(overviewSpy.getAll).toHaveBeenCalledWith(expectedOffsetPaginationEvent, undefined);

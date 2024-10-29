@@ -79,7 +79,7 @@ describe('UserOverviewConcreteService', () => {
         expect(resource).toEqual(expectedResource);
         done();
       },
-      () => fail()
+      () => fail(),
     );
 
     service.getAll(pagination).pipe(take(1)).subscribe();
@@ -95,7 +95,7 @@ describe('UserOverviewConcreteService', () => {
         expect(hasError).toBeFalsy();
         done();
       },
-      () => fail()
+      () => fail(),
     );
 
     service.getAll(pagination).pipe(take(1)).subscribe();
@@ -114,7 +114,7 @@ describe('UserOverviewConcreteService', () => {
         (err) => {
           expect(err).toEqual(expectedErr);
           done();
-        }
+        },
       );
   });
 
@@ -136,7 +136,7 @@ describe('UserOverviewConcreteService', () => {
           expect(apiSpy.deleteMultiple).toHaveBeenCalledWith([userToDelete.id]);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -158,7 +158,7 @@ describe('UserOverviewConcreteService', () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
           done();
-        }
+        },
       );
   });
 
@@ -181,7 +181,7 @@ describe('UserOverviewConcreteService', () => {
           expect(apiSpy.deleteMultiple).toHaveBeenCalledWith([userToDelete.id]);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -204,7 +204,7 @@ describe('UserOverviewConcreteService', () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(apiSpy.deleteMultiple).toHaveBeenCalledTimes(0);
           done();
-        }
+        },
       );
   });
 
@@ -223,7 +223,7 @@ describe('UserOverviewConcreteService', () => {
           expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -243,7 +243,7 @@ describe('UserOverviewConcreteService', () => {
           expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 

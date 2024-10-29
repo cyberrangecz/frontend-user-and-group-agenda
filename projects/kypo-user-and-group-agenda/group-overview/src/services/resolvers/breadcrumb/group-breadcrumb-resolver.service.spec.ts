@@ -50,7 +50,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(groupResolverSpy.resolve).toHaveBeenCalledTimes(1);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -71,7 +71,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(groupResolverSpy.resolve).toHaveBeenCalledTimes(1);
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -90,7 +90,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(title).toEqual('');
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -109,7 +109,7 @@ describe('GroupBreadcrumbResolver', () => {
         expect(title).toEqual('');
         done();
       },
-      () => fail()
+      () => fail(),
     );
   });
 
@@ -124,7 +124,7 @@ describe('GroupBreadcrumbResolver', () => {
     resolvedTitle$.pipe(take(1)).subscribe(
       () => fail(),
       () => fail(),
-      () => done()
+      () => done(),
     );
   });
 });

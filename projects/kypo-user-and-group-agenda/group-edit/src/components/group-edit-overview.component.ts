@@ -31,7 +31,10 @@ export class GroupEditOverviewComponent {
   controls: SentinelControlItem[];
   destroyRef = inject(DestroyRef);
 
-  constructor(private activeRoute: ActivatedRoute, private editService: GroupEditService) {
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private editService: GroupEditService,
+  ) {
     this.group$ = this.editService.group$;
     this.editMode$ = this.editService.editMode$.pipe(tap((editMode) => this.initControls(editMode)));
     this.activeRoute.data
@@ -67,7 +70,7 @@ export class GroupEditOverviewComponent {
     const saveItem = new SaveControlItem(
       'Save',
       this.editService.saveDisabled$,
-      defer(() => this.editService.save().pipe(tap(() => (this.canDeactivateGroupEdit = true))))
+      defer(() => this.editService.save().pipe(tap(() => (this.canDeactivateGroupEdit = true)))),
     );
     if (isEditMode) {
       this.controls = [saveItem];
@@ -76,7 +79,7 @@ export class GroupEditOverviewComponent {
       const saveAndStayItem = new SaveControlItem(
         'Create and continue editing',
         this.editService.saveDisabled$,
-        defer(() => this.editService.createAndEdit().pipe(tap(() => (this.canDeactivateGroupEdit = true))))
+        defer(() => this.editService.createAndEdit().pipe(tap(() => (this.canDeactivateGroupEdit = true)))),
       );
       saveAndStayItem.id = 'save_and_stay';
       this.controls = [saveItem, saveAndStayItem];

@@ -13,7 +13,7 @@ export class MicroserviceEditFormGroup {
       endpoint: new UntypedFormControl(microservice.endpoint, Validators.required),
       roles: new UntypedFormArray(
         microservice.roles.map((roles) => new UntypedFormControl(roles)),
-        Validators.required
+        Validators.required,
       ),
     });
   }

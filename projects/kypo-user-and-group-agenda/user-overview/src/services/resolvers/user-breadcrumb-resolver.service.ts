@@ -20,7 +20,7 @@ export class UserBreadcrumbResolverService {
       const resolved = this.userResolver.resolve(route, state) as Observable<User>;
       return resolved.pipe(
         map((group) => (group ? this.getBreadcrumbFromUser(group, state) : '')),
-        catchError(() => of(''))
+        catchError(() => of('')),
       );
     }
     return EMPTY;

@@ -96,7 +96,10 @@ export class GroupUserAssignComponent implements OnChanges {
 
   destroyRef = inject(DestroyRef);
 
-  constructor(private userAssignService: UserAssignService, private paginationService: PaginationService) {
+  constructor(
+    private userAssignService: UserAssignService,
+    private paginationService: PaginationService,
+  ) {
     this.userMapping = {
       id: 'id',
       title: 'name',
@@ -201,7 +204,7 @@ export class GroupUserAssignComponent implements OnChanges {
       this.assignedUsersControls = [
         new DeleteControlItem(
           selection.length,
-          defer(() => this.userAssignService.unassignSelected(this.resource.id))
+          defer(() => this.userAssignService.unassignSelected(this.resource.id)),
         ),
       ];
     });
@@ -217,7 +220,7 @@ export class GroupUserAssignComponent implements OnChanges {
       new SaveControlItem(
         'Add',
         disabled$,
-        defer(() => this.userAssignService.assignSelected(this.resource.id))
+        defer(() => this.userAssignService.assignSelected(this.resource.id)),
       ),
     ];
   }
@@ -228,11 +231,11 @@ export class GroupUserAssignComponent implements OnChanges {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.MEMBERS_OF_GROUP_INIT_SORT_NAME,
-        this.MEMBERS_OF_GROUP_INIT_SORT_DIR
+        this.MEMBERS_OF_GROUP_INIT_SORT_DIR,
       ),
     };
     this.assignedUsers$ = this.userAssignService.assignedUsers$.pipe(
-      map((paginatedUsers) => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService))
+      map((paginatedUsers) => new GroupMemberTable(paginatedUsers, this.resource.id, this.userAssignService)),
     );
     this.assignedUsersHasError$ = this.userAssignService.hasError$;
     this.isLoadingAssignedUsers$ = this.userAssignService.isLoadingAssigned$;

@@ -3,7 +3,7 @@
     <div class="group-name">{{ group.name }}</div>
     <div class="group-description">{{ group.description }}</div>
     <div class="group-expiration">
-      {{ group.expirationDate ? (group.expirationDate | sentinelDateTimeFormat) : 'No expiration date' }}
+      {{ group.expirationDate ? (group.expirationDate | date) : 'No expiration date' }}
     </div>
   </div>
 
@@ -57,7 +57,7 @@
       {{ group.name.length }}
     </div>
   </div>-->
-</mat-card> 
+</mat-card>
 <mat-card appearance="outlined" class="members-card">
   <sentinel-table
     [defaultSortName]="INIT_MEMBERS_SORT_NAME"

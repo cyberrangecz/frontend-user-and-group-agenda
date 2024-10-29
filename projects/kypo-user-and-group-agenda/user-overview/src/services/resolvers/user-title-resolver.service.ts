@@ -21,7 +21,7 @@ export class UserTitleResolverService {
       return resolved.pipe(
         take(1),
         map((user) => (user ? this.getTitleFromUser(user, state) : '')),
-        catchError(() => of(''))
+        catchError(() => of('')),
       );
     }
     return '';

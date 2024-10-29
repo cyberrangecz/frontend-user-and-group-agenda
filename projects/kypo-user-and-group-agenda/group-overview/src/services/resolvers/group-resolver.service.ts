@@ -21,7 +21,7 @@ export class GroupResolver {
     private router: Router,
     private api: GroupApi,
     private errorHandler: UserAndGroupErrorHandler,
-    private navigator: UserAndGroupNavigator
+    private navigator: UserAndGroupNavigator,
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Group> | Promise<Group> | Group {
@@ -36,7 +36,7 @@ export class GroupResolver {
         catchError((err) => {
           this.errorHandler.emit(err, 'Resolving group-overview');
           return this.navigateToNew();
-        })
+        }),
       );
     }
     return this.navigateToNew();

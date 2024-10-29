@@ -55,7 +55,7 @@ describe('GroupEditConcreteService', () => {
         expect(editMode).toBeFalsy();
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.set(undefined);
   });
@@ -67,7 +67,7 @@ describe('GroupEditConcreteService', () => {
         expect(editMode).toBeTruthy();
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.set(group);
   });
@@ -80,7 +80,7 @@ describe('GroupEditConcreteService', () => {
         expect(emittedGroup).toEqual(group);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.set(group);
   });
@@ -96,7 +96,7 @@ describe('GroupEditConcreteService', () => {
         expect(saveDisabled).not.toEqual(isGroupValid);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.change(changeEvent);
   });
@@ -124,7 +124,7 @@ describe('GroupEditConcreteService', () => {
           expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -148,7 +148,7 @@ describe('GroupEditConcreteService', () => {
           expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -173,7 +173,7 @@ describe('GroupEditConcreteService', () => {
           expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -191,7 +191,7 @@ describe('GroupEditConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 
@@ -207,7 +207,7 @@ describe('GroupEditConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 
@@ -223,7 +223,7 @@ describe('GroupEditConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 });

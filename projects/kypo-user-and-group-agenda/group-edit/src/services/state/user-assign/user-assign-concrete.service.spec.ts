@@ -65,7 +65,7 @@ describe('UserAssignConcreteService', () => {
           expect(groupApiSpy.addUsersToGroup).toHaveBeenCalledWith(resourceId, expectedUserIds, expectedGroupIds);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -86,7 +86,7 @@ describe('UserAssignConcreteService', () => {
           expect(groupApiSpy.removeUsersFromGroup).toHaveBeenCalledWith(resourceId, expectedUserIds);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -97,7 +97,7 @@ describe('UserAssignConcreteService', () => {
         expect(selected).toEqual(expectedUsers);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelectedAssignedUsers(expectedUsers);
   });
@@ -109,7 +109,7 @@ describe('UserAssignConcreteService', () => {
         expect(selected).toEqual(expectedUsers);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelectedUsersToAssign(expectedUsers);
   });
@@ -120,7 +120,7 @@ describe('UserAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.clearSelectedAssignedUsers();
   });
@@ -131,7 +131,7 @@ describe('UserAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.clearSelectedUsersToAssign();
   });
@@ -143,7 +143,7 @@ describe('UserAssignConcreteService', () => {
         expect(selected).toEqual(expectedGroups);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.setSelectedGroupsToImport(expectedGroups);
   });
@@ -154,7 +154,7 @@ describe('UserAssignConcreteService', () => {
         expect(selected).toEqual([]);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.clearSelectedGroupsToImport();
   });
@@ -180,7 +180,7 @@ describe('UserAssignConcreteService', () => {
           expect(groupApiSpy.addUsersToGroup).toHaveBeenCalledWith(resourceId, expectedUserIds, expectedGroupIds);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -202,7 +202,7 @@ describe('UserAssignConcreteService', () => {
           expect(groupApiSpy.removeUsersFromGroup).toHaveBeenCalledWith(resourceId, expectedUserIds);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -223,7 +223,7 @@ describe('UserAssignConcreteService', () => {
           expect(userApiSpy.getUsersInGroups).toHaveBeenCalledWith([resourceId], pagination, expectedFilter);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -243,7 +243,7 @@ describe('UserAssignConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 
@@ -259,7 +259,7 @@ describe('UserAssignConcreteService', () => {
         expect(user).toEqual(expectedUsers);
         done();
       },
-      () => fail()
+      () => fail(),
     );
 
     service.getAssigned(resourceId, pagination, filterValue).pipe(take(1)).subscribe();
@@ -281,7 +281,7 @@ describe('UserAssignConcreteService', () => {
           expect(userApiSpy.getUsersNotInGroup).toHaveBeenCalledWith(resourceId, jasmine.anything(), expectedFilter);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -300,7 +300,7 @@ describe('UserAssignConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 
@@ -319,7 +319,7 @@ describe('UserAssignConcreteService', () => {
           expect(groupApiSpy.getAll).toHaveBeenCalledWith(jasmine.anything(), expectedFilter);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -337,7 +337,7 @@ describe('UserAssignConcreteService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
           done();
-        }
+        },
       );
   });
 

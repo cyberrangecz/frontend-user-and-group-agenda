@@ -35,7 +35,10 @@ export class MicroserviceOverviewComponent implements OnInit {
 
   destroyRef = inject(DestroyRef);
 
-  constructor(private microserviceService: MicroserviceOverviewService, private paginationService: PaginationService) {}
+  constructor(
+    private microserviceService: MicroserviceOverviewService,
+    private paginationService: PaginationService,
+  ) {}
 
   ngOnInit(): void {
     const initialLoadEvent: TableLoadEvent = {
@@ -43,11 +46,11 @@ export class MicroserviceOverviewComponent implements OnInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.INIT_SORT_NAME,
-        this.INIT_SORT_DIR
+        this.INIT_SORT_DIR,
       ),
     };
     this.microservices$ = this.microserviceService.resource$.pipe(
-      map((microservices) => new MicroserviceTable(microservices))
+      map((microservices) => new MicroserviceTable(microservices)),
     );
     this.microservicesHasError$ = this.microserviceService.hasError$;
     this.microserviceService.selected$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => this.initControls());
@@ -83,7 +86,7 @@ export class MicroserviceOverviewComponent implements OnInit {
       new RegisterControlItem(
         'Register',
         of(false),
-        defer(() => this.microserviceService.register())
+        defer(() => this.microserviceService.register()),
       ),
     ];
   }

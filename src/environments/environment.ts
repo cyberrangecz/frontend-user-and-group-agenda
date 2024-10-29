@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const AUTH_URL = 'https://172.19.0.22';
-const BASE_URL = 'http://localhost:3000'; // 'https://172.19.0.22';
+const BASE_URL = 'https://172.19.0.22';
 const HOME_URL = 'https://localhost:4200';
 export const environment = {
   production: false,

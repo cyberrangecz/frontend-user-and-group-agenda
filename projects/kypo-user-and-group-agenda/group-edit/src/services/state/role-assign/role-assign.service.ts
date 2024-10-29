@@ -66,7 +66,7 @@ export abstract class RoleAssignService {
   abstract getAssigned(
     resourceId: number,
     pagination: PaginationBaseEvent,
-    filterValue?: string
+    filterValue?: string,
   ): Observable<PaginatedResource<UserRole>>;
 
   /**

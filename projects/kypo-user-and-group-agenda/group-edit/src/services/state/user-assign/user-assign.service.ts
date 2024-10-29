@@ -85,7 +85,7 @@ export abstract class UserAssignService {
   abstract getAssigned(
     resourceId: number,
     pagination: IPaginationEvent,
-    filterValue: string
+    filterValue: string,
   ): Observable<PaginatedResource<User>>;
 
   /**

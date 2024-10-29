@@ -1,17 +1,17 @@
 {
-  "name": "@muni-kypo-crp/user-and-group-agenda",
-  "version": "16.0.2",
-  "peerDependencies": {
-    "@angular/common": "^18.2.7",
-    "@angular/core": "^18.2.7",
-    "@angular/material": "^18.2.7",
-    "typescript-collections": "^1.3.3",
-    "@sentinel/common": "^18.0.2",
-    "@sentinel/components": "^18.2.2",
-    "@muni-kypo-crp/user-and-group-api": "file:uag-api.tgz",
-    "@muni-kypo-crp/user-and-group-model": "file:uag-model.tgz"
-  },
-  "dependencies": {
-    "tslib": "^2.7.0"
-  }
+    "name": "@muni-kypo-crp/user-and-group-agenda",
+    "version": "16.0.2",
+    "peerDependencies": {
+        "@angular/common": "^18.2.7",
+        "@angular/core": "^18.2.7",
+        "@angular/material": "^18.2.7",
+        "typescript-collections": "^1.3.3",
+        "@sentinel/common": "^18.0.3",
+        "@sentinel/components": "^18.2.2",
+        "@muni-kypo-crp/user-and-group-api": "^18.0.0",
+        "@muni-kypo-crp/user-and-group-model": "^18.0.0"
+    },
+    "dependencies": {
+        "tslib": "^2.7.0"
+    }
 }

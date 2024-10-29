@@ -1,5 +1,5 @@
 import { ChangeDetectorRef } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, flush, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -43,7 +43,7 @@ describe('GroupEditOverviewComponent', () => {
 
   const editModeSubject$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     activatedRouteSpy = jasmine.createSpyObj('ActivatedRoute', ['x']);
     editServiceSpy = jasmine.createSpyObj('GroupEditService', ['set', 'save', 'createAndEdit', 'change']);
     activatedRouteSpy.data = of({ group: createGroup() });

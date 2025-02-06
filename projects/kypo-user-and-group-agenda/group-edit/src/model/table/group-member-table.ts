@@ -1,9 +1,9 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { User } from '@muni-kypo-crp/user-and-group-model';
-import { Column, SentinelTable, Row } from '@sentinel/components/table';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
+import { Column, Row, SentinelTable } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';
-import { UserDeleteAction } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserDeleteAction } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 
 /**
  * Class creating data source for group-overview members table

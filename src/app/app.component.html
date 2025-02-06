@@ -4,6 +4,6 @@
                   [notificationsRoute]="notificationRoute"
                   (login)="onLogin()"
                   (logout)="onLogout()">
-  <h1 *ngIf="title$ | async as title">{{ title }}</h1>
-  <router-outlet></router-outlet>
+    <h1 *ngIf="title$ | async as title">{{ title }}</h1>
+    <router-outlet></router-outlet>
 </sentinel-layout1>

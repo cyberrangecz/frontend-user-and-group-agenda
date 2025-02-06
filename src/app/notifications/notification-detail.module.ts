@@ -4,15 +4,16 @@ import { RouterModule } from '@angular/router';
 import { SentinelNotificationDetailComponent, SentinelNotificationDetailModule } from '@sentinel/layout/notification';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SentinelNotificationDetailModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: SentinelNotificationDetailComponent,
-      },
-    ]),
-  ],
+    imports: [
+        CommonModule,
+        SentinelNotificationDetailModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: SentinelNotificationDetailComponent,
+            },
+        ]),
+    ],
 })
-export class NotificationDetailModule {}
+export class NotificationDetailModule {
+}

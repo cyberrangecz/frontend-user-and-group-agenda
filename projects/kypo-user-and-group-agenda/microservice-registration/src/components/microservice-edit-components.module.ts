@@ -3,10 +3,10 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   UserAndGroupAgendaConfig,
-  UserAndGroupNavigator,
   UserAndGroupDefaultNavigator,
-} from '@muni-kypo-crp/user-and-group-agenda';
-import { InternalSharedModule } from '@muni-kypo-crp/user-and-group-agenda/internal';
+  UserAndGroupNavigator,
+} from '@cyberrangecz-platform/user-and-group-agenda';
+import { InternalSharedModule } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { MicroserviceEditCanDeactivate } from '../services/microservice-edit-can-deactivate.service';
 import { MicroserviceEditControlsComponent } from './microservice-edit-controls/microservice-edit-controls.component';
 import { MicroserviceEditMaterialModule } from './microservice-edit-material.module';

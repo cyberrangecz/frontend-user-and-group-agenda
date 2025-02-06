@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
+  GROUP_DETAIL_PATH,
   GROUP_EDIT_PATH,
   GROUP_NEW_PATH,
   GROUP_PATH,
-  MICROSERVICE_PATH,
-  USER_PATH,
   MICROSERVICE_NEW_PATH,
-  GROUP_DETAIL_PATH,
+  MICROSERVICE_PATH,
   USER_DETAIL_PATH,
+  USER_PATH,
 } from './default-paths';
 import { UserAndGroupNavigator } from './user-and-group-navigator.service';
 

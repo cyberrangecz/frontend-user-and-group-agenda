@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SentinelTableModule } from '@sentinel/components/table';
 import {
-  UserAndGroupNavigator,
-  UserAndGroupDefaultNavigator,
   UserAndGroupAgendaConfig,
-} from '@muni-kypo-crp/user-and-group-agenda';
+  UserAndGroupDefaultNavigator,
+  UserAndGroupNavigator,
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { UserOverviewConcreteService } from '../services/overview/user-overview-concrete.service';
 import { UserOverviewService } from '../services/overview/user-overview.service';
-import { InternalSharedModule, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { InternalSharedModule, PaginationService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { UserOverviewComponent } from './user-overview.component';
 import { UserMaterialModule } from './user-material.module';
 import { UserResolverService } from '../services/resolvers/user-resolver.service';

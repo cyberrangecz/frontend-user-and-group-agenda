@@ -1,4 +1,4 @@
-import { User } from '@muni-kypo-crp/user-and-group-model';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { Column, Row, SentinelTable } from '@sentinel/components/table';
 

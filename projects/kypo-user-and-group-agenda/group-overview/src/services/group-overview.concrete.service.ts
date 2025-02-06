@@ -6,17 +6,17 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
+import { GroupApi } from '@cyberrangecz-platform/user-and-group-api';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import {
-  UserAndGroupNotificationService,
-  UserAndGroupNavigator,
   UserAndGroupErrorHandler,
-} from '@muni-kypo-crp/user-and-group-agenda';
-import { UserAndGroupContext, GroupFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
+  UserAndGroupNavigator,
+  UserAndGroupNotificationService,
+} from '@cyberrangecz-platform/user-and-group-agenda';
+import { GroupFilter, UserAndGroupContext } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { GroupOverviewService } from './group-overview.service';
 
 /**
@@ -103,7 +103,7 @@ export class GroupOverviewConcreteService extends GroupOverviewService {
     return dialogRef.afterClosed().pipe(map((result) => result === SentinelDialogResultEnum.CONFIRMED));
   }
 
-  private callApiToDelete(groups: Group[]): Observable<any> {
+  private callApiToDelete(groups: Group[]): Observable<never> {
     const ids = groups.map((group) => group.id);
     return this.api.deleteMultiple(ids).pipe(
       tap(

@@ -1,28 +1,31 @@
-import { waitForAsync, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTableComponent, TableLoadEvent, RowAction, TableActionEvent } from '@sentinel/components/table';
-import { defer, EMPTY, of } from 'rxjs';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
+import { RowAction, SentinelTableComponent, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
+import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import {
+  DeleteControlItem,
+  PaginationService,
+  SaveControlItem,
+  UserAndGroupContext,
+} from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
-import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
 import {
   createContextSpy,
+  createNavigatorSpy,
+  createPagination,
+  createPaginationServiceSpy,
   createSentinelControlsOverride,
   createSentinelOverride,
-  createPagination,
   SENTINEL_CONTROLS_COMPONENT_SELECTOR,
   SENTINEL_TABLE_COMPONENT_SELECTOR,
-  createPaginationServiceSpy,
-  createNavigatorSpy,
 } from '../../../internal/src/testing/testing-commons.spec';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
-import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupNavigator } from '@cyberrangecz-platform/user-and-group-agenda';
 
 describe('GroupOverviewComponent', () => {
   let component: GroupOverviewComponent;

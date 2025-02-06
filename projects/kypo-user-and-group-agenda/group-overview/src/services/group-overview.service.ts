@@ -1,7 +1,7 @@
-import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { Observable } from 'rxjs';
-import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { SelectablePaginatedService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.

@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { KypoUserAndGroupApiModule } from '@muni-kypo-crp/user-and-group-api';
+import { KypoUserAndGroupApiModule } from '@cyberrangecz-platform/user-and-group-api';
 import { agendaConfig, apiConfig } from '../../config';
 import { SharedProvidersModule } from '../shared-providers.module';
 import { GroupOverviewRoutingModule } from './group-overview-routing.module';
-import { GroupOverviewComponentsModule } from '@muni-kypo-crp/user-and-group-agenda/group-overview';
+import { GroupOverviewComponentsModule } from '@cyberrangecz-platform/user-and-group-agenda/group-overview';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedProvidersModule,
-    GroupOverviewRoutingModule,
-    GroupOverviewComponentsModule.forRoot(agendaConfig),
-    KypoUserAndGroupApiModule.forRoot(apiConfig),
-  ],
+    imports: [
+        CommonModule,
+        SharedProvidersModule,
+        GroupOverviewRoutingModule,
+        GroupOverviewComponentsModule.forRoot(agendaConfig),
+        KypoUserAndGroupApiModule.forRoot(apiConfig),
+    ],
 })
-export class GroupOverviewModule {}
+export class GroupOverviewModule {
+}

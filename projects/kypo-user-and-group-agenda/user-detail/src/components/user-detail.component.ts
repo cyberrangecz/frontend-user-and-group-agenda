@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '@muni-kypo-crp/user-and-group-model';
-import { USER_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
+import { USER_DATA_ATTRIBUTE_NAME } from '@cyberrangecz-platform/user-and-group-agenda';
 import { MatAccordion } from '@angular/material/expansion';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

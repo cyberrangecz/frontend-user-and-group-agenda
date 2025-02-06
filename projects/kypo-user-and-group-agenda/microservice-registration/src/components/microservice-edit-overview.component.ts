@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
+import { MicroserviceApi } from '@cyberrangecz-platform/user-and-group-api';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
 import {
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
   UserAndGroupNotificationService,
-} from '@muni-kypo-crp/user-and-group-agenda';
+} from '@cyberrangecz-platform/user-and-group-agenda';
 
 /**
  * Main smart component of microservice-registration state page

@@ -1,5 +1,5 @@
 describe('AppComponent', () => {
-  it('should create', () => {
-    expect(true).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(true).toBeTruthy();
+    });
 });

@@ -1,12 +1,12 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { Column, SentinelTable, Row, RowAction } from '@sentinel/components/table';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
+import { Column, Row, RowAction, SentinelTable } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { GroupOverviewService } from '../../services/group-overview.service';
 import { GroupDeleteAction } from './group-delete-action';
 import { GroupEditAction } from './group-edit-action';
 import { GroupRowAdapter } from './group-row-adapter';
-import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupNavigator } from '@cyberrangecz-platform/user-and-group-agenda';
 
 /**
  * @dynamic

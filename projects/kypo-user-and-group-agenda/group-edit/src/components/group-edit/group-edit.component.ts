@@ -11,7 +11,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 import { GroupEditFormGroup } from './group-edit-form-group';
 import { AbstractControl } from '@angular/forms';

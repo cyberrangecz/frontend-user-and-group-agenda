@@ -1,5 +1,5 @@
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 
 /**
  * Form control class for state group-overview componnet

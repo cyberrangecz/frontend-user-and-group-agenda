@@ -3,15 +3,15 @@
 // import { By } from '@angular/platform-browser';
 // import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 // import { SentinelControlsComponent } from '@sentinel/components/controls';
-// import { Group, UserRole } from '@muni-kypo-crp/user-and-group-model';
+// import { Group, UserRole } from '@cyberrangecz-platform/user-and-group-model';
 // import { SentinelTableComponent, TableActionEvent } from '@sentinel/components/table';
 // import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 // import { EMPTY, of } from 'rxjs';
 // import { RoleDeleteAction } from '../../model/table/role-delete-action';
-// import { DeleteControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
-// import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
-// import { RoleAssignService } from '@muni-kypo-crp/user-and-group-agenda/group-edit';
-// import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+// import { DeleteControlItem, PaginationService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+// import { SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+// import { RoleAssignService } from '@cyberrangecz-platform/user-and-group-agenda/group-edit';
+// import { UserAndGroupContext } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 // import {
 //   createContextSpy,
 //   createSentinelControlsOverride,

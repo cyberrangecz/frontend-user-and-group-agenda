@@ -12,7 +12,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormControl } from '@angular/forms';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
 import { MicroserviceRolesState } from '../../model/microservice-roles-state';
 import { MicroserviceEditFormGroup } from './microservice-edit-form-group';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

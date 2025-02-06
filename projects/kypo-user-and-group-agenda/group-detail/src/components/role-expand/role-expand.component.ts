@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
+import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
 
 @Component({
   selector: 'kypo-role-expand',

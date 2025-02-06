@@ -1,4 +1,4 @@
-import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
+import { MicroserviceRole } from '@cyberrangecz-platform/user-and-group-model';
 
 /**
  * Input form of microservice-registration role

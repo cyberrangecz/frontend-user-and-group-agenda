@@ -1,11 +1,14 @@
 import {
-  SENTINEL_TABLE_COMPONENT_SELECTOR,
-  SENTINEL_CONTROLS_COMPONENT_SELECTOR,
+  createContextSpy,
   createPagination,
   createPaginationServiceSpy,
+  createSentinelControlsOverride,
+  createSentinelOverride,
+  SENTINEL_CONTROLS_COMPONENT_SELECTOR,
+  SENTINEL_TABLE_COMPONENT_SELECTOR,
 } from '../../../internal/src/testing/testing-commons.spec';
-import { of, EMPTY } from 'rxjs';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { EMPTY, of } from 'rxjs';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableComponent, TableLoadEvent } from '@sentinel/components/table';
 import { UserAndGroupContext } from './../../../internal/src/services/user-and-group-context.service';
@@ -14,12 +17,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MicroserviceOverviewComponent } from './microservice-overview.component';
 import { MicroserviceOverviewService } from '../services/microservice-overview.service';
-import {
-  createSentinelOverride,
-  createSentinelControlsOverride,
-  createContextSpy,
-} from '../../../internal/src/testing/testing-commons.spec';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
 import { RegisterControlItem } from '../../../internal/src/model/controls/register-control-item';
 import { PaginationService } from '../../../internal/src/services/pagination.service';
 

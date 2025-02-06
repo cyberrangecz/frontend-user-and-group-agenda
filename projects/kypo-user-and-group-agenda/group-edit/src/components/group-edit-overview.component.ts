@@ -3,11 +3,11 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { defer, Observable, of } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
-import { GROUP_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/user-and-group-agenda';
-import { SaveControlItem } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { GROUP_DATA_ATTRIBUTE_NAME } from '@cyberrangecz-platform/user-and-group-agenda';
+import { SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
 import { GroupEditConcreteService } from '../services/state/group-edit-concrete.service';

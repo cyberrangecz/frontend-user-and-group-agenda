@@ -12,14 +12,13 @@ import {
 } from '@angular/core';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { Group, UserRole } from '@cyberrangecz-platform/user-and-group-model';
+import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { defer, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { GroupRolesTable } from '../../model/table/group-roles-table';
-import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, PaginationService, SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';
 import { RoleAssignConcreteService } from '../../services/state/role-assign/role-assign-concrete.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -185,6 +184,7 @@ export class GroupRoleAssignComponent implements OnChanges {
       ];
     });
   }
+
   private initRolesToAssignControls() {
     const disabled$ = this.roleAssignService.selectedRolesToAssign$.pipe(map((selection) => selection.length <= 0));
     this.rolesToAssignControls = [

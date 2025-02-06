@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { GroupApi } from '@cyberrangecz-platform/user-and-group-api';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
-  UserAndGroupNotificationService,
-  UserAndGroupNavigator,
   UserAndGroupErrorHandler,
-} from '@muni-kypo-crp/user-and-group-agenda';
+  UserAndGroupNavigator,
+  UserAndGroupNotificationService,
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { GroupEditService } from './group-edit.service';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 

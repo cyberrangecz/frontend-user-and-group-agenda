@@ -1,5 +1,5 @@
 import { UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
 
 /**
  * Form control for microservice-registration state component

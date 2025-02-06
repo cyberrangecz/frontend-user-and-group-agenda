@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import {
@@ -9,7 +9,7 @@ import {
   GROUP_NEW_PATH,
   GROUP_PATH,
   GROUP_SELECTOR,
-} from '@muni-kypo-crp/user-and-group-agenda';
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { GroupResolver } from '../group-resolver.service';
 
 @Injectable()

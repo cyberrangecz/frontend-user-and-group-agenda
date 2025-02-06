@@ -3,7 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -11,12 +11,13 @@ import {
   GROUP_EDIT_PATH,
   GROUP_NEW_PATH,
   GROUP_SELECTOR,
-} from '@muni-kypo-crp/user-and-group-agenda';
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { GroupResolver } from '../group-resolver.service';
 
 @Injectable()
 export class GroupBreadcrumbResolver {
   readonly CREATE_GROUP_BREADCRUMB = 'Create';
+
   constructor(private groupResolver: GroupResolver) {}
 
   /**

@@ -1,10 +1,10 @@
 import { ChangeDetectorRef } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { BehaviorSubject, of } from 'rxjs';
 import { GroupChangedEvent } from '../model/group-changed-event';
 import { GroupEditService } from '../services/state/group-edit.service';
@@ -21,12 +21,12 @@ import { GroupEditOverviewComponent } from './group-edit-overview.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupRoleAssignComponent } from './group-role-assign/group-role-assign.component';
 import { GroupUserAssignComponent } from './group-user-assign/group-user-assign.component';
-import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
+import { GroupApi } from '@cyberrangecz-platform/user-and-group-api';
 import {
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
   UserAndGroupNotificationService,
-} from '@muni-kypo-crp/user-and-group-agenda';
+} from '@cyberrangecz-platform/user-and-group-agenda';
 
 describe('GroupEditOverviewComponent', () => {
   let component: GroupEditOverviewComponent;

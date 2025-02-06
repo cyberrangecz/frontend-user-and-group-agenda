@@ -1,4 +1,4 @@
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 
 /**
  * Event emitted when edited group-overview is changed

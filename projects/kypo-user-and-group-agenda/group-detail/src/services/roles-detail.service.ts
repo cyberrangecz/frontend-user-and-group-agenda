@@ -1,5 +1,5 @@
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
+import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
+import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**

@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
-import { GroupApi, UserApi } from '@muni-kypo-crp/user-and-group-api';
-import { Group, User } from '@muni-kypo-crp/user-and-group-model';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
+import { GroupApi, UserApi } from '@cyberrangecz-platform/user-and-group-api';
+import { Group, User } from '@cyberrangecz-platform/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
-import { GroupFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { GroupFilter, UserAndGroupContext, UserFilter } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createErrorHandlerSpy,
@@ -13,8 +12,7 @@ import {
   createPagination,
   createUserApiSpy,
 } from '../../../../../internal/src/testing/testing-commons.spec';
-import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
-import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler } from '@cyberrangecz-platform/user-and-group-agenda';
 import { UserAssignConcreteService } from './user-assign-concrete.service';
 import { UserAssignService } from './user-assign.service';
 

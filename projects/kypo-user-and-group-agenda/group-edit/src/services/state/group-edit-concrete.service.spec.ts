@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { GroupApi } from '@cyberrangecz-platform/user-and-group-api';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/group-changed-event';
@@ -12,9 +12,11 @@ import {
   createNotificationSpy,
   createRouterSpy,
 } from '../../../../internal/src/testing/testing-commons.spec';
-import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
-import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
-import { UserAndGroupNotificationService } from '@muni-kypo-crp/user-and-group-agenda';
+import {
+  UserAndGroupErrorHandler,
+  UserAndGroupNavigator,
+  UserAndGroupNotificationService,
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { GroupEditConcreteService } from './group-edit-concrete.service';
 import { GroupEditService } from './group-edit.service';
 

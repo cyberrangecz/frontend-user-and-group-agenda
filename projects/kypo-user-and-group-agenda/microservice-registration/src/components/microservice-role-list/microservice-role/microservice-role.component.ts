@@ -10,7 +10,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { MicroserviceRole } from '@muni-kypo-crp/user-and-group-model';
+import { MicroserviceRole } from '@cyberrangecz-platform/user-and-group-model';
 import { MicroserviceRoleItem } from '../../../model/microservice-role-item';
 import { MicroserviceRoleForm } from './microservice-role-form';
 import { AbstractControl } from '@angular/forms';

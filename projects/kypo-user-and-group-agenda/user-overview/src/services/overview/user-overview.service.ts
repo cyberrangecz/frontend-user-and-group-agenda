@@ -1,7 +1,8 @@
 import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { User } from '@muni-kypo-crp/user-and-group-model';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
 import { Observable } from 'rxjs';
-import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { SelectablePaginatedService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.

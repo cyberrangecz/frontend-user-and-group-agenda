@@ -6,12 +6,12 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
-import { UserApi } from '@muni-kypo-crp/user-and-group-api';
-import { User } from '@muni-kypo-crp/user-and-group-model';
+import { UserApi } from '@cyberrangecz-platform/user-and-group-api';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
 import { EMPTY, Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
-import { UserFilter, UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupContext, UserFilter } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@cyberrangecz-platform/user-and-group-agenda';
 import { UserOverviewService } from './user-overview.service';
 import { UsersUploadDialogComponent } from '../../components/upload-dialog/users-upload-dialog.component';
 import { FileUploadProgressService } from '../file-upload/file-upload-progress.service';

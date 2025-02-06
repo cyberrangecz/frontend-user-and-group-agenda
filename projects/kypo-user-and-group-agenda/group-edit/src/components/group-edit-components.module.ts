@@ -5,10 +5,10 @@ import { SentinelTableModule } from '@sentinel/components/table';
 import { SentinelResourceSelectorModule } from '@sentinel/components/resource-selector';
 import { GroupEditCanDeactivate } from '../services/can-deactivate/group-edit-can-deactivate.service';
 import {
-  UserAndGroupNavigator,
-  UserAndGroupDefaultNavigator,
   UserAndGroupAgendaConfig,
-} from '@muni-kypo-crp/user-and-group-agenda';
+  UserAndGroupDefaultNavigator,
+  UserAndGroupNavigator,
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { GroupEditMaterialModule } from './group-edit-material.module';
 import { GroupEditOverviewComponent } from './group-edit-overview.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';

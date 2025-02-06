@@ -6,13 +6,13 @@ import {
   UserAndGroupAgendaConfig,
   UserAndGroupDefaultNavigator,
   UserAndGroupNavigator,
-} from '@muni-kypo-crp/user-and-group-agenda';
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { GroupOverviewConcreteService } from '../services/group-overview.concrete.service';
 import { GroupOverviewService } from '../services/group-overview.service';
 import { GroupBreadcrumbResolver } from '../services/resolvers/breadcrumb/group-breadcrumb-resolver.service';
 import { GroupResolver } from '../services/resolvers/group-resolver.service';
 import { GroupTitleResolver } from '../services/resolvers/title/group-title-resolver.service';
-import { InternalSharedModule, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { InternalSharedModule, PaginationService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { GroupOverviewMaterialModule } from './group-overview-material.module';
 import { GroupOverviewComponent } from './group-overview.component';
 import { SentinelControlsComponent } from '@sentinel/components/controls';

@@ -1,20 +1,20 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "types": [],
-    "paths": {
-      "@muni-kypo-crp/user-and-group-agenda": [
-        "../projects/kypo-user-and-group-agenda/src/public_api.ts"
-      ],
-      "@muni-kypo-crp/user-and-group-agenda/*": [
-        "../projects/kypo-user-and-group-agenda/*/src/public_api.ts"
-      ]
-    }
-  },
-  "files": [
-    "main.ts",
-    "polyfills.ts"
-  ]
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../out-tsc/app",
+        "baseUrl": "./",
+        "types": [],
+        "paths": {
+            "@cyberrangecz-platform/user-and-group-agenda": [
+                "../projects/kypo-user-and-group-agenda/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/user-and-group-agenda/*": [
+                "../projects/kypo-user-and-group-agenda/*/src/public_api.ts"
+            ]
+        }
+    },
+    "files": [
+        "main.ts",
+        "polyfills.ts"
+    ]
 }

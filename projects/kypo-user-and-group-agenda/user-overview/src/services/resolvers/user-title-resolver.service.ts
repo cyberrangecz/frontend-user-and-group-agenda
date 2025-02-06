@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { USER_DETAIL_PATH, USER_SELECTOR } from '@muni-kypo-crp/user-and-group-agenda';
+import { USER_DETAIL_PATH, USER_SELECTOR } from '@cyberrangecz-platform/user-and-group-agenda';
 import { catchError, map, take } from 'rxjs/operators';
 import { UserResolverService } from './user-resolver.service';
-import { User } from '@muni-kypo-crp/user-and-group-model';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
 
 @Injectable()
 export class UserTitleResolverService {

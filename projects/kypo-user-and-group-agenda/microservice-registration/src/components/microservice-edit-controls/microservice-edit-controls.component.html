@@ -1,12 +1,12 @@
 <div class="content">
-  <button mat-raised-button
-          color="primary"
-          [disabled]="!isFormValid"
-          (click)="onCreate()">
-    Register
-  </button>
+    <button mat-raised-button
+            color="primary"
+            [disabled]="!isFormValid"
+            (click)="onCreate()">
+        Register
+    </button>
 </div>
 <div class="error-state">
-  <mat-error *ngIf="!hasDefaultRole">Microservice has to have a default role</mat-error>
+    <mat-error *ngIf="!hasDefaultRole">Microservice has to have a default role</mat-error>
 </div>
 

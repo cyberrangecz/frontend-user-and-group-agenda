@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
-import { UserApi } from '@muni-kypo-crp/user-and-group-api';
-import { User } from '@muni-kypo-crp/user-and-group-model';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
+import { UserApi } from '@cyberrangecz-platform/user-and-group-api';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
-import { UserFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserAndGroupContext, UserFilter } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import {
   createContextSpy,
   createErrorHandlerSpy,
@@ -16,9 +16,7 @@ import {
   createPagination,
   createUserApiSpy,
 } from '../../../../internal/src/testing/testing-commons.spec';
-import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
-import { UserAndGroupNotificationService } from '@muni-kypo-crp/user-and-group-agenda';
-import { UserAndGroupContext } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@cyberrangecz-platform/user-and-group-agenda';
 import { UserOverviewConcreteService } from './user-overview-concrete.service';
 import { UserOverviewService } from './user-overview.service';
 import { FileUploadProgressService } from '../file-upload/file-upload-progress.service';

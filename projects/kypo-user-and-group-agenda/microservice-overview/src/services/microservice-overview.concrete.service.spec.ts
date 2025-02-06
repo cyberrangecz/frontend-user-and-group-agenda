@@ -1,27 +1,27 @@
-import { take, skip } from 'rxjs/operators';
-import { MicroserviceFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
+import { skip, take } from 'rxjs/operators';
+import { MicroserviceFilter } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
 import { of, throwError } from 'rxjs';
 import { MicroserviceOverviewConcreteService } from './microservice-overview.concrete.service';
 import { UserAndGroupContext } from '../../../internal/src/services/user-and-group-context.service';
 import {
-  UserAndGroupNotificationService,
   UserAndGroupErrorHandler,
   UserAndGroupNavigator,
-} from '@muni-kypo-crp/user-and-group-agenda';
+  UserAndGroupNotificationService,
+} from '@cyberrangecz-platform/user-and-group-agenda';
 import { Router } from '@angular/router';
-import { MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
-import { TestBed, inject } from '@angular/core/testing';
+import { MicroserviceApi } from '@cyberrangecz-platform/user-and-group-api';
+import { inject, TestBed } from '@angular/core/testing';
 import { MicroserviceOverviewService } from './microservice-overview.service';
 import {
-  createRouterSpy,
-  createNotificationSpy,
   createContextSpy,
-  createNavigatorSpy,
   createErrorHandlerSpy,
   createMicroserviceApiSpy,
+  createNavigatorSpy,
+  createNotificationSpy,
   createPagination,
+  createRouterSpy,
 } from '../../../internal/src/testing/testing-commons.spec';
 
 describe('MicroserviceOverviewConcreteService', () => {

@@ -1,26 +1,26 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../out-tsc/spec",
-    "baseUrl": "./",
-    "types": [
-      "jasmine",
-      "node"
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/spec",
+        "baseUrl": "./",
+        "types": [
+            "jasmine",
+            "node"
+        ],
+        "paths": {
+            "@cyberrangecz-platform/user-and-group-agenda": [
+                "./src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/user-and-group-agenda/*": [
+                "./*/src/public_api.ts"
+            ]
+        }
+    },
+    "files": [
+        "test.ts"
     ],
-    "paths": {
-      "@muni-kypo-crp/user-and-group-agenda": [
-        "./src/public_api.ts"
-      ],
-      "@muni-kypo-crp/user-and-group-agenda/*": [
-        "./*/src/public_api.ts"
-      ]
-    }
-  },
-  "files": [
-    "test.ts"
-  ],
-  "include": [
-    "**/*.spec.ts",
-    "**/*d.ts"
-  ]
+    "include": [
+        "**/*.spec.ts",
+        "**/*d.ts"
+    ]
 }

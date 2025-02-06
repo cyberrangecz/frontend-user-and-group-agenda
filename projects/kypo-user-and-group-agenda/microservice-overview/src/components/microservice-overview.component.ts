@@ -1,13 +1,13 @@
-import { RegisterControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { PaginationService, RegisterControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { MicroserviceTable } from './../model/table/microservice-table';
 import { MicroserviceOverviewService } from './../services/microservice-overview.service';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { Component, OnInit, ChangeDetectionStrategy, inject, DestroyRef, Input } from '@angular/core';
-import { Observable, defer, of } from 'rxjs';
-import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { defer, Observable, of } from 'rxjs';
+import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { take, map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

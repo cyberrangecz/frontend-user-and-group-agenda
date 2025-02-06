@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
+import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { GroupTable } from '../model/table/group-table';
-import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, PaginationService, SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { GroupOverviewService } from '../services/group-overview.service';
-import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupNavigator } from '@cyberrangecz-platform/user-and-group-agenda';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**

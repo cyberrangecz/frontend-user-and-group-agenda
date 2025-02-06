@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { User } from '@muni-kypo-crp/user-and-group-model';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
 import { RowAction, SentinelTableComponent, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -10,8 +10,8 @@ import {
   DeleteControlItem,
   PaginationService,
   UserAndGroupContext,
-} from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserOverviewService } from '@muni-kypo-crp/user-and-group-agenda/user-overview';
+} from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { UserOverviewService } from '@cyberrangecz-platform/user-and-group-agenda/user-overview';
 import {
   createContextSpy,
   createNavigatorSpy,
@@ -24,7 +24,7 @@ import {
 } from '../../../internal/src/testing/testing-commons.spec';
 import { UserMaterialModule } from './user-material.module';
 import { UserOverviewComponent } from './user-overview.component';
-import { UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupNavigator } from '@cyberrangecz-platform/user-and-group-agenda';
 
 describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;

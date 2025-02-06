@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, ParamMap, Router, RouterStateSnapshot } from '@angular/router';
-import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
+import { GroupApi } from '@cyberrangecz-platform/user-and-group-api';
+import { Group } from '@cyberrangecz-platform/user-and-group-model';
 import { Observable, of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { GROUP_NEW_PATH, GROUP_PATH, GROUP_SELECTOR } from '../../../../src/default-paths';

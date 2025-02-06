@@ -1,65 +1,67 @@
-<sentinel-controls class="to-assign-controls" [controls]="assignUsersControls" (itemClicked)="onControlAction($event)"></sentinel-controls>
+<sentinel-controls class="to-assign-controls" [controls]="assignUsersControls"
+                   (itemClicked)="onControlAction($event)"></sentinel-controls>
 <div class="add-content">
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <div mat-card-avatar>
-        <mat-icon color="primary">person_add</mat-icon>
-      </div>
-      <mat-card-title>Add users</mat-card-title>
-      <mat-card-subtitle>Add users individually</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <sentinel-resource-selector class="user-selector"
-        searchPlaceholder="Search users by surname"
-        [resources]="users$ | async"
-        [selected]="selectedUsersToAssign$ | async"
-        [resourceMapping]="userMapping"
-        (selectionChange)="onUserToAssignSelection($event)"
-        (fetch)="searchUsers($event)">
-      </sentinel-resource-selector>
-    </mat-card-content>
-  </mat-card>
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon color="primary">person_add</mat-icon>
+            </div>
+            <mat-card-title>Add users</mat-card-title>
+            <mat-card-subtitle>Add users individually</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <sentinel-resource-selector class="user-selector"
+                                        searchPlaceholder="Search users by surname"
+                                        [resources]="users$ | async"
+                                        [selected]="selectedUsersToAssign$ | async"
+                                        [resourceMapping]="userMapping"
+                                        (selectionChange)="onUserToAssignSelection($event)"
+                                        (fetch)="searchUsers($event)">
+            </sentinel-resource-selector>
+        </mat-card-content>
+    </mat-card>
 
-  <mat-card appearance="outlined">
-    <mat-card-header>
-      <div mat-card-avatar>
-        <mat-icon color="primary">group_add</mat-icon>
-      </div>
-      <mat-card-title>Import users</mat-card-title>
-      <mat-card-subtitle>Import users from already existing groups</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <sentinel-resource-selector class="group-selector"
-        searchPlaceholder="Search groups by name"
-        [resources]="groups$ | async"
-        [selected]="selectedGroupsToImport$ | async"
-        [resourceMapping]="groupMapping"
-        (selectionChange)="onGroupToImportSelection($event)"
-        (fetch)="searchGroups($event)">
-      </sentinel-resource-selector>
-    </mat-card-content>
-  </mat-card>
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon color="primary">group_add</mat-icon>
+            </div>
+            <mat-card-title>Import users</mat-card-title>
+            <mat-card-subtitle>Import users from already existing groups</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <sentinel-resource-selector class="group-selector"
+                                        searchPlaceholder="Search groups by name"
+                                        [resources]="groups$ | async"
+                                        [selected]="selectedGroupsToImport$ | async"
+                                        [resourceMapping]="groupMapping"
+                                        (selectionChange)="onGroupToImportSelection($event)"
+                                        (fetch)="searchGroups($event)">
+            </sentinel-resource-selector>
+        </mat-card-content>
+    </mat-card>
 </div>
 
-<sentinel-controls class="assigned-controls" [controls]="assignedUsersControls" (itemClicked)="onControlAction($event)"></sentinel-controls>
+<sentinel-controls class="assigned-controls" [controls]="assignedUsersControls"
+                   (itemClicked)="onControlAction($event)"></sentinel-controls>
 <mat-card appearance="outlined">
-  <mat-card-header>
-    <div mat-card-avatar>
-      <mat-icon color="primary">person</mat-icon>
-    </div>
-    <mat-card-title> Members of group {{ resource.name }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <sentinel-table elevation="0"
-                 [defaultSortName]="MEMBERS_OF_GROUP_INIT_SORT_NAME"
-                 [defaultSortDirection]="MEMBERS_OF_GROUP_INIT_SORT_DIR"
-                 [hasError]="assignedUsersHasError$ | async"
-                 [data]="assignedUsers$ | async"
-                 [isLoading]="isLoadingAssignedUsers$ | async"
-                 (rowAction)="onAssignedUsersTableAction($event)"
-                 (rowSelection)="onAssignedUsersSelection($event)"
-                 (tableLoad)="onAssignedLoadEvent($event)">
-    </sentinel-table>
-  </mat-card-content>
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon color="primary">person</mat-icon>
+        </div>
+        <mat-card-title> Members of group {{ resource.name }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <sentinel-table elevation="0"
+                        [defaultSortName]="MEMBERS_OF_GROUP_INIT_SORT_NAME"
+                        [defaultSortDirection]="MEMBERS_OF_GROUP_INIT_SORT_DIR"
+                        [hasError]="assignedUsersHasError$ | async"
+                        [data]="assignedUsers$ | async"
+                        [isLoading]="isLoadingAssignedUsers$ | async"
+                        (rowAction)="onAssignedUsersTableAction($event)"
+                        (rowSelection)="onAssignedUsersSelection($event)"
+                        (tableLoad)="onAssignedLoadEvent($event)">
+        </sentinel-table>
+    </mat-card-content>
 </mat-card>
 

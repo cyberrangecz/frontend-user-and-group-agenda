@@ -1,6 +1,6 @@
-import { SelectablePaginatedService } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { Microservice } from '@muni-kypo-crp/user-and-group-model';
-import { OffsetPaginationEvent, PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
+import { SelectablePaginatedService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { Microservice } from '@cyberrangecz-platform/user-and-group-model';
+import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { Observable } from 'rxjs';
 
 export abstract class MicroserviceOverviewService extends SelectablePaginatedService<Microservice> {

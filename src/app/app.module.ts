@@ -14,20 +14,20 @@ import { SentinelAuthGuardWithLogin, SentinelNegativeAuthGuard } from '@sentinel
  * Main module of the user and group-overview example app
  */
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
-  bootstrap: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    SentinelLayout1Module,
-    AppRoutingModule,
-    SentinelAuthModule.forRoot(environment.authConfig)
-  ],
-  providers: [
-    SentinelAuthGuardWithLogin,
-    SentinelNegativeAuthGuard,
-    provideHttpClient(withInterceptorsFromDi())
-  ]
+    declarations: [AppComponent, HomeComponent],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        SentinelLayout1Module,
+        AppRoutingModule,
+        SentinelAuthModule.forRoot(environment.authConfig)
+    ],
+    providers: [
+        SentinelAuthGuardWithLogin,
+        SentinelNegativeAuthGuard,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule {
 }

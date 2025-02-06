@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { UserAndGroupAgendaConfig } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupAgendaConfig } from '@cyberrangecz-platform/user-and-group-agenda';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { PaginationService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { GroupDetailMaterialModule } from './group-detail-material.module';
 import { GroupDetailComponent } from './group-detail.component';
 import { MembersDetailConcreteService } from '../services/members-detail-concrete.service';

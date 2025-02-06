@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { User } from '@muni-kypo-crp/user-and-group-model';
-import { UserApi } from '@muni-kypo-crp/user-and-group-api';
-import { USER_SELECTOR, UserAndGroupErrorHandler, UserAndGroupNavigator } from '@muni-kypo-crp/user-and-group-agenda';
+import { User } from '@cyberrangecz-platform/user-and-group-model';
+import { UserApi } from '@cyberrangecz-platform/user-and-group-api';
+import { USER_SELECTOR, UserAndGroupErrorHandler, UserAndGroupNavigator } from '@cyberrangecz-platform/user-and-group-agenda';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 

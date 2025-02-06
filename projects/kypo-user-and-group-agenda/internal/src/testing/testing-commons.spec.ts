@@ -2,7 +2,7 @@ import { MetadataOverride } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { GroupApi, RoleApi, UserApi, MicroserviceApi } from '@muni-kypo-crp/user-and-group-api';
+import { GroupApi, MicroserviceApi, RoleApi, UserApi } from '@cyberrangecz-platform/user-and-group-api';
 import { UserAndGroupErrorHandler } from '../../../src/user-and-group-error-handler.service';
 import { UserAndGroupNavigator } from '../../../src/user-and-group-navigator.service';
 import { UserAndGroupNotificationService } from '../../../src/user-and-group-notification.service';

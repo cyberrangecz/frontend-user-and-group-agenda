@@ -1,6 +1,6 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { Column, ExpandableSentinelTable, Row, RowExpand, SentinelTable } from '@sentinel/components/table';
+import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
+import { Column, ExpandableSentinelTable, Row, RowExpand } from '@sentinel/components/table';
 import { RoleExpandComponent } from '../components/role-expand/role-expand.component';
 
 /**

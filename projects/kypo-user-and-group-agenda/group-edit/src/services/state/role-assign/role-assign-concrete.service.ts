@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { SentinelFilter } from '@sentinel/common/filter';
 import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
-import { RoleApi } from '@muni-kypo-crp/user-and-group-api';
-import { GroupApi } from '@muni-kypo-crp/user-and-group-api';
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { RoleFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
-import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
+import { GroupApi, RoleApi } from '@cyberrangecz-platform/user-and-group-api';
+import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { RoleFilter } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { UserAndGroupErrorHandler } from '@cyberrangecz-platform/user-and-group-agenda';
 import { RoleAssignService } from './role-assign.service';
 
 /**

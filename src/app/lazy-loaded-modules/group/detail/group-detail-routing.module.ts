@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GroupDetailComponent } from '@muni-kypo-crp/user-and-group-agenda/group-detail'; 
+import { GroupDetailComponent } from '@cyberrangecz-platform/user-and-group-agenda/group-detail';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: GroupDetailComponent,
-  },
+    {
+        path: '',
+        component: GroupDetailComponent,
+    },
 ];
 
 /**
  * Routing module training definition overview
  */
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class GroupDetailRoutingModule {}
+export class GroupDetailRoutingModule {
+}

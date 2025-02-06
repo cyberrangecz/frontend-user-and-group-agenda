@@ -1,6 +1,6 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
-import { Column, SentinelTable, Row } from '@sentinel/components/table';
+import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
+import { Column, Row, SentinelTable } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { RoleAssignService } from '../../services/state/role-assign/role-assign.service';
 import { RoleDeleteAction } from './role-delete-action';

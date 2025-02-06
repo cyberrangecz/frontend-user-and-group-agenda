@@ -12,14 +12,13 @@ import {
 } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { User } from '@muni-kypo-crp/user-and-group-model';
-import { Group } from '@muni-kypo-crp/user-and-group-model';
-import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { Group, User } from '@cyberrangecz-platform/user-and-group-model';
+import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { SentinelResourceSelectorMapping } from '@sentinel/components/resource-selector';
 import { combineLatest, defer, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { GroupMemberTable } from '../../model/table/group-member-table';
-import { DeleteControlItem, SaveControlItem, PaginationService } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { DeleteControlItem, PaginationService, SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import { UserAssignService } from '../../services/state/user-assign/user-assign.service';
 import { UserAssignConcreteService } from '../../services/state/user-assign/user-assign-concrete.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
-import { GroupApi, RoleApi } from '@muni-kypo-crp/user-and-group-api';
-import { UserRole } from '@muni-kypo-crp/user-and-group-model';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
+import { GroupApi, RoleApi } from '@cyberrangecz-platform/user-and-group-api';
+import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
-import { RoleFilter } from '@muni-kypo-crp/user-and-group-agenda/internal';
+import { RoleFilter } from '@cyberrangecz-platform/user-and-group-agenda/internal';
 import {
   createErrorHandlerSpy,
   createGroupApiSpy,
   createPagination,
   createRoleApiSpy,
 } from '../../../../../internal/src/testing/testing-commons.spec';
-import { UserAndGroupErrorHandler } from '@muni-kypo-crp/user-and-group-agenda';
+import { UserAndGroupErrorHandler } from '@cyberrangecz-platform/user-and-group-agenda';
 import { RoleAssignConcreteService } from './role-assign-concrete.service';
 import { RoleAssignService } from './role-assign.service';
 

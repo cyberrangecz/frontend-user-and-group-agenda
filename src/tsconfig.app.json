@@ -6,10 +6,10 @@
         "types": [],
         "paths": {
             "@cyberrangecz-platform/user-and-group-agenda": [
-                "../projects/kypo-user-and-group-agenda/src/public_api.ts"
+                "../projects/user-and-group-agenda/src/public_api.ts"
             ],
             "@cyberrangecz-platform/user-and-group-agenda/*": [
-                "../projects/kypo-user-and-group-agenda/*/src/public_api.ts"
+                "../projects/user-and-group-agenda/*/src/public_api.ts"
             ]
         }
     },

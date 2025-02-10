@@ -1,0 +1,5 @@
+<div class="controls">
+    <button type="button" mat-button color="primary" (click)="addRole()">Add role</button>
+</div>
+<crczp-microservice-role *ngFor="let role of roles, index as i" (roleChange)="onRoleChange($event, i)"
+                        (delete)="deleteRole(i)" [role]="role"></crczp-microservice-role>

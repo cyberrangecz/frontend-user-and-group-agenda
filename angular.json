@@ -126,38 +126,38 @@
                 }
             }
         },
-        "kypo-user-and-group-agenda": {
-            "root": "projects/kypo-user-and-group-agenda",
-            "sourceRoot": "projects/kypo-user-and-group-agenda",
+        "user-and-group-agenda": {
+            "root": "projects/user-and-group-agenda",
+            "sourceRoot": "projects/user-and-group-agenda",
             "projectType": "library",
-            "prefix": "kypo",
+            "prefix": "crczp",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
-                        "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.json",
-                        "project": "projects/kypo-user-and-group-agenda/ng-package.json"
+                        "tsConfig": "projects/user-and-group-agenda/tsconfig.lib.json",
+                        "project": "projects/user-and-group-agenda/ng-package.json"
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.prod.json"
+                            "tsConfig": "projects/user-and-group-agenda/tsconfig.lib.prod.json"
                         }
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/kypo-user-and-group-agenda/test.ts",
-                        "tsConfig": "projects/kypo-user-and-group-agenda/tsconfig.lib.spec.json",
-                        "karmaConfig": "projects/kypo-user-and-group-agenda/karma.conf.js"
+                        "main": "projects/user-and-group-agenda/test.ts",
+                        "tsConfig": "projects/user-and-group-agenda/tsconfig.lib.spec.json",
+                        "karmaConfig": "projects/user-and-group-agenda/karma.conf.js"
                     }
                 },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "lintFilePatterns": [
-                            "projects/kypo-user-and-group-agenda/**/*.ts",
-                            "projects/kypo-user-and-group-agenda/**/*.component.html"
+                            "projects/user-and-group-agenda/**/*.ts",
+                            "projects/user-and-group-agenda/**/*.component.html"
                         ]
                     }
                 }

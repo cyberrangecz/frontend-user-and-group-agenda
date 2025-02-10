@@ -1,7 +1,7 @@
-import { MICROSERVICE_NEW_PATH } from './../../../../projects/kypo-user-and-group-agenda/src/default-paths';
+import { MICROSERVICE_NEW_PATH } from '../../../../projects/user-and-group-agenda/src/default-paths';
 import {
     MicroserviceOverviewComponent
-} from './../../../../projects/kypo-user-and-group-agenda/microservice-overview/src/components/microservice-overview.component';
+} from '../../../../projects/user-and-group-agenda/microservice-overview/src/components/microservice-overview.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

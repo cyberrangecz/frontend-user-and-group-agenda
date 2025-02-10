@@ -1,7 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./projects/kypo-user-and-group-agenda",
+        "baseUrl": "./projects/user-and-group-agenda",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,

@@ -79,11 +79,9 @@ export class UserOverviewRoutingModule {}
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
-To run the example you need to run [User and Group Service](https://github.com/cyberrangecz/backend-user-and-group) or have access to a running instance and provide the URL to the service in when importing API module.
 
-Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [Training portal](LINK-HERE) project and can be run via `npm run api`.
-
-1. Clone this repository
-1. Run `npm install`
-1. Run `ng serve --ssl`
-1. See the app at `https://localhost:4200`
+1. Configure and run the [Training service](https://github.com/cyberrangecz/backend-training) and the [User and group service](https://github.com/cyberrangecz/backend-user-and-group) or the whole [deployment](https://github.com/cyberrangecz/devops-helm).
+2. Configure the [environment.ts](src/environments/environment.ts) file, pointing to the services.
+3. Run `npm install` to install all dependencies.
+4. Run the app with ssl via `npm run start`.
+5. Navigate to `https://localhost:4200/`. The app will automatically reload if you change any of the source files. The app will use a self-signed certificate, so you will need to accept it in the browser.

@@ -13,27 +13,27 @@ import { MatInputModule } from '@angular/material/input';
  * Material components imports for group-overview state module
  */
 @NgModule({
-  imports: [
-    MatButtonModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
-  ],
-  exports: [
-    MatButtonModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCardModule,
-  ],
+    imports: [
+        MatButtonModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+    ],
+    exports: [
+        MatButtonModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCardModule,
+    ],
 })
 export class GroupEditMaterialModule {}

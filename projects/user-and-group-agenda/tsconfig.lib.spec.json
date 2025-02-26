@@ -8,10 +8,10 @@
             "node"
         ],
         "paths": {
-            "@cyberrangecz-platform/user-and-group-agenda": [
+            "@crczp/user-and-group-agenda": [
                 "./src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/*": [
+            "@crczp/user-and-group-agenda/*": [
                 "./*/src/public_api.ts"
             ]
         }

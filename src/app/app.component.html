@@ -1,9 +1,9 @@
-<sentinel-layout1 logoSrc="./assets/images/logo.svg"
+<sentinel-layout1 logoSrc="./assets/logo/logo.svg"
                   [user]="activeUser$ | async"
                   [agendaContainers]="agendaContainers$ | async"
                   [notificationsRoute]="notificationRoute"
                   (login)="onLogin()"
                   (logout)="onLogout()">
     <h1 *ngIf="title$ | async as title">{{ title }}</h1>
-    <router-outlet></router-outlet>
+    <router-outlet/>
 </sentinel-layout1>

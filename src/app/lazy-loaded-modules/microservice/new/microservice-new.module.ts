@@ -5,7 +5,7 @@ import { SharedProvidersModule } from '../../shared-providers.module';
 import { MicroserviceNewRoutingModule } from './microservice-new-routing.module';
 import {
     MicroserviceEditComponentsModule
-} from '@cyberrangecz-platform/user-and-group-agenda/microservice-registration';
+} from '@crczp/user-and-group-agenda/microservice-registration';
 
 @NgModule({
     imports: [

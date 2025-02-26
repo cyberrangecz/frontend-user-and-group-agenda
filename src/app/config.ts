@@ -1,6 +1,6 @@
-import { UserAndGroupApiConfig } from '@cyberrangecz-platform/user-and-group-api';
+import { UserAndGroupApiConfig } from '@crczp/user-and-group-api';
 import { environment } from '../environments/environment';
-import { UserAndGroupAgendaConfig } from '@cyberrangecz-platform/user-and-group-agenda';
+import { UserAndGroupAgendaConfig } from '@crczp/user-and-group-agenda';
 
 /**
  * Example config of user and group-overview library

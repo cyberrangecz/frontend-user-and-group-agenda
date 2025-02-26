@@ -16,31 +16,31 @@
             "es2018"
         ],
         "paths": {
-            "@cyberrangecz-platform/user-and-group-agenda": [
+            "@crczp/user-and-group-agenda": [
                 "./src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/group-edit": [
+            "@crczp/user-and-group-agenda/group-edit": [
                 "./group-edit/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/group-detail": [
+            "@crczp/user-and-group-agenda/group-detail": [
                 "./group-detail/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/group-overview": [
+            "@crczp/user-and-group-agenda/group-overview": [
                 "./group-overview/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/internal": [
+            "@crczp/user-and-group-agenda/internal": [
                 "./internal/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/microservice-registration": [
+            "@crczp/user-and-group-agenda/microservice-registration": [
                 "./microservice-registration/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/user-overview": [
+            "@crczp/user-and-group-agenda/user-overview": [
                 "./user-overview/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/user-detail": [
+            "@crczp/user-and-group-agenda/user-detail": [
                 "./user-detail/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/user-and-group-agenda/microservice-overview": [
+            "@crczp/user-and-group-agenda/microservice-overview": [
                 "./microservice-overview/src/public_api.ts"
             ]
         }

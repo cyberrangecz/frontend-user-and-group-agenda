@@ -2,7 +2,7 @@ import { MetadataOverride } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { GroupApi, MicroserviceApi, RoleApi, UserApi } from '@cyberrangecz-platform/user-and-group-api';
+import { GroupApi, MicroserviceApi, RoleApi, UserApi } from '@crczp/user-and-group-api';
 import { UserAndGroupErrorHandler } from '../../../src/user-and-group-error-handler.service';
 import { UserAndGroupNavigator } from '../../../src/user-and-group-navigator.service';
 import { UserAndGroupNotificationService } from '../../../src/user-and-group-notification.service';
@@ -15,120 +15,120 @@ export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
 export const SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR = 'sentinel-resource-selector';
 
 export function createGroupApiSpy(): jasmine.SpyObj<GroupApi> {
-  return jasmine.createSpyObj('GroupApi', [
-    'get',
-    'getAll',
-    'deleteMultiple',
-    'create',
-    'update',
-    'addUsersToGroup',
-    'removeUsersFromGroup',
-    'assignRole',
-    'removeRole',
-    'getRolesOfGroup',
-  ]);
+    return jasmine.createSpyObj('GroupApi', [
+        'get',
+        'getAll',
+        'deleteMultiple',
+        'create',
+        'update',
+        'addUsersToGroup',
+        'removeUsersFromGroup',
+        'assignRole',
+        'removeRole',
+        'getRolesOfGroup',
+    ]);
 }
 
 export function createUserApiSpy(): jasmine.SpyObj<UserApi> {
-  return jasmine.createSpyObj('UserApi', [
-    'getAll',
-    'deleteMultiple',
-    'create',
-    'update',
-    'getUsersNotInGroup',
-    'getUsersInGroups',
-  ]);
+    return jasmine.createSpyObj('UserApi', [
+        'getAll',
+        'deleteMultiple',
+        'create',
+        'update',
+        'getUsersNotInGroup',
+        'getUsersInGroups',
+    ]);
 }
 
 export function createRoleApiSpy(): jasmine.SpyObj<RoleApi> {
-  return jasmine.createSpyObj('RoleApi', ['getAll', 'getRolesNotInGroup']);
+    return jasmine.createSpyObj('RoleApi', ['getAll', 'getRolesNotInGroup']);
 }
 
 export function createMicroserviceApiSpy(): jasmine.SpyObj<MicroserviceApi> {
-  return jasmine.createSpyObj('MicroserviceApi', ['getAll', 'register']);
+    return jasmine.createSpyObj('MicroserviceApi', ['getAll', 'register']);
 }
 
 export function createRouterSpy(): jasmine.SpyObj<Router> {
-  return jasmine.createSpyObj('Router', ['navigate']);
+    return jasmine.createSpyObj('Router', ['navigate']);
 }
 
 export function createNotificationSpy(): jasmine.SpyObj<UserAndGroupNotificationService> {
-  return jasmine.createSpyObj('UserAndGroupNotificationService', ['emit']);
+    return jasmine.createSpyObj('UserAndGroupNotificationService', ['emit']);
 }
 
 export function createMatDialogSpy(): jasmine.SpyObj<MatDialog> {
-  return jasmine.createSpyObj('MatDialog', ['open']);
+    return jasmine.createSpyObj('MatDialog', ['open']);
 }
 
 export function createContextSpy(): jasmine.SpyObj<UserAndGroupContext> {
-  return jasmine.createSpyObj('UserAndGroupContext', ['config']);
+    return jasmine.createSpyObj('UserAndGroupContext', ['config']);
 }
 
 export function createPaginationServiceSpy(): jasmine.SpyObj<PaginationService> {
-  return jasmine.createSpyObj('PaginationService', ['setPagination', 'getPagination']);
+    return jasmine.createSpyObj('PaginationService', ['setPagination', 'getPagination']);
 }
 
 export function createNavigatorSpy(): jasmine.SpyObj<UserAndGroupNavigator> {
-  return jasmine.createSpyObj('UserAndGroupNavigator', [
-    'toNewGroup',
-    'toGroupEdit',
-    'toGroupDetail',
-    'toGroupOverview',
-    'toUserOverview',
-    'toUserDetail',
-    'toNewMicroservice',
-  ]);
+    return jasmine.createSpyObj('UserAndGroupNavigator', [
+        'toNewGroup',
+        'toGroupEdit',
+        'toGroupDetail',
+        'toGroupOverview',
+        'toUserOverview',
+        'toUserDetail',
+        'toNewMicroservice',
+    ]);
 }
 
 export function createErrorHandlerSpy(): jasmine.SpyObj<UserAndGroupErrorHandler> {
-  return jasmine.createSpyObj('UserAndGroupErrorHandler', ['emit']);
+    return jasmine.createSpyObj('UserAndGroupErrorHandler', ['emit']);
 }
 
 export function createPagination(): OffsetPaginationEvent {
-  return new OffsetPaginationEvent(0, 5, '', 'asc');
+    return new OffsetPaginationEvent(0, 5, '', 'asc');
 }
 
 export function createSentinelOverride(): MetadataOverride<any> {
-  return {
-    set: {
-      selector: SENTINEL_TABLE_COMPONENT_SELECTOR,
-      inputs: [
-        'hasError',
-        'defaultSortName',
-        'defaultSortDirection',
-        'data',
-        'preselected',
-        'totalElements',
-        'showMoreDefaultSize',
-      ],
-      outputs: ['refresh', 'rowAction', 'rowSelection', 'rowClick', 'tableLoad'],
-    },
-  };
+    return {
+        set: {
+            selector: SENTINEL_TABLE_COMPONENT_SELECTOR,
+            inputs: [
+                'hasError',
+                'defaultSortName',
+                'defaultSortDirection',
+                'data',
+                'preselected',
+                'totalElements',
+                'showMoreDefaultSize',
+            ],
+            outputs: ['refresh', 'rowAction', 'rowSelection', 'rowClick', 'tableLoad'],
+        },
+    };
 }
 
 export function createResourceSelectorOverride(): MetadataOverride<any> {
-  return {
-    set: {
-      selector: SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR,
-      inputs: ['searchPlaceholder', 'resources', 'selected', 'resourceMapping'],
-      outputs: ['selectionChange', 'fetch'],
-    },
-  };
+    return {
+        set: {
+            selector: SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR,
+            inputs: ['searchPlaceholder', 'resources', 'selected', 'resourceMapping'],
+            outputs: ['selectionChange', 'fetch'],
+        },
+    };
 }
 
 export function createSentinelControlsOverride(): MetadataOverride<any> {
-  return {
-    set: {
-      selector: SENTINEL_CONTROLS_COMPONENT_SELECTOR,
-      outputs: ['itemClicked'],
-    },
-  };
+    return {
+        set: {
+            selector: SENTINEL_CONTROLS_COMPONENT_SELECTOR,
+            outputs: ['itemClicked'],
+        },
+    };
 }
 
 export function createDialogRefSpy(): jasmine.SpyObj<MatDialogRef<any>> {
-  return jasmine.createSpyObj(MatDialogRef, ['open', 'close']);
+    return jasmine.createSpyObj(MatDialogRef, ['open', 'close']);
 }
 
 export function createFileUploadProgressServiceSpy(): jasmine.SpyObj<FileUploadProgressService> {
-  return jasmine.createSpyObj('FileUploadProgressService', ['start', 'finish']);
+    return jasmine.createSpyObj('FileUploadProgressService', ['start', 'finish']);
 }

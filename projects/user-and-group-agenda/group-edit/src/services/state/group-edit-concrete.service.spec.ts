@@ -1,231 +1,231 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { GroupApi } from '@cyberrangecz-platform/user-and-group-api';
-import { Group } from '@cyberrangecz-platform/user-and-group-model';
+import { GroupApi } from '@crczp/user-and-group-api';
+import { Group } from '@crczp/user-and-group-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
 import { GroupChangedEvent } from '../../model/group-changed-event';
 import {
-  createErrorHandlerSpy,
-  createGroupApiSpy,
-  createNavigatorSpy,
-  createNotificationSpy,
-  createRouterSpy,
+    createErrorHandlerSpy,
+    createGroupApiSpy,
+    createNavigatorSpy,
+    createNotificationSpy,
+    createRouterSpy,
 } from '../../../../internal/src/testing/testing-commons.spec';
 import {
-  UserAndGroupErrorHandler,
-  UserAndGroupNavigator,
-  UserAndGroupNotificationService,
-} from '@cyberrangecz-platform/user-and-group-agenda';
+    UserAndGroupErrorHandler,
+    UserAndGroupNavigator,
+    UserAndGroupNotificationService,
+} from '@crczp/user-and-group-agenda';
 import { GroupEditConcreteService } from './group-edit-concrete.service';
 import { GroupEditService } from './group-edit.service';
 
 describe('GroupEditConcreteService', () => {
-  let service: GroupEditService;
-  let apiSpy: jasmine.SpyObj<GroupApi>;
-  let routerSpy: jasmine.SpyObj<Router>;
-  let notificationSpy: jasmine.SpyObj<UserAndGroupNotificationService>;
-  let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
-  let errorHandlerSpy: jasmine.SpyObj<UserAndGroupErrorHandler>;
+    let service: GroupEditService;
+    let apiSpy: jasmine.SpyObj<GroupApi>;
+    let routerSpy: jasmine.SpyObj<Router>;
+    let notificationSpy: jasmine.SpyObj<UserAndGroupNotificationService>;
+    let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
+    let errorHandlerSpy: jasmine.SpyObj<UserAndGroupErrorHandler>;
 
-  beforeEach(() => {
-    apiSpy = createGroupApiSpy();
-    routerSpy = createRouterSpy();
-    notificationSpy = createNotificationSpy();
-    navigatorSpy = createNavigatorSpy();
-    errorHandlerSpy = createErrorHandlerSpy();
-    TestBed.configureTestingModule({
-      providers: [
-        { provide: GroupEditService, useClass: GroupEditConcreteService },
-        { provide: GroupApi, useValue: apiSpy },
-        { provide: Router, useValue: routerSpy },
-        { provide: UserAndGroupNotificationService, useValue: notificationSpy },
-        { provide: UserAndGroupNavigator, useValue: navigatorSpy },
-        { provide: UserAndGroupErrorHandler, useValue: errorHandlerSpy },
-      ],
+    beforeEach(() => {
+        apiSpy = createGroupApiSpy();
+        routerSpy = createRouterSpy();
+        notificationSpy = createNotificationSpy();
+        navigatorSpy = createNavigatorSpy();
+        errorHandlerSpy = createErrorHandlerSpy();
+        TestBed.configureTestingModule({
+            providers: [
+                { provide: GroupEditService, useClass: GroupEditConcreteService },
+                { provide: GroupApi, useValue: apiSpy },
+                { provide: Router, useValue: routerSpy },
+                { provide: UserAndGroupNotificationService, useValue: notificationSpy },
+                { provide: UserAndGroupNavigator, useValue: navigatorSpy },
+                { provide: UserAndGroupErrorHandler, useValue: errorHandlerSpy },
+            ],
+        });
+        service = TestBed.inject(GroupEditService);
     });
-    service = TestBed.inject(GroupEditService);
-  });
 
-  it('should create', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(service).toBeTruthy();
+    });
 
-  it('should set state mode to false if no initial group-overview is provided', (done) => {
-    service.editMode$.pipe(skip(1), take(1)).subscribe(
-      (editMode) => {
-        expect(editMode).toBeFalsy();
-        done();
-      },
-      () => fail(),
-    );
-    service.set(undefined);
-  });
+    it('should set state mode to false if no initial group-overview is provided', (done) => {
+        service.editMode$.pipe(skip(1), take(1)).subscribe(
+            (editMode) => {
+                expect(editMode).toBeFalsy();
+                done();
+            },
+            () => fail(),
+        );
+        service.set(undefined);
+    });
 
-  it('should set state mode if initial group-overview is provided', (done) => {
-    const group = new Group();
-    service.editMode$.pipe(skip(1), take(1)).subscribe(
-      (editMode) => {
-        expect(editMode).toBeTruthy();
-        done();
-      },
-      () => fail(),
-    );
-    service.set(group);
-  });
+    it('should set state mode if initial group-overview is provided', (done) => {
+        const group = new Group();
+        service.editMode$.pipe(skip(1), take(1)).subscribe(
+            (editMode) => {
+                expect(editMode).toBeTruthy();
+                done();
+            },
+            () => fail(),
+        );
+        service.set(group);
+    });
 
-  it('should emit group-overview when new one is set', (done) => {
-    const group = new Group();
-    group.id = 1;
-    service.group$.pipe(take(1)).subscribe(
-      (emittedGroup) => {
-        expect(emittedGroup).toEqual(group);
-        done();
-      },
-      () => fail(),
-    );
-    service.set(group);
-  });
+    it('should emit group-overview when new one is set', (done) => {
+        const group = new Group();
+        group.id = 1;
+        service.group$.pipe(take(1)).subscribe(
+            (emittedGroup) => {
+                expect(emittedGroup).toEqual(group);
+                done();
+            },
+            () => fail(),
+        );
+        service.set(group);
+    });
 
-  it('should emit save disabled on change event', (done) => {
-    const group = new Group();
-    group.id = 1;
-    const isGroupValid = true;
-    const changeEvent = new GroupChangedEvent(group, isGroupValid);
+    it('should emit save disabled on change event', (done) => {
+        const group = new Group();
+        group.id = 1;
+        const isGroupValid = true;
+        const changeEvent = new GroupChangedEvent(group, isGroupValid);
 
-    service.saveDisabled$.pipe(skip(1), take(1)).subscribe(
-      (saveDisabled) => {
-        expect(saveDisabled).not.toEqual(isGroupValid);
-        done();
-      },
-      () => fail(),
-    );
-    service.change(changeEvent);
-  });
+        service.saveDisabled$.pipe(skip(1), take(1)).subscribe(
+            (saveDisabled) => {
+                expect(saveDisabled).not.toEqual(isGroupValid);
+                done();
+            },
+            () => fail(),
+        );
+        service.change(changeEvent);
+    });
 
-  it('should navigate to state page on create and state', (done) => {
-    const expectedId = 1;
-    const expectedRoute = 'groupeditpage';
-    apiSpy.create.and.returnValue(of(expectedId));
-    navigatorSpy.toGroupEdit.and.returnValue(expectedRoute);
-    expect(apiSpy.create).toHaveBeenCalledTimes(0);
-    expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
-    expect(navigatorSpy.toGroupEdit).toHaveBeenCalledTimes(0);
-    expect(notificationSpy.emit).toHaveBeenCalledTimes(0);
+    it('should navigate to state page on create and state', (done) => {
+        const expectedId = 1;
+        const expectedRoute = 'groupeditpage';
+        apiSpy.create.and.returnValue(of(expectedId));
+        navigatorSpy.toGroupEdit.and.returnValue(expectedRoute);
+        expect(apiSpy.create).toHaveBeenCalledTimes(0);
+        expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
+        expect(navigatorSpy.toGroupEdit).toHaveBeenCalledTimes(0);
+        expect(notificationSpy.emit).toHaveBeenCalledTimes(0);
 
-    service
-      .createAndEdit()
-      .pipe(take(1))
-      .subscribe(
-        () => {
-          expect(apiSpy.create).toHaveBeenCalledTimes(1);
-          expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
-          expect(routerSpy.navigate).toHaveBeenCalledWith([expectedRoute]);
-          expect(navigatorSpy.toGroupEdit).toHaveBeenCalledTimes(1);
-          expect(navigatorSpy.toGroupEdit).toHaveBeenCalledWith(expectedId);
-          expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
-          done();
-        },
-        () => fail(),
-      );
-  });
+        service
+            .createAndEdit()
+            .pipe(take(1))
+            .subscribe(
+                () => {
+                    expect(apiSpy.create).toHaveBeenCalledTimes(1);
+                    expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
+                    expect(routerSpy.navigate).toHaveBeenCalledWith([expectedRoute]);
+                    expect(navigatorSpy.toGroupEdit).toHaveBeenCalledTimes(1);
+                    expect(navigatorSpy.toGroupEdit).toHaveBeenCalledWith(expectedId);
+                    expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
+                    done();
+                },
+                () => fail(),
+            );
+    });
 
-  it('should call update api and stay on the page on save in state mode', (done) => {
-    const editedGroup = new Group();
-    editedGroup.id = 1;
-    apiSpy.update.and.returnValue(of(editedGroup.id));
-    expect(apiSpy.update).toHaveBeenCalledTimes(0);
-    expect(apiSpy.create).toHaveBeenCalledTimes(0);
-    expect(notificationSpy.emit).toHaveBeenCalledTimes(0);
+    it('should call update api and stay on the page on save in state mode', (done) => {
+        const editedGroup = new Group();
+        editedGroup.id = 1;
+        apiSpy.update.and.returnValue(of(editedGroup.id));
+        expect(apiSpy.update).toHaveBeenCalledTimes(0);
+        expect(apiSpy.create).toHaveBeenCalledTimes(0);
+        expect(notificationSpy.emit).toHaveBeenCalledTimes(0);
 
-    service.set(editedGroup);
-    service
-      .save()
-      .pipe(take(1))
-      .subscribe(
-        () => {
-          expect(apiSpy.create).toHaveBeenCalledTimes(0);
-          expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
-          expect(apiSpy.update).toHaveBeenCalledTimes(1);
-          expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
-          done();
-        },
-        () => fail(),
-      );
-  });
+        service.set(editedGroup);
+        service
+            .save()
+            .pipe(take(1))
+            .subscribe(
+                () => {
+                    expect(apiSpy.create).toHaveBeenCalledTimes(0);
+                    expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
+                    expect(apiSpy.update).toHaveBeenCalledTimes(1);
+                    expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
+                    done();
+                },
+                () => fail(),
+            );
+    });
 
-  it('should call create api and navigate to overview page on save not in state mode', (done) => {
-    apiSpy.create.and.returnValue(of(1));
-    expect(apiSpy.create).toHaveBeenCalledTimes(0);
-    expect(apiSpy.update).toHaveBeenCalledTimes(0);
-    expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
-    expect(navigatorSpy.toGroupOverview).toHaveBeenCalledTimes(0);
-    expect(notificationSpy.emit).toHaveBeenCalledTimes(0);
+    it('should call create api and navigate to overview page on save not in state mode', (done) => {
+        apiSpy.create.and.returnValue(of(1));
+        expect(apiSpy.create).toHaveBeenCalledTimes(0);
+        expect(apiSpy.update).toHaveBeenCalledTimes(0);
+        expect(routerSpy.navigate).toHaveBeenCalledTimes(0);
+        expect(navigatorSpy.toGroupOverview).toHaveBeenCalledTimes(0);
+        expect(notificationSpy.emit).toHaveBeenCalledTimes(0);
 
-    service.set(undefined);
-    service
-      .save()
-      .pipe(take(1))
-      .subscribe(
-        () => {
-          expect(apiSpy.update).toHaveBeenCalledTimes(0);
-          expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
-          expect(navigatorSpy.toGroupOverview).toHaveBeenCalledTimes(1);
-          expect(apiSpy.create).toHaveBeenCalledTimes(1);
-          expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
-          done();
-        },
-        () => fail(),
-      );
-  });
+        service.set(undefined);
+        service
+            .save()
+            .pipe(take(1))
+            .subscribe(
+                () => {
+                    expect(apiSpy.update).toHaveBeenCalledTimes(0);
+                    expect(routerSpy.navigate).toHaveBeenCalledTimes(1);
+                    expect(navigatorSpy.toGroupOverview).toHaveBeenCalledTimes(1);
+                    expect(apiSpy.create).toHaveBeenCalledTimes(1);
+                    expect(notificationSpy.emit).toHaveBeenCalledTimes(1);
+                    done();
+                },
+                () => fail(),
+            );
+    });
 
-  it('should call error handler on error save in state mode', (done) => {
-    const editedGroup = new Group();
-    editedGroup.id = 1;
-    apiSpy.update.and.returnValue(throwError({ status: 400 }));
-    service.set(editedGroup);
-    service
-      .save()
-      .pipe(take(1))
-      .subscribe(
-        () => fail(),
-        (err) => {
-          expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-          expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
-          done();
-        },
-      );
-  });
+    it('should call error handler on error save in state mode', (done) => {
+        const editedGroup = new Group();
+        editedGroup.id = 1;
+        apiSpy.update.and.returnValue(throwError({ status: 400 }));
+        service.set(editedGroup);
+        service
+            .save()
+            .pipe(take(1))
+            .subscribe(
+                () => fail(),
+                (err) => {
+                    expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
+                    expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
+                    done();
+                },
+            );
+    });
 
-  it('should call error handler on error save not in state mode', (done) => {
-    apiSpy.create.and.returnValue(throwError({ status: 400 }));
-    service.set(undefined);
-    service
-      .save()
-      .pipe(take(1))
-      .subscribe(
-        () => fail(),
-        (err) => {
-          expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-          expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
-          done();
-        },
-      );
-  });
+    it('should call error handler on error save not in state mode', (done) => {
+        apiSpy.create.and.returnValue(throwError({ status: 400 }));
+        service.set(undefined);
+        service
+            .save()
+            .pipe(take(1))
+            .subscribe(
+                () => fail(),
+                (err) => {
+                    expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
+                    expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
+                    done();
+                },
+            );
+    });
 
-  it('should call error handler on error in createAndEdit', (done) => {
-    apiSpy.create.and.returnValue(throwError({ status: 400 }));
-    service.set(undefined);
-    service
-      .createAndEdit()
-      .pipe(take(1))
-      .subscribe(
-        () => fail(),
-        (err) => {
-          expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-          expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
-          done();
-        },
-      );
-  });
+    it('should call error handler on error in createAndEdit', (done) => {
+        apiSpy.create.and.returnValue(throwError({ status: 400 }));
+        service.set(undefined);
+        service
+            .createAndEdit()
+            .pipe(take(1))
+            .subscribe(
+                () => fail(),
+                (err) => {
+                    expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
+                    expect(errorHandlerSpy.emit).toHaveBeenCalledWith(err, jasmine.anything());
+                    done();
+                },
+            );
+    });
 });

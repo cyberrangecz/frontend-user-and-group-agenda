@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { agendaConfig } from '../../../config';
 import { SharedProvidersModule } from '../../shared-providers.module';
 import { GroupEditRoutingModule } from './group-edit-routing.module';
-import { GroupEditComponentsModule } from '@cyberrangecz-platform/user-and-group-agenda/group-edit';
+import { GroupEditComponentsModule } from '@crczp/user-and-group-agenda/group-edit';
 
 @NgModule({
     imports: [

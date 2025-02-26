@@ -1,17 +1,17 @@
 // import { SimpleChange } from '@angular/core';
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { By } from '@angular/platform-browser';
 // import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 // import { SentinelControlsComponent } from '@sentinel/components/controls';
-// import { Group, User } from '@cyberrangecz-platform/user-and-group-model';
+// import { Group, User } from '@crczp/user-and-group-model';
 // import { SentinelTableComponent, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 // import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 // import { EMPTY, of } from 'rxjs';
-// import { PaginationService, UserDeleteAction } from '@cyberrangecz-platform/user-and-group-agenda/internal';
-// import { DeleteControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
-// import { SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
-// import { UserAndGroupContext } from '@cyberrangecz-platform/user-and-group-agenda/internal';
-// import { GroupEditService, UserAssignService } from '@cyberrangecz-platform/user-and-group-agenda/group-edit';
+// import { PaginationService, UserDeleteAction } from '@crczp/user-and-group-agenda/internal';
+// import { DeleteControlItem } from '@crczp/user-and-group-agenda/internal';
+// import { SaveControlItem } from '@crczp/user-and-group-agenda/internal';
+// import { UserAndGroupContext } from '@crczp/user-and-group-agenda/internal';
+// import { GroupEditService, UserAssignService } from '@crczp/user-and-group-agenda/group-edit';
 // import {
 //   createContextSpy,
 //   createSentinelControlsOverride,
@@ -29,13 +29,13 @@
 // } from '../../../../internal/src/testing/testing-commons.spec';
 // import { GroupEditMaterialModule } from '../group-edit-material.module';
 // import { GroupUserAssignComponent } from './group-user-assign.component';
-// import { GroupApi, UserApi } from '@cyberrangecz-platform/user-and-group-api';
+// import { GroupApi, UserApi } from '@crczp/user-and-group-api';
 // import { Router } from '@angular/router';
 // import {
 //   UserAndGroupErrorHandler,
 //   UserAndGroupNavigator,
 //   UserAndGroupNotificationService,
-// } from '@cyberrangecz-platform/user-and-group-agenda';
+// } from '@crczp/user-and-group-agenda';
 
 // describe('GroupUserAssignComponent', () => {
 //   let component: GroupUserAssignComponent;
@@ -51,7 +51,7 @@
 //   let navigatorSpy: jasmine.SpyObj<UserAndGroupNavigator>;
 //   let errorHandlerSpy: jasmine.SpyObj<UserAndGroupErrorHandler>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     const testUsers = createUserResource();
 //     const testGroups = createGroupResource();
 //     contextSpy = createContextSpy();

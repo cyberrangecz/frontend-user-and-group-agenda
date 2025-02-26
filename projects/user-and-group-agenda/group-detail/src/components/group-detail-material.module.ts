@@ -7,7 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
  * Material components imports for group detail module
  */
 @NgModule({
-  imports: [MatCardModule, MatIconModule, MatTooltipModule],
-  exports: [MatCardModule, MatIconModule, MatTooltipModule],
+    imports: [MatCardModule, MatIconModule, MatTooltipModule],
+    exports: [MatCardModule, MatIconModule, MatTooltipModule],
 })
 export class GroupDetailMaterialModule {}

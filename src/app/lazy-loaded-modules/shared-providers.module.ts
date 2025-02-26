@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ClientErrorHandlerService } from '../services/client-error-handler.service';
 import { ClientNotificationService } from '../services/client-notification.service';
-import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@cyberrangecz-platform/user-and-group-agenda';
+import { UserAndGroupErrorHandler, UserAndGroupNotificationService } from '@crczp/user-and-group-agenda';
 
 @NgModule({
     providers: [

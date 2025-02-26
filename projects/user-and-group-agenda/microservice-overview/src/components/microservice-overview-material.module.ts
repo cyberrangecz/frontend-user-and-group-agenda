@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
  * Material component imports for microservice-overview overview module
  */
 @NgModule({
-  imports: [MatButtonModule, MatIconModule],
-  exports: [MatButtonModule, MatIconModule],
+    imports: [MatButtonModule, MatIconModule],
+    exports: [MatButtonModule, MatIconModule],
 })
 export class MicroserviceOverviewMaterialModule {}

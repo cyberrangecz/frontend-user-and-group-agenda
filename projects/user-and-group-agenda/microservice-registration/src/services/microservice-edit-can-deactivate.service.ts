@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UrlTree } from '@angular/router';
 import {
-  SentinelConfirmationDialogComponent,
-  SentinelConfirmationDialogConfig,
-  SentinelDialogResultEnum,
+    SentinelConfirmationDialogComponent,
+    SentinelConfirmationDialogConfig,
+    SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -16,24 +16,24 @@ import { MicroserviceEditOverviewComponent } from '../components/microservice-ed
  */
 @Injectable()
 export class MicroserviceEditCanDeactivate {
-  constructor(private dialog: MatDialog) {}
+    constructor(private dialog: MatDialog) {}
 
-  canDeactivate(
-    component: MicroserviceEditOverviewComponent,
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (component.canDeactivate()) {
-      return of(true);
+    canDeactivate(
+        component: MicroserviceEditOverviewComponent,
+    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        if (component.canDeactivate()) {
+            return of(true);
+        }
+        const dialogData = new SentinelConfirmationDialogConfig(
+            'Unsaved changes',
+            'There are some unsaved changes. Do you want to leave without saving?',
+            'Cancel',
+            'Leave',
+        );
+        const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, { data: dialogData });
+        return dialogRef.afterClosed().pipe(
+            take(1),
+            map((result) => result === SentinelDialogResultEnum.CONFIRMED),
+        );
     }
-    const dialogData = new SentinelConfirmationDialogConfig(
-      'Unsaved changes',
-      'There are some unsaved changes. Do you want to leave without saving?',
-      'Cancel',
-      'Leave',
-    );
-    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, { data: dialogData });
-    return dialogRef.afterClosed().pipe(
-      take(1),
-      map((result) => result === SentinelDialogResultEnum.CONFIRMED),
-    );
-  }
 }

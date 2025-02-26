@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
     GroupEditCanDeactivate,
     GroupEditOverviewComponent
-} from '@cyberrangecz-platform/user-and-group-agenda/group-edit';
+} from '@crczp/user-and-group-agenda/group-edit';
 
 const routes: Routes = [
     {

@@ -5,14 +5,14 @@ import {
     GroupOverviewComponent,
     GroupResolver,
     GroupTitleResolver
-} from '@cyberrangecz-platform/user-and-group-agenda/group-overview';
+} from '@crczp/user-and-group-agenda/group-overview';
 import {
     GROUP_DATA_ATTRIBUTE_NAME,
     GROUP_DETAIL_PATH,
     GROUP_EDIT_PATH,
     GROUP_NEW_PATH,
     GROUP_SELECTOR
-} from '@cyberrangecz-platform/user-and-group-agenda';
+} from '@crczp/user-and-group-agenda';
 
 const routes: Routes = [
     {

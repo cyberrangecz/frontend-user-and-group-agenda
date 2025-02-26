@@ -1,5 +1,5 @@
 import { IPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
-import { Group, User } from '@cyberrangecz-platform/user-and-group-model';
+import { Group, User } from '@crczp/user-and-group-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
@@ -9,109 +9,109 @@ import { BehaviorSubject, Observable } from 'rxjs';
  * Subscribe to assignedUsers$ to receive latest data updates.
  */
 export abstract class UserAssignService {
-  protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  /**
-   * True if error was returned from API, false otherwise
-   */
-  hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();
+    protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    /**
+     * True if error was returned from API, false otherwise
+     */
+    hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();
 
-  protected isLoadingAssignedSubject$ = new BehaviorSubject<boolean>(false);
-  /**
-   * True if service is waiting on response from API for request to get assigned users
-   */
-  isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
+    protected isLoadingAssignedSubject$ = new BehaviorSubject<boolean>(false);
+    /**
+     * True if service is waiting on response from API for request to get assigned users
+     */
+    isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
 
-  protected selectedUsersToAssignSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
+    protected selectedUsersToAssignSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
-  selectedUsersToAssign$: Observable<User[]> = this.selectedUsersToAssignSubject$.asObservable();
+    selectedUsersToAssign$: Observable<User[]> = this.selectedUsersToAssignSubject$.asObservable();
 
-  protected selectedAssignedUsersSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
+    protected selectedAssignedUsersSubject$: BehaviorSubject<User[]> = new BehaviorSubject([]);
 
-  selectedAssignedUsers$: Observable<User[]> = this.selectedAssignedUsersSubject$.asObservable();
+    selectedAssignedUsers$: Observable<User[]> = this.selectedAssignedUsersSubject$.asObservable();
 
-  protected selectedGroupsToImportSubject$: BehaviorSubject<Group[]> = new BehaviorSubject([]);
+    protected selectedGroupsToImportSubject$: BehaviorSubject<Group[]> = new BehaviorSubject([]);
 
-  selectedGroupsToImport$: Observable<Group[]> = this.selectedGroupsToImportSubject$.asObservable();
+    selectedGroupsToImport$: Observable<Group[]> = this.selectedGroupsToImportSubject$.asObservable();
 
-  /**
-   * List of users already assigned to the resource
-   */
-  abstract assignedUsers$: Observable<PaginatedResource<User>>;
+    /**
+     * List of users already assigned to the resource
+     */
+    abstract assignedUsers$: Observable<PaginatedResource<User>>;
 
-  setSelectedUsersToAssign(users: User[]): void {
-    this.selectedUsersToAssignSubject$.next(users);
-  }
+    setSelectedUsersToAssign(users: User[]): void {
+        this.selectedUsersToAssignSubject$.next(users);
+    }
 
-  clearSelectedUsersToAssign(): void {
-    this.selectedUsersToAssignSubject$.next([]);
-  }
+    clearSelectedUsersToAssign(): void {
+        this.selectedUsersToAssignSubject$.next([]);
+    }
 
-  setSelectedAssignedUsers(users: User[]): void {
-    this.selectedAssignedUsersSubject$.next(users);
-  }
+    setSelectedAssignedUsers(users: User[]): void {
+        this.selectedAssignedUsersSubject$.next(users);
+    }
 
-  clearSelectedAssignedUsers(): void {
-    this.selectedAssignedUsersSubject$.next([]);
-  }
+    clearSelectedAssignedUsers(): void {
+        this.selectedAssignedUsersSubject$.next([]);
+    }
 
-  setSelectedGroupsToImport(groups: Group[]): void {
-    this.selectedGroupsToImportSubject$.next(groups);
-  }
+    setSelectedGroupsToImport(groups: Group[]): void {
+        this.selectedGroupsToImportSubject$.next(groups);
+    }
 
-  clearSelectedGroupsToImport(): void {
-    this.selectedGroupsToImportSubject$.next([]);
-  }
+    clearSelectedGroupsToImport(): void {
+        this.selectedGroupsToImportSubject$.next([]);
+    }
 
-  /**
-   * Get users available to assign to resource
-   * @param resourceId id of a resource associated with users
-   * @param filter filter to be applied on users
-   */
-  abstract getUsersToAssign(resourceId: number, filter: string): Observable<PaginatedResource<User>>;
+    /**
+     * Get users available to assign to resource
+     * @param resourceId id of a resource associated with users
+     * @param filter filter to be applied on users
+     */
+    abstract getUsersToAssign(resourceId: number, filter: string): Observable<PaginatedResource<User>>;
 
-  /**
-   * Get groups available to assign to resource
-   * @param filterValue filter to be applied on users
-   */
-  abstract getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>>;
+    /**
+     * Get groups available to assign to resource
+     * @param filterValue filter to be applied on users
+     */
+    abstract getGroupsToImport(filterValue: string): Observable<PaginatedResource<Group>>;
 
-  /**
-   * Get users already assigned to the resource
-   * @contract MUST update assignedUsers$ observable.
-   * @param resourceId id of a resource associated with requested users
-   * @param pagination requested pagination
-   * @param filterValue filter to be applied on users
-   */
-  abstract getAssigned(
-    resourceId: number,
-    pagination: IPaginationEvent,
-    filterValue: string,
-  ): Observable<PaginatedResource<User>>;
+    /**
+     * Get users already assigned to the resource
+     * @contract MUST update assignedUsers$ observable.
+     * @param resourceId id of a resource associated with requested users
+     * @param pagination requested pagination
+     * @param filterValue filter to be applied on users
+     */
+    abstract getAssigned(
+        resourceId: number,
+        pagination: IPaginationEvent,
+        filterValue: string,
+    ): Observable<PaginatedResource<User>>;
 
-  /**
-   * Assigns selected users to a resource
-   * @param resourceId id of a resource to associate with users
-   */
-  abstract assignSelected(resourceId: number): Observable<any>;
+    /**
+     * Assigns selected users to a resource
+     * @param resourceId id of a resource to associate with users
+     */
+    abstract assignSelected(resourceId: number): Observable<any>;
 
-  /**
-   * Assigns selected users to a resource
-   * @param resourceId id of a resource to associate with users
-   * @param users users to assign
-   * @param groups groups to import users from
-   */
-  abstract assign(resourceId: number, users: User[], groups?: Group[]): Observable<any>;
+    /**
+     * Assigns selected users to a resource
+     * @param resourceId id of a resource to associate with users
+     * @param users users to assign
+     * @param groups groups to import users from
+     */
+    abstract assign(resourceId: number, users: User[], groups?: Group[]): Observable<any>;
 
-  /**
-   * Unassigns users from resource
-   * @param resourceId id of resource which association should be cancelled
-   * @param users users to unassign
-   */
-  abstract unassign(resourceId: number, users: User[]): Observable<any>;
+    /**
+     * Unassigns users from resource
+     * @param resourceId id of resource which association should be cancelled
+     * @param users users to unassign
+     */
+    abstract unassign(resourceId: number, users: User[]): Observable<any>;
 
-  /**
-   * Unassigns selected users from resource
-   * @param resourceId id of resource which association should be cancelled
-   */
-  abstract unassignSelected(resourceId: number): Observable<any>;
+    /**
+     * Unassigns selected users from resource
+     * @param resourceId id of resource which association should be cancelled
+     */
+    abstract unassignSelected(resourceId: number): Observable<any>;
 }

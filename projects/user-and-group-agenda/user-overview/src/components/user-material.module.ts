@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
  * Material components imports for user module
  */
 @NgModule({
-  imports: [MatListModule, MatIconModule, MatProgressBarModule, MatDialogModule, MatButtonModule, MatTooltipModule],
-  exports: [MatListModule, MatIconModule, MatProgressBarModule, MatDialogModule, MatButtonModule, MatTooltipModule],
+    imports: [MatListModule, MatIconModule, MatProgressBarModule, MatDialogModule, MatButtonModule, MatTooltipModule],
+    exports: [MatListModule, MatIconModule, MatProgressBarModule, MatDialogModule, MatButtonModule, MatTooltipModule],
 })
 export class UserMaterialModule {}

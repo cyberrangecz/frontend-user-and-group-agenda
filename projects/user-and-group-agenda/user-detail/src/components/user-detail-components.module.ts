@@ -8,8 +8,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
  * Module containing component and providers for user detail page
  */
 @NgModule({
-  declarations: [UserDetailComponent],
-  imports: [CommonModule, UserDetailMaterialModule, MatExpansionModule],
-  providers: [],
+    declarations: [UserDetailComponent],
+    imports: [CommonModule, UserDetailMaterialModule, MatExpansionModule],
+    providers: [],
 })
 export class UserDetailComponentsModule {}

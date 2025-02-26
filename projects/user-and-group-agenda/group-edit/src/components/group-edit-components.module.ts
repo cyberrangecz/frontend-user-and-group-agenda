@@ -5,10 +5,10 @@ import { SentinelTableModule } from '@sentinel/components/table';
 import { SentinelResourceSelectorModule } from '@sentinel/components/resource-selector';
 import { GroupEditCanDeactivate } from '../services/can-deactivate/group-edit-can-deactivate.service';
 import {
-  UserAndGroupAgendaConfig,
-  UserAndGroupDefaultNavigator,
-  UserAndGroupNavigator,
-} from '@cyberrangecz-platform/user-and-group-agenda';
+    UserAndGroupAgendaConfig,
+    UserAndGroupDefaultNavigator,
+    UserAndGroupNavigator,
+} from '@crczp/user-and-group-agenda';
 import { GroupEditMaterialModule } from './group-edit-material.module';
 import { GroupEditOverviewComponent } from './group-edit-overview.component';
 import { GroupEditComponent } from './group-edit/group-edit.component';
@@ -20,30 +20,30 @@ import { SentinelControlsComponent } from '@sentinel/components/controls';
  * Module containing necessary imports and components for group-overview state page
  */
 @NgModule({
-  declarations: [GroupEditOverviewComponent, GroupEditComponent, GroupRoleAssignComponent, GroupUserAssignComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    GroupEditMaterialModule,
-    SentinelResourceSelectorModule,
-    SentinelTableModule,
-    SentinelControlsComponent,
-  ],
-  exports: [
-    GroupEditMaterialModule,
-    GroupEditComponent,
-    GroupEditOverviewComponent,
-    GroupRoleAssignComponent,
-    GroupUserAssignComponent,
-  ],
-  providers: [GroupEditCanDeactivate, { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator }],
+    declarations: [GroupEditOverviewComponent, GroupEditComponent, GroupRoleAssignComponent, GroupUserAssignComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        GroupEditMaterialModule,
+        SentinelResourceSelectorModule,
+        SentinelTableModule,
+        SentinelControlsComponent,
+    ],
+    exports: [
+        GroupEditMaterialModule,
+        GroupEditComponent,
+        GroupEditOverviewComponent,
+        GroupRoleAssignComponent,
+        GroupUserAssignComponent,
+    ],
+    providers: [GroupEditCanDeactivate, { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator }],
 })
 export class GroupEditComponentsModule {
-  static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<GroupEditComponentsModule> {
-    return {
-      ngModule: GroupEditComponentsModule,
-      providers: [{ provide: UserAndGroupAgendaConfig, useValue: config }],
-    };
-  }
+    static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<GroupEditComponentsModule> {
+        return {
+            ngModule: GroupEditComponentsModule,
+            providers: [{ provide: UserAndGroupAgendaConfig, useValue: config }],
+        };
+    }
 }

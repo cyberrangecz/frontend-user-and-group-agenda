@@ -1,7 +1,7 @@
 import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { Group } from '@cyberrangecz-platform/user-and-group-model';
+import { Group } from '@crczp/user-and-group-model';
 import { Observable } from 'rxjs';
-import { SelectablePaginatedService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { SelectablePaginatedService } from '@crczp/user-and-group-agenda/internal';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -9,26 +9,26 @@ import { SelectablePaginatedService } from '@cyberrangecz-platform/user-and-grou
  * You can use get methods to get paginated requests and other operations to modify data.
  */
 export abstract class GroupOverviewService extends SelectablePaginatedService<Group> {
-  protected constructor(pageSize: number) {
-    super(pageSize);
-  }
+    protected constructor(pageSize: number) {
+        super(pageSize);
+    }
 
-  /**
-   *
-   * @param pagination requested pagination
-   * @param filter filter to be applied on groups
-   */
-  abstract getAll(pagination?: PaginationBaseEvent, filter?: string): Observable<PaginatedResource<Group>>;
+    /**
+     *
+     * @param pagination requested pagination
+     * @param filter filter to be applied on groups
+     */
+    abstract getAll(pagination?: PaginationBaseEvent, filter?: string): Observable<PaginatedResource<Group>>;
 
-  /**
-   * Deletes group-overview
-   * @param group a group-overview to be deleted
-   */
-  abstract delete(group: Group): Observable<any>;
+    /**
+     * Deletes group-overview
+     * @param group a group-overview to be deleted
+     */
+    abstract delete(group: Group): Observable<any>;
 
-  abstract deleteSelected(): Observable<any>;
+    abstract deleteSelected(): Observable<any>;
 
-  abstract edit(group: Group): Observable<any>;
+    abstract edit(group: Group): Observable<any>;
 
-  abstract create(): Observable<any>;
+    abstract create(): Observable<any>;
 }

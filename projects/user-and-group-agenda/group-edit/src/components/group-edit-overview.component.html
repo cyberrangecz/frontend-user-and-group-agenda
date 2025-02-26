@@ -11,12 +11,11 @@
         </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <sentinel-controls [controls]="controls" (itemClicked)="onControlAction($event)"></sentinel-controls>
-    <mat-divider></mat-divider>
+    <sentinel-controls [controls]="controls" (itemClicked)="onControlAction($event)"/>
+    <mat-divider/>
     <crczp-group-edit
         (edited)="onGroupChanged($event)"
-        [group]="group$ | async">
-    </crczp-group-edit>
+        [group]="group$ | async"/>
 </mat-expansion-panel>
 
 <mat-expansion-panel class="group-members-panel" [disabled]="(editMode$ | async) === false"

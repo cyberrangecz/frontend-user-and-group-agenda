@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
  * Material components imports for user detail module
  */
 @NgModule({
-  imports: [MatCardModule, MatIconModule, MatTooltipModule, MatListModule, MatButtonModule],
-  exports: [MatCardModule, MatIconModule, MatTooltipModule, MatListModule, MatButtonModule],
+    imports: [MatCardModule, MatIconModule, MatTooltipModule, MatListModule, MatButtonModule],
+    exports: [MatCardModule, MatIconModule, MatTooltipModule, MatListModule, MatButtonModule],
 })
 export class UserDetailMaterialModule {}

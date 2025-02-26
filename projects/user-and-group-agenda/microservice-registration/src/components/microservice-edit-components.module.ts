@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  UserAndGroupAgendaConfig,
-  UserAndGroupDefaultNavigator,
-  UserAndGroupNavigator,
-} from '@cyberrangecz-platform/user-and-group-agenda';
-import { InternalSharedModule } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+    UserAndGroupAgendaConfig,
+    UserAndGroupDefaultNavigator,
+    UserAndGroupNavigator,
+} from '@crczp/user-and-group-agenda';
+import { InternalSharedModule } from '@crczp/user-and-group-agenda/internal';
 import { MicroserviceEditCanDeactivate } from '../services/microservice-edit-can-deactivate.service';
 import { MicroserviceEditControlsComponent } from './microservice-edit-controls/microservice-edit-controls.component';
 import { MicroserviceEditMaterialModule } from './microservice-edit-material.module';
@@ -19,32 +19,32 @@ import { MicroserviceRoleComponent } from './microservice-role-list/microservice
  * Module containing components and necessary imports for microservice-registration state page
  */
 @NgModule({
-  imports: [CommonModule, InternalSharedModule, MicroserviceEditMaterialModule, ReactiveFormsModule],
-  declarations: [
-    MicroserviceEditOverviewComponent,
-    MicroserviceEditComponent,
-    MicroserviceEditControlsComponent,
-    MicroserviceRoleListComponent,
-    MicroserviceRoleComponent,
-  ],
-  exports: [
-    MicroserviceEditMaterialModule,
-    MicroserviceEditOverviewComponent,
-    MicroserviceEditComponent,
-    MicroserviceEditControlsComponent,
-    MicroserviceRoleListComponent,
-    MicroserviceRoleComponent,
-  ],
-  providers: [
-    MicroserviceEditCanDeactivate,
-    { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
-  ],
+    imports: [CommonModule, InternalSharedModule, MicroserviceEditMaterialModule, ReactiveFormsModule],
+    declarations: [
+        MicroserviceEditOverviewComponent,
+        MicroserviceEditComponent,
+        MicroserviceEditControlsComponent,
+        MicroserviceRoleListComponent,
+        MicroserviceRoleComponent,
+    ],
+    exports: [
+        MicroserviceEditMaterialModule,
+        MicroserviceEditOverviewComponent,
+        MicroserviceEditComponent,
+        MicroserviceEditControlsComponent,
+        MicroserviceRoleListComponent,
+        MicroserviceRoleComponent,
+    ],
+    providers: [
+        MicroserviceEditCanDeactivate,
+        { provide: UserAndGroupNavigator, useClass: UserAndGroupDefaultNavigator },
+    ],
 })
 export class MicroserviceEditComponentsModule {
-  static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<MicroserviceEditComponentsModule> {
-    return {
-      ngModule: MicroserviceEditComponentsModule,
-      providers: [{ provide: UserAndGroupAgendaConfig, useValue: config }],
-    };
-  }
+    static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<MicroserviceEditComponentsModule> {
+        return {
+            ngModule: MicroserviceEditComponentsModule,
+            providers: [{ provide: UserAndGroupAgendaConfig, useValue: config }],
+        };
+    }
 }

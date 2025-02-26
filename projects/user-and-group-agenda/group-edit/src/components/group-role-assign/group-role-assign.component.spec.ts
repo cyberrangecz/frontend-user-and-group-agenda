@@ -1,17 +1,17 @@
 // import { SimpleChange } from '@angular/core';
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { By } from '@angular/platform-browser';
 // import { PaginatedResource, OffsetPagination } from '@sentinel/common';
 // import { SentinelControlsComponent } from '@sentinel/components/controls';
-// import { Group, UserRole } from '@cyberrangecz-platform/user-and-group-model';
+// import { Group, UserRole } from '@crczp/user-and-group-model';
 // import { SentinelTableComponent, TableActionEvent } from '@sentinel/components/table';
 // import { SentinelResourceSelectorComponent } from '@sentinel/components/resource-selector';
 // import { EMPTY, of } from 'rxjs';
 // import { RoleDeleteAction } from '../../model/table/role-delete-action';
-// import { DeleteControlItem, PaginationService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
-// import { SaveControlItem } from '@cyberrangecz-platform/user-and-group-agenda/internal';
-// import { RoleAssignService } from '@cyberrangecz-platform/user-and-group-agenda/group-edit';
-// import { UserAndGroupContext } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+// import { DeleteControlItem, PaginationService } from '@crczp/user-and-group-agenda/internal';
+// import { SaveControlItem } from '@crczp/user-and-group-agenda/internal';
+// import { RoleAssignService } from '@crczp/user-and-group-agenda/group-edit';
+// import { UserAndGroupContext } from '@crczp/user-and-group-agenda/internal';
 // import {
 //   createContextSpy,
 //   createSentinelControlsOverride,
@@ -32,7 +32,7 @@
 //   let roleAssignServiceSpy: jasmine.SpyObj<RoleAssignService>;
 //   let contextSpy: jasmine.SpyObj<UserAndGroupContext>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     const testUserRoles = createUserRoleResource();
 //     contextSpy = createContextSpy();
 //     paginationServiceSpy = createPaginationServiceSpy();

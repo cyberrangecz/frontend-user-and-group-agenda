@@ -22,13 +22,14 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@crczp/theme/assets",
+                                "output": "assets/"
+                            }
                         ],
                         "styles": [
-                            "src/styles.scss",
-                            "src/theme.scss",
-                            "src/variables.scss"
+                            "node_modules/@crczp/theme/theming/apply-all.scss"
                         ],
                         "scripts": [],
                         "vendorChunk": true,
@@ -92,14 +93,17 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.spec.json",
                         "karmaConfig": "src/karma.conf.js",
-                        "styles": [
-                            "src/styles.scss"
-                        ],
-                        "scripts": [],
                         "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
-                        ]
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@crczp/theme/assets",
+                                "output": "assets/"
+                            }
+                        ],
+                        "styles": [
+                            "node_modules/@crczp/theme/theming/apply-all.scss"
+                        ],
+                        "scripts": []
                     }
                 },
                 "lint": {
@@ -109,19 +113,6 @@
                             "src/**/*.ts",
                             "src/**/*.component.html"
                         ]
-                    }
-                },
-                "e2e": {
-                    "builder": "@nrwl/cypress:cypress",
-                    "options": {
-                        "cypressConfig": "e2e/cypress.json",
-                        "tsConfig": "e2e/tsconfig.e2e.json",
-                        "devServerTarget": "user-and-group-management-example:serve:development"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "user-and-group-management-example:serve:production"
-                        }
                     }
                 }
             }

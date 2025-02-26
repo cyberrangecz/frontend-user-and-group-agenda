@@ -1,4 +1,4 @@
-import { UserRole } from '@cyberrangecz-platform/user-and-group-model';
+import { UserRole } from '@crczp/user-and-group-model';
 import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -8,33 +8,33 @@ import { BehaviorSubject, Observable } from 'rxjs';
  * You can use get methods to get paginated sandbox instances and other operations to modify data.
  */
 export abstract class RolesDetailService {
-  protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  /**
-   * True if error was returned from API, false otherwise
-   */
-  hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();
+    protected hasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    /**
+     * True if error was returned from API, false otherwise
+     */
+    hasError$: Observable<boolean> = this.hasErrorSubject$.asObservable();
 
-  protected isLoadingAssignedSubject$ = new BehaviorSubject<boolean>(false);
-  /**
-   * True if service is waiting on response from API for request to get assigned users
-   */
-  isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
+    protected isLoadingAssignedSubject$ = new BehaviorSubject<boolean>(false);
+    /**
+     * True if service is waiting on response from API for request to get assigned users
+     */
+    isLoadingAssigned$: Observable<boolean> = this.isLoadingAssignedSubject$.asObservable();
 
-  /**
-   * List of roles already assigned to the resource
-   */
-  abstract assignedRoles$: Observable<PaginatedResource<UserRole>>;
+    /**
+     * List of roles already assigned to the resource
+     */
+    abstract assignedRoles$: Observable<PaginatedResource<UserRole>>;
 
-  /**
-   * Get roles already assigned to the resource
-   * @contract MUST update assignedRoles observable.
-   * @param resourceId id of a resource associated with roles
-   * @param pagination requested pagination
-   * @param filterValue filter to be applied on result
-   */
-  abstract getAssigned(
-    resourceId: number,
-    pagination: PaginationBaseEvent,
-    filterValue?: string,
-  ): Observable<PaginatedResource<UserRole>>;
+    /**
+     * Get roles already assigned to the resource
+     * @contract MUST update assignedRoles observable.
+     * @param resourceId id of a resource associated with roles
+     * @param pagination requested pagination
+     * @param filterValue filter to be applied on result
+     */
+    abstract getAssigned(
+        resourceId: number,
+        pagination: PaginationBaseEvent,
+        filterValue?: string,
+    ): Observable<PaginatedResource<UserRole>>;
 }

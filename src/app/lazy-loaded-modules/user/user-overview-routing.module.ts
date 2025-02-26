@@ -5,8 +5,8 @@ import {
     UserOverviewComponent,
     UserResolverService,
     UserTitleResolverService
-} from '@cyberrangecz-platform/user-and-group-agenda/user-overview';
-import { USER_DATA_ATTRIBUTE_NAME, USER_DETAIL_PATH, USER_SELECTOR } from '@cyberrangecz-platform/user-and-group-agenda';
+} from '@crczp/user-and-group-agenda/user-overview';
+import { USER_DATA_ATTRIBUTE_NAME, USER_DETAIL_PATH, USER_SELECTOR } from '@crczp/user-and-group-agenda';
 
 const routes: Routes = [
     {

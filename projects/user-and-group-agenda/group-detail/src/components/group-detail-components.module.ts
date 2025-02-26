@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { UserAndGroupAgendaConfig } from '@cyberrangecz-platform/user-and-group-agenda';
+import { UserAndGroupAgendaConfig } from '@crczp/user-and-group-agenda';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { PaginationService } from '@cyberrangecz-platform/user-and-group-agenda/internal';
+import { PaginationService } from '@crczp/user-and-group-agenda/internal';
 import { GroupDetailMaterialModule } from './group-detail-material.module';
 import { GroupDetailComponent } from './group-detail.component';
 import { MembersDetailConcreteService } from '../services/members-detail-concrete.service';
@@ -16,19 +16,19 @@ import { RoleExpandComponent } from './role-expand/role-expand.component';
  * Module containing component and providers for group detail page
  */
 @NgModule({
-  declarations: [GroupDetailComponent, RoleExpandComponent],
-  imports: [CommonModule, GroupDetailMaterialModule, SentinelTableModule, SentinelPipesModule],
-  providers: [
-    PaginationService,
-    { provide: MembersDetailService, useClass: MembersDetailConcreteService },
-    { provide: RolesDetailService, useClass: RolesDetailConcreteService },
-  ],
+    declarations: [GroupDetailComponent, RoleExpandComponent],
+    imports: [CommonModule, GroupDetailMaterialModule, SentinelTableModule, SentinelPipesModule],
+    providers: [
+        PaginationService,
+        { provide: MembersDetailService, useClass: MembersDetailConcreteService },
+        { provide: RolesDetailService, useClass: RolesDetailConcreteService },
+    ],
 })
 export class GroupDetailComponentsModule {
-  static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<GroupDetailComponentsModule> {
-    return {
-      ngModule: GroupDetailComponentsModule,
-      providers: [{ provide: UserAndGroupAgendaConfig, useValue: config }],
-    };
-  }
+    static forRoot(config: UserAndGroupAgendaConfig): ModuleWithProviders<GroupDetailComponentsModule> {
+        return {
+            ngModule: GroupDetailComponentsModule,
+            providers: [{ provide: UserAndGroupAgendaConfig, useValue: config }],
+        };
+    }
 }

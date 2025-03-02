@@ -74,13 +74,4 @@ export class UserOverviewRoutingModule {}
     path: USER_PATH,
     loadChildren: () => import('./lazy-loaded-modules/user/user-overview.module').then((m) => m.UserOverviewModule)
   }
-
-## Example
-
-To see the library in work and to see example setup, you can run the example app.
-
-1. Configure and run the [Training service](https://github.com/cyberrangecz/backend-training) and the [User and group service](https://github.com/cyberrangecz/backend-user-and-group) or the whole [deployment](https://github.com/cyberrangecz/devops-helm).
-2. Configure the [environment.ts](src/environments/environment.ts) file, pointing to the services.
-3. Run `npm install` to install all dependencies.
-4. Run the app with ssl via `npm run start`.
-5. Navigate to `https://localhost:4200/`. The app will automatically reload if you change any of the source files. The app will use a self-signed certificate, so you will need to accept it in the browser.
+```

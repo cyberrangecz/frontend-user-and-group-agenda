@@ -1,6 +1,6 @@
 {
     "name": "@crczp/user-and-group-agenda",
-    "version": "0.0.3",
+    "version": "1.0.0",
     "license": "MIT",
     "peerDependencies": {
         "@angular/common": "^18.2.13",
@@ -9,8 +9,9 @@
         "typescript-collections": "^1.3.3",
         "@sentinel/common": "^18.0.4",
         "@sentinel/components": "^18.2.7",
-        "@crczp/user-and-group-api": "^0.0.4",
-        "@crczp/user-and-group-model": "^0.0.2"
+        "@crczp/user-and-group-api": "^1.0.0",
+        "@crczp/user-and-group-model": "^1.0.0",
+        "@crczp/theme": "^1.0.0"
     },
     "dependencies": {
         "tslib": "^2.7.0"

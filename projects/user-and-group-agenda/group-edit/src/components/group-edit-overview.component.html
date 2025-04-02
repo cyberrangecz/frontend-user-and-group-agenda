@@ -1,11 +1,10 @@
 <mat-expansion-panel class="group-edit-panel" [expanded]="(editMode$ | async) === false">
     <mat-expansion-panel-header>
-        <mat-panel-title class="group-edit-title">
+        <mat-panel-title>
             <span *ngIf="(editMode$ | async) else newGroupTitle">Edit Group</span>
             <ng-template #newGroupTitle>Create Group</ng-template>
         </mat-panel-title>
         <mat-panel-description>
-            <span>{{ (group$ | async)?.name }}</span>
             <span class="spacer"></span>
             <mat-icon>edit</mat-icon>
         </mat-panel-description>

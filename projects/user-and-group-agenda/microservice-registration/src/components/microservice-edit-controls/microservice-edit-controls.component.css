@@ -8,7 +8,6 @@
 .error-state {
     display: flex;
     justify-content: flex-end;
-    font-size: 12px;
 }
 
 button {

@@ -40,7 +40,12 @@
                 <!-- DESCRIPTION field-->
                 <mat-form-field appearance="outline">
                     <mat-label>Description</mat-label>
-                    <textarea class="description" maxlength="255" matInput placeholder="Description" formControlName="description"></textarea>
+                    <textarea
+                        class="description"
+                        maxlength="255" matInput
+                        placeholder="Description"
+                        formControlName="description">
+                    </textarea>
                     <button *ngIf="description.value"
                             matSuffix
                             mat-icon-button

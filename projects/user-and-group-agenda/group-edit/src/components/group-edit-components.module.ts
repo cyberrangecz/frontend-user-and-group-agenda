@@ -15,6 +15,7 @@ import { GroupEditComponent } from './group-edit/group-edit.component';
 import { GroupRoleAssignComponent } from './group-role-assign/group-role-assign.component';
 import { GroupUserAssignComponent } from './group-user-assign/group-user-assign.component';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * Module containing necessary imports and components for group-overview state page
@@ -29,6 +30,7 @@ import { SentinelControlsComponent } from '@sentinel/components/controls';
         SentinelResourceSelectorModule,
         SentinelTableModule,
         SentinelControlsComponent,
+        MatTooltip,
     ],
     exports: [
         GroupEditMaterialModule,

@@ -7,6 +7,6 @@
     </button>
 </div>
 <div class="error-state">
-    <mat-error *ngIf="!hasDefaultRole">Microservice has to have a default role</mat-error>
+    <mat-error class="error-state" *ngIf="!(hasDefaultRole)">Microservice has to have a default role</mat-error>
 </div>
 

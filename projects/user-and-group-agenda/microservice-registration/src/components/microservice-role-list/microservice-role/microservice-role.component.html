@@ -30,7 +30,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Type</mat-label>
                     <input matInput placeholder="Type" formControlName="type" required>
-                    <button mat-button *ngIf="type.value" matSuffix mat-icon-button aria-label="Clear"
+                    <button *ngIf="type.value" matSuffix mat-icon-button aria-label="Clear"
                             (click)="type.setValue(''); onClear();">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -40,9 +40,8 @@
                 <!-- DESCRIPTION field-->
                 <mat-form-field appearance="outline">
                     <mat-label>Description</mat-label>
-                    <textarea matInput placeholder="Description" formControlName="description"></textarea>
-                    <button mat-button
-                            *ngIf="description.value"
+                    <textarea class="description" maxlength="255" matInput placeholder="Description" formControlName="description"></textarea>
+                    <button *ngIf="description.value"
                             matSuffix
                             mat-icon-button
                             aria-label="Clear"

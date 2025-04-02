@@ -29,8 +29,8 @@
                         <input matInput [min]="tomorrow" [matDatepicker]="picker" formControlName="expirationDate"
                                placeholder="Expires on">
                         <mat-datepicker #picker/>
+                        <mat-datepicker-toggle matSuffix [for]="picker"/>
                     </mat-form-field>
-                    <mat-datepicker-toggle matSuffix [for]="picker"/>
                 </div>
             </div>
         </div>
@@ -40,8 +40,21 @@
     <!-- DESCRIPTION field -->
     <mat-form-field appearance="outline" class="description-form">
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Description" formControlName="description" required></textarea>
-        <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description.setValue('')">
+        <textarea
+            matInput
+            maxlength="255"
+            class="description-form__texarea"
+            placeholder="Description"
+            formControlName="description"
+            required></textarea>
+        <button
+            class="description-form__clear"
+            *ngIf="description"
+            mat-icon-button
+            aria-label="Clear"
+            matTooltip="Clear"
+            matTooltipPosition="right"
+            (click)="description.setValue('')">
             <mat-icon>close</mat-icon>
         </button>
         <mat-error>Description is required</mat-error>

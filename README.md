@@ -1,3 +1,5 @@
+> The code from this repository has been integrated to the [frontend-platform monorepo](https://github.com/cyberrangecz/frontend-platform), where development and maintenance continue.
+
 # User and Group Agenda
 
 User and Group Agenda is a library containing components and services to manage users, groups, microservices and roles in CyberRangeᶜᶻ Platform microservices.
